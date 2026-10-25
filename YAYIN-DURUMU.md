@@ -31,3 +31,10 @@
 - Dahili test bağlantısı: https://play.google.com/apps/internaltest/4700445078648883917
 - Yükleme anahtarı: imza-anahtari/yasam-rehberi-upload.jks (kullanıcının Mac'inde; Drive'a yedeklenmeli).
 - Sırada: gizlilik politikası sayfası, Play "Uygulama içeriği" formları, mağaza girişi, kapalı test için 12 testçi.
+
+## Güncelleme — 25 Ekim 2026 (akşam)
+- Gizlilik politikası yayında: https://emreanduv.github.io/yasam-rehberi/gizlilik.html (GitHub Pages, main/docs)
+- Play: gizlilik, reklam yok, oturum açma yok, hedef kitle 13+, veri güvenliği (veri toplanmıyor), reklam kimliği yok, resmi kurum değil, finans yok, sağlık yok → kaydedildi. Kategori: Kitaplar ve Referans. Mağaza metinleri taslak kaydedildi.
+- App Store: açıklama, anahtar kelimeler, destek URL'si, telif, sürüm 1.0.0, inceleme notu, alt başlık "Kur'an meallerini karşılaştır", kategori Referans/Kitaplar, yaş 4+, fiyat ücretsiz, gizlilik "Data Not Collected" → kaydedildi.
+- Görseller: store/gorseller/ (play: 1080x1920 ×6, simge 512, öne çıkan grafik 1024x500; appstore: 1284x2778 ×6)
+- Kullanıcıda bekleyen: Play iletişim e-postası, görsel yüklemeleri, IARC onay kutusu; Apple ekran görüntüleri, Content Rights, App Privacy "Publish", ülke uygunluğu (Diyanet kararına göre).
