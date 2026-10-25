@@ -33,7 +33,10 @@ export const STOPWORDS = new Set([
 export const WEAK = new Set(["boz", "bozar", "bozmak", "bozul", "yap", "yapmak", "etmek", "olmak",
   "caiz", "farz", "haram", "helal", "gunah", "sevap", "yasak", "mubah",
   "serbest", "dogru", "yanlis", "izin", "uygun", "lazim", "gerek",
-  "mecbur", "sart", "kural", "hukum", "emir", "emr"]);
+  "mecbur", "sart", "kural", "hukum", "emir", "emr",
+  // soru kalıpları ("abdest almak kabul olur mu", "geçerli mi"): konu değil, soru biçimi
+  "kabul", "almak", "alinir", "alir", "alabilir", "alinmasi", "gecerli",
+  "sahih", "mumkun", "sakinca", "sakincali"]);
 
 const SOFT = { b: "p", p: "b", d: "t", t: "d", g: "k", k: "g" };
 

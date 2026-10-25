@@ -108,8 +108,9 @@ export class Engine {
       const hits = (words) => terms.filter((t) => words.some((w) => matches(t, w)));
       const th = hits(c.triggers);
       const mh = [...new Set(terms.flatMap((t) => c.modern.filter((w) => matches(t, w)).map(() => t)))].sort();
+      const mw = [...new Set(terms.flatMap((t) => c.modern.filter((w) => matches(t, w))))];
       if (th.length || mh.length) found.push({ key: c.key, label: c.label, keywords: c.keywords,
-        anchors: c.anchors, modernHit: mh });
+        anchors: c.anchors, modernHit: mh, modernWords: mw, triggerHit: th.length > 0, note: c.note || "", diyanet: c.diyanet || c.label });
     }
     return found;
   }
@@ -121,7 +122,7 @@ export class Engine {
       const v = this.verse(this.indexOf(ref[0], ref[1]), tids);
       return { query, terms: [], missing: [], missingKeys: [], concepts: [], verses: v ? [v] : [], isRef: true };
     }
-    const qterms = queryTerms(query);
+    let qterms = queryTerms(query);
     const terms = qterms.map((q) => q.key);
     const originals = new Map();
     for (const m of query.matchAll(WORD_RE)) {
@@ -131,10 +132,20 @@ export class Engine {
       }
     }
     const concepts = this._detectConcepts(terms);
+    // Kur'an'da geçmeyen modern bir şey soruluyorsa (oje, sigara, dövme…) sorudaki diğer
+    // fiiller ("içmek", "yaptırmak", "engel") yalnızca soru biçimidir: konuya ait olmayan
+    // kelimeler zayıf sayılır
+    if (concepts.some((c) => c.modernHit.length)) {
+      const keys = new Set(concepts.map((c) => c.key));
+      const topic = this.core.concepts.filter((c) => keys.has(c.key)).flatMap((c) => [...c.triggers, ...c.modern, ...c.keywords]);
+      qterms = qterms.map((q) => ({ key: q.key, weak: q.weak || !topic.some((w) => matches(q.key, w)) }));
+    }
     const scores = new Map();
     const matched = new Map();
     const missing = [];
     const missingKeys = [];
+    const support = new Set(); // güçlü kelime, kavram kelimesi veya temel ayetle gelenler
+    const ckHits = new Map();  // ayette geçen farklı kavram kelimeleri
 
     const weighted = qterms.map((q) => [q.key, q.weak ? WEAK_WEIGHT : QUERY_WEIGHT]);
     for (const c of concepts) for (const k of c.keywords) if (!terms.includes(k)) weighted.push([k, CONCEPT_WEIGHT]);
@@ -152,6 +163,8 @@ export class Engine {
         let part = n ? 0.5 + 0.5 * n / nTr : 0;
         if (tf) part += n ? 0.25 : 0.3;
         scores.set(i, (scores.get(i) || 0) + w * idf * part);
+        if (w === QUERY_WEIGHT) support.add(i);
+        else if (w === CONCEPT_WEIGHT) { if (!ckHits.has(i)) ckHits.set(i, new Set()); ckHits.get(i).add(term); }
         if (w === QUERY_WEIGHT && n) {
           if (!matched.has(i)) matched.set(i, new Set());
           matched.get(i).add(term);
@@ -170,7 +183,15 @@ export class Engine {
         if (!anchorOf.has(i)) anchorOf.set(i, []);
         anchorOf.get(i).push(c.label);
         scores.set(i, (scores.get(i) || 0) + ANCHOR_BONUS * topBase);
+        support.add(i);
       }
+    }
+    // Kavram kelimelerinden tek biri ("ayak", "ay") yetmez; en az üçü birlikte geçmeli
+    for (const [i, ws] of ckHits) if (ws.size >= 3) support.add(i);
+    // Yalnızca zayıf kelimelerle ("almak", "kabul", "bozar"…) gelen ayetler gürültüdür;
+    // yeterince güçlü sonuç varsa bunları ele
+    if ([...scores.keys()].filter((i) => support.has(i)).length >= 3) {
+      for (const i of [...scores.keys()]) if (!support.has(i)) scores.delete(i);
     }
 
     const ranked = [...scores.entries()].sort((a, b) => b[1] - a[1]);

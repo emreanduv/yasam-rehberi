@@ -60,6 +60,12 @@ def main() -> None:
                  "keywords": kw.split(), "anchors": an.split(",")}
                 for k, l, t, m, kw, an in con.execute(
                     "SELECT key, label, triggers, modern, keywords, anchors FROM concepts")]
+    # Kısa cevap kartı için: temel ayetlerin sade özeti ve Diyanet arama kelimesi
+    from kuran.concepts import CONCEPTS  # noqa: E402  (kuran-terminal sys.path'te)
+    for c in concepts:
+        src = CONCEPTS.get(c["key"], {})
+        c["note"] = src.get("note", "")
+        c["diyanet"] = src.get("diyanet", c["label"])
 
     core = {
         "meta": {"built": meta.get("built"), "arabic_credit": meta.get("arabic_credit"),

@@ -1,5 +1,6 @@
 // Yaşam Rehberi — uygulama ekranları
 import { Engine, highlightSpans } from "./engine.js";
+import { queryTerms } from "./text.js";
 
 // ---------------------------------------------------------------------------
 // Ayarlanabilir sabitler (isim değişirse sadece burası ve capacitor.config.json)
@@ -191,12 +192,77 @@ function missingInfo(r) {
 const fold2 = (s) => s.replace(/İ/g, "i").replace(/I/g, "ı").toLowerCase()
   .replace(/[çğıöşüâîû]/g, (c) => ({ ç: "c", ğ: "g", ı: "i", ö: "o", ş: "s", ü: "u", â: "a", î: "i", û: "u" }[c]));
 
+// ---------- Kısa cevap kartı ----------
+// Kur'an'da doğrudan geçmeyen ya da "olur mu / caiz mi" türü sorularda: ayetlerin ne söylediğini
+// sade dille özetler ve resmî görüş için Diyanet Din İşleri Yüksek Kurulu'na yönlendirir.
+// Uygulama fetva vermez.
+const DIYANET_ARA = "https://kurul.diyanet.gov.tr/tr/fetvalar?arama=";
+const RULING_RE = /\b(olur|olmaz|caiz|kabul|boz\w*|gunah|haram|helal|gerek\w*|farz|sart|gecerli|sahih|yapilir|yapilabilir|mubah|sakinca\w*|uygun|dogru|engel\w*|mekruh|sunnet)\s*m[iu]\b/;
+
+// Diyanet araması bütün kelimelerin geçmesini istiyor: önce "modern kelime + sorudaki konu"
+// (ör. "oje abdest", "sakız oruç"), ayrıca yalnızca modern kelimeyle ikinci bir arama.
+function diyanetQueries(q, r, strong) {
+  const qWords = q.match(/[\p{L}\p{N}']+/gu) || [];
+  const modern = [];
+  for (const c of r.concepts) {
+    for (const w of c.modernWords || []) {
+      const orig = qWords.find((x) => fold2(x).startsWith(w));
+      const form = orig ? orig.slice(0, w.length).toLocaleLowerCase("tr") : w;
+      if (!modern.includes(form)) modern.push(form);
+    }
+  }
+  const topic = r.concepts.find((c) => c.triggerHit);
+  if (modern.length) {
+    const m = modern.slice(0, 2).join(" ");
+    return topic ? [`${m} ${topic.diyanet}`, m] : [m];
+  }
+  if (r.concepts.length) return [(topic || r.concepts[0]).diyanet];
+  // Konu yoksa: sorudaki güçlü (soru kalıbı olmayan) kelimeler, kullanıcının yazdığı biçimiyle
+  const keys = queryTerms(q).filter((t) => !t.weak).map((t) => t.key);
+  const words = qWords.filter((w) => keys.some((k) => fold2(w).startsWith(k.slice(0, 4))))
+    .map((w) => w.toLocaleLowerCase("tr").replace(/['’].*$/, ""));
+  return words.length ? [[...new Set(words)].slice(0, 2).join(" ")] : [];
+}
+
+const linkRefs = (text) => esc(text).replace(/(\d{1,3}):(\d{1,3})(?:[–-]\d{1,3})?/g,
+  (m, s, a) => `<a href="#/ayet/${s}/${a}">${m}</a>`);
+
+function answerCard(q, r, strong) {
+  const ruling = RULING_RE.test(fold2(q));
+  if (!strong.length && !r.concepts.length && !ruling) return "";
+  if (!r.verses.length && !strong.length) return "";
+  let html = `<section class="panel answer"><div class="panel-h">Kısa cevap</div><div class="panel-b">`;
+  const roots = r.concepts.flatMap((c) => c.modernWords || []);
+  const shown = strong.map((w) => { const m = roots.find((x) => fold2(w).startsWith(x)); return m ? w.slice(0, m.length) : w; });
+  if (strong.length) {
+    html += `<p><b>${[...new Set(shown)].map((w) => `“${esc(w)}”`).join(", ")} Kur'an'da geçmez;</b> bu sorunun cevabı doğrudan bir ayette yok.</p>`;
+  } else if (r.concepts.length) {
+    html += `<p>Bu konu Kur'an'da geçer; temel ayetler aşağıda.</p>`;
+  }
+  // Kullanıcının adını verdiği konu önce ("kolonya abdest bozar mı" → Abdest, sonra Oruç)
+  const ordered = [...r.concepts.filter((c) => c.triggerHit), ...r.concepts.filter((c) => !c.triggerHit)];
+  for (const c of ordered.slice(0, ordered[0] && ordered[0].triggerHit ? 1 : 2)) {
+    if (c.note) html += `<p><span class="ans-k">Kur'an ne diyor? · ${esc(c.label)}</span>${linkRefs(c.note)}</p>`;
+  }
+  if (ruling || strong.length) {
+    const [main, alt] = diyanetQueries(q, r, strong);
+    html += `<p class="ans-m">“Olur mu, caiz mi” gibi soruların cevabı bu ayetlerin âlimlerce yorumuna (fıkıh) dayanır. Uygulama fetva vermez; resmî görüş için Diyanet İşleri Başkanlığı Din İşleri Yüksek Kurulu:</p>
+      <div class="ans-btns">
+        ${main ? `<a class="btn-go" href="${DIYANET_ARA}${enc(main)}">${ICON.note}Diyanet'te ara: “${esc(main)}”</a>` : ""}
+        <a class="btn-light" href="tel:190">ALO 190 Fetva Hattı</a>
+      </div>
+      ${alt ? `<p class="ans-m" style="margin-top:8px">Sonuç çıkmazsa: <a href="${DIYANET_ARA}${enc(alt)}">yalnızca “${esc(alt)}” ile ara</a></p>` : ""}`;
+  }
+  return html + `</div></section>`;
+}
+
 function resultsView(q) {
   const r = E.search(q, 8, mealsOn());
   if (r.isRef && r.verses.length) { location.replace(`#/ayet/${r.verses[0].surah}/${r.verses[0].ayah}`); return ""; }
   const { strong, soft } = missingInfo(r);
-  let body = "";
-  if (strong.length) body += `<div class="warn">${ICON.warn}<div><b>${strong.map((w) => `“${esc(w)}”`).join(", ")} Kur'an'da geçmez.</b> Bu konuda doğrudan bir hüküm yok; aşağıdakiler konuyla dolaylı olarak ilgili ayetlerdir.</div></div>`;
+  const card = answerCard(q, r, strong);
+  let body = card;
+  if (strong.length && !card) body += `<div class="warn">${ICON.warn}<div><b>${strong.map((w) => `“${esc(w)}”`).join(", ")} Kur'an'da geçmez.</b> Bu konuda doğrudan bir hüküm yok; aşağıdakiler konuyla dolaylı olarak ilgili ayetlerdir.</div></div>`;
   if (soft.length) body += `<div class="note">${soft.map((w) => `“${esc(w)}”`).join(", ")} kelimesi meallerde bu biçimiyle geçmiyor; konu başka kelimelerle anlatılıyor olabilir.</div>`;
   if (r.concepts.length) body += `<div class="topic">İlgili konu ${r.concepts.map((c) => `<span class="pill">${esc(c.label)}</span>`).join("")}<span style="margin-left:auto;color:var(--muted)">${mealsOn().length} meal</span></div>`;
   if (!r.verses.length) body += `<div class="empty">Bu arama için ayet bulunamadı.<br>Farklı kelimelerle deneyin.</div>`;
@@ -216,13 +282,16 @@ function summaryView(q) {
     `Bu soru ${topic} konusuyla eşleşti. Konunun temel ayetleri aşağıda.`,
     r.verses.length ? "Sorudaki kelimelerin geçtiği ayetler bulundu; en üsttekiler en çok eşleşenlerdir." : "Bu soru için ayet bulunamadı.",
   ][state];
-  const ordered = [...r.verses.filter((v) => v.anchorOf.length), ...r.verses.filter((v) => !v.anchorOf.length)].slice(0, 6);
+  const anchors = r.verses.filter((v) => v.anchorOf.length);
+  const ordered = (anchors.length ? anchors : r.verses).slice(0, 6);
+  const card = answerCard(q, r, strong);
   const first = mealsOn()[0];
   const tv = ordered[0];
   const tafsirTid = E.tefsirs[0];
   let body = `<section class="panel"><div class="panel-h">Durum</div><div class="panel-b">
       <div class="status">${labels.map((l, i) => `<span class="${i === state ? "on" : ""}">${l}</span>`).join("")}</div>
-      <div style="font-size:15px;line-height:1.55;margin-top:10px">${lead}</div></div></section>`;
+      ${card ? "" : `<div style="font-size:15px;line-height:1.55;margin-top:10px">${lead}</div>`}</div></section>`;
+  body += card;
   if (ordered.length) {
     body += `<section class="panel"><div class="panel-h">${state === 2 ? "Bulunan ayetler" : "Temel ayetler"}</div><div class="rows">
       ${ordered.map((v) => `<a class="row" href="#/ayet/${v.surah}/${v.ayah}" style="align-items:flex-start">

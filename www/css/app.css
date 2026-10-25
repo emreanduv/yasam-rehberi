@@ -150,3 +150,15 @@ table.src tr:nth-child(even) td { background: var(--panel-alt); }
   color: #fff; padding: 9px 14px; border-radius: 18px; font-size: 13px; z-index: 9; pointer-events: none; }
 .sr { position: absolute; left: -9999px; }
 .loading { color: #c4cbd1; text-align: center; padding: 60px 20px; font-size: 14px; }
+
+/* Kısa cevap kartı */
+.answer { border-color: var(--gold); }
+.answer .panel-h { background: var(--band); }
+.answer p { margin: 0 0 10px; font-size: 15px; line-height: 1.55; }
+.answer p:last-child { margin-bottom: 0; }
+.answer a:not(.btn-go):not(.btn-light) { font-weight: 700; }
+.ans-k { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--band); margin-bottom: 2px; }
+.ans-m { font-size: 13px !important; color: var(--ink-2); }
+.ans-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.ans-btns .btn-go { text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; min-width: 0; }
+.ans-btns .btn-light { min-height: 46px; }
