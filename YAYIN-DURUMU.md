@@ -38,3 +38,8 @@
 - App Store: açıklama, anahtar kelimeler, destek URL'si, telif, sürüm 1.0.0, inceleme notu, alt başlık "Kur'an meallerini karşılaştır", kategori Referans/Kitaplar, yaş 4+, fiyat ücretsiz, gizlilik "Data Not Collected" → kaydedildi.
 - Görseller: store/gorseller/ (play: 1080x1920 ×6, simge 512, öne çıkan grafik 1024x500; appstore: 1284x2778 ×6)
 - Kullanıcıda bekleyen: Play iletişim e-postası, görsel yüklemeleri, IARC onay kutusu; Apple ekran görüntüleri, Content Rights, App Privacy "Publish", ülke uygunluğu (Diyanet kararına göre).
+
+## Güncelleme — 25 Ekim 2026 (gece) · Mağaza kurulumu tamam
+- Play: mağaza girişi (metin + simge + grafik + 6 ekran), iletişim bilgileri, tüm beyanlar, içerik derecelendirmesi (PEGI 3) → tamam. Üretim kilidi: kapalı test (12 testçi × 14 gün).
+- App Store: 1.0.0 sayfası (metinler, iPhone 6 + iPad 6 ekran, build 2 bağlı), Content Rights, yaş 4+, ücretsiz, App Privacy yayınlandı. "Add for Review" BASILMADI — ülke uygunluğu Diyanet kararına bağlı.
+- iOS hedefi 15.0'a çekildi (ITMS-90068); bir sonraki build'de gider.
