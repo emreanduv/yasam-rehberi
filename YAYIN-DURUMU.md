@@ -24,3 +24,10 @@
 ## Güncelleme çıkarma
 1. QuranEnc'te yeni sürüm varsa: kuran-terminal'de `python build_db.py --magaza`, burada `npm run veri`, `npm test`
 2. `www/` değişikliği → GitHub'a gönder → iOS ve Android iş akışlarını sürüm adını artırarak çalıştır
+
+## Güncelleme — 25 Ekim 2026
+- App Store Connect uygulama no: 6826874224 · TestFlight dahili + harici grup kuruldu, harici beta incelemesi gönderildi.
+- Google Play uygulama no: 4973166921024096394 · Dahili test YAYINDA: sürüm 2 (1.0.0), minSdk 24.
+- Dahili test bağlantısı: https://play.google.com/apps/internaltest/4700445078648883917
+- Yükleme anahtarı: imza-anahtari/yasam-rehberi-upload.jks (kullanıcının Mac'inde; Drive'a yedeklenmeli).
+- Sırada: gizlilik politikası sayfası, Play "Uygulama içeriği" formları, mağaza girişi, kapalı test için 12 testçi.
