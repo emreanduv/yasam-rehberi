@@ -43,3 +43,7 @@
 - Play: mağaza girişi (metin + simge + grafik + 6 ekran), iletişim bilgileri, tüm beyanlar, içerik derecelendirmesi (PEGI 3) → tamam. Üretim kilidi: kapalı test (12 testçi × 14 gün).
 - App Store: 1.0.0 sayfası (metinler, iPhone 6 + iPad 6 ekran, build 2 bağlı), Content Rights, yaş 4+, ücretsiz, App Privacy yayınlandı. "Add for Review" BASILMADI — ülke uygunluğu Diyanet kararına bağlı.
 - iOS hedefi 15.0'a çekildi (ITMS-90068); bir sonraki build'de gider.
+
+## Park edilenler
+- **Kıble bulma** (Kasım 2026): konum + pusula, cihaz içinde hesap, 2:144 kartı, pusulasız telefonda derece. Veri toplanmaz.
+- **Android**: her düzeltmede imzalanmayacak; "en iyi sürüm" kararıyla tek paket → kapalı test (12 kişi × 14 gün). Play'de 2. dahili sürüm taslağı açık bekliyor.
