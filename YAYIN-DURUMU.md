@@ -6,6 +6,10 @@
 - Kaynaklar: QuranEnc (Rowwad 1.0.4, Ali Özek 1.0.0, Şaban Britiş 1.1.0, el-Muhtasar) + Tanzil Arapça metin
   QuranEnc şartı: değiştirme yok, kaynak+sürüm göster, güncel tut, uygunsuz reklam yok.
 
+## Doğrulanan derlemeler (25 Ekim 2026)
+- Android: iş akışı başarılı → imzasız `yasam-rehberi-1.0.0-1-unsigned.aab` `builds` dalında
+- iOS: arşivleme başarılı; yükleme `ASC_KEY_P8` sırrı eklenmediği için durdu (beklenen)
+
 ## Yapılacaklar (sırayla)
 1. [x] GitHub deposu: `emreanduv/yasam-rehberi` (public — Actions dakikaları ücretsiz)
 2. [ ] App Store Connect'te uygulama kaydı, bundle ID `com.anduv.yasamrehberi` (son onay Emre)
