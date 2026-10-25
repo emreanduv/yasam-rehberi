@@ -1,0 +1,821 @@
+{
+"sakız orucu bozar mı": {
+"refs": [
+"2:185",
+"2:184",
+"2:187",
+"2:183",
+"2:196",
+"58:4",
+"5:89",
+"4:92"
+],
+"missing": [
+"sakız"
+],
+"concepts": [
+"Oruç"
+],
+"terms": [
+"sakiz",
+"oruc",
+"bozar"
+]
+},
+"miras": {
+"refs": [
+"4:12",
+"4:11",
+"4:176",
+"4:7",
+"2:180",
+"4:33",
+"2:240",
+"24:31"
+],
+"missing": [],
+"concepts": [
+"Miras"
+],
+"terms": [
+"miras"
+]
+},
+"kadınlara göre erkekler neden daha fazla miras alır": {
+"refs": [
+"4:12",
+"4:11",
+"4:176",
+"4:7",
+"2:180",
+"2:240",
+"4:33",
+"2:228"
+],
+"missing": [],
+"concepts": [
+"Miras"
+],
+"terms": [
+"kadin",
+"erkek",
+"fazl",
+"miras",
+"alir"
+]
+},
+"faiz haram mı": {
+"refs": [
+"2:275",
+"3:130",
+"30:39",
+"2:276",
+"2:278",
+"2:279",
+"2:280",
+"4:161"
+],
+"missing": [],
+"concepts": [
+"Faiz"
+],
+"terms": [
+"faiz",
+"haram"
+]
+},
+"domuz eti": {
+"refs": [
+"5:3",
+"6:145",
+"16:115",
+"2:173",
+"2:168",
+"5:4",
+"6:121",
+"6:118",
+"2:172",
+"5:5"
+],
+"missing": [],
+"concepts": [
+"Yenmesi yasak yiyecekler"
+],
+"terms": [
+"domuz",
+"eti"
+]
+},
+"içki": {
+"refs": [
+"5:90",
+"5:91",
+"2:219",
+"4:43",
+"16:67",
+"37:47",
+"83:25",
+"52:23"
+],
+"missing": [],
+"concepts": [
+"İçki ve kumar"
+],
+"terms": [
+"icki"
+]
+},
+"hırsızın cezası": {
+"refs": [
+"5:38",
+"12:73",
+"60:12",
+"5:39",
+"12:74",
+"12:81",
+"12:70",
+"12:75"
+],
+"missing": [],
+"concepts": [
+"Hırsızlık"
+],
+"terms": [
+"hirsiz",
+"ceza"
+]
+},
+"boşanan kadın ne kadar bekler": {
+"refs": [
+"2:228",
+"2:234",
+"65:6",
+"65:1",
+"2:232",
+"2:229",
+"65:4",
+"2:241",
+"2:231",
+"2:230",
+"2:226",
+"2:236"
+],
+"missing": [],
+"concepts": [
+"Boşanma ve iddet"
+],
+"terms": [
+"bosanan",
+"kadin",
+"bekler"
+]
+},
+"başörtüsü farz mı": {
+"refs": [
+"24:31",
+"33:59",
+"7:26",
+"24:60",
+"24:30",
+"33:53",
+"11:5",
+"3:154"
+],
+"missing": [],
+"concepts": [
+"Örtünme ve kıyafet"
+],
+"terms": [
+"basort",
+"farz"
+]
+},
+"abdest": {
+"refs": [
+"5:6",
+"4:43",
+"2:222",
+"33:27",
+"8:11",
+"18:18",
+"53:32",
+"4:135"
+],
+"missing": [],
+"concepts": [
+"Abdest, gusül, teyemmüm"
+],
+"terms": [
+"abdest"
+]
+},
+"Yusuf kardeşleri": {
+"refs": [
+"12:7",
+"12:8",
+"12:58",
+"12:69",
+"12:70",
+"12:76",
+"12:77",
+"12:87"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"yusuf",
+"kardes"
+]
+},
+"namaz vakitleri": {
+"refs": [
+"17:78",
+"4:103",
+"11:114",
+"4:101",
+"2:144",
+"2:238",
+"62:9",
+"20:130"
+],
+"missing": [],
+"concepts": [
+"Namaz (salat) ve vakitleri"
+],
+"terms": [
+"namaz",
+"vakit"
+]
+},
+"Musa ile Firavun": {
+"refs": [
+"7:103",
+"7:104",
+"7:127",
+"10:83",
+"10:88",
+"14:6",
+"17:101",
+"17:102"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"musa",
+"firav"
+]
+},
+"kredi kartı faizi": {
+"refs": [
+"2:280",
+"2:282",
+"2:283",
+"3:130",
+"2:275",
+"30:39",
+"2:276",
+"2:278",
+"2:279",
+"17:34",
+"5:1"
+],
+"missing": [
+"kredi"
+],
+"concepts": [
+"Faiz",
+"Borç ve sözleşme"
+],
+"terms": [
+"kred",
+"kart",
+"faiz"
+]
+},
+"sigara içmek caiz mi": {
+"refs": [
+"4:29",
+"2:195",
+"7:157",
+"5:90",
+"8:37",
+"33:53",
+"5:100",
+"53:32"
+],
+"missing": [
+"sigara"
+],
+"concepts": [
+"Kendine zarar verme"
+],
+"terms": [
+"sigar",
+"icmek",
+"caiz"
+]
+},
+"oruçluyken iğne olmak": {
+"refs": [
+"2:185",
+"2:184",
+"2:187",
+"2:183",
+"2:196",
+"7:40",
+"58:4",
+"5:89"
+],
+"missing": [],
+"concepts": [
+"Oruç"
+],
+"terms": [
+"oruc",
+"igne"
+]
+},
+"kurban kesmek": {
+"refs": [
+"2:196",
+"22:36",
+"108:2",
+"22:34",
+"22:37",
+"5:95",
+"5:2",
+"22:28"
+],
+"missing": [],
+"concepts": [
+"Kurban"
+],
+"terms": [
+"kurban",
+"kesmek"
+]
+},
+"yetim malı": {
+"refs": [
+"6:152",
+"17:34",
+"4:6",
+"2:177",
+"4:2",
+"2:215",
+"4:8",
+"2:83"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"yetim",
+"mali"
+]
+},
+"tesettür": {
+"refs": [
+"33:59",
+"7:26",
+"24:31",
+"24:60",
+"24:30",
+"33:53",
+"11:5",
+"3:154"
+],
+"missing": [
+"tesettür"
+],
+"concepts": [
+"Örtünme ve kıyafet"
+],
+"terms": [
+"teset"
+]
+},
+"Nisa 176": {
+"refs": [
+"4:176"
+],
+"missing": [],
+"concepts": [],
+"terms": []
+},
+"4:176": {
+"refs": [
+"4:176"
+],
+"missing": [],
+"concepts": [],
+"terms": []
+},
+"bakara:255": {
+"refs": [
+"2:255"
+],
+"missing": [],
+"concepts": [],
+"terms": []
+},
+"Allah'ın rahmeti": {
+"refs": [
+"2:218",
+"6:157",
+"7:56",
+"9:61",
+"10:58",
+"11:73",
+"30:50",
+"39:53"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"in",
+"rahmet"
+]
+},
+"cennet ve cehennem": {
+"refs": [
+"7:44",
+"7:50",
+"59:20",
+"13:18",
+"5:72",
+"42:7",
+"2:221",
+"3:185"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"cennet",
+"cehennem"
+]
+},
+"sabır": {
+"refs": [
+"2:45",
+"2:250",
+"7:126",
+"8:65",
+"8:66",
+"12:83",
+"3:200",
+"11:115"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"sabir"
+]
+},
+"anne babaya iyilik": {
+"refs": [
+"46:15",
+"6:151",
+"2:233",
+"12:100",
+"31:14",
+"19:28",
+"24:61",
+"29:8"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"anne",
+"baba",
+"iyilik"
+]
+},
+"zekât kimlere verilir": {
+"refs": [
+"9:60",
+"2:177",
+"2:271",
+"2:215",
+"2:219",
+"17:71",
+"2:267",
+"2:261"
+],
+"missing": [],
+"concepts": [
+"Zekât ve sadaka"
+],
+"terms": [
+"zekat",
+"kimler",
+"verilir"
+]
+},
+"şarap": {
+"refs": [
+"5:90",
+"5:91",
+"2:219",
+"4:43",
+"12:36",
+"12:41",
+"47:15",
+"37:47"
+],
+"missing": [],
+"concepts": [
+"İçki ve kumar"
+],
+"terms": [
+"sarap"
+]
+},
+"kumar oynamak günah mı": {
+"refs": [
+"5:90",
+"2:219",
+"5:91",
+"4:43",
+"12:12",
+"43:83",
+"70:42",
+"14:46"
+],
+"missing": [],
+"concepts": [
+"İçki ve kumar"
+],
+"terms": [
+"kumar",
+"oyna",
+"gunah"
+]
+},
+"İsa Mesih": {
+"refs": [
+"4:157",
+"4:171",
+"9:30",
+"3:45",
+"5:17",
+"5:75",
+"9:31",
+"5:72"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"isa",
+"mesih"
+]
+},
+"Meryem": {
+"refs": [
+"2:87",
+"3:36",
+"3:37",
+"3:42",
+"3:43",
+"3:44",
+"3:45",
+"3:47"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"meryem"
+]
+},
+"diş fırçalamak orucu bozar mı": {
+"refs": [
+"2:185",
+"2:184",
+"2:187",
+"2:183",
+"2:196",
+"58:4",
+"5:89",
+"4:92"
+],
+"missing": [
+"fırçalamak"
+],
+"concepts": [
+"Oruç"
+],
+"terms": [
+"dis",
+"firc",
+"oruc",
+"bozar"
+]
+},
+"evlilik": {
+"refs": [
+"4:24",
+"2:229",
+"17:33",
+"25:54",
+"8:34",
+"45:10",
+"4:6",
+"15:71"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"evli"
+]
+},
+"adalet": {
+"refs": [
+"2:282",
+"5:8",
+"4:135",
+"65:2",
+"4:58",
+"16:90",
+"5:42",
+"49:9"
+],
+"missing": [],
+"concepts": [
+"Adalet ve şahitlik"
+],
+"terms": [
+"adalet"
+]
+},
+"yalan söylemek": {
+"refs": [
+"2:10",
+"3:75",
+"6:93",
+"9:43",
+"10:66",
+"11:18",
+"12:26",
+"12:27"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"yalan",
+"soyl"
+]
+},
+"komşu hakkı": {
+"refs": [
+"2:282",
+"5:8",
+"4:135",
+"4:58",
+"65:2",
+"16:90",
+"4:36",
+"13:4"
+],
+"missing": [],
+"concepts": [
+"Adalet ve şahitlik"
+],
+"terms": [
+"koms",
+"hakk"
+]
+},
+"hac ne zaman": {
+"refs": [
+"5:95",
+"2:196",
+"2:198",
+"2:197",
+"22:28",
+"3:97",
+"22:27",
+"5:97"
+],
+"missing": [],
+"concepts": [
+"Hac ve umre"
+],
+"terms": [
+"hac"
+]
+},
+"rüya": {
+"refs": [
+"12:4",
+"12:5",
+"12:6",
+"12:21",
+"12:36",
+"12:41",
+"12:43",
+"12:100"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"ruya"
+]
+},
+"cin": {
+"refs": [
+"6:112",
+"55:33",
+"55:74",
+"7:38",
+"55:56",
+"6:130",
+"41:25",
+"6:128"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"cin"
+]
+},
+"melekler": {
+"refs": [
+"2:30",
+"2:31",
+"2:33",
+"2:34",
+"2:98",
+"2:102",
+"2:161",
+"2:177"
+],
+"missing": [],
+"concepts": [],
+"terms": [
+"melek"
+]
+},
+"__keys__": {
+"hırsızın": [
+"hirsiz"
+],
+"cezası": [
+"ceza"
+],
+"kadınlara": [
+"kadin"
+],
+"fırçalamak": [
+"firc"
+],
+"firavun": [
+"firav"
+],
+"başörtüsü": [
+"basort"
+],
+"mirası": [
+"mira"
+],
+"orucu": [
+"oruc"
+],
+"içki": [
+"icki"
+],
+"kitabı": [
+"kitab"
+],
+"erkeklere": [
+"erkek"
+],
+"namazlarınızı": [
+"namaz"
+],
+"İsa": [
+"isa"
+],
+"IŞIK": [
+"isik"
+],
+"Allah'ın": [
+"allah",
+"in"
+],
+"âyetlerini": [
+"ayet"
+],
+"Kur'ân": [
+"kur",
+"an"
+],
+"oruçluyken": [
+"oruc"
+],
+"şükredersiniz": [
+"sukreders"
+],
+"yaklaşmayın": [
+"yaklasmay"
+]
+}
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" fill="#1d4d36"/>
+  <rect y="860" width="1024" height="44" fill="#c9a227"/>
+  <!-- açık kitap -->
+  <path d="M512 330 C 430 280, 320 270, 220 290 L 220 690 C 320 670, 430 680, 512 730 Z" fill="#efe8d4"/>
+  <path d="M512 330 C 594 280, 704 270, 804 290 L 804 690 C 704 670, 594 680, 512 730 Z" fill="#e2d9c0"/>
+  <path d="M512 330 L 512 730" stroke="#1d4d36" stroke-width="10"/>
+  <g fill="none" stroke="#9c9077" stroke-width="12" stroke-linecap="round">
+    <path d="M280 380 C 350 368, 410 372, 462 392"/><path d="M280 450 C 350 438, 410 442, 462 462"/>
+    <path d="M280 520 C 350 508, 410 512, 462 532"/>
+    <path d="M562 392 C 614 372, 674 368, 744 380"/><path d="M562 462 C 614 442, 674 438, 744 450"/>
+  </g>
+  <!-- büyüteç -->
+  <circle cx="676" cy="590" r="92" fill="none" stroke="#d4a017" stroke-width="34"/>
+  <path d="M744 658 L 830 744" stroke="#d4a017" stroke-width="44" stroke-linecap="round"/>
+</svg>

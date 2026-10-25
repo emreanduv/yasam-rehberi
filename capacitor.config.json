@@ -1,0 +1,8 @@
+{
+  "appId": "com.anduv.yasamrehberi",
+  "appName": "Yaşam Rehberi",
+  "webDir": "www",
+  "backgroundColor": "#1e2226",
+  "android": { "backgroundColor": "#1e2226" },
+  "ios": { "backgroundColor": "#1e2226", "contentInset": "never" }
+}
