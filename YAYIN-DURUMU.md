@@ -7,7 +7,7 @@
   QuranEnc şartı: değiştirme yok, kaynak+sürüm göster, güncel tut, uygunsuz reklam yok.
 
 ## Yapılacaklar (sırayla)
-1. [ ] GitHub'da boş özel depo: `emreanduv/yasam-rehberi` (Emre) → kod gönderilir (Claude)
+1. [x] GitHub deposu: `emreanduv/yasam-rehberi` (public — Actions dakikaları ücretsiz)
 2. [ ] App Store Connect'te uygulama kaydı, bundle ID `com.anduv.yasamrehberi` (son onay Emre)
 3. [ ] Actions → "iOS (App Store Connect / TestFlight)" → TestFlight; ASC_KEY_P8 sırrı depoya eklenmeli
 4. [ ] Play Console'da uygulama + kapalı test; Actions → "Android (Google Play paketi)" → `builds` dalındaki .aab imzalanır
