@@ -10,7 +10,24 @@ KS="imza-anahtari/yasam-rehberi-upload.jks"
 ALIAS="yasamrehberi"
 mkdir -p imza-anahtari
 
-command -v keytool >/dev/null || { echo "keytool yok: Java (JDK) kurulu olmalı (Malazgirt'i imzaladığın bilgisayarda vardır)."; exit 1; }
+# Java: sistemde varsa onu, yoksa ücretsiz Temurin JDK'yi (Eclipse Adoptium) kullanıcı klasörüne indir.
+# Yönetici şifresi gerekmez, sisteme kurulum yapılmaz.
+if ! /usr/libexec/java_home >/dev/null 2>&1 && ! java -version >/dev/null 2>&1; then
+  JDK_DIR="$HOME/.yasam-rehberi-jdk"
+  if [ ! -x "$JDK_DIR/bin/keytool" ]; then
+    case "$(uname -m)" in arm64|aarch64) ARCH=aarch64;; *) ARCH=x64;; esac
+    echo "▸ Java bulunamadı; Temurin JDK 21 indiriliyor (~200 MB, bir kez)…"
+    TMP="$(mktemp -d)"
+    curl -fL --progress-bar -o "$TMP/jdk.tar.gz" \
+      "https://api.adoptium.net/v3/binary/latest/21/ga/mac/$ARCH/jdk/hotspot/normal/eclipse"
+    tar -xzf "$TMP/jdk.tar.gz" -C "$TMP"
+    HOME_DIR="$(dirname "$(dirname "$(find "$TMP" -type f -path '*/bin/keytool' | head -1)")")"
+    rm -rf "$JDK_DIR" && mv "$HOME_DIR" "$JDK_DIR" && rm -rf "$TMP"
+  fi
+  export JAVA_HOME="$JDK_DIR"
+  export PATH="$JDK_DIR/bin:$PATH"
+fi
+keytool -help >/dev/null 2>&1 || { echo "Java hazırlanamadı."; exit 1; }
 
 if [ ! -f "$KS" ]; then
   echo "▸ Yeni yükleme anahtarı oluşturuluyor. Şifreyi kendin belirle ve bir yere not et."
@@ -21,7 +38,8 @@ fi
 
 echo "▸ GitHub'daki son imzasız paket bulunuyor…"
 NAME=$(curl -fsSL "https://api.github.com/repos/$REPO/contents/android?ref=builds" \
-  | python3 -c "import json,sys; print(sorted(x['name'] for x in json.load(sys.stdin) if x['name'].endswith('.aab'))[-1])")
+  | grep -o '"name": *"[^"]*\.aab"' | sed 's/.*"\([^"]*\.aab\)"/\1/' | sort -V | tail -1)
+[ -n "$NAME" ] || { echo "GitHub'da paket bulunamadı."; exit 1; }
 curl -fsSL -o "imza-anahtari/$NAME" "https://raw.githubusercontent.com/$REPO/builds/android/$NAME"
 
 OUT="imza-anahtari/${NAME%-unsigned.aab}-imzali.aab"
