@@ -4,6 +4,8 @@
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Kıble yönünü hesaplamak için konumunuz yalnızca bu telefonda kullanılır; hiçbir yere gönderilmez.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Kıble yönünü hesaplamak için konumunuz yalnızca bu telefonda kullanılır; hiçbir yere gönderilmez. Uygulama konumu yalnızca açıkken kullanır.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Kıble pusulası için telefonun yön sensörü kullanılır.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

@@ -44,6 +44,9 @@
 - App Store: 1.0.0 sayfası (metinler, iPhone 6 + iPad 6 ekran, build 2 bağlı), Content Rights, yaş 4+, ücretsiz, App Privacy yayınlandı. "Add for Review" BASILMADI — ülke uygunluğu Diyanet kararına bağlı.
 - iOS hedefi 15.0'a çekildi (ITMS-90068); bir sonraki build'de gider.
 
+## Güncelleme — 30 Ekim 2026 · ITMS-90683
+- Build 4 uyarısı: `NSLocationAlwaysAndWhenInUseUsageDescription` eksikti (geolocation eklentisi bu API'ye dokunuyor). Info.plist'e eklendi; uygulama yine yalnızca "kullanırken" izni ister. Yeni build iOS iş akışından yüklendi.
+
 ## Park edilenler
 - **Kıble bulma** (Kasım 2026): konum + pusula, cihaz içinde hesap, 2:144 kartı, pusulasız telefonda derece. Veri toplanmaz.
 - **Android**: her düzeltmede imzalanmayacak; "en iyi sürüm" kararıyla tek paket → kapalı test (12 kişi × 14 gün). Play'de 2. dahili sürüm taslağı açık bekliyor.
