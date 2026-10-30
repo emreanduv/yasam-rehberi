@@ -30,3 +30,7 @@ SOFTWARE.
   Birebir kopyalanabilir, değiştirilemez; kaynak ve http://tanzil.net bağlantısı
   belirtilmelidir.
 - Yazı tipleri (www/fonts/): PT Sans, PT Sans Narrow, Amiri — SIL Open Font License 1.1.
+- Namaz vakti hesabı (www/js/vendor/adhan.js): adhan-js — MIT Lisansı (www/js/vendor/adhan-LICENSE.txt).
+- Manyetik sapma (www/js/vendor/wmm.js): geomagnetism — Apache 2.0 (www/js/vendor/geomagnetism-LICENSE.txt);
+  World Magnetic Model 2025 katsayıları NOAA/NCEI — ABD kamu malı.
+- Bildirim sesi (dit.wav): bu proje için sentezlendi, kod lisansı (MIT) kapsamında.

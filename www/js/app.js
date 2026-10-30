@@ -2,6 +2,8 @@
 import { Engine, highlightSpans } from "./engine.js";
 import { queryTerms } from "./text.js";
 import * as K from "./kible.js";
+import * as V from "./vakit.js";
+import * as B from "./bildirim.js";
 
 // ---------------------------------------------------------------------------
 // Ayarlanabilir sabitler (isim değişirse sadece burası ve capacitor.config.json)
@@ -62,6 +64,7 @@ const ICON = {
   mark: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"/></svg>',
   markOn: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"/></svg>',
   compass: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>',
+  mosque: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c-3 2.5-5 4.5-5 7h10c0-2.5-2-4.5-5-7z"/><path d="M5 21V12h14v9M3 21h18M10 21v-4a2 2 0 0 1 4 0v4"/></svg>',
   gear: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>',
   share: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/></svg>',
   note: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/></svg>',
@@ -123,7 +126,7 @@ function verseCard(v, terms) {
 function renderNav(active) {
   const item = (id, href, icon, label) => `<a href="${href}" class="${active === id ? "on" : ""}"${active === id ? ' aria-current="page"' : ""}>${icon}${label}</a>`;
   $nav.innerHTML = item("ara", "#/", ICON.search, "Ara") + item("sure", "#/sureler", ICON.book, "Sureler")
-    + item("kible", "#/kible", ICON.compass, "Kıble")
+    + item("namaz", "#/namaz", ICON.mosque, "Namaz")
     + item("kayit", "#/kaydedilenler", ICON.mark, "Kayıtlı") + item("ayar", "#/ayarlar", ICON.gear, "Ayarlar");
 }
 
@@ -415,9 +418,11 @@ function settingsView() {
 }
 
 // ---------------------------------------------------------------------------
-// Kıble
+// Namaz: vakitler, bildirimler, kıble
 // ---------------------------------------------------------------------------
-const kible = { stop: null, pos: null, heading: null, gotEvent: false, timer: null };
+const VAKIT_VARSAYILAN = { on: false, keys: { imsak: true, gunes: false, ogle: true, ikindi: true, aksam: true, yatsi: true }, once: 0, sahur: true };
+const kible = { stop: null, heading: null, gotEvent: false, timer: null, tick: null, decl: 0 };
+const ayarVakit = () => ({ ...VAKIT_VARSAYILAN, ...(S.vakit || {}), keys: { ...VAKIT_VARSAYILAN.keys, ...((S.vakit || {}).keys || {}) } });
 
 function compassSvg() {
   const ticks = Array.from({ length: 72 }, (_, i) => {
@@ -440,31 +445,96 @@ function compassSvg() {
   </svg>`;
 }
 
-function kibleView() {
-  const i = E.indexOf(2, 144);
-  const v = E.verse(i, mealsOn());
+function vakitPanel(pos) {
+  if (!pos) {
+    return `<section class="panel"><div class="panel-h">Bugünün vakitleri</div><div class="panel-b nz-empty">
+      <div>Vakitleri hesaplamak için bulunduğun yeri bilmemiz gerekiyor. Konum yalnızca bu telefonda kullanılır.</div>
+      <button class="btn-go" data-act="konum">${ICON.compass}Konumumu kullan</button>
+      <div class="kb-msg" id="nz-msg"></div></div></section>`;
+  }
+  const now = new Date();
+  const t = V.times(pos.lat, pos.lon, now);
+  const nx = V.nextVakit(pos.lat, pos.lon, now);
+  const h = V.hicri(now);
+  const rows = V.VAKITLER.map((v) => {
+    const on = nx.key === v.key && nx.at.toDateString() === now.toDateString();
+    const past = t[v.key] <= now;
+    return `<div class="row nz-row${on ? " on" : ""}${past ? " past" : ""}"><span>${esc(v.ad)}</span><b>${V.hhmm(t[v.key])}</b></div>`;
+  }).join("");
+  const dateStr = now.toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "long" });
+  return `<section class="panel"><div class="panel-h">Bugünün vakitleri<span class="nz-date">${esc(dateStr)}${h ? ` · ${h.gun} ${h.ayAdi} ${h.yil}` : ""}</span></div>
+    <div class="nz-next"><div class="eyebrow-d">Sıradaki · ${esc(nx.ad)} ${V.hhmm(nx.at)}</div><div class="nz-count" id="nz-count">${V.kalan(nx.at - now)}</div></div>
+    <div class="rows">${rows}</div>
+    <div class="panel-b nz-foot">Konum: ${pos.lat.toFixed(2)}, ${pos.lon.toFixed(2)} · <a href="#" data-act="konum">Konumu güncelle</a><br>
+    Vakitler telefonda Diyanet yöntemiyle hesaplanır; resmî takvimle 1–2 dakikalık fark olabilir.</div></section>`;
+}
+
+function ramazanPanel(pos) {
+  if (!pos) return "";
+  const now = new Date();
+  const h = V.hicri(now);
+  if (!h?.ramazan) return "";
+  const t = V.times(pos.lat, pos.lon, now);
+  let label, at;
+  if (now < t.imsak) { label = "Sahura (imsak)"; at = t.imsak; }
+  else if (now < t.aksam) { label = "İftara"; at = t.aksam; }
+  else { const tom = new Date(now); tom.setDate(tom.getDate() + 1); label = "Yarın imsak"; at = V.times(pos.lat, pos.lon, tom).imsak; }
+  return `<section class="panel nz-ram"><div class="panel-h">Ramazan · ${h.gun}. gün</div>
+    <div class="nz-next"><div class="eyebrow-d">${label} · ${V.hhmm(at)}</div><div class="nz-count" id="nz-ram">${V.kalan(at - now)}</div></div>
+    <div class="rows"><div class="row nz-row"><span>İmsak (sahur sonu)</span><b>${V.hhmm(t.imsak)}</b></div>
+    <div class="row nz-row"><span>İftar (akşam)</span><b>${V.hhmm(t.aksam)}</b></div></div></section>`;
+}
+
+function bildirimPanel(pos) {
+  const a = ayarVakit();
+  if (!B.destekli()) {
+    return `<section class="panel"><div class="panel-h">Vakit bildirimleri</div><div class="panel-b" style="font-size:14px">Bildirimler telefondaki uygulamada çalışır.</div></section>`;
+  }
+  const row = (label, key, checked, dis) => `<label class="opt"><span>${label}</span><input type="checkbox" data-act="vopt" data-key="${key}" ${checked ? "checked" : ""} ${dis ? "disabled" : ""}></label>`;
+  const onceSel = `<label class="opt"><span>Ne zaman haber verilsin?</span>
+    <select data-act="vonce" class="nz-sel" ${a.on ? "" : "disabled"}>${[[0, "Vakit girince"], [5, "5 dk önce"], [10, "10 dk önce"], [15, "15 dk önce"], [30, "30 dk önce"]]
+      .map(([m, l]) => `<option value="${m}" ${a.once === m ? "selected" : ""}>${l}</option>`).join("")}</select></label>`;
+  return `<section class="panel"><div class="panel-h">Vakit bildirimleri</div><div>
+    ${row("<b>Bildirimleri aç</b>", "on", a.on, !pos)}
+    ${V.VAKITLER.map((v) => row(`${v.ad}${v.key === "aksam" ? " <small>(Ramazan'da iftar)</small>" : v.key === "gunes" ? " <small>(doğuş)</small>" : ""}`, "k:" + v.key, a.keys[v.key], !a.on)).join("")}
+    ${row("Ramazan'da sahur hatırlatması <small>(imsaktan 45 dk önce)</small>", "sahur", a.sahur, !a.on)}
+    ${onceSel}
+    </div>
+    <div class="panel-b nz-foot" id="nz-bstat">${!pos ? "Bildirimler için önce konumu kullan." : a.on ? "Kuruluyor…" : "Kapalı."}</div>
+    <div class="panel-b" style="padding-top:0"><button class="btn-light" data-act="vdeneme">Deneme bildirimi gönder</button></div>
+  </section>`;
+}
+
+// Gerçek kuzeye göre açı + pusulada (manyetik) okunacak açı; Diyanet'in "kıble açısı" ikincisidir
+function kibleMetin(pos) {
+  const q = K.qiblaBearing(pos.lat, pos.lon);
+  const m = (q - K.trueNorthOffset(pos.lat, pos.lon) + 360) % 360;
+  return `Kıble, gerçek kuzeyden ${Math.round(q)}° (${K.yonAdi(q)}); pusulada ${Math.round(m)}° · Kâbe'ye ${Math.round(K.distanceKm(pos.lat, pos.lon)).toLocaleString("tr-TR")} km`;
+}
+
+function namazView() {
+  const pos = S.konum || null;
+  const v = E.verse(E.indexOf(2, 144), mealsOn());
   const t = Object.keys(v.texts)[0];
   return `${topbar()}
   <section class="band">
-    <div class="eyebrow">Yön</div>
-    <h1>Kıble</h1>
-    <div class="sub">Bulunduğun yere göre Kâbe'nin yönü · internetsiz</div>
+    <div class="eyebrow">Namaz</div>
+    <h1>Vakitler ve kıble</h1>
+    <div class="sub">Bulunduğun yere göre · internetsiz</div>
   </section>
   <main class="content">
+    ${ramazanPanel(pos)}
+    ${vakitPanel(pos)}
     <section class="panel kb">
-      <div class="panel-h" id="kb-h">Pusula</div>
+      <div class="panel-h" id="kb-h">Kıble pusulası</div>
       <div class="panel-b kb-b">
         <div class="kb-wrap">${compassSvg()}</div>
-        <div class="kb-big" id="kb-big">—</div>
-        <div class="kb-msg" id="kb-msg">Kıble yönünü bulmak için konumuna ve telefonun pusulasına ihtiyaç var.</div>
-        <button class="btn-go" id="kb-start" data-act="kible">${ICON.compass}Kıbleyi bul</button>
+        <div class="kb-big" id="kb-big">${pos ? `${Math.round(K.qiblaBearing(pos.lat, pos.lon))}°` : "—"}</div>
+        <div class="kb-msg" id="kb-msg">${pos ? kibleMetin(pos) : "Kıble yönü için konum ve pusula gerekir."}</div>
+        <button class="btn-go" id="kb-start" data-act="kible">${ICON.compass}Pusulayı aç</button>
       </div>
     </section>
-    <section class="panel"><div class="panel-h">Bilgi</div><div class="rows" id="kb-info">
-      <div class="row"><span>Kıble açısı</span><b id="kb-ang" style="margin-left:auto">—</b></div>
-      <div class="row"><span>Kâbe'ye uzaklık</span><b id="kb-km" style="margin-left:auto">—</b></div>
-      <div class="row"><span>Konum</span><b id="kb-pos" style="margin-left:auto">—</b></div>
-    </div></section>
+    ${bildirimPanel(pos)}
     <section class="panel"><div class="panel-h">Doğru ölçmek için</div><div class="panel-b" style="font-size:14px;line-height:1.55">
       • Telefonu yere paralel, düz tut.<br>
       • Metal eşya, mıknatıslı kılıf ve hoparlörden uzak dur.<br>
@@ -474,77 +544,125 @@ function kibleView() {
       <div style="font-size:15px;line-height:1.55">${esc(v.texts[t])}</div>
       <div class="credits" style="color:var(--ink-2);margin-top:6px">${esc(E.source(t).credit)} · <a href="#/ayet/2/144">Ayeti aç ›</a></div>
     </div></section>
-    <div class="note">Konumun yalnızca bu telefonda, kıble açısını hesaplamak için kullanılır; hiçbir yere gönderilmez ve kaydedilmez.</div>
+    <div class="note">Konumun yalnızca bu telefonda saklanır ve vakit ile kıble hesabı için kullanılır; hiçbir yere gönderilmez. Bildirimler telefonun kendisine kurulur.</div>
   </main>`;
+}
+
+function namazMount() {
+  const pos = S.konum;
+  if (pos) kibleRender(true);
+  bildirimDurum();
+  // geri sayım
+  kible.tick = setInterval(() => {
+    const el = document.getElementById("nz-count");
+    if (!el || !S.konum) return;
+    const now = new Date();
+    const nx = V.nextVakit(S.konum.lat, S.konum.lon, now);
+    if (nx.at - now < 1000) { route(); return; }  // vakit girdi: tabloyu yenile
+    el.textContent = V.kalan(nx.at - now);
+    const r = document.getElementById("nz-ram");
+    if (r) { const m = r.closest(".nz-ram").querySelector(".eyebrow-d").textContent.match(/(\d\d:\d\d)/); if (m) { const [hh, mm] = m[1].split(":").map(Number); const at = new Date(now); at.setHours(hh, mm, 0, 0); if (at < now) at.setDate(at.getDate() + 1); r.textContent = V.kalan(at - now); } }
+  }, 20000);
 }
 
 function kibleStop() {
   if (kible.stop) { kible.stop(); kible.stop = null; }
   clearTimeout(kible.timer);
+  clearInterval(kible.tick);
 }
 
-function kibleRender() {
+function kibleRender(statik = false) {
   const $ = (id) => document.getElementById(id);
-  if (!$("kb-big") || !kible.pos) return;
-  const q = kible.pos.qibla;
+  if (!$("kb-big") || !S.konum) return;
+  const q = K.qiblaBearing(S.konum.lat, S.konum.lon);
   const arrow = $("kb-arrow"), rose = $("kb-rose");
-  if (kible.heading == null) {
-    // pusula yok ya da henüz veri gelmedi: kuzeye göre sabit gösterim
+  if (statik || kible.heading == null) {
     rose.setAttribute("transform", "rotate(0 130 130)");
     arrow.setAttribute("transform", `rotate(${q.toFixed(1)} 130 130)`);
-    arrow.style.opacity = kible.gotEvent ? "1" : ".55";
-    $("kb-big").textContent = `${Math.round(q)}°`;
+    arrow.style.opacity = statik ? ".55" : "1";
     return;
   }
-  const diff = ((q - kible.heading + 540) % 360) - 180;   // -180..180
+  const diff = ((q - kible.heading + 540) % 360) - 180;
   rose.setAttribute("transform", `rotate(${(-kible.heading).toFixed(1)} 130 130)`);
   arrow.setAttribute("transform", `rotate(${diff.toFixed(1)} 130 130)`);
   arrow.style.opacity = "1";
   const ok = Math.abs(diff) <= 5;
-  $("kb-h").textContent = ok ? "Kıble yönündesin" : "Pusula";
+  $("kb-h").textContent = ok ? "Kıble yönündesin" : "Kıble pusulası";
   $("kb-h").classList.toggle("ok", ok);
   $("kb-big").textContent = ok ? "Kıble ✓" : `${Math.abs(Math.round(diff))}° ${diff > 0 ? "sağa" : "sola"} dön`;
   $("kb-msg").textContent = "Yeşil ok yukarıyı gösterdiğinde Kâbe yönündesin.";
+}
+
+async function konumAl(msgId) {
+  const msg = (t) => { const el = document.getElementById(msgId); if (el) el.textContent = t; };
+  msg("Konum alınıyor…");
+  try {
+    const p = await K.getPosition();
+    S.konum = { lat: p.lat, lon: p.lon, t: Date.now() };
+    await store.set("settings", S);
+    return true;
+  } catch (e) {
+    msg(String(e.message).includes("izin")
+      ? "Konum izni verilmedi. Telefonun Ayarlar → Yaşam Rehberi → Konum bölümünden “Uygulamayı kullanırken” seçip tekrar dene."
+      : "Konum alınamadı. Konum servisleri açıkken tekrar dene.");
+    return false;
+  }
 }
 
 async function kibleStart() {
   const $ = (id) => document.getElementById(id);
   const btn = $("kb-start");
   btn.disabled = true;
-  $("kb-msg").textContent = "Konum alınıyor…";
-  // iOS: pusula izni dokunma anında istenmeli
-  const compassOk = await K.requestCompassPermission();
-  let p;
-  try { p = await K.getPosition(); }
-  catch (e) {
-    btn.disabled = false;
-    $("kb-msg").textContent = String(e.message).includes("izin")
-      ? "Konum izni verilmedi. Telefonun Ayarlar → Yaşam Rehberi → Konum bölümünden “Uygulamayı kullanırken” seçip tekrar dene."
-      : "Konum alınamadı. Açık havada ya da konum servisleri açıkken tekrar dene.";
-    return;
+  const compassOk = await K.requestCompassPermission();   // iOS: dokunma anında istenmeli
+  if (!S.konum) {
+    if (!(await konumAl("kb-msg"))) { btn.disabled = false; return; }
+    route(); setTimeout(() => document.getElementById("kb-start")?.click(), 50); return;
   }
-  const qibla = K.qiblaBearing(p.lat, p.lon);
-  const decl = K.trueNorthOffset(p.lat, p.lon);
-  kible.pos = { ...p, qibla, decl };
-  $("kb-ang").textContent = `${Math.round(qibla)}° · ${K.yonAdi(qibla)}`;
-  $("kb-km").textContent = `${Math.round(K.distanceKm(p.lat, p.lon)).toLocaleString("tr-TR")} km`;
-  $("kb-pos").textContent = `${p.lat.toFixed(2)}, ${p.lon.toFixed(2)}`;
+  kible.decl = K.trueNorthOffset(S.konum.lat, S.konum.lon);
   btn.style.display = "none";
   kible.heading = null; kible.gotEvent = false;
-  kibleRender();
   $("kb-msg").textContent = "Pusula bekleniyor… telefonu düz tut.";
-  kibleStop();
+  if (kible.stop) kible.stop();
   // İzin sonucuna bakmadan dinle: izin yoksa zaten veri gelmez, 3 sn sonra yazılı yöne düşeriz
   kible.compassDenied = !compassOk;
   kible.stop = K.startCompass((magnetic) => {
     kible.gotEvent = true;
-    kible.heading = (magnetic + decl + 360) % 360;   // manyetik → gerçek kuzey
+    kible.heading = (magnetic + kible.decl + 360) % 360;   // manyetik → gerçek kuzey
     kibleRender();
   });
+  clearTimeout(kible.timer);
   kible.timer = setTimeout(() => {
     if (kible.gotEvent || !$("kb-msg")) return;
-    $("kb-msg").textContent = `${kible.compassDenied ? "Hareket/pusula izni verilmedi." : "Bu telefonda pusula verisi alınamadı."} Kıble, kuzeyden saat yönünde ${Math.round(qibla)}° (${K.yonAdi(qibla)}). Ok, kuzey yukarıdayken kıbleyi gösteriyor.`;
+    const q = K.qiblaBearing(S.konum.lat, S.konum.lon);
+    kibleRender(true);
+    $("kb-msg").textContent = `${kible.compassDenied ? "Hareket/pusula izni verilmedi." : "Bu telefonda pusula verisi alınamadı."} ${kibleMetin(S.konum)}. Ok, kuzey yukarıdayken kıbleyi gösteriyor.`;
   }, 3000);
+}
+
+// Bildirimleri ayara ve konuma göre yeniden kur (açılışta, ayar ya da konum değişince)
+async function bildirimKur() {
+  const a = ayarVakit();
+  if (!B.destekli()) return null;
+  if (!a.on || !S.konum) { await B.iptal(); return 0; }
+  const list = V.plan(S.konum.lat, S.konum.lon, a);
+  await B.kur(list);
+  return list;
+}
+
+async function bildirimDurum() {
+  const el = document.getElementById("nz-bstat");
+  if (!el) return;
+  const a = ayarVakit();
+  if (!B.destekli() || !S.konum || !a.on) return;
+  try {
+    const list = await bildirimKur();
+    const son = V.sonGun(list);
+    const exact = await B.tamZamanli();
+    el.innerHTML = list.length
+      ? `✓ ${list.length} bildirim kurulu · ${son.toLocaleDateString("tr-TR", { day: "numeric", month: "long" })} tarihine kadar. Uygulamayı açtıkça ileriye doğru yenilenir.`
+        + (exact ? "" : `<br><b>Dakikası dakikasına bildirim için</b> <a href="#" data-act="vexact">alarm iznini aç ›</a>`)
+      : "Seçili vakit yok.";
+  } catch (e) { el.textContent = "Bildirimler kurulamadı: " + (e.message || e); }
 }
 
 // ---------------------------------------------------------------------------
@@ -565,14 +683,22 @@ function route() {
   else if (parts[0] === "sure") { html = surahView(Number(parts[1])); nav = "sure"; }
   else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "kayit"; }
   else if (parts[0] === "ayarlar") { html = settingsView(); nav = "ayar"; }
-  else if (parts[0] === "kible") { html = kibleView(); nav = "kible"; }
+  else if (parts[0] === "namaz" || parts[0] === "kible") { html = namazView(); nav = "namaz"; }
   else { html = homeView(); }
   if (!html) return;
   kibleStop();
   $app.innerHTML = html;
+  if (nav === "namaz") namazMount();
   renderNav(nav);
   window.scrollTo(0, 0);
 }
+
+// Uygulama arka plandan dönünce: bildirimleri ileriye yenile, Namaz ekranındaysa vakitleri tazele
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState !== "visible" || !E) return;
+  bildirimKur().catch(() => {});
+  if (/^#\/(namaz|kible)/.test(location.hash) && !kible.stop) route();
+});
 
 let lastHash = "";
 window.addEventListener("hashchange", () => {
@@ -602,6 +728,12 @@ document.addEventListener("click", async (e) => {
   const act = el.dataset.act;
   if (act === "back") { if (history.length > 1) history.back(); else location.hash = "#/"; }
   else if (act === "kible") { kibleStart(); }
+  else if (act === "konum") { e.preventDefault(); if (await konumAl("nz-msg")) { await bildirimKur(); route(); } }
+  else if (act === "vdeneme") {
+    if (await B.izinIste()) { await B.deneme(); toast("5 saniye içinde deneme bildirimi gelecek"); }
+    else toast("Bildirim izni verilmedi");
+  }
+  else if (act === "vexact") { e.preventDefault(); await B.tamZamanliAyar(); }
   else if (act === "tafsir") { view.tafsirOpen = !view.tafsirOpen; route(); }
   else if (act === "filter") { view.mealFilter = el.dataset.id; route(); }
   else if (act === "save") {
@@ -625,6 +757,20 @@ document.addEventListener("click", async (e) => {
 
 document.addEventListener("change", async (e) => {
   const el = e.target;
+  if (el.dataset.act === "vopt" || el.dataset.act === "vonce") {
+    const a = ayarVakit();
+    if (el.dataset.act === "vonce") a.once = Number(el.value);
+    else if (el.dataset.key === "on") {
+      if (el.checked && !(await B.izinIste())) { el.checked = false; toast("Bildirim izni verilmedi. Telefonun Ayarlar bölümünden açabilirsin."); return; }
+      a.on = el.checked;
+    } else if (el.dataset.key === "sahur") a.sahur = el.checked;
+    else a.keys[el.dataset.key.slice(2)] = el.checked;
+    S.vakit = a;
+    await store.set("settings", S);
+    if (!a.on) await bildirimKur();   // kapatınca bekleyenleri sil
+    route();
+    return;
+  }
   if (el.dataset.act !== "opt") return;
   const key = el.dataset.key;
   if (key.startsWith("meal:")) {
@@ -655,6 +801,8 @@ async function boot() {
   if (!Array.isArray(S.meals) || !S.meals.some((t) => E.meals.includes(t))) S.meals = [...E.meals];
   saved = await store.get("saved", []);
   document.title = APP_NAME;
+  // Bildirimleri her açılışta ileriye doğru yenile (iOS en fazla 64 bekleyen bildirim tutar)
+  bildirimKur().catch(() => {});
   lastHash = location.hash;
   route();
 }

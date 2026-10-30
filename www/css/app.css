@@ -172,3 +172,20 @@ table.src tr:nth-child(even) td { background: var(--panel-alt); }
 .kb-msg { font-size: 14px; line-height: 1.5; color: var(--ink-2); text-align: center; max-width: 34ch; }
 .kb .panel-h.ok { background: var(--go); }
 #kb-start { min-width: 200px; justify-content: center; }
+
+/* Namaz vakitleri */
+.panel-h .nz-date { float: right; font-weight: 400; letter-spacing: 0; text-transform: none; color: #c4cbd1; font-size: 11px; }
+.nz-next { background: var(--band); color: #fff; padding: 10px 12px; border-bottom: 3px solid var(--gold); }
+.eyebrow-d { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #cfe3d6; }
+.nz-count { font-family: "PT Sans Narrow", "PT Sans", sans-serif; font-weight: 700; font-size: 30px; line-height: 1.15; }
+.nz-row { justify-content: space-between; cursor: default; }
+.nz-row b { font-family: "PT Sans Narrow", "PT Sans", sans-serif; font-size: 18px; }
+.nz-row.past { color: var(--ink-2); }
+.nz-row.past b { color: var(--muted); font-weight: 400; }
+.nz-row.on { background: #f6e7b0 !important; font-weight: 700; box-shadow: inset 4px 0 0 var(--gold); }
+.nz-foot { font-size: 12px; line-height: 1.5; color: var(--ink-2); border-top: 1px solid var(--panel-line); }
+.nz-empty { display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.5; }
+.nz-ram .panel-h { background: #6d3f86; }
+.nz-sel { font: inherit; font-size: 14px; padding: 6px 8px; border: 1px solid var(--panel-line); border-radius: 3px; background: var(--field); }
+.opt small { color: var(--ink-2); font-weight: 400; }
+.opt input:disabled, .nz-sel:disabled { opacity: .45; }

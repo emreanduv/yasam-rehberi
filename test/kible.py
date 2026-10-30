@@ -7,9 +7,9 @@ with sync_playwright() as p:
     ctx = b.new_context(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True,
                         geolocation={"latitude": 41.0225, "longitude": 29.0156}, permissions=["geolocation"])
     pg = ctx.new_page(); pg.on("pageerror", lambda e: errs.append(str(e)))
-    pg.goto("http://localhost:8765/index.html#/kible"); pg.wait_for_selector("#kb-start")
-    pg.click("#kb-start"); pg.wait_for_timeout(800)
-    assert pg.text_content("#kb-ang").startswith("152°"), pg.text_content("#kb-ang")
+    pg.goto("http://localhost:8765/index.html#/namaz"); pg.wait_for_selector("#kb-start")
+    pg.click("#kb-start"); pg.wait_for_timeout(1200)          # konum alınır, ekran yenilenir, pusula açılır
+    assert "152°" in pg.text_content("#kb-msg") or pg.text_content("#kb-big") == "152°", pg.text_content("#kb-msg")
     ev = lambda a: pg.evaluate("a=>{const e=new Event('deviceorientationabsolute');e.alpha=a;e.absolute=true;window.dispatchEvent(e)}", a)
     ios = lambda h: pg.evaluate("h=>{const e=new Event('deviceorientation');e.webkitCompassHeading=h;window.dispatchEvent(e)}", h)
     for _ in range(30): ev(0)                      # manyetik kuzey → gerçek ~6°
