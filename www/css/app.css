@@ -142,7 +142,7 @@ table.src tr:nth-child(even) td { background: var(--panel-alt); }
 
 /* alt menü */
 .nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: var(--bar); border-top: 1px solid #000;
-  padding-bottom: var(--safe-bottom); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  padding-bottom: var(--safe-bottom); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .nav a { height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
   color: var(--muted); font-size: 11px; text-decoration: none; border-top: 2px solid transparent; }
 .nav a.on { color: var(--gold-text); font-weight: 700; border-top-color: var(--gold-text); }
@@ -162,3 +162,13 @@ table.src tr:nth-child(even) td { background: var(--panel-alt); }
 .ans-btns { display: flex; flex-wrap: wrap; gap: 8px; }
 .ans-btns .btn-go { text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; min-width: 0; }
 .ans-btns .btn-light { min-height: 46px; }
+
+/* Kıble */
+.kb-b { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 14px 10px; }
+.kb-wrap { width: min(78vw, 300px); aspect-ratio: 1; }
+.kb-dial { width: 100%; height: 100%; display: block; }
+#kb-rose, #kb-arrow { transition: transform .12s linear; }
+.kb-big { font-family: "PT Sans Narrow", "PT Sans", sans-serif; font-weight: 700; font-size: 30px; letter-spacing: .5px; color: var(--ink); }
+.kb-msg { font-size: 14px; line-height: 1.5; color: var(--ink-2); text-align: center; max-width: 34ch; }
+.kb .panel-h.ok { background: var(--go); }
+#kb-start { min-width: 200px; justify-content: center; }

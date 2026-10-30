@@ -30,7 +30,7 @@ with sync_playwright() as p:
     pg.fill("#sf", "nisa"); vis = pg.eval_on_selector_all("#slist .row", "els => els.filter(e => e.style.display !== 'none').map(e => e.textContent.trim())")
     pg.screenshot(path=f"{SHOT}/5-sureler.png")
     pg.goto("http://localhost:8765/index.html#/sure/112"); pg.wait_for_selector(".rows .row"); n112 = pg.eval_on_selector_all(".rows .row", "e => e.length")
-    pg.click(".nav a >> text=Kaydedilenler"); pg.wait_for_timeout(200); kay = pg.eval_on_selector_all(".rows .row b", "els => els.map(e => e.textContent)")
+    pg.click(".nav a >> text=Kayıtlı"); pg.wait_for_timeout(200); kay = pg.eval_on_selector_all(".rows .row b", "els => els.map(e => e.textContent)")
     pg.screenshot(path=f"{SHOT}/6-kaydedilenler.png")
     pg.click(".nav a >> text=Ayarlar"); pg.wait_for_selector("table.src")
     pg.screenshot(path=f"{SHOT}/7-ayarlar.png", full_page=True)

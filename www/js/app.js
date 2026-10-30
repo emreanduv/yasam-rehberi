@@ -1,6 +1,7 @@
 // Yaşam Rehberi — uygulama ekranları
 import { Engine, highlightSpans } from "./engine.js";
 import { queryTerms } from "./text.js";
+import * as K from "./kible.js";
 
 // ---------------------------------------------------------------------------
 // Ayarlanabilir sabitler (isim değişirse sadece burası ve capacitor.config.json)
@@ -60,6 +61,7 @@ const ICON = {
   book: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"/></svg>',
   mark: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"/></svg>',
   markOn: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"/></svg>',
+  compass: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>',
   gear: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>',
   share: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/></svg>',
   note: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/></svg>',
@@ -121,7 +123,8 @@ function verseCard(v, terms) {
 function renderNav(active) {
   const item = (id, href, icon, label) => `<a href="${href}" class="${active === id ? "on" : ""}"${active === id ? ' aria-current="page"' : ""}>${icon}${label}</a>`;
   $nav.innerHTML = item("ara", "#/", ICON.search, "Ara") + item("sure", "#/sureler", ICON.book, "Sureler")
-    + item("kayit", "#/kaydedilenler", ICON.mark, "Kaydedilenler") + item("ayar", "#/ayarlar", ICON.gear, "Ayarlar");
+    + item("kible", "#/kible", ICON.compass, "Kıble")
+    + item("kayit", "#/kaydedilenler", ICON.mark, "Kayıtlı") + item("ayar", "#/ayarlar", ICON.gear, "Ayarlar");
 }
 
 // ---------------------------------------------------------------------------
@@ -412,6 +415,139 @@ function settingsView() {
 }
 
 // ---------------------------------------------------------------------------
+// Kıble
+// ---------------------------------------------------------------------------
+const kible = { stop: null, pos: null, heading: null, gotEvent: false, timer: null };
+
+function compassSvg() {
+  const ticks = Array.from({ length: 72 }, (_, i) => {
+    const big = i % 18 === 0, mid = i % 6 === 0;
+    return `<line x1="130" y1="${big ? 14 : mid ? 18 : 22}" x2="130" y2="28" transform="rotate(${i * 5} 130 130)" stroke="${big ? "#1f2328" : "#9c9077"}" stroke-width="${big ? 3 : mid ? 2 : 1}"/>`;
+  }).join("");
+  const lbl = [["K", 0], ["D", 90], ["G", 180], ["B", 270]].map(([t, a]) =>
+    `<text x="130" y="48" text-anchor="middle" font-family="PT Sans Narrow, PT Sans, sans-serif" font-weight="700" font-size="18" fill="${t === "K" ? "#b23b2a" : "#2f3e4c"}" transform="rotate(${a} 130 130)">${t}</text>`).join("");
+  return `<svg viewBox="0 0 260 260" class="kb-dial" aria-hidden="true">
+    <circle cx="130" cy="130" r="124" fill="#fffdf6" stroke="#c8bc9a" stroke-width="2"/>
+    <g id="kb-rose">${ticks}${lbl}</g>
+    <g id="kb-arrow" style="opacity:0">
+      <path d="M130 30 L146 120 L130 110 L114 120 Z" fill="#1d4d36"/>
+      <path d="M130 230 L142 140 L130 150 L118 140 Z" fill="#c8bc9a"/>
+      <rect x="119" y="10" width="22" height="22" rx="2" fill="#14171a" stroke="#c9a227" stroke-width="2"/>
+      <rect x="119" y="16" width="22" height="3" fill="#c9a227"/>
+    </g>
+    <circle cx="130" cy="130" r="7" fill="#c9a227" stroke="#14171a" stroke-width="2"/>
+    <path d="M130 2 L136 14 L124 14 Z" fill="#c9a227"/>
+  </svg>`;
+}
+
+function kibleView() {
+  const i = E.indexOf(2, 144);
+  const v = E.verse(i, mealsOn());
+  const t = Object.keys(v.texts)[0];
+  return `${topbar()}
+  <section class="band">
+    <div class="eyebrow">Yön</div>
+    <h1>Kıble</h1>
+    <div class="sub">Bulunduğun yere göre Kâbe'nin yönü · internetsiz</div>
+  </section>
+  <main class="content">
+    <section class="panel kb">
+      <div class="panel-h" id="kb-h">Pusula</div>
+      <div class="panel-b kb-b">
+        <div class="kb-wrap">${compassSvg()}</div>
+        <div class="kb-big" id="kb-big">—</div>
+        <div class="kb-msg" id="kb-msg">Kıble yönünü bulmak için konumuna ve telefonun pusulasına ihtiyaç var.</div>
+        <button class="btn-go" id="kb-start" data-act="kible">${ICON.compass}Kıbleyi bul</button>
+      </div>
+    </section>
+    <section class="panel"><div class="panel-h">Bilgi</div><div class="rows" id="kb-info">
+      <div class="row"><span>Kıble açısı</span><b id="kb-ang" style="margin-left:auto">—</b></div>
+      <div class="row"><span>Kâbe'ye uzaklık</span><b id="kb-km" style="margin-left:auto">—</b></div>
+      <div class="row"><span>Konum</span><b id="kb-pos" style="margin-left:auto">—</b></div>
+    </div></section>
+    <section class="panel"><div class="panel-h">Doğru ölçmek için</div><div class="panel-b" style="font-size:14px;line-height:1.55">
+      • Telefonu yere paralel, düz tut.<br>
+      • Metal eşya, mıknatıslı kılıf ve hoparlörden uzak dur.<br>
+      • Ok titriyor ya da kayıyorsa telefonu havada birkaç kez “8” çizerek kalibre et.
+    </div></section>
+    <section class="panel"><div class="panel-h">Kur'an'da kıble · Bakara 2:144</div><div class="panel-b">
+      <div style="font-size:15px;line-height:1.55">${esc(v.texts[t])}</div>
+      <div class="credits" style="color:var(--ink-2);margin-top:6px">${esc(E.source(t).credit)} · <a href="#/ayet/2/144">Ayeti aç ›</a></div>
+    </div></section>
+    <div class="note">Konumun yalnızca bu telefonda, kıble açısını hesaplamak için kullanılır; hiçbir yere gönderilmez ve kaydedilmez.</div>
+  </main>`;
+}
+
+function kibleStop() {
+  if (kible.stop) { kible.stop(); kible.stop = null; }
+  clearTimeout(kible.timer);
+}
+
+function kibleRender() {
+  const $ = (id) => document.getElementById(id);
+  if (!$("kb-big") || !kible.pos) return;
+  const q = kible.pos.qibla;
+  const arrow = $("kb-arrow"), rose = $("kb-rose");
+  if (kible.heading == null) {
+    // pusula yok ya da henüz veri gelmedi: kuzeye göre sabit gösterim
+    rose.setAttribute("transform", "rotate(0 130 130)");
+    arrow.setAttribute("transform", `rotate(${q.toFixed(1)} 130 130)`);
+    arrow.style.opacity = kible.gotEvent ? "1" : ".55";
+    $("kb-big").textContent = `${Math.round(q)}°`;
+    return;
+  }
+  const diff = ((q - kible.heading + 540) % 360) - 180;   // -180..180
+  rose.setAttribute("transform", `rotate(${(-kible.heading).toFixed(1)} 130 130)`);
+  arrow.setAttribute("transform", `rotate(${diff.toFixed(1)} 130 130)`);
+  arrow.style.opacity = "1";
+  const ok = Math.abs(diff) <= 5;
+  $("kb-h").textContent = ok ? "Kıble yönündesin" : "Pusula";
+  $("kb-h").classList.toggle("ok", ok);
+  $("kb-big").textContent = ok ? "Kıble ✓" : `${Math.abs(Math.round(diff))}° ${diff > 0 ? "sağa" : "sola"} dön`;
+  $("kb-msg").textContent = "Yeşil ok yukarıyı gösterdiğinde Kâbe yönündesin.";
+}
+
+async function kibleStart() {
+  const $ = (id) => document.getElementById(id);
+  const btn = $("kb-start");
+  btn.disabled = true;
+  $("kb-msg").textContent = "Konum alınıyor…";
+  // iOS: pusula izni dokunma anında istenmeli
+  const compassOk = await K.requestCompassPermission();
+  let p;
+  try { p = await K.getPosition(); }
+  catch (e) {
+    btn.disabled = false;
+    $("kb-msg").textContent = String(e.message).includes("izin")
+      ? "Konum izni verilmedi. Telefonun Ayarlar → Yaşam Rehberi → Konum bölümünden “Uygulamayı kullanırken” seçip tekrar dene."
+      : "Konum alınamadı. Açık havada ya da konum servisleri açıkken tekrar dene.";
+    return;
+  }
+  const qibla = K.qiblaBearing(p.lat, p.lon);
+  const decl = K.trueNorthOffset(p.lat, p.lon);
+  kible.pos = { ...p, qibla, decl };
+  $("kb-ang").textContent = `${Math.round(qibla)}° · ${K.yonAdi(qibla)}`;
+  $("kb-km").textContent = `${Math.round(K.distanceKm(p.lat, p.lon)).toLocaleString("tr-TR")} km`;
+  $("kb-pos").textContent = `${p.lat.toFixed(2)}, ${p.lon.toFixed(2)}`;
+  btn.style.display = "none";
+  kible.heading = null; kible.gotEvent = false;
+  kibleRender();
+  $("kb-msg").textContent = "Pusula bekleniyor… telefonu düz tut.";
+  kibleStop();
+  // İzin sonucuna bakmadan dinle: izin yoksa zaten veri gelmez, 3 sn sonra yazılı yöne düşeriz
+  kible.compassDenied = !compassOk;
+  kible.stop = K.startCompass((magnetic) => {
+    kible.gotEvent = true;
+    kible.heading = (magnetic + decl + 360) % 360;   // manyetik → gerçek kuzey
+    kibleRender();
+  });
+  kible.timer = setTimeout(() => {
+    if (kible.gotEvent || !$("kb-msg")) return;
+    $("kb-msg").textContent = `${kible.compassDenied ? "Hareket/pusula izni verilmedi." : "Bu telefonda pusula verisi alınamadı."} Kıble, kuzeyden saat yönünde ${Math.round(qibla)}° (${K.yonAdi(qibla)}). Ok, kuzey yukarıdayken kıbleyi gösteriyor.`;
+  }, 3000);
+}
+
+// ---------------------------------------------------------------------------
 // yönlendirme
 // ---------------------------------------------------------------------------
 function route() {
@@ -429,8 +565,10 @@ function route() {
   else if (parts[0] === "sure") { html = surahView(Number(parts[1])); nav = "sure"; }
   else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "kayit"; }
   else if (parts[0] === "ayarlar") { html = settingsView(); nav = "ayar"; }
+  else if (parts[0] === "kible") { html = kibleView(); nav = "kible"; }
   else { html = homeView(); }
   if (!html) return;
+  kibleStop();
   $app.innerHTML = html;
   renderNav(nav);
   window.scrollTo(0, 0);
@@ -463,6 +601,7 @@ document.addEventListener("click", async (e) => {
   if (!el || el.tagName === "INPUT" || el.tagName === "FORM") return;
   const act = el.dataset.act;
   if (act === "back") { if (history.length > 1) history.back(); else location.hash = "#/"; }
+  else if (act === "kible") { kibleStart(); }
   else if (act === "tafsir") { view.tafsirOpen = !view.tafsirOpen; route(); }
   else if (act === "filter") { view.mealFilter = el.dataset.id; route(); }
   else if (act === "save") {
