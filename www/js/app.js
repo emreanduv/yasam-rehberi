@@ -793,8 +793,9 @@ document.addEventListener("input", (e) => {
 // ---------------------------------------------------------------------------
 async function boot() {
   const [core, index] = await Promise.all([
-    fetch("data/core.json").then((r) => r.json()),
-    fetch("data/index.json").then((r) => r.json()),
+    // İnceleme sürümünde (tek HTML dosyası) veriler sayfanın içine gömülüdür
+    window.__CORE || fetch("data/core.json").then((r) => r.json()),
+    window.__INDEX || fetch("data/index.json").then((r) => r.json()),
   ]);
   E = new Engine(core, index);
   S = { ...S, ...(await store.get("settings", {})) };

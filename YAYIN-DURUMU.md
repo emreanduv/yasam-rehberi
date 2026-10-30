@@ -56,3 +56,8 @@
 - Yerel vakit bildirimleri: kendi "dıt-dıttt" sesimiz; vakit başına aç/kapat, 5–30 dk önce, Ramazan'da iftar/imsak + sahur (imsaktan 45 dk önce). iOS 64 sınırı → 60 bildirim (~12 gün), açılışta yenilenir.
 - Doğruluk: Diyanet takvimi ile 7 il × 3 gün × 6 vakit = 126 karşılaştırma → 121'i 0–1 dk, 1 tanesi 2 dk.
 - Android toplu sürümünde: SCHEDULE_EXACT_ALARM (kullanıcı izni) ve Play veri güvenliği beyanı kontrolü.
+
+## Diyanet başvurusu — 30 Ekim 2026
+- 17:52 Mushafları İnceleme ve Kıraat Kurulu'na (mushaflar@diyanet.gov.tr) usul sorusu e-postası gönderildi (form, dijital eserin teslim biçimi, DİYK meal görüşü).
+- Başvuru paketi hazır (zip, depo dışında): Ek-1 internetsiz tek dosya HTML (tools/inceleme_surumu.py), Ek-2a Arapça+3 meal 1.610 sf, Ek-2b tefsir 753 sf (tools/tam_metin_pdf.py), Ek-3 kaynak/lisans, Ek-4 ekranlar (tools/ekler_pdf.py). Dilekçe: Claude Docs belgesi.
+- Dayanak: Kur'an-ı Kerim Basım ve Yayım Kriterleri Hakkında Yönetmelik (RG 02.11.2022/32001; md. 7–8, 8/3 DİYK görüşü, md. 11 yaptırım). Reddedilen metin değiştirilmez, TR sürümünden çıkarılır.

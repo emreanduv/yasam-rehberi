@@ -7,3 +7,4 @@ ios/App/Pods/
 *.keystore
 *.jks
 imza-anahtari/
+dist/
