@@ -50,3 +50,9 @@
 ## Park edilenler
 - **Kıble bulma** (Kasım 2026): konum + pusula, cihaz içinde hesap, 2:144 kartı, pusulasız telefonda derece. Veri toplanmaz.
 - **Android**: her düzeltmede imzalanmayacak; "en iyi sürüm" kararıyla tek paket → kapalı test (12 kişi × 14 gün). Play'de 2. dahili sürüm taslağı açık bekliyor.
+
+## Güncelleme — 30 Ekim 2026 · Namaz sekmesi (build 5)
+- Kıble sekmesi "Namaz" oldu: bugünün vakitleri, sıradaki vakte geri sayım, hicri tarih, Ramazan kartı (iftar/sahur geri sayımı), kıble pusulası.
+- Yerel vakit bildirimleri: kendi "dıt-dıttt" sesimiz; vakit başına aç/kapat, 5–30 dk önce, Ramazan'da iftar/imsak + sahur (imsaktan 45 dk önce). iOS 64 sınırı → 60 bildirim (~12 gün), açılışta yenilenir.
+- Doğruluk: Diyanet takvimi ile 7 il × 3 gün × 6 vakit = 126 karşılaştırma → 121'i 0–1 dk, 1 tanesi 2 dk.
+- Android toplu sürümünde: SCHEDULE_EXACT_ALARM (kullanıcı izni) ve Play veri güvenliği beyanı kontrolü.
