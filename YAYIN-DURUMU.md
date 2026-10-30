@@ -60,6 +60,8 @@
 ## Diyanet başvurusu — 30 Ekim 2026
 - 17:52 Mushafları İnceleme ve Kıraat Kurulu'na (mushaflar@diyanet.gov.tr) usul sorusu e-postası gönderildi (form, dijital eserin teslim biçimi, DİYK meal görüşü).
 - Başvuru paketi hazır (zip, depo dışında): Ek-1 internetsiz tek dosya HTML (tools/inceleme_surumu.py), Ek-2a Arapça+3 meal 1.610 sf, Ek-2b tefsir 753 sf (tools/tam_metin_pdf.py), Ek-3 kaynak/lisans, Ek-4 ekranlar (tools/ekler_pdf.py). Dilekçe: Claude Docs belgesi.
+- 19:34 Din İşleri Yüksek Kurulu'na (dinisleriyk@diyanet.gov.tr, bilgi: mushaflar@) izin talebi gönderildi: DİYK fetvaları + Diyanet ilmihal metinlerinin uygulamada kaynak/bağlantıyla, değiştirilmeden, ücretsiz, internetsiz kullanımı (ileride "Hukuk" sekmesi için). Yanıt gelene kadar fetva metni uygulamaya konmaz; yalnızca fetva sayfası bağlantısı + ALO 190.
+- Not: Gmail'de "ekliyorum/ekte" kelimeleri "ek unuttunuz mu" onayı açıyor; tarayıcı paneli bu onayı gizlediği için gönderim sessizce iptal oluyor. Bu kelimeler kullanılmaz.
 - Dayanak: Kur'an-ı Kerim Basım ve Yayım Kriterleri Hakkında Yönetmelik (RG 02.11.2022/32001; md. 7–8, 8/3 DİYK görüşü, md. 11 yaptırım). Reddedilen metin değiştirilmez, TR sürümünden çıkarılır.
 
 ## Güncelleme — 30 Ekim 2026 · Miras sekmesi
