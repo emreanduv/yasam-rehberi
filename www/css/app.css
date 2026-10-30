@@ -189,3 +189,36 @@ table.src tr:nth-child(even) td { background: var(--panel-alt); }
 .nz-sel { font: inherit; font-size: 14px; padding: 6px 8px; border: 1px solid var(--panel-line); border-radius: 3px; background: var(--field); }
 .opt small { color: var(--ink-2); font-weight: 400; }
 .opt input:disabled, .nz-sel:disabled { opacity: .45; }
+
+/* Üst çubuk: Ayarlar */
+.tb-r { display: flex; align-items: center; gap: 10px; }
+.tb-gear { color: #b9c0c7; display: flex; padding: 4px; margin-right: -4px; }
+.tb-gear:active { color: var(--gold-text); }
+
+/* Miras */
+.mr-row { min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 10px;
+  border-bottom: 1px solid var(--panel-rule); font-size: 15px; }
+.mr-row:nth-child(even) { background: var(--panel-alt); }
+.mr-row small, .mr-ipucu small { color: var(--ink-2); }
+.mr-row input[type=checkbox] { width: 22px; height: 22px; accent-color: var(--go); }
+.stp { display: inline-flex; align-items: center; border: 1px solid var(--panel-line); border-radius: 3px; background: var(--field); }
+.stp button { width: 38px; height: 34px; border: 0; background: none; font-size: 20px; font-weight: 700; color: var(--band); cursor: pointer; }
+.stp button:disabled { color: #c8bc9a; }
+.stp b { min-width: 26px; text-align: center; font-family: "PT Sans Narrow", "PT Sans", sans-serif; font-size: 18px; }
+.mr-ipucu { font-size: 13px; color: var(--ink-2); margin-top: 8px; line-height: 1.45; }
+.mr-ekle { display: flex; flex-wrap: wrap; gap: 8px; }
+.mr-olmus { border-left: 4px solid var(--gold); background: #f6efdc; }
+.mr-olmus-h { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; font-size: 12px; font-weight: 700;
+  letter-spacing: .8px; text-transform: uppercase; color: var(--ink-2); }
+.mr-x { border: 0; background: none; font-size: 22px; color: var(--ink-2); cursor: pointer; line-height: 1; }
+.mr-tutar { width: 100%; box-sizing: border-box; height: 46px; border: 1px solid #9c9077; border-radius: 3px; background: var(--field);
+  padding: 0 10px; font-size: 18px; font-family: "PT Sans Narrow", "PT Sans", sans-serif; }
+.mr-tab { width: 100%; border-collapse: collapse; font-size: 14px; }
+.mr-tab th { text-align: left; font-size: 11px; letter-spacing: .8px; text-transform: uppercase; color: var(--ink-2); padding: 7px 10px;
+  border-bottom: 1px solid var(--panel-line); }
+.mr-tab td { padding: 8px 10px; border-bottom: 1px solid var(--panel-rule); vertical-align: top; }
+.mr-tab tr:nth-child(even) td { background: var(--panel-alt); }
+.mr-tab .num { text-align: right; white-space: nowrap; font-family: "PT Sans Narrow", "PT Sans", sans-serif; font-size: 16px; font-weight: 700; }
+.mr-tab th.num { font-family: inherit; font-size: 11px; }
+.mr-day { font-size: 11.5px; color: var(--ink-2); margin-top: 2px; font-weight: 400; font-family: "PT Sans", sans-serif; }
+.mr-not { font-size: 13px; line-height: 1.5; color: #3d382d; border-top: 1px solid var(--panel-line); }

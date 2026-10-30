@@ -4,6 +4,7 @@ import { queryTerms } from "./text.js";
 import * as K from "./kible.js";
 import * as V from "./vakit.js";
 import * as B from "./bildirim.js";
+import * as M from "./miras.js";
 
 // ---------------------------------------------------------------------------
 // Ayarlanabilir sabitler (isim değişirse sadece burası ve capacitor.config.json)
@@ -65,6 +66,7 @@ const ICON = {
   markOn: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"/></svg>',
   compass: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>',
   mosque: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c-3 2.5-5 4.5-5 7h10c0-2.5-2-4.5-5-7z"/><path d="M5 21V12h14v9M3 21h18M10 21v-4a2 2 0 0 1 4 0v4"/></svg>',
+  scale: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/></svg>',
   gear: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>',
   share: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/></svg>',
   note: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/></svg>',
@@ -96,7 +98,7 @@ function topbar(left = "brand") {
   const l = left === "brand"
     ? `<span class="brand">${esc(APP_NAME)}</span>`
     : `<button class="back" data-act="back">${ICON.back}${esc(left)}</button>`;
-  return `<header class="topbar"><div class="topbar-in">${l}<span class="badge">Mr. Anduv!</span></div></header>`;
+  return `<header class="topbar"><div class="topbar-in">${l}<span class="tb-r"><span class="badge">Mr. Anduv!</span><a class="tb-gear" href="#/ayarlar" aria-label="Ayarlar">${ICON.gear}</a></span></div></header>`;
 }
 
 const linkTanzil = (s) => esc(s).replace("http://tanzil.net", '<a href="http://tanzil.net">tanzil.net</a>');
@@ -126,8 +128,8 @@ function verseCard(v, terms) {
 function renderNav(active) {
   const item = (id, href, icon, label) => `<a href="${href}" class="${active === id ? "on" : ""}"${active === id ? ' aria-current="page"' : ""}>${icon}${label}</a>`;
   $nav.innerHTML = item("ara", "#/", ICON.search, "Ara") + item("sure", "#/sureler", ICON.book, "Sureler")
-    + item("namaz", "#/namaz", ICON.mosque, "Namaz")
-    + item("kayit", "#/kaydedilenler", ICON.mark, "Kayıtlı") + item("ayar", "#/ayarlar", ICON.gear, "Ayarlar");
+    + item("miras", "#/miras", ICON.scale, "Miras") + item("namaz", "#/namaz", ICON.mosque, "Namaz")
+    + item("kayit", "#/kaydedilenler", ICON.mark, "Kayıtlı");
 }
 
 // ---------------------------------------------------------------------------
@@ -249,6 +251,7 @@ function answerCard(q, r, strong) {
   const ordered = [...r.concepts.filter((c) => c.triggerHit), ...r.concepts.filter((c) => !c.triggerHit)];
   for (const c of ordered.slice(0, ordered[0] && ordered[0].triggerHit ? 1 : 2)) {
     if (c.note) html += `<p><span class="ans-k">Kur'an ne diyor? · ${esc(c.label)}</span>${linkRefs(c.note)}</p>`;
+    if (c.key === "miras" || c.key === "vasiyet") html += `<p><a class="btn-go" href="#/miras">${ICON.scale}Miras hesapla: kime ne düşer?</a></p>`;
   }
   if (ruling || strong.length) {
     const [main, alt] = diyanetQueries(q, r, strong);
@@ -394,7 +397,7 @@ function savedView() {
 
 function settingsView() {
   const row = (label, key, checked, extra = "") => `<label class="opt">${label}<input type="checkbox" data-act="opt" data-key="${key}" ${extra} ${checked ? "checked" : ""}></label>`;
-  return `${topbar()}
+  return `${topbar("Geri")}
   <section class="band"><div class="eyebrow">Ayarlar</div><h1>Kaynaklar ve görünüm</h1></section>
   <main class="content">
     <section class="panel"><div class="panel-h">Gösterilecek mealler</div><div>
@@ -666,6 +669,101 @@ async function bildirimDurum() {
 }
 
 // ---------------------------------------------------------------------------
+// Miras
+// ---------------------------------------------------------------------------
+let mg = null;   // miras girdisi (cihazda saklanır)
+const mirasGirdi = () => (mg ||= JSON.parse(JSON.stringify(M.BOS)));
+const tl = (v) => v.toLocaleString("tr-TR", { maximumFractionDigits: 0 }) + " TL";
+
+function stepper(key, val, max, label, alt = "") {
+  return `<div class="mr-row"><span>${label}${alt ? ` <small>${alt}</small>` : ""}</span>
+    <span class="stp"><button data-act="mr-step" data-k="${key}" data-d="-1" aria-label="${esc(label)} azalt" ${val <= 0 ? "disabled" : ""}>−</button><b>${val}</b><button data-act="mr-step" data-k="${key}" data-d="1" aria-label="${esc(label)} artır" ${val >= max ? "disabled" : ""}>+</button></span></div>`;
+}
+function toggle(key, val, label, alt = "") {
+  return `<label class="mr-row"><span>${label}${alt ? ` <small>${alt}</small>` : ""}</span><input type="checkbox" data-act="mr-tog" data-k="${key}" ${val ? "checked" : ""}></label>`;
+}
+
+function sonucTablo(r, tutar, baslik, renk) {
+  const rows = r.satirlar.map((x) => `<tr><td><b>${esc(x.ad)}</b>${x.kisi > 1 ? ` <small>(${x.kisi} kişi · kişi başı ${M.kesir(x.kisiBasi)})</small>` : ""}<div class="mr-day">${esc(x.dayanak)}</div></td>
+    <td class="num">${M.kesir(x.pay)}</td><td class="num">%${M.yuzde(x.pay).toLocaleString("tr-TR", { maximumFractionDigits: 1 })}</td>
+    ${tutar ? `<td class="num">${tl(tutar * x.pay.n / x.pay.d)}${x.kisi > 1 ? `<div class="mr-day">kişi başı ${tl(tutar * x.kisiBasi.n / x.kisiBasi.d)}</div>` : ""}</td>` : ""}</tr>`).join("");
+  return `<section class="panel mr-sonuc"><div class="panel-h" style="background:${renk}">${baslik}</div>
+    ${r.satirlar.length ? `<table class="mr-tab"><thead><tr><th>Mirasçı</th><th class="num">Pay</th><th class="num">Oran</th>${tutar ? '<th class="num">Tutar</th>' : ""}</tr></thead><tbody>${rows}</tbody></table>` : `<div class="panel-b">Mirasçı yok.</div>`}
+    ${r.mahrum?.length ? `<div class="panel-b mr-not"><b>Pay almayanlar:</b> ${r.mahrum.map((m) => `${esc(m.ad)} (${esc(m.neden)})`).join("; ")}</div>` : ""}
+    ${r.notlar.length ? `<div class="panel-b mr-not">${r.notlar.map((n) => `• ${esc(n)}`).join("<br>")}</div>` : ""}
+  </section>`;
+}
+
+function mirasView() {
+  const g = mirasGirdi();
+  const kadin = g.olen === "kadin";
+  const bos = !(g.es || g.ogul || g.kiz || g.olmus.length || g.anne || g.baba || g.dede || g.anneDede || g.babaAnne || g.anneAnne
+    || g.tamE || g.tamK || g.babaE || g.babaK || g.anaE || g.anaK || g.uzakAsabe);
+  const f = M.feraiz(g), t = M.tmk(g);
+  const olmusRows = g.olmus.map((c, i) => `<div class="mr-olmus"><div class="mr-olmus-h">Vefat etmiş ${c.cins === "erkek" ? "oğlu" : "kızı"} ${i + 1}
+      <button class="mr-x" data-act="mr-del" data-i="${i}" aria-label="Kaldır">×</button></div>
+      ${stepper(`olmus.${i}.ogul`, c.ogul, 12, "Onun hayattaki oğulları")}${stepper(`olmus.${i}.kiz`, c.kiz, 12, "Onun hayattaki kızları")}</div>`).join("");
+  const v = (s, a) => { const x = E.verse(E.indexOf(s, a), mealsOn()); return x; };
+  const ayetler = [[4, 11], [4, 12], [4, 176]].map(([s, a]) => { const x = v(s, a); const t0 = Object.keys(x.texts)[0];
+    return `<a class="row" href="#/ayet/${s}/${a}" style="align-items:flex-start"><span style="flex:none;width:58px;font-weight:700;color:var(--band)">${s}:${a}</span><span style="flex:1;font-size:14px;line-height:1.45">${esc(excerpt(x.texts[t0], 170))}</span></a>`; }).join("");
+  return `${topbar()}
+  <section class="band">
+    <div class="eyebrow">Miras</div>
+    <h1>Kime ne düşer?</h1>
+    <div class="sub">Kur'an'a göre (feraiz) ve Türk Medeni Kanunu'na göre yan yana</div>
+  </section>
+  <main class="content" id="mr-main">
+    <section class="panel"><div class="panel-h">1 · Vefat eden</div><div class="panel-b">
+      <div class="seg" role="group" aria-label="Vefat edenin cinsiyeti">
+        <button data-act="mr-olen" data-v="erkek" class="${!kadin ? "on" : ""}">Erkek</button>
+        <button data-act="mr-olen" data-v="kadin" class="${kadin ? "on" : ""}">Kadın</button></div>
+      <div class="mr-ipucu">Aşağıya yalnızca <b>vefat anında hayatta olan</b> yakınları girin.</div></div>
+      ${kadin ? toggle("es", g.es > 0, "Kocası hayatta") : stepper("es", g.es, 4, "Hanımı", "(nikâhlı)")}
+    </section>
+    <section class="panel"><div class="panel-h">2 · Çocukları</div>
+      ${stepper("ogul", g.ogul, 12, "Oğlu")}${stepper("kiz", g.kiz, 12, "Kızı")}
+      ${olmusRows}
+      <div class="panel-b mr-ekle"><button class="btn-light" data-act="mr-olmus" data-v="erkek">+ Ondan önce vefat etmiş oğlu</button>
+      <button class="btn-light" data-act="mr-olmus" data-v="kadin">+ Ondan önce vefat etmiş kızı</button></div>
+    </section>
+    <section class="panel"><div class="panel-h">3 · Anne, baba, büyükler</div>
+      ${toggle("anne", g.anne, "Annesi")}${toggle("baba", g.baba, "Babası")}
+      ${toggle("dede", g.dede, "Babasının babası")}${toggle("babaAnne", g.babaAnne, "Babasının annesi")}
+      ${toggle("anneDede", g.anneDede, "Annesinin babası")}${toggle("anneAnne", g.anneAnne, "Annesinin annesi")}
+    </section>
+    <section class="panel"><div class="panel-h">4 · Kardeşleri</div>
+      ${stepper("tamE", g.tamE, 12, "Erkek kardeşi", "(ana-baba bir)")}${stepper("tamK", g.tamK, 12, "Kız kardeşi", "(ana-baba bir)")}
+      ${stepper("babaE", g.babaE, 12, "Erkek kardeşi", "(yalnız baba bir)")}${stepper("babaK", g.babaK, 12, "Kız kardeşi", "(yalnız baba bir)")}
+      ${stepper("anaE", g.anaE, 12, "Erkek kardeşi", "(yalnız ana bir)")}${stepper("anaK", g.anaK, 12, "Kız kardeşi", "(yalnız ana bir)")}
+      ${toggle("uzakAsabe", g.uzakAsabe, "Amcası ya da erkek kardeşinin oğlu var", "(yukarıdakiler yoksa önemli)")}
+    </section>
+    <section class="panel"><div class="panel-h">5 · Miras tutarı <small style="text-transform:none;letter-spacing:0;font-weight:400">(isteğe bağlı)</small></div>
+      <div class="panel-b"><input id="mr-tutar" class="mr-tutar" type="text" inputmode="numeric" placeholder="Örn. 3.000.000" value="${g.tutar ? g.tutar.toLocaleString("tr-TR") : ""}" data-act="mr-tutar" aria-label="Miras tutarı (TL)"></div>
+    </section>
+    <div id="mr-sonuc">${bos ? `<div class="note">Mirasçıları girdikçe sonuç burada belirir.</div>` : mirasSonuc(f, t, g.tutar || 0)}</div>
+    <section class="panel"><div class="panel-h">Kur'an'da miras ayetleri</div><div class="rows">${ayetler}</div></section>
+    <div class="note"><b>Bilgi amaçlıdır; fetva ya da hukuki görüş değildir.</b> Feraiz hesabı Hanefî mezhebine göre, Diyanet'in anlatımı esas alınarak yapılır. Türkiye'de tapu ve mahkemede Türk Medeni Kanunu uygulanır; Kur'an'daki paylara göre paylaşım ancak bütün mirasçıların rızasıyla yapılacak bir anlaşmayla mümkündür. Vasiyet, borç ve cenaze giderleri önce düşülür.</div>
+  </main>`;
+}
+
+function mirasSonuc(f, t, tutar) {
+  return `${sonucTablo(f, tutar, "Kur'an'a göre (feraiz · Hanefî)", "var(--band)")}
+    ${sonucTablo(t, tutar, "Türk Medeni Kanunu'na göre", "var(--head)")}
+    <section class="panel"><div class="panel-h">Resmî görüş için</div><div class="panel-b ans-btns">
+      <a class="btn-go" href="${DIYANET_ARA}${enc("miras")}">${ICON.note}Diyanet'te ara: “miras”</a>
+      <a class="btn-light" href="tel:190">ALO 190 Fetva Hattı</a>
+      <div class="mr-ipucu" style="width:100%">Medeni Kanun'a göre paylaşım ve tapu işlemleri için noter ya da avukata danışın.</div></div></section>`;
+}
+
+async function mirasDegisti(rerender = true) {
+  await store.set("miras", mg);
+  if (!rerender) return;
+  const y = window.scrollY;
+  $app.innerHTML = mirasView();
+  window.scrollTo(0, y);
+}
+
+// ---------------------------------------------------------------------------
 // yönlendirme
 // ---------------------------------------------------------------------------
 function route() {
@@ -684,6 +782,7 @@ function route() {
   else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "kayit"; }
   else if (parts[0] === "ayarlar") { html = settingsView(); nav = "ayar"; }
   else if (parts[0] === "namaz" || parts[0] === "kible") { html = namazView(); nav = "namaz"; }
+  else if (parts[0] === "miras") { html = mirasView(); nav = "miras"; }
   else { html = homeView(); }
   if (!html) return;
   kibleStop();
@@ -727,6 +826,18 @@ document.addEventListener("click", async (e) => {
   if (!el || el.tagName === "INPUT" || el.tagName === "FORM") return;
   const act = el.dataset.act;
   if (act === "back") { if (history.length > 1) history.back(); else location.hash = "#/"; }
+  else if (act === "mr-step" || act === "mr-olen" || act === "mr-olmus" || act === "mr-del") {
+    const g = mirasGirdi();
+    if (act === "mr-olen") { g.olen = el.dataset.v; g.es = 0; }
+    else if (act === "mr-olmus") { if (g.olmus.length < 8) g.olmus.push({ cins: el.dataset.v, ogul: 0, kiz: 0 }); }
+    else if (act === "mr-del") g.olmus.splice(Number(el.dataset.i), 1);
+    else {
+      const path = el.dataset.k.split("."), d = Number(el.dataset.d);
+      let o = g; for (const p of path.slice(0, -1)) o = o[p];
+      const k = path.at(-1); o[k] = Math.max(0, (o[k] || 0) + d);
+    }
+    await mirasDegisti();
+  }
   else if (act === "kible") { kibleStart(); }
   else if (act === "konum") { e.preventDefault(); if (await konumAl("nz-msg")) { await bildirimKur(); route(); } }
   else if (act === "vdeneme") {
@@ -757,6 +868,7 @@ document.addEventListener("click", async (e) => {
 
 document.addEventListener("change", async (e) => {
   const el = e.target;
+  if (el.dataset.act === "mr-tog") { const g = mirasGirdi(); g[el.dataset.k] = el.dataset.k === "es" ? (el.checked ? 1 : 0) : el.checked; await mirasDegisti(); return; }
   if (el.dataset.act === "vopt" || el.dataset.act === "vonce") {
     const a = ayarVakit();
     if (el.dataset.act === "vonce") a.once = Number(el.value);
@@ -783,6 +895,14 @@ document.addEventListener("change", async (e) => {
 });
 
 document.addEventListener("input", (e) => {
+  if (e.target.dataset.act === "mr-tutar") {
+    const g = mirasGirdi();
+    g.tutar = Number(e.target.value.replace(/[^\d]/g, "")) || 0;
+    const box = document.getElementById("mr-sonuc");
+    if (box && box.querySelector(".mr-sonuc")) box.innerHTML = mirasSonuc(M.feraiz(g), M.tmk(g), g.tutar);
+    mirasDegisti(false);
+    return;
+  }
   if (e.target.dataset.act !== "sfilter") return;
   const f = fold2(e.target.value.trim());
   for (const a of document.querySelectorAll("#slist .row")) a.style.display = !f || a.dataset.name.includes(f) ? "" : "none";
@@ -801,6 +921,8 @@ async function boot() {
   S = { ...S, ...(await store.get("settings", {})) };
   if (!Array.isArray(S.meals) || !S.meals.some((t) => E.meals.includes(t))) S.meals = [...E.meals];
   saved = await store.get("saved", []);
+  const kayitliMiras = await store.get("miras", null);
+  if (kayitliMiras && typeof kayitliMiras === "object") mg = { ...M.BOS, ...kayitliMiras };
   document.title = APP_NAME;
   // Bildirimleri her açılışta ileriye doğru yenile (iOS en fazla 64 bekleyen bildirim tutar)
   bildirimKur().catch(() => {});

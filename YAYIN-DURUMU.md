@@ -61,3 +61,9 @@
 - 17:52 Mushafları İnceleme ve Kıraat Kurulu'na (mushaflar@diyanet.gov.tr) usul sorusu e-postası gönderildi (form, dijital eserin teslim biçimi, DİYK meal görüşü).
 - Başvuru paketi hazır (zip, depo dışında): Ek-1 internetsiz tek dosya HTML (tools/inceleme_surumu.py), Ek-2a Arapça+3 meal 1.610 sf, Ek-2b tefsir 753 sf (tools/tam_metin_pdf.py), Ek-3 kaynak/lisans, Ek-4 ekranlar (tools/ekler_pdf.py). Dilekçe: Claude Docs belgesi.
 - Dayanak: Kur'an-ı Kerim Basım ve Yayım Kriterleri Hakkında Yönetmelik (RG 02.11.2022/32001; md. 7–8, 8/3 DİYK görüşü, md. 11 yaptırım). Reddedilen metin değiştirilmez, TR sürümünden çıkarılır.
+
+## Güncelleme — 30 Ekim 2026 · Miras sekmesi
+- Alt menü: Ara · Sureler · Miras · Namaz · Kayıtlı; Ayarlar üst sağda ⚙️.
+- Miras: sihirbaz (vefat eden, eş, çocuklar + vefat etmiş çocukların çocukları, anne-baba-büyükler, kardeşler, amca/yeğen, tutar) → iki tablo: feraiz (Hanefî) ve TMK md. 495–501; kesirle kesin hesap, TL tutarı, dayanak (ayet/madde), pay almayanlar ve nedenleri.
+- Testler: test/miras.mjs (33 vaka: avl, redd, Ömeriyye, Himariyye, Minberiyye, maa'l-gayr, TMK zümreleri/halefiyet), test/miras_ekran.py. Bağımsız inceleme: feraiz sonuçlarının hepsi doğru; TMK'da amca/yeğen hatası düzeltildi.
+- Diyanet dilekçesine "miras hesaplayıcı (feraiz) da içerir" satırı eklenecek (Kurul yanıtından sonra).

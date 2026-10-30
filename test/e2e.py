@@ -32,7 +32,7 @@ with sync_playwright() as p:
     pg.goto("http://localhost:8765/index.html#/sure/112"); pg.wait_for_selector(".rows .row"); n112 = pg.eval_on_selector_all(".rows .row", "e => e.length")
     pg.click(".nav a >> text=Kayıtlı"); pg.wait_for_timeout(200); kay = pg.eval_on_selector_all(".rows .row b", "els => els.map(e => e.textContent)")
     pg.screenshot(path=f"{SHOT}/6-kaydedilenler.png")
-    pg.click(".nav a >> text=Ayarlar"); pg.wait_for_selector("table.src")
+    pg.click("a.tb-gear"); pg.wait_for_selector("table.src")
     pg.screenshot(path=f"{SHOT}/7-ayarlar.png", full_page=True)
     # meal kapat → sonuçlarda 2 meal kalmalı; hepsini kapatmaya çalış → engellenmeli
     pg.click("input[data-key='meal:saban']"); pg.click("input[data-key='meal:ozek']"); pg.click("input[data-key='meal:rowwad']")
