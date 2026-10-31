@@ -222,3 +222,39 @@ table.src tr:nth-child(even) td { background: var(--panel-alt); }
 .mr-tab th.num { font-family: inherit; font-size: 11px; }
 .mr-day { font-size: 11.5px; color: var(--ink-2); margin-top: 2px; font-weight: 400; font-family: "PT Sans", sans-serif; }
 .mr-not { font-size: 13px; line-height: 1.5; color: #3d382d; border-top: 1px solid var(--panel-line); }
+
+/* Menü */
+.mn-row { text-decoration: none; }
+.mn-l { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.mn-ic { flex: none; width: 34px; height: 34px; border-radius: 3px; background: var(--head); color: #fff; display: inline-flex; align-items: center; justify-content: center; }
+.mn-row b { font-size: 16px; }
+.mn-hint { font-size: 12px; color: #6b6250; }
+
+/* Tesbih ve Saat: kendi ekranlarıyla açılan modüller */
+.modul { display: block; width: 100%; border: 0; background: var(--bg);
+  height: calc(100vh - 45px - var(--safe-top) - 62px - var(--safe-bottom));
+  height: calc(100dvh - 45px - var(--safe-top) - 62px - var(--safe-bottom)); }
+
+/* Çarşı */
+.c-name { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.c-name > span:last-child { overflow: hidden; text-overflow: ellipsis; }
+.c-tile { flex: none; width: 30px; height: 30px; border-radius: 3px; background: var(--head); color: #fff; font-size: 11px;
+  font-weight: 700; letter-spacing: .5px; display: inline-flex; align-items: center; justify-content: center; }
+.c-star { color: var(--gold); margin-left: 5px; }
+.c-flag { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #7a3a10; background: #f3dcc9;
+  border-radius: 2px; padding: 2px 5px; margin-right: 6px; }
+.c-hint { font-size: 12px; color: #6b6250; font-weight: 400; }
+.c-soon { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--ink-2); border: 1px solid var(--panel-line);
+  border-radius: 8px; padding: 1px 6px; }
+.c-inbox { display: flex; gap: 10px; text-decoration: none; color: var(--ink); }
+.c-inbox-bar { width: 6px; border-radius: 3px; background: var(--go); flex: none; }
+.c-inbox-t { font-size: 12px; font-weight: 700; color: var(--band); }
+.c-inbox-n { font-size: 17px; font-weight: 700; margin-top: 2px; }
+.c-small { font-size: 12px; line-height: 1.45; color: var(--ink-2); margin-top: 8px; }
+.c-result { margin-top: 8px; padding: 8px 10px; border-radius: 3px; font-size: 14px; font-weight: 700; line-height: 1.4; }
+.c-ok { background: #d7ecdf; color: #1d4d36; border: 1px solid #9cc9ae; }
+.c-info { background: var(--field); color: var(--ink-2); border: 1px solid var(--panel-line); }
+.c-bad { background: #f3dcc9; color: #7a3a10; border: 1px solid #d9a982; }
+.c-empty-row { padding: 12px 10px; font-size: 14px; color: var(--ink-2); border-top: 1px solid var(--panel-rule); }
+.c-kunye th { width: 38%; text-align: left; color: var(--ink-2); font-weight: 700; border-bottom: 1px solid var(--panel-rule); padding: 8px 10px; vertical-align: top; }
+.c-actions { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); }

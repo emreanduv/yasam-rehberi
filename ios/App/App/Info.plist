@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Çarşı bölümünde ürün barkodunu okutmak için kamera kullanılır. Görüntü kaydedilmez ve telefondan çıkmaz.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Namaz vakitlerini ve kıble yönünü hesaplamak için konumunuz yalnızca bu telefonda kullanılır; hiçbir yere gönderilmez.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

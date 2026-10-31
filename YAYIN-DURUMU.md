@@ -69,3 +69,14 @@
 - Miras: sihirbaz (vefat eden, eş, çocuklar + vefat etmiş çocukların çocukları, anne-baba-büyükler, kardeşler, amca/yeğen, tutar) → iki tablo: feraiz (Hanefî) ve TMK md. 495–501; kesirle kesin hesap, TL tutarı, dayanak (ayet/madde), pay almayanlar ve nedenleri.
 - Testler: test/miras.mjs (33 vaka: avl, redd, Ömeriyye, Himariyye, Minberiyye, maa'l-gayr, TMK zümreleri/halefiyet), test/miras_ekran.py. Bağımsız inceleme: feraiz sonuçlarının hepsi doğru; TMK'da amca/yeğen hatası düzeltildi.
 - Diyanet dilekçesine "miras hesaplayıcı (feraiz) da içerir" satırı eklenecek (Kurul yanıtından sonra).
+
+## Güncelleme — 31 Ekim 2026 · Tesbih, Saat ve Çarşı uygulamanın içinde
+- Alt menü: Ara · Sureler · Miras · Namaz · Menü. Menü: Tesbih, Saat, Çarşı, Kayıtlı ayetler, Ayarlar. Namaz ekranında "Namaz sonrası tesbihat" kısayolu.
+- Tesbih (ayrı sohbette yapılan artifact): sayaç, Esmâ, serbest zikir, tesbih atölyesi + tasarım kodu + usta kartı. Vakitler artık uygulamanın hesabından (Diyanet yöntemi); "namaz sonrası tesbihat" telefon bildirimi (3000+, en fazla 6). Ayet düğmeleri uygulamanın ayet ekranını açar.
+- Saat (artifact adı "Vakit"): 20 kadran + kadran atölyesi, hatırlatıcılar, gelen kutusu, zamanlayıcı/kronometre/odak/uyku/dünya saati/güneşle kıble. Vakit ve konum uygulamadan; namaz hatırlatıcısı Namaz sekmesine yönlendirir; açık hatırlatıcılar + zamanlayıcı telefon bildirimi (2000+, en yakın 20). Örnek hatırlatıcılar kapalı başlar. Hatırlatıcı aç/kapa düğmesinin sıfır boyut hatası düzeltildi.
+- Çarşı (Mac'teki commitlenmemiş kopyadan): 194 marka / 13 reyon (Wikidata CC0), barkod denetimi + kamerayla okutma (@capacitor/barcode-scanner 2.2.6). Kamera izni metni eklendi; Android minSdk 26 (eklenti şartı).
+- Namaz bildirim üst sınırı 60 → 36 (toplam iOS 64 sınırı içinde).
+- Yazı tipleri yerel (OFL): Cormorant Garamond, Bebas Neue, Share Tech Mono, VT323. Google Fonts bağlantısı yok; uygulama internetsiz.
+- Testler: test/moduller.py (internetsiz açılış, vakit eşitliği, bildirim aralıkları, kalıcı depo, yönlendirmeler) + mevcut testler geçti.
+- Android toplu sürümde kontrol: ML Kit barkod tarayıcısının Play "Veri güvenliği" beyanına etkisi; CAMERA izni.
+- Mac'teki ~/yasam-rehberi kopyası eski (a608883) ve commitlenmemiş Çarşı değişiklikleri içeriyor; bunlar artık GitHub'da. Mac'te `git stash` ya da yeniden klonlama gerekecek.

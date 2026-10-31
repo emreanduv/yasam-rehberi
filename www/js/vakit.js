@@ -56,10 +56,10 @@ export function hicri(date = new Date()) {
 
 // ---------------------------------------------------------------------------
 // Bildirim planı: önümüzdeki günlerin vakitleri → yerel bildirim listesi
-// iOS en fazla 64 bekleyen bildirime izin verir; 60'ta keseriz.
+// iOS en fazla 64 bekleyen bildirime izin verir. Bütçe: namaz 36 + Saat 20 + tesbihat 6 + deneme 1 = 63.
 // ---------------------------------------------------------------------------
 export const ID_BASE = 1000;
-export const MAX_BEKLEYEN = 60;
+export const MAX_BEKLEYEN = 36;
 
 export function plan(lat, lon, ayar, now = new Date()) {
   const secili = VAKITLER.filter((v) => ayar.keys[v.key]);

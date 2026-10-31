@@ -5,6 +5,7 @@ import * as K from "./kible.js";
 import * as V from "./vakit.js";
 import * as B from "./bildirim.js";
 import * as M from "./miras.js";
+import { initCarsi, carsiRoute } from "./carsi.js";
 
 // ---------------------------------------------------------------------------
 // Ayarlanabilir sabitler (isim değişirse sadece burası ve capacitor.config.json)
@@ -70,6 +71,10 @@ const ICON = {
   gear: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>',
   share: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 14v6h14v-6"/></svg>',
   note: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/></svg>',
+  beads: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4" r="1.6"/><circle cx="17.5" cy="6.5" r="1.6"/><circle cx="19.5" cy="12" r="1.6"/><circle cx="17.5" cy="17.5" r="1.6"/><circle cx="6.5" cy="6.5" r="1.6"/><circle cx="4.5" cy="12" r="1.6"/><circle cx="6.5" cy="17.5" r="1.6"/><path d="M12 19v3M10.5 22h3"/></svg>',
+  clock: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  bag: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>',
+  grid: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg>',
   warn: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7a5b00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg>',
 };
 
@@ -129,7 +134,7 @@ function renderNav(active) {
   const item = (id, href, icon, label) => `<a href="${href}" class="${active === id ? "on" : ""}"${active === id ? ' aria-current="page"' : ""}>${icon}${label}</a>`;
   $nav.innerHTML = item("ara", "#/", ICON.search, "Ara") + item("sure", "#/sureler", ICON.book, "Sureler")
     + item("miras", "#/miras", ICON.scale, "Miras") + item("namaz", "#/namaz", ICON.mosque, "Namaz")
-    + item("kayit", "#/kaydedilenler", ICON.mark, "Kayıtlı");
+    + item("menu", "#/menu", ICON.grid, "Menü");
 }
 
 // ---------------------------------------------------------------------------
@@ -515,6 +520,98 @@ function kibleMetin(pos) {
   return `Kıble, gerçek kuzeyden ${Math.round(q)}° (${K.yonAdi(q)}); pusulada ${Math.round(m)}° · Kâbe'ye ${Math.round(K.distanceKm(pos.lat, pos.lon)).toLocaleString("tr-TR")} km`;
 }
 
+// ---------------------------------------------------------------------------
+// Menü: alt çubuğa sığmayan bölümler
+// ---------------------------------------------------------------------------
+function menuView() {
+  const row = (href, icon, title, hint, meta = "") => `<a class="row mn-row" href="${href}"><span class="mn-l"><span class="mn-ic">${icon}</span><span><b>${esc(title)}</b><br><span class="mn-hint">${esc(hint)}</span></span></span><span class="meta">${meta}›</span></a>`;
+  return `${topbar()}
+  <section class="band"><div class="eyebrow">Menü</div><h1>Rehberin tamamı</h1><div class="sub">Hepsi telefonda çalışır, internet gerekmez</div></section>
+  <main class="content">
+    <section class="panel"><div class="panel-h">Günlük</div><div class="rows">
+      ${row("#/tesbih", ICON.beads, "Tesbih", "Namaz tesbihatı, Esmâü'l-Hüsnâ, kendi zikrin, tesbih atölyesi")}
+      ${row("#/saat", ICON.clock, "Saat", "Kadranlar, kadran atölyesi, hatırlatıcılar, zamanlayıcı")}
+      ${row("#/carsi", ICON.bag, "Çarşı", "Reyon reyon markalar, kaynaklı künye, barkod, listem")}
+    </div></section>
+    <section class="panel"><div class="panel-h">Senin</div><div class="rows">
+      ${row("#/kaydedilenler", ICON.mark, "Kayıtlı ayetler", "Kaydettiğin ayetler", saved.length ? `<span class="count">${saved.length}</span> ` : "")}
+      ${row("#/ayarlar", ICON.gear, "Ayarlar", "Mealler, Arapça metin, tefsir")}
+    </div></section>
+    <div class="made">${esc(MAKER)}</div>
+  </main>`;
+}
+
+const MODULLER = { tesbih: "Tesbih", saat: "Saat" };
+function modulView(ad) {
+  return `${topbar("Menü")}<iframe class="modul" src="moduller/${ad}.html" title="${esc(MODULLER[ad])}"></iframe>`;
+}
+
+// ---------------------------------------------------------------------------
+// Modül köprüsü: moduller/*.html aynı kökenden window.parent.YR'yi kullanır.
+// Konum, vakit ve kıble uygulamanın kendi (Diyanet'le doğrulanmış) hesabından gelir;
+// modül verisi telefonun kalıcı deposunda (Preferences) tutulur.
+// ---------------------------------------------------------------------------
+const MOD_KEYS = ["mrAnduvTesbih.v1", "vakit-v1"];
+const modVeri = {};
+const modYazT = {};
+const SAAT_BASE = 2000, SAAT_MAX = 20, TESBIH_BASE = 3000, TESBIH_MAX = 6;
+
+async function saatBildirimKur() {
+  if (!B.destekli()) return;
+  const now = Date.now() + 5000;
+  const list = (S.saatPlan || []).filter((n) => n.at > now).slice(0, SAAT_MAX)
+    .map((n, i) => ({ id: SAAT_BASE + i, at: new Date(n.at), title: String(n.title).slice(0, 80), body: String(n.body || "").slice(0, 160) }));
+  if (!list.length) { await B.iptal(SAAT_BASE); return; }
+  if (!(await B.izinIste())) return;
+  await B.kur(list, SAAT_BASE);
+}
+
+const TESBIH_VAKIT = [["imsak", "Sabah"], ["ogle", "Öğle"], ["ikindi", "İkindi"], ["aksam", "Akşam"], ["yatsi", "Yatsı"]];
+async function tesbihBildirimKur() {
+  if (!B.destekli()) return;
+  const t = S.tesbihHatir;
+  if (!t || !t.on || !S.konum) { await B.iptal(TESBIH_BASE); return; }
+  const now = new Date(), out = [];
+  for (let g = 0; g < 3 && out.length < TESBIH_MAX; g++) {
+    const d = new Date(now); d.setDate(d.getDate() + g);
+    const tt = V.times(S.konum.lat, S.konum.lon, d);
+    TESBIH_VAKIT.forEach(([k, ad], i) => {
+      const at = new Date(tt[k].getTime() + (t.after || 20) * 60000);
+      if (at > now && out.length < TESBIH_MAX) out.push({ id: TESBIH_BASE + g * 10 + i, at, title: `${ad} namazı sonrası tesbihat`, body: "Sübhânallah, Elhamdülillah, Allâhu Ekber · 33'er kez" });
+    });
+  }
+  if (!(await B.izinIste())) return;
+  await B.kur(out, TESBIH_BASE);
+}
+
+window.YR = {
+  oku: (k) => modVeri[k] ?? null,
+  yaz: (k, v) => {
+    if (!MOD_KEYS.includes(k)) return;
+    modVeri[k] = v;
+    clearTimeout(modYazT[k]);
+    modYazT[k] = setTimeout(() => store.set("mod:" + k, v), 400);
+  },
+  konum: () => (S.konum ? { lat: S.konum.lat, lon: S.konum.lon, ad: "Bulunduğun yer" } : null),
+  vakit: (d) => (S.konum ? V.times(S.konum.lat, S.konum.lon, d || new Date()) : null),
+  git: (h) => { location.hash = h; },
+  saatPlan: async (list) => {
+    S.saatPlan = (Array.isArray(list) ? list : []).filter((n) => n && n.at && n.title).slice(0, SAAT_MAX)
+      .map((n) => ({ at: Number(n.at), title: String(n.title), body: String(n.body || "") }));
+    await store.set("settings", S);
+    saatBildirimKur().catch(() => {});
+  },
+  tesbihAyar: async (on, after) => {
+    const yeni = { on: !!on, after: Math.max(5, Math.min(60, Number(after) || 20)) };
+    if (JSON.stringify(yeni) === JSON.stringify(S.tesbihHatir || { on: false, after: 20 })) return true;
+    if (yeni.on && B.destekli() && !(await B.izinIste())) return false;
+    S.tesbihHatir = yeni;
+    await store.set("settings", S);
+    tesbihBildirimKur().catch(() => {});
+    return true;
+  },
+};
+
 function namazView() {
   const pos = S.konum || null;
   const v = E.verse(E.indexOf(2, 144), mealsOn());
@@ -538,6 +635,7 @@ function namazView() {
       </div>
     </section>
     ${bildirimPanel(pos)}
+    <a class="btn-go btn-dark" href="#/tesbih">${ICON.beads}Namaz sonrası tesbihat</a>
     <section class="panel"><div class="panel-h">Doğru ölçmek için</div><div class="panel-b" style="font-size:14px;line-height:1.55">
       • Telefonu yere paralel, düz tut.<br>
       • Metal eşya, mıknatıslı kılıf ve hoparlörden uzak dur.<br>
@@ -779,7 +877,10 @@ function route() {
   } else if (parts[0] === "ayet") { html = verseView(Number(parts[1]), Number(parts[2])); }
   else if (parts[0] === "sureler") { html = surahsView(); nav = "sure"; }
   else if (parts[0] === "sure") { html = surahView(Number(parts[1])); nav = "sure"; }
-  else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "kayit"; }
+  else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "menu"; }
+  else if (parts[0] === "menu") { html = menuView(); nav = "menu"; }
+  else if (parts[0] === "tesbih" || parts[0] === "saat") { html = modulView(parts[0]); nav = "menu"; }
+  else if (parts[0] === "carsi") { html = carsiRoute(parts); nav = "menu"; if (!html) { location.replace("#/carsi"); return; } }
   else if (parts[0] === "ayarlar") { html = settingsView(); nav = "ayar"; }
   else if (parts[0] === "namaz" || parts[0] === "kible") { html = namazView(); nav = "namaz"; }
   else if (parts[0] === "miras") { html = mirasView(); nav = "miras"; }
@@ -796,6 +897,8 @@ function route() {
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState !== "visible" || !E) return;
   bildirimKur().catch(() => {});
+  saatBildirimKur().catch(() => {});
+  tesbihBildirimKur().catch(() => {});
   if (/^#\/(namaz|kible)/.test(location.hash) && !kible.stop) route();
 });
 
@@ -923,9 +1026,14 @@ async function boot() {
   saved = await store.get("saved", []);
   const kayitliMiras = await store.get("miras", null);
   if (kayitliMiras && typeof kayitliMiras === "object") mg = { ...M.BOS, ...kayitliMiras };
+  for (const k of MOD_KEYS) modVeri[k] = await store.get("mod:" + k, null);
+  await initCarsi({ store, esc, toast, topbar, ICON, MAKER, APP_NAME, rerender: () => route(),
+    fail: (err) => { $app.innerHTML = `${topbar("Menü")}<div class="empty">Çarşı verisi yüklenemedi.<br>${esc(err.message)}</div>`; } });
   document.title = APP_NAME;
   // Bildirimleri her açılışta ileriye doğru yenile (iOS en fazla 64 bekleyen bildirim tutar)
   bildirimKur().catch(() => {});
+  saatBildirimKur().catch(() => {});
+  tesbihBildirimKur().catch(() => {});
   lastHash = location.hash;
   route();
 }

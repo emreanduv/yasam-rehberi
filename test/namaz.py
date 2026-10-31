@@ -44,7 +44,7 @@ def run(date_iso, name):
 r1 = run("2026-10-29T16:05:00+03:00", "ekim")
 print(json.dumps(r1, ensure_ascii=False, indent=1))
 assert r1["rows"][0] == "İmsak05:58" and r1["rows"][4] == "Akşam18:11", r1["rows"]   # Üsküdar
-assert r1["next"].startswith("Sıradaki · Akşam") and r1["n"] == 60 and r1["no_yatsi"] == 0 and r1["after_off"] == 0
+assert r1["next"].startswith("Sıradaki · Akşam") and r1["n"] == 36 and r1["no_yatsi"] == 0 and r1["after_off"] == 0
 r2 = run("2027-02-10T16:05:00+03:00", "ramazan")
 print(json.dumps({k: r2[k] for k in ("next", "first")}, ensure_ascii=False, indent=1))
 assert any("İftar" in x[2] for x in r2["first"]), r2["first"]

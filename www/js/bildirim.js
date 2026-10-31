@@ -34,23 +34,25 @@ export async function tamZamanliAyar() {
   try { await LN()?.changeExactNotificationSetting(); } catch { /* yoksay */ }
 }
 
-async function bizimBekleyenler() {
+// Kimlik aralıkları: 1000–1999 namaz vakitleri, 2000–2999 Saat hatırlatıcıları, 3000–3999 tesbihat hatırlatması.
+// Her modül yalnız kendi aralığını siler ve kurar.
+async function bizimBekleyenler(base) {
   const ln = LN();
   const { notifications } = await ln.getPending();
-  return notifications.filter((n) => n.id >= ID_BASE && n.id < ID_BASE + 1000);
+  return notifications.filter((n) => n.id >= base && n.id < base + 1000);
 }
 
-export async function iptal() {
+export async function iptal(base = ID_BASE) {
   const ln = LN();
   if (!ln) return;
-  const list = await bizimBekleyenler();
+  const list = await bizimBekleyenler(base);
   if (list.length) await ln.cancel({ notifications: list.map((n) => ({ id: n.id })) });
 }
 
-export async function kur(list) {
+export async function kur(list, base = ID_BASE) {
   const ln = LN();
   if (!ln) return 0;
-  await iptal();
+  await iptal(base);
   if (!list.length) return 0;
   await ln.schedule({
     notifications: list.map((n) => ({

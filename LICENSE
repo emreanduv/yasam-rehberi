@@ -29,7 +29,8 @@ SOFTWARE.
 - Arapça metin: Tanzil Quran Text, Tanzil.net — Creative Commons Attribution 3.0.
   Birebir kopyalanabilir, değiştirilemez; kaynak ve http://tanzil.net bağlantısı
   belirtilmelidir.
-- Yazı tipleri (www/fonts/): PT Sans, PT Sans Narrow, Amiri — SIL Open Font License 1.1.
+- Yazı tipleri (www/fonts/): PT Sans, PT Sans Narrow, Amiri, Cormorant Garamond, Bebas Neue, Share Tech Mono, VT323 — SIL Open Font License 1.1.
+- Çarşı verisi (www/data/carsi.json): Wikidata (CC0 1.0); marka seçimi Türkçe Vikipedi kategorilerinden.
 - Namaz vakti hesabı (www/js/vendor/adhan.js): adhan-js — MIT Lisansı (www/js/vendor/adhan-LICENSE.txt).
 - Manyetik sapma (www/js/vendor/wmm.js): geomagnetism — Apache 2.0 (www/js/vendor/geomagnetism-LICENSE.txt);
   World Magnetic Model 2025 katsayıları NOAA/NCEI — ABD kamu malı.
