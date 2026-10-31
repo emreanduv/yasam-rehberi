@@ -81,3 +81,7 @@
 - Android toplu sürümde kontrol: ML Kit barkod tarayıcısının Play "Veri güvenliği" beyanına etkisi; CAMERA izni.
 - Mac'teki ~/yasam-rehberi kopyası eski (a608883) ve commitlenmemiş Çarşı değişiklikleri içeriyor; bunlar artık GitHub'da. Mac'te `git stash` ya da yeniden klonlama gerekecek.
 - 31.10 sabah: alt menü Ara · Sureler · Namaz · Tesbih · Menü (kullanıcının isteği); Menü: Saat, Çarşı, Miras + Kayıtlı ayetler, Ayarlar. Namaz ekranındaki tesbihat kısayolu kaldırıldı (Tesbih artık sekme).
+- 01.11: Çarşı taraması (Wikidata, merkezi Türkiye + Vikipedi sayfası olan 459 kayıt → listede olmayan 284'ten tüketiciye dönük 28'i eklendi; banka, holding, savunma, enerji, alkol/tütün bilerek dışarıda). File (BİM), Turkcell, Vodafone, KVK, Hepsiburada, BiTaksi, Cimri, kargolar, Kâmil Koç, Metro Turizm, Brisa, Türk Traktör, Oyak-Renault, lokantalar… Toplam 255 marka. Sahiplik düzeltmeleri carsi_veri.mjs FIX'te (Aras→Avusturya Postası, Kâmil Koç→FlixBus, Hepsiburada→Kaspi.kz, Viko→Panasonic…).
+- Çarşı: bir marka birden fazla reyonda görünebilir (carsi.js EK_REYON: Teknosa ve Vatan Teknoloji'de de, KVK Market'te de).
+- Wikidata'ya buluttan/Mac terminalinden erişim kapalıysa: `node tools/carsi_veri.mjs --sorgu` → query.wikidata.org'da çalıştır → `CARSI_JSON=sonuc.json npm run carsi`.
+- NOT (öbür sohbetler): Çarşı'ya dokunmadan önce `git pull`; carsi.json 01.11 itibarıyla 255 kayıt.

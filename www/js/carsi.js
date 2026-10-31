@@ -21,8 +21,10 @@ const ULKE = {
   Q43: "Türkiye", Q30: "ABD", Q145: "Birleşik Krallık", Q183: "Almanya", Q142: "Fransa", Q55: "Hollanda",
   Q38: "İtalya", Q17: "Japonya", Q155: "Brezilya", Q148: "Çin", Q29: "İspanya", Q884: "Güney Kore",
   Q227: "Azerbaycan", Q851: "Suudi Arabistan", Q159: "Rusya", Q833: "Malezya", Q41: "Yunanistan",
-  Q846: "Katar", Q32: "Lüksemburg", Q39: "İsviçre", Q31: "Belçika",
+  Q846: "Katar", Q32: "Lüksemburg", Q39: "İsviçre", Q31: "Belçika", Q40: "Avusturya", Q232: "Kazakistan",
 };
+// Birden fazla reyonda görünecek markalar (ör. teknoloji mağazaları hem "Market ve mağaza"da hem "Teknoloji"de)
+const EK_REYON = { Q6559269: ["teknoloji"], Q6048050: ["teknoloji"], Q6017141: ["market"] };
 const MAX_LIST = 200;
 const ICON_KAMERA = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8v8M10 8v8M13 8v8M16 8v8"/></svg>';
 
@@ -36,7 +38,7 @@ const ui = { q: "", barkod: "", barkodTam: false };
 const fold = (s) => String(s || "").toLocaleLowerCase("tr").normalize("NFD").replace(/[̀-ͯ]/g, "")
   .replace(/ı/g, "i").replace(/[^a-z0-9]+/g, " ").trim();
 const reyon = (id) => REYON.find((r) => r[0] === id);
-const byReyon = (id) => D.items.filter((x) => x.r === id).sort((a, b) => a.n.localeCompare(b.n, "tr"));
+const byReyon = (id) => D.items.filter((x) => x.r === id || (EK_REYON[x.id] || []).includes(id)).sort((a, b) => a.n.localeCompare(b.n, "tr"));
 const ortakYurtdisi = (x) => (x.o || []).filter((o) => o[1] && o[1] !== "Q43");
 const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } };
 const wpUrl = (t) => `https://tr.wikipedia.org/wiki/${encodeURIComponent(t)}`;
