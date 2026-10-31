@@ -285,7 +285,11 @@ body.focus .exitFocus { display: inline-block; }
   --ink: #1f2328; --muted: #5e5645; --go: #2e7d46; --go-2: #1f5a31; --gold: #c9a227; }
 body, body::before { background: #1e2226; }
 .top { background: #1d4d36; border-bottom: 3px solid var(--gold); }
-.gomulu .top { position: static; }
+.gomulu .top { position: static; padding-block: 10px; padding-left: 16px; padding-right: 16px; }
+.gomulu .wrap { padding-left: 16px; padding-right: 16px; }
+.gomulu body.focus .counter-panel .body { min-height: calc(100vh - 60px); }
+.targets button, .mats button { color: var(--ink); }
+.targets button[aria-pressed="true"] { color: #fff; }
 </style>
 
 <div class="top">
