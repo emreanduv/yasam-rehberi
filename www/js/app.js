@@ -133,7 +133,7 @@ function verseCard(v, terms) {
 function renderNav(active) {
   const item = (id, href, icon, label) => `<a href="${href}" class="${active === id ? "on" : ""}"${active === id ? ' aria-current="page"' : ""}>${icon}${label}</a>`;
   $nav.innerHTML = item("ara", "#/", ICON.search, "Ara") + item("sure", "#/sureler", ICON.book, "Sureler")
-    + item("miras", "#/miras", ICON.scale, "Miras") + item("namaz", "#/namaz", ICON.mosque, "Namaz")
+    + item("namaz", "#/namaz", ICON.mosque, "Namaz") + item("tesbih", "#/tesbih", ICON.beads, "Tesbih")
     + item("menu", "#/menu", ICON.grid, "Menü");
 }
 
@@ -529,9 +529,9 @@ function menuView() {
   <section class="band"><div class="eyebrow">Menü</div><h1>Rehberin tamamı</h1><div class="sub">Hepsi telefonda çalışır, internet gerekmez</div></section>
   <main class="content">
     <section class="panel"><div class="panel-h">Günlük</div><div class="rows">
-      ${row("#/tesbih", ICON.beads, "Tesbih", "Namaz tesbihatı, Esmâü'l-Hüsnâ, kendi zikrin, tesbih atölyesi")}
       ${row("#/saat", ICON.clock, "Saat", "Kadranlar, kadran atölyesi, hatırlatıcılar, zamanlayıcı")}
       ${row("#/carsi", ICON.bag, "Çarşı", "Reyon reyon markalar, kaynaklı künye, barkod, listem")}
+      ${row("#/miras", ICON.scale, "Miras", "Feraiz ve Türk Medeni Kanunu'na göre paylaşım hesabı")}
     </div></section>
     <section class="panel"><div class="panel-h">Senin</div><div class="rows">
       ${row("#/kaydedilenler", ICON.mark, "Kayıtlı ayetler", "Kaydettiğin ayetler", saved.length ? `<span class="count">${saved.length}</span> ` : "")}
@@ -543,7 +543,7 @@ function menuView() {
 
 const MODULLER = { tesbih: "Tesbih", saat: "Saat" };
 function modulView(ad) {
-  return `${topbar("Menü")}<iframe class="modul" src="moduller/${ad}.html" title="${esc(MODULLER[ad])}"></iframe>`;
+  return `${ad === "tesbih" ? topbar() : topbar("Menü")}<iframe class="modul" src="moduller/${ad}.html" title="${esc(MODULLER[ad])}"></iframe>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -635,7 +635,6 @@ function namazView() {
       </div>
     </section>
     ${bildirimPanel(pos)}
-    <a class="btn-go btn-dark" href="#/tesbih">${ICON.beads}Namaz sonrası tesbihat</a>
     <section class="panel"><div class="panel-h">Doğru ölçmek için</div><div class="panel-b" style="font-size:14px;line-height:1.55">
       • Telefonu yere paralel, düz tut.<br>
       • Metal eşya, mıknatıslı kılıf ve hoparlörden uzak dur.<br>
@@ -804,7 +803,7 @@ function mirasView() {
   const v = (s, a) => { const x = E.verse(E.indexOf(s, a), mealsOn()); return x; };
   const ayetler = [[4, 11], [4, 12], [4, 176]].map(([s, a]) => { const x = v(s, a); const t0 = Object.keys(x.texts)[0];
     return `<a class="row" href="#/ayet/${s}/${a}" style="align-items:flex-start"><span style="flex:none;width:58px;font-weight:700;color:var(--band)">${s}:${a}</span><span style="flex:1;font-size:14px;line-height:1.45">${esc(excerpt(x.texts[t0], 170))}</span></a>`; }).join("");
-  return `${topbar()}
+  return `${topbar("Menü")}
   <section class="band">
     <div class="eyebrow">Miras</div>
     <h1>Kime ne düşer?</h1>
@@ -879,11 +878,11 @@ function route() {
   else if (parts[0] === "sure") { html = surahView(Number(parts[1])); nav = "sure"; }
   else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "menu"; }
   else if (parts[0] === "menu") { html = menuView(); nav = "menu"; }
-  else if (parts[0] === "tesbih" || parts[0] === "saat") { html = modulView(parts[0]); nav = "menu"; }
+  else if (parts[0] === "tesbih" || parts[0] === "saat") { html = modulView(parts[0]); nav = parts[0] === "tesbih" ? "tesbih" : "menu"; }
   else if (parts[0] === "carsi") { html = carsiRoute(parts); nav = "menu"; if (!html) { location.replace("#/carsi"); return; } }
   else if (parts[0] === "ayarlar") { html = settingsView(); nav = "ayar"; }
   else if (parts[0] === "namaz" || parts[0] === "kible") { html = namazView(); nav = "namaz"; }
-  else if (parts[0] === "miras") { html = mirasView(); nav = "miras"; }
+  else if (parts[0] === "miras") { html = mirasView(); nav = "menu"; }
   else { html = homeView(); }
   if (!html) return;
   kibleStop();

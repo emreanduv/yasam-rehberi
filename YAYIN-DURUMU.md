@@ -80,3 +80,4 @@
 - Testler: test/moduller.py (internetsiz açılış, vakit eşitliği, bildirim aralıkları, kalıcı depo, yönlendirmeler) + mevcut testler geçti.
 - Android toplu sürümde kontrol: ML Kit barkod tarayıcısının Play "Veri güvenliği" beyanına etkisi; CAMERA izni.
 - Mac'teki ~/yasam-rehberi kopyası eski (a608883) ve commitlenmemiş Çarşı değişiklikleri içeriyor; bunlar artık GitHub'da. Mac'te `git stash` ya da yeniden klonlama gerekecek.
+- 31.10 sabah: alt menü Ara · Sureler · Namaz · Tesbih · Menü (kullanıcının isteği); Menü: Saat, Çarşı, Miras + Kayıtlı ayetler, Ayarlar. Namaz ekranındaki tesbihat kısayolu kaldırıldı (Tesbih artık sekme).

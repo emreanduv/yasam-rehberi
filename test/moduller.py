@@ -52,7 +52,7 @@ with sync_playwright() as p:
     fr.locator("#qSensor").click(); pg.wait_for_timeout(400); kible_hash = pg.evaluate("location.hash")
 
     # --- Tesbih ---
-    pg.goto("http://localhost:8765/index.html#/tesbih"); pg.wait_for_selector("iframe.modul")
+    pg.click(".nav a >> text=Tesbih"); pg.wait_for_selector("iframe.modul")
     fr = pg.frame_locator("iframe.modul"); fr.locator("#vakitList li").first.wait_for()
     tv = fr.locator("#vakitList").inner_text().split()
     for _ in range(7): fr.locator("#ring").click()
@@ -78,7 +78,7 @@ r = dict(menu=menu, namaz=namaz, saat_vakit=saat_vakit, prayer_btn=prayer_btn, r
          tm=tm, stored_reminders=len(stored["reminders"]) if stored else None, kible_hash=kible_hash, tesbih_vakit=tv, big=big, big2=big2,
          tes=tes, ayet_hash=ayet_hash, tes_off=tes_off, carsi=carsi, total=total, namaz2=namaz2, errors=errs)
 print(json.dumps(r, ensure_ascii=False, indent=1))
-assert menu[:3] == ["Tesbih", "Saat", "Çarşı"], menu
+assert menu[:3] == ["Saat", "Çarşı", "Miras"], menu
 assert namaz == 36 and namaz2 == 36, (namaz, namaz2)
 # Üsküdar 29.10.2026 — Namaz sekmesi testindeki değerlerle aynı (İmsak 05:58, Akşam 18:11)
 assert saat_vakit[saat_vakit.index("İMSAK") + 1] == "05:58" or saat_vakit[saat_vakit.index("İmsak") + 1] == "05:58", saat_vakit
