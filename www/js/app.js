@@ -99,7 +99,10 @@ function toast(msg) {
 
 const mealsOn = () => S.meals.filter((t) => E.meals.includes(t));
 
+// Ana sayfa dışındaki her ekranda sol üstte geri düğmesi olur (sekmeler değişse de geçerli kalsın diye)
+const anaSayfa = () => !location.hash || /^#\/?$/.test(location.hash);
 function topbar(left = "brand") {
+  if (left === "brand" && !anaSayfa()) left = "Geri";
   const l = left === "brand"
     ? `<span class="brand">${esc(APP_NAME)}</span>`
     : `<button class="back" data-act="back">${ICON.back}${esc(left)}</button>`;
