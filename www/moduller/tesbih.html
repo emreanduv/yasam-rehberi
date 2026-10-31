@@ -285,6 +285,8 @@ body.focus .exitFocus { display: inline-block; }
   --ink: #1f2328; --muted: #5e5645; --go: #2e7d46; --go-2: #1f5a31; --gold: #c9a227; }
 body, body::before { background: #1e2226; }
 .top { background: #1d4d36; border-bottom: 3px solid var(--gold); }
+.foot { font-style: italic; color: #d4a017; font-size: 13px; letter-spacing: 0; }
+.uSign { font-style: italic; color: #8a6d12; }
 .gomulu .top { position: static; padding-block: 10px; padding-left: 16px; padding-right: 16px; }
 .gomulu .wrap { padding-left: 16px; padding-right: 16px; }
 .gomulu body.focus .counter-panel .body { min-height: calc(100vh - 60px); }
@@ -453,7 +455,7 @@ body, body::before { background: #1e2226; }
   </div>
 </main>
 
-<div class="foot"><span class="badge">Mr. Anduv!</span>Bir Mr. Anduv! yapımıdır.</div>
+<div class="foot">Bir Mr. Anduv! yapımıdır.</div>
 <div class="modal" id="designer" hidden role="dialog" aria-modal="true" aria-labelledby="h-design">
   <section class="panel sheet">
     <header><span id="h-design">Tesbih tasarla</span><button class="x" id="dClose" type="button">Kapat ✕</button></header>
@@ -501,7 +503,7 @@ body, body::before { background: #1e2226; }
       <div class="dcode"><span>Kod</span><strong id="uCode"></strong></div>
       <div class="controls left"><button class="btn go" id="uCopy" type="button">Ölçüleri kopyala</button></div>
       <p class="uNote">Bu kartı bir tesbih ustasına göster ya da gönder; ölçüler yaklaşıktır, son kararı usta verir.</p>
-      <p class="uSign"><span class="badge">Mr. Anduv!</span>Bir Mr. Anduv! yapımıdır.</p>
+      <p class="uSign">Bir Mr. Anduv! yapımıdır.</p>
     </div>
   </section>
 </div>
