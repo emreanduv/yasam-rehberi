@@ -2,7 +2,7 @@
 // Kullanım (Mac terminali, internet gerekir): npm run carsi
 // Seçim: Türkçe Vikipedi'nin "Türkiye merkezli ... şirketleri" / "Türk ... markaları" kategorilerinden elle seçilmiş tüketici markaları.
 // Bilerek dışarıda: alkol, tütün, banka/finans, savunma, holding, kapanmış şirketler.
-import { writeFileSync } from "node:fs";
+import { writeFileSync, readFileSync } from "node:fs";
 
 const PICK = {
   gida: "Q334789 Q6090589 Q6049099 Q63209808 Q5994473 Q31190884 Q119442968 Q118496649 Q19613996 Q65219957 Q65219971 Q65219984 Q17513065 Q20471706 Q6033790 Q6031553 Q118929542 Q6009987 Q118929548 Q118929547 Q109383852 Q20472507 Q123784262 Q4779832 Q20474291 Q118929382 Q12810467 Q25475766 Q104853262 Q118946806 Q6012986 Q118946921 Q118946919 Q25478119 Q6096616 Q6772111 Q65220186 Q6051584",
@@ -65,7 +65,9 @@ for (const [r, list] of Object.entries(PICK)) for (const id of list.split(" ")) 
     w: pickWeb(e.web), wp: e.wp || null, o: o.length ? o : null, ...(FIX[id] || {}) };
   items.push([id, it.n, r, it.y, it.m, it.w, it.wp, it.o]);
 }
+// Wikidata'da kaydı olmayan, kaynağıyla elle girilmiş markalar (ör. saat reyonu)
+for (const it of JSON.parse(readFileSync(new URL("./carsi_elle.json", import.meta.url), "utf8")).items) items.push(it);
 const today = new Date().toISOString().slice(0, 10);
-const out = `{"meta":${JSON.stringify({ kaynak: "Wikidata (CC0) + Türkçe Vikipedi kategori üyelikleri", guncelleme: today, not: "Kuruluş, merkez ve sahiplik bilgileri Wikidata'dan olduğu gibi alınmıştır." })},\n"items":[\n${items.map((i) => JSON.stringify(i)).join(",\n")}\n]}\n`;
+const out = `{"meta":${JSON.stringify({ kaynak: "Wikidata (CC0) + Türkçe Vikipedi kategori üyelikleri + kaynaklı elle kayıtlar (tools/carsi_elle.json)", guncelleme: today, not: "Kuruluş, merkez ve sahiplik bilgileri Wikidata'dan olduğu gibi alınmıştır." })},\n"items":[\n${items.map((i) => JSON.stringify(i)).join(",\n")}\n]}\n`;
 writeFileSync(new URL("../www/data/carsi.json", import.meta.url), out);
 console.log(`${items.length} marka yazıldı → www/data/carsi.json (${today}). Değişen web siteleri ve sahiplikleri gözden geçir.`);

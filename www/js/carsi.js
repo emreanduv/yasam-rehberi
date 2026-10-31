@@ -26,7 +26,7 @@ const ULKE = {
 const MAX_LIST = 200;
 const ICON_KAMERA = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 8v8M10 8v8M13 8v8M16 8v8"/></svg>';
 
-let D = null;            // { meta, items: [{id,n,r,y,m,w,wp,o}] }
+let D = null;            // { meta, items: [{id,n,r,y,m,w,wp,o,src}] } · src: elle kayıtların kaynağı (Wikidata dışı, id "x-…")
 let loading = null;
 let liste = [];          // kullanıcının listesi (marka kimlikleri)
 let ctx = null;          // app.js'ten gelen yardımcılar
@@ -41,6 +41,7 @@ const ortakYurtdisi = (x) => (x.o || []).filter((o) => o[1] && o[1] !== "Q43");
 const host = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; } };
 const wpUrl = (t) => `https://tr.wikipedia.org/wiki/${encodeURIComponent(t)}`;
 const wdUrl = (q) => `https://www.wikidata.org/wiki/${q}`;
+const isWD = (x) => /^Q\d+$/.test(x.id);   // Wikidata kaydı mı, kaynaklı elle kayıt mı
 
 export async function initCarsi(c) {
   ctx = c;
@@ -50,7 +51,7 @@ export async function initCarsi(c) {
 function load() {
   if (!loading) {
     loading = fetch("data/carsi.json").then((r) => r.json()).then((j) => {
-      D = { meta: j.meta, items: j.items.map(([id, n, r, y, m, w, wp, o]) => ({ id, n, r, y, m, w, wp, o, k: fold(n) })) };
+      D = { meta: j.meta, items: j.items.map(([id, n, r, y, m, w, wp, o, src]) => ({ id, n, r, y, m, w, wp, o, src, k: fold(n) })) };
     });
   }
   return loading;
@@ -116,7 +117,7 @@ function initials(n) {
 }
 
 function credits() {
-  return `<div class="credits">Kaynak: <a href="https://www.wikidata.org">Wikidata</a> (CC0) ve Türkçe Vikipedi kategorileri · Güncelleme ${ctx.esc(D.meta.guncelleme.split("-").reverse().join("."))}. Bilgi eksik ya da yanlışsa markanın Wikidata sayfasından herkes düzeltebilir.</div>`;
+  return `<div class="credits">Kaynak: <a href="https://www.wikidata.org">Wikidata</a> (CC0), Türkçe Vikipedi kategorileri ve kaynağı belirtilen elle kayıtlar · Güncelleme ${ctx.esc(D.meta.guncelleme.split("-").reverse().join("."))}. Bilgi eksik ya da yanlışsa markanın Wikidata sayfasından herkes düzeltebilir.</div>`;
 }
 
 function homeView() {
@@ -181,8 +182,9 @@ function reyonView(id) {
   const r = reyon(id);
   if (!r) return null;
   const list = byReyon(id);
+  const atolye = id === "saat" ? `<a class="btn-go btn-dark" href="#/saat">${ctx.ICON.clock}Kendi kadranını tasarla: Saat › Kadran atölyesi</a>` : "";
   const body = list.length
-    ? `<section class="panel"><div class="panel-h">${ctx.esc(r[1])} <span class="count">${list.length}</span></div><div class="rows">${list.map((x) => brandRow(x)).join("")}</div></section>`
+    ? `<section class="panel"><div class="panel-h">${ctx.esc(r[1])} <span class="count">${list.length}</span></div><div class="rows">${list.map((x) => brandRow(x)).join("")}</div></section>${atolye}`
     : id === "saat"
       ? `<div class="warn">${ctx.ICON.warn}<div>Açık kaynaklarda bu reyon için henüz yeterli kayıt yok. Saat markaları Wikidata'ya eklendikçe burada görünecek.</div></div>
          <a class="btn-go btn-dark" href="#/saat">${ctx.ICON.clock}Kendi kadranını tasarla: Saat › Kadran atölyesi</a>`
@@ -216,16 +218,19 @@ function markaView(id) {
         ${row("Merkez", ctx.esc(x.m || ""))}
         ${row("Bağlı olduğu", owners)}
         ${row("Web sitesi", x.w ? `<a href="${ctx.esc(x.w)}" rel="noopener">${ctx.esc(host(x.w))}</a>` : "")}
+        ${x.src ? row("Kaynak", `<a href="${ctx.esc(x.src)}" rel="noopener">${ctx.esc(host(x.src))}</a>`) : ""}
       </tbody></table>
     </section>
     <div class="actions c-actions">
       <button class="btn-go" data-act="c-liste" data-id="${x.id}">${inList ? ctx.ICON.markOn + "Listende" : ctx.ICON.mark + "Listeme ekle"}</button>
       ${x.wp ? `<a class="btn-go btn-dark" href="${wpUrl(x.wp)}" rel="noopener">${ctx.ICON.book}Vikipedi</a>` : ""}
-      <a class="btn-go btn-dark" href="${wdUrl(x.id)}" rel="noopener">${ctx.ICON.note}Düzelt</a>
+      ${isWD(x) ? `<a class="btn-go btn-dark" href="${wdUrl(x.id)}" rel="noopener">${ctx.ICON.note}Düzelt</a>` : ""}
     </div>
     ${near.length ? `<section class="panel"><div class="panel-h">Aynı reyonda</div><div class="rows">${near.map((o) => brandRow(o)).join("")}</div>
       ${others.length > near.length ? `<a class="row" href="#/carsi/r/${x.r}"><b>Tümünü gör</b><span class="meta">${others.length + 1} marka ›</span></a>` : ""}</section>` : ""}
-    <div class="credits">Bu sayfadaki bilgiler Wikidata kaydı <a href="${wdUrl(x.id)}">${x.id}</a>'den alınmıştır (güncelleme ${ctx.esc(D.meta.guncelleme.split("-").reverse().join("."))}).</div>
+    <div class="credits">${isWD(x)
+      ? `Bu sayfadaki bilgiler Wikidata kaydı <a href="${wdUrl(x.id)}">${x.id}</a>'den alınmıştır (güncelleme ${ctx.esc(D.meta.guncelleme.split("-").reverse().join("."))}).`
+      : `Bu marka Wikidata'da kayıtlı değil; bilgiler <a href="${ctx.esc(x.src || x.w || "")}">${ctx.esc(host(x.src || x.w || ""))}</a> kaynağından elle girildi, bilinmeyen alanlar boş bırakıldı.`}</div>
   </main>`;
 }
 

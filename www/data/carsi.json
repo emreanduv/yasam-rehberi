@@ -1,4 +1,4 @@
-{"meta":{"kaynak":"Wikidata (CC0) + Türkçe Vikipedi kategori üyelikleri","guncelleme":"2026-10-31","not":"Kuruluş, merkez ve sahiplik bilgileri Wikidata'dan olduğu gibi alınmıştır."},
+{"meta":{"kaynak":"Wikidata (CC0) + Türkçe Vikipedi kategori üyelikleri + kaynaklı elle kayıtlar (tools/carsi_elle.json)","guncelleme":"2026-10-31","not":"Kuruluş, merkez ve sahiplik bilgileri Wikidata'dan olduğu gibi alınmıştır."},
 "items":[
 ["Q334789","Ülker","gida",1944,"İstanbul","http://www.ulker.com.tr/","Ülker_(şirket)",[["Yıldız Holding","Q43"]]],
 ["Q6090589","Eti","gida",1962,"Eskişehir","http://www.etietieti.com/","Eti_(şirket)",null],
@@ -193,5 +193,15 @@
 ["Q19313474","Etstur","yolculuk",1991,"İstanbul","http://www.etstur.com","Etstur",null],
 ["Q20471091","Jolly Tur","yolculuk",null,null,"http://www.jollytur.com/","Jolly_Tur",null],
 ["Q2905397","İstanbul Deniz Otobüsleri","yolculuk",1987,"Yalova","http://www.ido.com.tr","İstanbul_Deniz_Otobüsleri",null],
-["Q3079259","PTT","yolculuk",1840,"Ankara","https://www.ptt.gov.tr/","PTT",null]
+["Q3079259","PTT","yolculuk",1840,"Ankara","https://www.ptt.gov.tr/","PTT",null],
+["x-nacar","Nacar","saat",1921,null,"https://www.nacar.com.tr",null,[["Nalçacı ailesi (Konyalı Saat)",""]],"https://www.hurriyet.com.tr/gundem/turk-saati-sanilan-nacar-nasil-turk-markasi-oldu-38505431"],
+["x-quantum","Quantum","saat",1996,null,null,null,null,"https://www.ablogtowatch.com/the-first-istanbul-watch-festival-and-celebrating-30-years-of-quantum-watches/"],
+["x-momentus","Momentus","saat",null,null,null,null,null,"https://www.yerlituket.com/kol-saati-c-728"],
+["x-hislon","Hislon","saat",null,null,"https://hislon.com",null,null,"https://www.yerlituket.com/kol-saati-c-728"],
+["x-serhat-saat","Serhat Saat","saat",null,null,"https://serhatsaat.com",null,null,"https://serhatsaat.com/en"],
+["x-taf-watch","TAF Watch","saat",null,null,"https://tafwatch.com",null,null,"https://tafwatch.com"],
+["x-pomander","Pomander","saat",null,null,"https://www.pomander.com.tr",null,null,"https://www.pomander.com.tr"],
+["x-svenn","Svenn","saat",null,"İzmir","https://ahsapsaat.com",null,null,"https://ahsapsaat.com"],
+["x-zebrino","Zebrino","saat",null,null,"https://www.kargunlar.com",null,null,"https://www.kargunlar.com"],
+["x-dice-kayek","Dice Kayek","saat",null,null,"https://dicekayekwatches.com/tr",null,null,"https://dicekayekwatches.com/tr"]
 ]}
