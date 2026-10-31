@@ -1,0 +1,15 @@
+{
+  "not": "Wikidata'da kaydı olmayan markalar. Her kayıt yanındaki kaynakta yazanla sınırlıdır; bilinmeyen alan boş (null) bırakılır. npm run carsi bu dosyayı da carsi.json'a ekler.",
+  "items": [
+    ["x-nacar", "Nacar", "saat", 1921, null, "https://www.nacar.com.tr", null, [["Nalçacı ailesi (Konyalı Saat)", ""]], "https://www.hurriyet.com.tr/gundem/turk-saati-sanilan-nacar-nasil-turk-markasi-oldu-38505431"],
+    ["x-quantum", "Quantum", "saat", 1996, null, null, null, null, "https://www.ablogtowatch.com/the-first-istanbul-watch-festival-and-celebrating-30-years-of-quantum-watches/"],
+    ["x-momentus", "Momentus", "saat", null, null, null, null, null, "https://www.yerlituket.com/kol-saati-c-728"],
+    ["x-hislon", "Hislon", "saat", null, null, "https://hislon.com", null, null, "https://www.yerlituket.com/kol-saati-c-728"],
+    ["x-serhat-saat", "Serhat Saat", "saat", null, null, "https://serhatsaat.com", null, null, "https://serhatsaat.com/en"],
+    ["x-taf-watch", "TAF Watch", "saat", null, null, "https://tafwatch.com", null, null, "https://tafwatch.com"],
+    ["x-pomander", "Pomander", "saat", null, null, "https://www.pomander.com.tr", null, null, "https://www.pomander.com.tr"],
+    ["x-svenn", "Svenn", "saat", null, "İzmir", "https://ahsapsaat.com", null, null, "https://ahsapsaat.com"],
+    ["x-zebrino", "Zebrino", "saat", null, null, "https://www.kargunlar.com", null, null, "https://www.kargunlar.com"],
+    ["x-dice-kayek", "Dice Kayek", "saat", null, null, "https://dicekayekwatches.com/tr", null, null, "https://dicekayekwatches.com/tr"]
+  ]
+}
