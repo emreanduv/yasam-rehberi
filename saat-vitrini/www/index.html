@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1e22">
+<title>Saat Vitrini</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+  <header class="band">
+    <div class="crest" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="34" r="20" fill="#fff"/><circle cx="32" cy="34" r="20" fill="none" stroke="#173b40" stroke-width="5"/><rect x="24" y="4" width="16" height="9" rx="3" fill="#173b40"/><path d="M32 34V22M32 34l8 5" stroke="#173b40" stroke-width="4" stroke-linecap="round"/></svg></div>
+    <div class="band-txt">
+      <h1 id="hBaslik">Saat Vitrini</h1>
+      <div class="band-sub" id="hAlt">yükleniyor…</div>
+    </div>
+    <div class="imza">Bir <b>Mr. Anduv!</b> yapımıdır.</div>
+  </header>
+
+  <main id="ekran"></main>
+
+  <nav class="tabbar" id="tabbar">
+    <button data-s="vitrin" class="on"><i>⌚</i><span>Vitrin</span></button>
+    <button data-s="takip"><i>♥</i><span>Takip</span><b id="takipSay" hidden></b></button>
+    <button data-s="kose"><i>🧭</i><span>Köşe</span></button>
+    <button data-s="bilgi"><i>ℹ︎</i><span>Bilgi</span></button>
+  </nav>
+
+  <div class="sheet" id="sheet" hidden><div class="sheet-bg" data-kapat></div><div class="sheet-in" id="sheetIn"></div></div>
+  <div class="toast" id="toast" hidden></div>
+</div>
+<script src="js/app.js"></script>
+</body>
+</html>

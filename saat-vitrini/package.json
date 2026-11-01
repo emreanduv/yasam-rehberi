@@ -1,0 +1,30 @@
+{
+  "name": "saat-vitrini",
+  "version": "1.0.0",
+  "description": "Saat Vitrini — Türkiye'de markaların kendi mağazalarında ve kurumsal saatçilerde satılan saatlerin vitrini (iOS + Android, Capacitor). Bir Mr. Anduv! yapımıdır.",
+  "private": true,
+  "scripts": {
+    "serve": "python3 -m http.server 8790 --directory www",
+    "veri": "python3 tools/veri_guncelle.py veri",
+    "fontlar": "node tools/fontlar.mjs",
+    "sync": "npx cap sync",
+    "android": "npx cap open android",
+    "ios": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/app": "^7.0.2",
+    "@capacitor/browser": "^7.0.2",
+    "@capacitor/core": "^7.6.9",
+    "@capacitor/local-notifications": "^7.0.7",
+    "@capacitor/preferences": "^7.0.4"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^7.6.9",
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.6.9",
+    "@capacitor/ios": "^7.6.9",
+    "@fontsource/barlow-condensed": "^5.3.0",
+    "@fontsource/dm-sans": "^5.3.0",
+    "@fontsource/pacifico": "^5.3.0"
+  }
+}

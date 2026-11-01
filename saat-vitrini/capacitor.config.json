@@ -1,0 +1,9 @@
+{
+  "appId": "com.anduv.saatvitrini",
+  "appName": "Saat Vitrini",
+  "webDir": "www",
+  "backgroundColor": "#0b1e22",
+  "android": { "backgroundColor": "#0b1e22" },
+  "ios": { "backgroundColor": "#0b1e22", "contentInset": "never" },
+  "plugins": { "LocalNotifications": { "iconColor": "#ed713c" } }
+}
