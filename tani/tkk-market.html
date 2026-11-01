@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tarım Kredi</title>
+<meta name="description" content="Tarım Kredi Grubu 1863'ten bu yana çiftçinin ve üreticinin yanında olan binlerce kooperatifi ve iştirakleriyle Türk üreticilerin gücüne güç katmaya devam ediyor">
+<meta name="keywords" content="tarım kred, kooperatif, çiftçi">
+
+<!--Meta Propertys-->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tarım Kredi">
+    <meta property="og:title" content="Tarım Kredi">
+    <meta property="og:image" content="">
+<!--Meta Propertys End-->
+<meta name="google-site-verification" content="NgIUfqKu8lhsiDIAG1D69QIswVp2iFuZe9onyf1iGBg" />
+<!--Alternate Links-->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-01LKSVJ8DT"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-01LKSVJ8DT');
+</script>     <link rel="icon" href="https://tarimkredi.org.tr/assets/front/images/merkez-symbol.png" type="image/x-icon">
+ <!-- CSS here -->
+ <!-- CSS here -->
+ <link rel="stylesheet" href="https://tarimkredi.org.tr/assets/front/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://tarimkredi.org.tr/assets/front/css/swiper-bundle.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <link rel="stylesheet" href="https://tarimkredi.org.tr/assets/front/css/tarim-kredi.css?v=12">
+ <link rel="stylesheet" href="https://tarimkredi.org.tr/assets/front/css/responsive.css?v=12">
+ <link rel="stylesheet" href="https://tarimkredi.org.tr/assets/front/css/custom.css?v=12">
+ <!-- CSS here -->
+ <!-- CSS here -->
+ <style>
+    .groups-v2 {
+        padding: 80px 0;
+        overflow: hidden;
+    }
+
+    .groups-v2 .info-cover {
+        position: relative;
+        text-align: center;
+        overflow: hidden;
+        border-radius: 80px 0 0 0;
+    }
+
+    .groups-v2 .info-cover.right {
+        border-radius: 0 80px 0 0;
+    }
+
+    .groups-v2 .info-cover h2 {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Montserrat', sans-serif;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        width: 100%;
+    }
+
+    .groups-v2 .left-col {
+        transform: translateX(28.8%);
+        transition: all 0.9s ease;
+    }
+
+    .groups-v2 .right-col {
+        transform: translateX(-28.8%);
+        transition: all 0.9s ease;
+    }
+
+
+    .groups-v2.opened .left-col,
+    .groups-v2.opened .right-col,
+    .scrolled-body .groups-v2 .left-col,
+    .scrolled-body .groups-v2 .right-col,
+    .big-heigh-body .groups-v2 .left-col,
+    .big-heigh-body .groups-v2 .right-col {
+        transform: translateX(0);
+    }
+
+    .info-area {
+        position: relative;
+    }
+
+    .special-text {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #fff;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.3s ease;
+        opacity: 0;
+    }
+
+    .special-text {
+        color: #fff;
+        text-shadow: 0 0 5px #1c7e4e, 0 0 10px #1c7e4e, 0 0 20px #1c7e4e, 0 0 40px #1c7e4e, 0 0 80px #1c7e4e;
+        animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+        0% {
+            text-shadow: 0 0 5px #1c7e4e, 0 0 10px #1c7e4e, 0 0 20px #1c7e4e, 0 0 40px #1c7e4e, 0 0 80px #1c7e4e;
+        }
+
+        100% {
+            text-shadow: 0 0 10px #f19214, 0 0 20px #f19214, 0 0 40px #f19214, 0 0 80px #f19214, 0 0 160px #f19214;
+        }
+    }
+
+    .info-cover:hover .special-text {
+        opacity: 1;
+    }
+
+
+    @media (max-width: 767px) {
+        .groups-v2 .right-col {
+            transform: translateX(0);
+        }
+
+        .groups-v2 .left-col {
+            transform: translateX(0);
+        }
+
+        .special-text {
+            opacity: 1;
+        }
+    }
+
+    /* .info-area .special-text {
+
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2),
+    4px 4px 0px rgba(0, 0, 0, 0.15),
+    6px 6px 0px rgba(0, 0, 0, 0.1),
+    8px 8px 10px rgba(0, 0, 0, 0.3);
+
+    -webkit-text-stroke: 1px rgba(0, 100, 80, 0.5);
+    text-stroke: 1px rgba(0, 100, 80, 0.5);
+
+    background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    transition: all 0.3s ease;
+    }
+
+    .info-area:hover .special-text {
+        transform: translateX(-50%) translateY(-3px);
+        text-shadow:
+            3px 3px 0px rgba(0, 0, 0, 0.25),
+            6px 6px 0px rgba(0, 0, 0, 0.2),
+            9px 9px 0px rgba(0, 0, 0, 0.15),
+            12px 12px 15px rgba(0, 0, 0, 0.4);
+        letter-spacing: 3px;
+    }
+
+    */
+</style>
+</head>
+
+<body
+    class="  page-page page-id-1    ">
+    <div class="mouse"></div>
+    <!-- Header Area -->
+<header class="main-header">
+    <div class="container">
+        <div class="header-wrapper">
+            <div class="header-logo">
+                <a href="https://tarimkredi.org.tr/tr">
+                    <img src="https://tarimkredi.org.tr/assets/front/images/logo.png?v=1" alt="Tarım Kredi Logo">
+                </a>
+            </div>
+
+            <nav class="header-nav">
+                <ul class="nav-menu">
+                                                                    <li class="nav-item">
+                            <a href="https://tarimkredi.org.tr/tr/biz-kimiz" class="nav-link">Hakkımızda</a>
+                                                            <div class="dropdown-menu">
+                                    <ul class="dropdown-list">
+                                                                                    <li><a href="https://tarimkredi.org.tr/tr/biz-kimiz" class="dropdown-link">Biz Kimiz</a></li>
+                                                                                    <li><a href="https://tarimkredi.org.tr/tr/koklu-gecmisimiz" class="dropdown-link">Köklü Geçmişimiz</a></li>
+                                                                                    <li><a href="https://tarimkredi.org.tr/tr/kurumsal-yapimiz" class="dropdown-link">Kurumsal Yapımız</a></li>
+                                                                            </ul>
+                                </div>
+                                                    </li>
+                                                                    <li class="nav-item">
+                            <a href="https://tarimkredi.org.tr/tr/ekosistem" class="nav-link">Ekosistem</a>
+                                                    </li>
+                                                                    <li class="nav-item">
+                            <a href="https://tarimkredi.org.tr/tr/haberler" class="nav-link">Medya Merkezi</a>
+                                                            <div class="dropdown-menu">
+                                    <ul class="dropdown-list">
+                                                                                    <li><a href="https://tarimkredi.org.tr/tr/haberler" class="dropdown-link">Haberler</a></li>
+                                                                                    <li><a href="https://tarimkredi.org.tr/tr/duyurular-ilanlar" class="dropdown-link">İlanlar</a></li>
+                                                                                    <li><a href="https://tarimkredi.org.tr/tr/kampanyalar" class="dropdown-link">Kampanyalar</a></li>
+                                                                            </ul>
+                                </div>
+                                                    </li>
+                                                                    <li class="nav-item">
+                            <a href="https://tarimkredi.org.tr/tr/iletisim" class="nav-link">İletişim</a>
+                                                    </li>
+                                    </ul>
+            </nav>
+
+            <div class="header-actions">
+                <div class="language-switcher">
+                                                                    <a href="https://tarimkredi.org.tr/tr" class="lang-btn active" data-lang="tr">
+                            TR                        </a>
+                                                                        <span class="lang-divider">|</span>
+                                                <a href="https://tarimkredi.org.tr/en" class="lang-btn " data-lang="en">
+                            EN                        </a>
+                                    </div>
+
+                <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <button class="mobile-menu-close" aria-label="Close Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <nav class="mobile-nav">
+            <ul class="mobile-nav-menu">
+                                                        <li class="mobile-nav-item">
+                        <a href="https://tarimkredi.org.tr/tr/biz-kimiz" class="mobile-nav-link toggle-submenu">Hakkımızda</a>
+                                                    <ul class="mobile-submenu">
+                                                                    <li><a href="https://tarimkredi.org.tr/tr/biz-kimiz" class="mobile-nav-link">Biz Kimiz</a></li>
+                                                                    <li><a href="https://tarimkredi.org.tr/tr/koklu-gecmisimiz" class="mobile-nav-link">Köklü Geçmişimiz</a></li>
+                                                                    <li><a href="https://tarimkredi.org.tr/tr/kurumsal-yapimiz" class="mobile-nav-link">Kurumsal Yapımız</a></li>
+                                                            </ul>
+                                            </li>
+                                                        <li class="mobile-nav-item">
+                        <a href="https://tarimkredi.org.tr/tr/ekosistem" class="mobile-nav-link ">Ekosistem</a>
+                                            </li>
+                                                        <li class="mobile-nav-item">
+                        <a href="https://tarimkredi.org.tr/tr/haberler" class="mobile-nav-link toggle-submenu">Medya Merkezi</a>
+                                                    <ul class="mobile-submenu">
+                                                                    <li><a href="https://tarimkredi.org.tr/tr/haberler" class="mobile-nav-link">Haberler</a></li>
+                                                                    <li><a href="https://tarimkredi.org.tr/tr/duyurular-ilanlar" class="mobile-nav-link">İlanlar</a></li>
+                                                                    <li><a href="https://tarimkredi.org.tr/tr/kampanyalar" class="mobile-nav-link">Kampanyalar</a></li>
+                                                            </ul>
+                                            </li>
+                                                        <li class="mobile-nav-item">
+                        <a href="https://tarimkredi.org.tr/tr/iletisim" class="mobile-nav-link ">İletişim</a>
+                                            </li>
+                            </ul>
+        </nav>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay"></div>
+</header>    <main>
+        <!-- Main Hero Swiper -->
+<div class="swiper main-hero">
+    <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                <img src="https://tarimkredi.org.tr/uploads/slider/2048x853px-slider-jpg-19.jpeg" class="d-none d-md-block" alt="">
+                <img src="https://tarimkredi.org.tr/uploads/slider/2048x853px-slider-jpg-mobile-19.jpeg" class="d-block d-md-none" alt="">
+                <div class="slide-content container">
+                    <h2 class="slide-title"></h2>
+                                    </div>
+            </div>
+                    <div class="swiper-slide">
+                <img src="https://tarimkredi.org.tr/uploads/slider/son-banner-15.jpeg" class="d-none d-md-block" alt="">
+                <img src="https://tarimkredi.org.tr/uploads/slider/son-banner-mobile-15.jpeg" class="d-block d-md-none" alt="">
+                <div class="slide-content container">
+                    <h2 class="slide-title"></h2>
+                                            <a href="https://tarimkredi.org.tr/tr/haber/varsayimlar-degil-bilanco-konustu-tarim-kredi-2025-i-tarihi-rekorla-kapatti" class="btn btn-primary slide-btn">Detaylı Bilgi</a>
+                                    </div>
+            </div>
+                    <div class="swiper-slide">
+                <img src="https://tarimkredi.org.tr/uploads/slider/slider-jpg-1-6.jpeg" class="d-none d-md-block" alt="">
+                <img src="https://tarimkredi.org.tr/uploads/slider/anasayfa-slider-01-mobile-6.jpg" class="d-block d-md-none" alt="">
+                <div class="slide-content container">
+                    <h2 class="slide-title"></h2>
+                                    </div>
+            </div>
+                    <div class="swiper-slide">
+                <img src="https://tarimkredi.org.tr/uploads/slider/anasayfa-slider-03-4.jpg" class="d-none d-md-block" alt="">
+                <img src="https://tarimkredi.org.tr/uploads/slider/anasayfa-slider-03-mobile-4.jpg" class="d-block d-md-none" alt="">
+                <div class="slide-content container">
+                    <h2 class="slide-title"></h2>
+                                    </div>
+            </div>
+            </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+</div>
+<!-- End Main Hero Swiper -->
+
+<div class="groups d-none">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-5">
+                <div class="group-item">
+                    <div class="group-item-image particle-logo-containerx">
+                        <a href="https://tarimkredi.org.tr/tr/merkez-birligi">
+                            <img src="assets/front/images/merkez.png" class="logo-animation" alt="Group 1">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="group-item">
+                    <div class="group-item-image particle-logo-containerx">
+                        <a href="https://www.tkholding.com.tr/" target="_blank">
+                            <img src="assets/front/images/holding.png" class="logo-animation delay"
+                                alt="Group 2">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12">
+                        <img src="assets/front/images/companies-infographic.jpg" class="w-100" alt="">
+                    </div> -->
+            <div class="row justify-content-center">
+                <div class="col-4 justify-content-end">
+                    <a href="https://tarimkredi.org.tr/tr/merkez-birligi" class="info-area hover-shine">
+                        <img src="assets/front/images/c-info-1.png" class="w-100" alt="">
+                        <span class="special-text">
+                            İncele                        </span>
+                    </a>
+                </div>
+                <div class="col-4 justify-content-start">
+                    <a href="https://www.tkholding.com.tr/" target="_blank" class="info-area hover-shine">
+                        <img src="assets/front/images/c-info-2.png" class="w-100" alt="">
+                        <span class="special-text">
+                            İncele                        </span>
+                    </a>
+                </div>
+                <div class="col-6 justify-content-center">
+                    <img src="assets/front/images/c-info-3.jpg" class="w-100" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="groups-v2">
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-6 col-md-4 left-col">
+                <a href="https://tarimkredi.org.tr/tr/merkez-birligi" class="hover-shine">
+                    <div class="info-cover left">
+                        <h2>MERKEZ BİRLİĞİ</h2>
+                        <img src="assets/front/images/c-info-left.jpg" class="w-100" alt="">
+                        <span class="special-text">
+                            İncele                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-2 d-none d-sm-block">
+                <img src="assets/front/images/c-info-center.jpg" class="w-100" alt="">
+            </div>
+            <div class="col-6 col-md-4 right-col">
+                <a href="https://www.tkholding.com.tr/" target="_blank" class="hover-shine">
+                    <div class="info-cover right">
+                        <h2>HOLDİNG</h2>
+                        <img src="assets/front/images/c-info-right.jpg" class="w-100" alt="">
+                        <span class="special-text">
+                            İncele                        </span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 d-block d-sm-none mt-4">
+                <img src="assets/front/images/c-info-center.jpg" class="w-100" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- project area end -->
+    </main>
+    <footer>
+    <!-- Footer Main Content -->
+    <div class="footer-main">
+        <div class="container">
+            <div class="row align-items-center">
+                
+
+                <!-- Footer Column -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-column">
+                        <ul class="footer-links">
+                                                            <li><a href="https://tarimkredi.org.tr/tr/kullanim-kosullari">Kullanım Koşulları</a></li>
+                                                            <li><a href="https://tarimkredi.org.tr/tr/gizlilik-politikasi">Gizlilik Politikası</a></li>
+                                                            <li><a href="https://tarimkredi.org.tr/tr/cerez-politikasi">Çerez Politikası</a></li>
+                                                    </ul>
+                    </div>
+                </div>
+                <style>
+                    .footer-column {
+                        margin-top: 8px;
+                    }
+
+                    .footer-brand {
+                        margin-bottom: 0;
+                    }
+                </style>
+
+                <div class="col-lg-6 col-md-6 d-flex flex-column justify-content-center">
+                    <div class="support-line text-center">
+                        <a href="tel:444 4 855">444 4 855</a>
+                    </div>
+                    <div class="footer-social">
+                        <a target="_blank" href="https://www.facebook.com/tarimkredi" aria-label="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a target="_blank" href="https://x.com/TarimKredi" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a target="_blank" href="https://www.instagram.com/tarimkredi" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a target="_blank" href="https://www.linkedin.com/company/tar%C4%B1m-kredi-kooperatifleri/" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                        </a>
+                        <a target="_blank" href="https://www.youtube.com/@turkiyetarmkredikooperatif2643" aria-label="YouTube">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div class="col-lg-3 col-md-6 d-none">
+                    <div class="footer-column">
+                        <h4>İletişim</h4>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>Tarım Kredi Kooperatifleri Merkez Birliği<br>Mithatpaşa Cad. No:21
+                                Kızılay/Ankara</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                </path>
+                            </svg>
+                            <span><a href="tel:+903124100110">+90 312 410 01 10</a></span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                </path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <span><a href="mailto:info@tarimkredi.org.tr">info@tarimkredi.org.tr</a></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Brand Column -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-brand">
+                        <img src="https://tarimkredi.org.tr/assets/front/images/footer-logo.png" alt="Tarım Kredi">
+                        <p class="d-none">Türkiye'nin en büyük tarım kuruluşu olarak çiftçilerimize destek olmaya,
+                            tarımsal
+                            kalkınmaya katkı sağlamaya devam ediyoruz.</p>
+                    </div>
+                    <div class="footer-social d-none">
+                        <a href="#" aria-label="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="YouTube">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom d-none">
+        <div class="container">
+            <div class="footer-bottom-content">
+                <div class="footer-copyright">
+                    © 2026 Tarım Kredi. Tüm hakları saklıdır.
+                </div>
+                <div class="footer-bottom-links">
+                    <a href="#">Gizlilik Politikası</a>
+                    <a href="#">Kullanım Koşulları</a>
+                    <a href="#">Çerez Politikası</a>
+                    <a href="#">KVKK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://tarimkredi.org.tr/assets/front/js/jquery-3.7.1.min.js"></script>
+<script src="https://tarimkredi.org.tr/assets/front/js/bootstrap.bundle.min.js"></script>
+<script src="https://tarimkredi.org.tr/assets/front/js/swiper-bundle.min.js"></script>
+<script src="https://tarimkredi.org.tr/assets/front/js/particle-logo.js"></script>
+<script src="https://tarimkredi.org.tr/assets/front/js/tarim-kredi.js?v=10"></script>
+<script>
+    // open groups-v2 animation after a delay
+    setTimeout(() => {
+        //document.querySelector('.groups-v2').classList.add('opened');
+    }, 800);
+
+    var swiper = new Swiper(".main-hero", {
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        autoplay: {
+            delay: 10000,
+            disableOnInteraction: false,
+        },
+        loop: true,
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const body = document.body;
+        const header = document.querySelector('.main-header');
+        const headerLogo = document.querySelector('.header-logo img');
+        headerLogo.src = 'https://tarimkredi.org.tr/assets/front/images/logo-white.png?v=1';
+
+        // Ekran yüksekliği kontrolü
+        function checkScreenHeight() {
+            if (window.innerHeight > 1060) {
+                body.classList.add('big-heigh-body');
+            } else {
+                body.classList.remove('big-heigh-body');
+            }
+        }
+
+        // Sayfa yüklendiğinde ve pencere boyutu değiştiğinde kontrol et
+        checkScreenHeight();
+        window.addEventListener('resize', checkScreenHeight);
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                body.classList.add('scrolled-body');
+                headerLogo.src = 'https://tarimkredi.org.tr/assets/front/images/logo.png?v=1';
+            } else {
+                header.classList.remove('scrolled');
+                body.classList.remove('scrolled-body');
+                headerLogo.src = 'https://tarimkredi.org.tr/assets/front/images/logo-white.png?v=1';
+            }
+        });
+    });
+
+    const logos = document.querySelectorAll('.logo-animation');
+    const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.4
+        }
+    );
+
+    logos.forEach(logo => observer.observe(logo));
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const body = document.body;
+
+        // Parent Company Bar Scroll Effect
+        const parentBar = document.querySelector('.parent-company-bar');
+        const mainHeader = document.querySelector('.main-header');
+        const scrollThreshold = 100; // Scroll amount before bar moves to corner
+
+        function handleParentBarScroll() {
+            if (window.scrollY > scrollThreshold) {
+                parentBar.classList.add('scrolled');
+                mainHeader.classList.add('bar-scrolled');
+                body.classList.add('bar-scrolled');
+            } else {
+                parentBar.classList.remove('scrolled');
+                mainHeader.classList.remove('bar-scrolled');
+                body.classList.remove('bar-scrolled');
+            }
+        }
+
+        if (parentBar) {
+            window.addEventListener('scroll', handleParentBarScroll);
+            handleParentBarScroll(); // Check initial state
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuClose = document.querySelector('.mobile-menu-close');
+        const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+
+        function closeMobileMenu() {
+            menuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            body.classList.remove('menu-open');
+        }
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                menuToggle.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                body.classList.toggle('menu-open');
+            });
+        }
+
+        // Close button
+        if (mobileMenuClose) {
+            mobileMenuClose.addEventListener('click', closeMobileMenu);
+        }
+
+        // Overlay click
+        if (mobileMenuOverlay) {
+            mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+        }
+
+        // Mobile Submenu Toggle
+        const toggleSubmenuButtons = document.querySelectorAll('.toggle-submenu');
+        toggleSubmenuButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const submenu = this.nextElementSibling;
+                if (submenu && submenu.classList.contains('mobile-submenu')) {
+                    submenu.classList.toggle('active');
+                    this.classList.toggle('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileRegularLinks = document.querySelectorAll('.mobile-nav-menu > li:not(:has(.mobile-submenu)) .mobile-nav-link, .mobile-submenu .mobile-nav-link');
+        mobileRegularLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (!this.classList.contains('toggle-submenu')) {
+                    closeMobileMenu();
+                }
+            });
+        });
+
+        setTimeout(() => {
+            const mobileSubmenuLinks = document.querySelectorAll('.mobile-submenu > li > a');
+            mobileSubmenuLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        }, 800);
+    });
+</script>
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+    const cookieBanner = document.createElement("div");
+		cookieBanner.style.cssText = `z-index: 9999999999;position:fixed;`;
+    cookieBanner.innerHTML = `
+        <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; background: white; padding: 15px; border-radius: 0; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); width: 100%;">
+            <p>Web sitemiz, deneyiminizi iyileştirmek için çerezleri kullanmaktadır. Detaylı bilgi almak ve tercihlerinizi yönetmek için <a href="https://www.tarimkredi.org.tr/tr/cerez-politikasi" style="color: black;font-weight: 600;" target="_blank">çerez politikamızı</a> inceleyebilirsiniz.</p>
+            <button id="accept-all" class="btn btn-top" style="background: black; color: white;">Tümünü Onayla</button>
+            <button id="reject-all" class="btn btn-top" style="background: black; color: white;">Tümünü Reddet</button>
+            <button id="customize" class="btn btn-top" style="background: black; color: white;">Tercihleri Düzenle</button>
+        </div>
+        <div id="cookie-settings" style="display: none;position: fixed; bottom: 0; left: 0; background: white; padding: 15px; border-radius: 0; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); width: 100%;text-align: center;">
+            <p>Çerez tercihlerinizi seçin:</p>
+            <label><input type="checkbox" id="analytics"> Analitik Çerezler</label><br>
+            <label><input type="checkbox" id="ads">Reklam Çerezleri</label><br>
+            <button id="save-preferences" class="btn btn-top" style="background: black; color: white;margin-top:10px;">Kaydet</button>
+        </div>
+    `;
+    document.body.appendChild(cookieBanner);
+	
+	if (localStorage.getItem("cookieConsent") === "accepted" || localStorage.getItem("cookieConsent") === "rejected") {
+        cookieBanner.style.display = "none";
+    }
+
+    if (localStorage.getItem("cookieConsent") === "custom") {
+        cookieBanner.style.display = "none";
+        cookieSettings.style.display = "block";
+    }
+		
+    document.getElementById("accept-all").addEventListener("click", function () {
+        document.cookie = "_ga=enabled; path=/";
+        document.cookie = "_ga_01LKSVJ8DT=enabled; path=/";
+        document.cookie = "_fbp=enabled; path=/";
+		localStorage.setItem("cookieConsent", "accepted");
+        document.getElementById("cookie-banner").style.display = "none";
+    });
+
+    document.getElementById("reject-all").addEventListener("click", function () {
+        document.cookie = "_ga=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "_ga_01LKSVJ8DT=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "_fbp=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+		localStorage.setItem("cookieConsent", "rejected");
+        document.getElementById("cookie-banner").style.display = "none";
+    });
+
+    document.getElementById("customize").addEventListener("click", function () {
+        document.getElementById("cookie-banner").style.display = "none";
+        document.getElementById("cookie-settings").style.display = "block";
+		localStorage.setItem("cookieConsent", "custom");
+    });
+
+    document.getElementById("save-preferences").addEventListener("click", function () {
+        let analytics = document.getElementById("analytics").checked;
+        let ads = document.getElementById("ads").checked;
+
+        document.cookie = `_ga=${analytics ? "enabled" : ""}; path=/;`;
+        document.cookie = `_ga_01LKSVJ8DT=${analytics ? "enabled" : ""}; path=/;`;
+        document.cookie = `_fbp=${ads ? "enabled" : ""}; path=/;`;
+		localStorage.setItem("cookieConsent", "saved");
+        document.getElementById("cookie-settings").style.display = "none";
+    });
+});
+</script></body>
+
+</html>

@@ -1,0 +1,18 @@
+bim-aktuel       200 robots:evet      53955 bayt  → https://www.bim.com.tr/Categories/254/aktuel_urunler.aspx
+bim-ana          200 robots:evet      80017 bayt  → https://www.bim.com.tr/
+a101-kampanya    HATA robots:evet   HTTP Error 403: Forbidden
+a101-aldin       HATA robots:evet   HTTP Error 403: Forbidden
+sok-kampanya     200 robots:evet     851679 bayt  → https://www.sokmarket.com.tr/kampanyalar
+migros-kampanya  200 robots:evet     159946 bayt  → https://www.migros.com.tr/kampanyalar
+file-ana         200 robots:robots okunamadı (HTTP Error 404: Not Found)    21238 bayt  → https://www.file.com.tr/
+file-kampanya    200 robots:robots okunamadı (HTTP Error 404: Not Found)    21238 bayt  → https://www.file.com.tr/
+tkk-ana          200 robots:evet     171108 bayt  → https://www.tkkoop.com.tr/
+tkk-market       200 robots:evet      42111 bayt  → https://tarimkredi.org.tr/
+macro-kampanya   200 robots:evet      74613 bayt  → https://www.macrocenter.com.tr/kampanyalar
+metro-ana        HATA robots:robots okunamadı (HTTP Error 403: Forbidden) HTTP Error 403: Forbidden
+fisko-ana        HATA robots:robots okunamadı (<urlopen error [SSL: CERTIFICATE_VERIFY_) <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has
+fiskomar-ana     200 robots:robots okunamadı (HTTP Error 404: Not Found)      135 bayt  → https://www.fiskomar.com.tr/
+hakmar-ana       200 robots:evet      28337 bayt  → https://www.hakmarexpress.com.tr/
+onur-ana         200 robots:robots okunamadı (HTTP Error 404: Not Found)    38301 bayt  → https://kurumsal.onurmarket.com/
+akakce-brosur    200 robots:evet     292510 bayt  → https://www.akakce.com/brosurler/
+akakce-file      200 robots:evet     216127 bayt  → https://www.akakce.com/brosurler/filemarket
