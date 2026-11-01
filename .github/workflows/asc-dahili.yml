@@ -1,0 +1,23 @@
+name: TestFlight dahili test (tüm uygulamalar)
+# Her uygulamada "Dahili Test" grubu + hesap sahibi: yeni derleme işlenince incelemesiz telefona düşer.
+on:
+  workflow_dispatch:
+    inputs:
+      bundle: { description: "Yalnız bu Bundle ID (boş = tüm uygulamalar)", default: "" }
+env:
+  ASC_KEY_ID: DJSHKK6T3P
+  ASC_ISSUER_ID: f4943ef8-df6f-42c8-a561-58554097ea35
+jobs:
+  dahili:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pyjwt cryptography requests
+      - name: App Store Connect anahtarı
+        env: { P8: "${{ secrets.ASC_KEY_P8 }}" }
+        run: printf '%s' "$P8" > $RUNNER_TEMP/asc.p8
+      - name: Dahili test grupları
+        env: { ASC_KEY_PATH: "${{ runner.temp }}/asc.p8" }
+        working-directory: tools
+        run: python asc_dahili.py ${{ inputs.bundle }}

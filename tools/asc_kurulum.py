@@ -100,6 +100,14 @@ def main(bundle, klasor):
             api("POST", "betaTesters", ok=(409,), json={"data": {"type": "betaTesters", "attributes": {"email": e},
                 "relationships": {"betaGroups": {"data": [{"type": "betaGroups", "id": g["id"]}]}}}})
         print(f"TestFlight: '{GRUP}' grubu · {len(TESTCILER)} test kullanıcısı (derleme gelince gruba eklenir)")
+    # 5) Dahili test: hesap sahibi her derlemeyi incelemesiz alır
+    try:
+        import asc_dahili
+        kisiler = asc_dahili.kullanicilar()
+        if kisiler:
+            asc_dahili.uygula(app, kisiler)
+    except Exception as e:  # noqa: BLE001
+        print(f"::warning::dahili test grubu: {e}")
 
 
 REF_APP = "6826874224"   # Yaşam Rehberi: inceleme iletişim bilgileri buradan kopyalanır
