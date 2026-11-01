@@ -45,6 +45,15 @@ struct VakitSaglayici: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> VakitKaydi {
         VakitKaydi(date: .now, ad: "Öğle", saat: "12:53", zaman: .now.addingTimeInterval(3600), ilAdi: "İstanbul")
     }
+    // watchOS'ta kadran ayarı öneri listesinden seçilir: her il bir seçenek (alfabetik)
+    func recommendations() -> [AppIntentRecommendation<VakitAyari>] {
+        (1...81).sorted { Vakit.il[$0 - 1].compare(Vakit.il[$1 - 1], locale: Locale(identifier: "tr_TR")) == .orderedAscending }
+            .map { no in
+                var ayar = VakitAyari()
+                ayar.il = IlSecenek(id: no)
+                return AppIntentRecommendation(intent: ayar, description: Vakit.il[no - 1])
+            }
+    }
     func snapshot(for configuration: VakitAyari, in context: Context) async -> VakitKaydi {
         kayit(il: configuration.il?.id ?? 34, an: .now)
     }
