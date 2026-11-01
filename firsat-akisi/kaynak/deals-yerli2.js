@@ -1,0 +1,56 @@
+// Fırsat Akışı — 🇹🇷 Yerli gündem ve yerli marka fırsatları (10.10.2026)
+// İzleyici isteği: yerli ve milli markalar, ürünler ve duyurular öne çıksın.
+(function(){
+  const D = (o) => Object.assign({ cards:[], channels:['Mağaza','Online'], checked:'2026-10-10', added:'2026-10-10T10:50:00+03:00', value:0, start:null, end:null, yerliGundem:true }, o);
+  // Eski Togg kaydı yerine resmî Ekim koşulları
+  (window.FIRSAT_DEALS || []).forEach(d => { if(d.id === 'togg-ekim') d.paused = true; });
+  window.FIRSAT_DEALS.push(
+  D({ id:'pardus-25-2', store:'Pardus', headline:'Yerli işletim sistemi Pardus 25.2 yayında: ücretsiz', title:'TÜBİTAK’ın yerli işletim sistemi Pardus 25.2 “Bilge” yayında, ücretsiz indirilebilir',
+    category:'Teknoloji', type:'gift', emoji:'🐧', offer:'Ücretsiz · açık kaynak', channels:['Online'], start:'2026-09-11',
+    detail:'Pardus 25.2’de Linux çekirdeği 6.12.95’e yükseltildi, Debian 13.5 güncellemeleri ve 2.000’den fazla paket güncellemesi geldi; Firefox ve LibreOffice yenilendi. GNOME ve XFCE masaüstü sürümleri var.',
+    how:['pardus.org.tr/surumler sayfasından GNOME ya da XFCE sürümünü indir.','USB belleğe yazıp bilgisayarını Pardus’la başlat.'],
+    conditions:['Lisans ücreti yok; özgür ve açık kaynak.','Kurmadan önce verilerini yedekle.'],
+    url:'https://pardus.org.tr/surumler/', source:'Pardus (TÜBİTAK BİLGEM) · sürüm notları' }),
+  D({ id:'togg-ekim-resmi', store:'Togg', headline:'Togg’da Ekim fırsatı: 1 milyon TL’ye %0 faiz', title:'Togg’da Ekim: T10F V2’de 1 milyon TL’ye 6 ay, T10X V2’de 800 bin TL’ye 6 ay sıfır faiz',
+    category:'Oto & Mobilite', type:'money', emoji:'🚘', offer:'1.000.000 TL’ye %0 faiz', start:'2026-10-01', end:'2026-10-31',
+    detail:'T10F V2: 1.000.000 TL 6 ay, 800.000 TL 8 ay, 600.000 TL 12 ay sıfır faiz. T10X V2: 800.000 TL 6 ay, 600.000 TL 8 ay, 400.000 TL 12 ay sıfır faiz. 48 ay %2,95 faizli 1.700.000 TL seçeneğinde 3.000 kWh Trugo şarj hediye; Ekim’de Trugo şarjlarda %20 indirim.',
+    how:['Togg uygulamasından ya da Togg Deneyim Merkezi’nden başvur.','Kredi uygunluğunu anlaşmalı bankayla netleştir.'],
+    conditions:['Sınırlı sayıda araçta.','Banka onayına tabi; koşullar Togg satış ve finansman sayfasında.'],
+    url:'https://www.togg.com.tr/sales-and-finance', source:'Togg satış ve finansman koşulları · YatırımX (05.10.2026)' }),
+  D({ id:'toki-yuzde25', store:'TOKİ', headline:'TOKİ’den borcunu kapatana %25 indirim', title:'TOKİ’de kalan borcunu peşin kapatan hak sahibine %25 indirim: son başvuru 19 Ekim',
+    category:'Ev & Yaşam', type:'percent', emoji:'🏘️', offer:'Peşin kapamaya %25 indirim', start:'2026-09-22', end:'2026-10-19', channels:['Banka'],
+    detail:'Taksitleri en geç Haziran 2025 sonunda başlamış, gecikmiş taksiti ve emlak vergisi borcu olmayan TOKİ alıcıları kalan borcunu peşin öderse %25 indirim alır. Kalan borcun en az %25’i kadar ara ödemede de indirim uygulanır. Yaklaşık 228 bin kişinin yararlanması bekleniyor.',
+    how:['Satışın yapıldığı bankaya başvur, kalan borç tutarını öğren.','Ödemeyi 19 Ekim’e kadar yap; istersen bankadan konut kredisi kullanabilirsin.'],
+    conditions:['Kalan taksit sayısı 12 ve altında olanlar kapsam dışı.','Kampanya süresi dışındaki ödemelere indirim uygulanmaz.'],
+    calc:{mode:'percent', rate:25, label:'Kalan borcun'},
+    url:'https://www.toki.gov.tr/', source:'TOKİ duyurusu (Türkiye Ajans Press, 21.09.2026)' }),
+  D({ id:'thy-aile', store:'Türk Hava Yolları', headline:'THY’den Kıbrıs uçuşlarında aile indirimi', title:'THY’de aynı soyadlı 3–9 kişilik ailelere İstanbul–Ercan uçuşlarında %25 indirim',
+    category:'Seyahat', type:'percent', emoji:'✈️', offer:'Aileye %25 indirim', end:'2027-02-26', channels:['Online'],
+    detail:'İstanbul–KKTC (Ercan) direkt uçuşlarında aynı soyadlı 3–9 yolcuya ekonomi sınıfı ücretlerinde %25 indirim. Uçuş dönemi 1 Kasım 2026 – 28 Şubat 2027.',
+    how:['turkishairlines.com’da Ercan uçuşlarını ara.','Aile üyelerini aynı rezervasyona ekle.'], conditions:['Aynı soyadı şartı.','Ekonomi sınıfı, direkt uçuş.','26 Şubat 2027’ye kadar satın alınmalı.'],
+    calc:{mode:'percent', rate:25, label:'Bilet tutarın'},
+    url:'https://www.turkishairlines.com/tr-tr/ucus-firsatlari-ercan-ucuslarinda-aile-indirimi', source:'Türk Hava Yolları kampanyalar' }),
+  D({ id:'reeder-s19', store:'Reeder', headline:'Yerli telefon Reeder’da fiyat düştü', title:'Yerli üretim Reeder S19 Max Pro S 128 GB 24.000 TL yerine 17.000 TL',
+    category:'Teknoloji', type:'money', emoji:'📱', offer:'17.000 TL', oldPrice:24000, newPrice:17000, value:7000, channels:['Online'],
+    detail:'Samsun’da üretilen Reeder’ın S19 Max Pro S 128 GB modeli indirimde; bazı ürünlerde “ikincisi 1 TL” kampanyası ve tüm ürünlerde ücretsiz kargo var.',
+    how:['reeder.com.tr’den ürünü sepete ekle.'], conditions:['Stoklarla sınırlı.','Bitiş tarihi belirtilmiyor.'],
+    url:'https://www.reeder.com.tr/kampanyalar', source:'Reeder kampanyalar' }),
+  D({ id:'kumtel-yeniuye', store:'Kumtel', headline:'Kumtel’den yeni üyeye 200 TL', title:'Yerli küçük ev aletleri markası Kumtel’de yeni üyelere 200 TL indirim',
+    category:'Ev & Yaşam', type:'money', emoji:'🍳', offer:'Yeni üyeye 200 TL', value:200, channels:['Online'],
+    detail:'kumtel.com’a üye olanlar sepette YENIUYE200 koduyla 200 TL indirim alır; üyelik bilgisi güncelleme, yorum ve siparişlerde ParaPuan kazanılır. Vade farksız 3 taksit, ücretsiz kargo.',
+    how:['kumtel.com’a üye ol.','Sepette “Hediye Çekleri” alanına YENIUYE200 yaz.'], conditions:['Yeni üyelere.','Bitiş tarihi belirtilmiyor.'],
+    url:'https://www.kumtel.com/kampanyalar', source:'Kumtel kampanyalar' }),
+  D({ id:'arzum-yeniuye', store:'Arzum', headline:'Arzum’da yeni üyeye %10', title:'Yerli küçük ev aletleri markası Arzum’da yeni üyelere %10 indirim',
+    category:'Ev & Yaşam', type:'percent', emoji:'☕', offer:'Yeni üyeye %10', end:'2026-12-31', channels:['Online'],
+    detail:'Arzum’un online mağazasında yeni üyelere %10 indirim; kampanya 31 Aralık 2026’ya kadar geçerli.',
+    how:['arzum.com.tr’ye üye ol, ilk alışverişte indirimi kullan.'], conditions:['Yeni üyelere.','31 Aralık 2026’ya kadar.'],
+    calc:{mode:'percent', rate:10, label:'Sepet tutarın'},
+    url:'https://www.arzum.com.tr/kampanyalar', source:'Arzum kampanyalar' }),
+  D({ id:'penti-evgiyim', store:'Penti', headline:'Penti’de ev giyimde %40 indirim', title:'Penti’de seçili ev giyim ürünlerinde %40 indirim',
+    category:'Giyim', type:'percent', emoji:'🧦', offer:'%40 indirim', end:'2026-12-31',
+    detail:'Seçili ev giyim ürünlerinde %40 indirim; Sütyen Günleri’nde seçili ürünler 749 TL. Penticlub üyelerine özel indirim 11 Ekim akşamına kadar.',
+    how:['Penti’de “Ev giyim kampanya” bölümünü aç.'], conditions:['Stoklarla sınırlı.','Seçili ürünlerde.'],
+    calc:{mode:'percent', rate:40, label:'Sepet tutarın'},
+    url:'https://www.penti.com/tr/c/ev-giyim-kampanya', source:'Penti kampanyalar' })
+  );
+})();

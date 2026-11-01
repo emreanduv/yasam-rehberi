@@ -1,0 +1,940 @@
+{
+ "Ülker": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.ulker.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Eti": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.etietieti.com",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Torku": {
+  "url": null,
+  "kat": "Market",
+  "site": "https://torku.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Pınar": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://pinar.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Sütaş": {
+  "url": null,
+  "kat": "Market",
+  "site": "https://www.sutas.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Şölen": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.solen.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Dardanel": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.dardanel.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Keskinoğlu": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.keskinoglu.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Apikoğlu": {
+  "url": "https://www.apikoglu.com.tr/kampanyalar",
+  "kat": "Market",
+  "site": "http://www.apikoglu.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Kurukahveci Mehmet Efendi": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.mehmetefendi.com",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Panda": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.panda.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Türkiye Şeker Fabrikaları": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.turkseker.gov.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Aytaç": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.aytac.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Köfteci Yusuf": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "https://kofteciyusuf.com",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Komagene": {
+  "url": "https://www.komagene.com.tr/kampanyalar",
+  "kat": "Yemek",
+  "site": "https://www.komagene.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Tarihi Sultanahmet Köftecisi": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "http://www.sultanahmetkoftesi.com",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Köfteci Ramiz": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "https://www.kofteciramiz.com",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Bolulu Hasan Usta": {
+  "url": "https://www.bhu.com.tr/kampanyalar",
+  "kat": "Yemek",
+  "site": "https://www.bhu.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Pasaport Pizza": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "https://www.pasaportpizza.com",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Terra Pizza": {
+  "url": "https://www.terrapizza.com.tr/tum-urunler/kampanyalar",
+  "kat": "Yemek",
+  "site": "https://www.terrapizza.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Mado": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "https://www.mado.com.tr",
+  "t": 1793473361.796847,
+  "tarih": "31.10.2026"
+ },
+ "Özsüt": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "https://ozsut.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Vefa Bozacısı": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "http://www.vefa.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Ali Muhiddin Hacı Bekir": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "http://www.hacibekir.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Çaykur": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.caykur.gov.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Kızılay Maden Suyu": {
+  "url": null,
+  "kat": "Market",
+  "site": "https://www.kizilaymadensuyu.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Erikli": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.erikli.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Niğde Gazozu": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.nigdegazozu.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Fruko": {
+  "url": null,
+  "kat": "Market",
+  "site": "https://fruko.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Cola Turka": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.colaturka.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Kiğılı": {
+  "url": "https://www.kigili.com/collections/outlet-erkek-urunleri",
+  "kat": "Giyim",
+  "site": "https://www.kigili.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Hatemoğlu": {
+  "url": "https://www.hatemoglu.com/kampanyalar",
+  "kat": "Giyim",
+  "site": "https://www.hatemoglu.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Damat Tween": {
+  "url": null,
+  "kat": "Giyim",
+  "site": "http://www.damattween.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Ramsey": {
+  "url": "https://www.ramsey.com.tr/collections/indirim",
+  "kat": "Giyim",
+  "site": "https://www.ramsey.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Vakko": {
+  "url": null,
+  "kat": "Giyim",
+  "site": "http://www.vakko.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Beymen": {
+  "url": null,
+  "kat": "Giyim",
+  "site": "http://www.beymen.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Collezione": {
+  "url": null,
+  "kat": "Giyim",
+  "site": "http://www.collezione.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "LiG": {
+  "url": "https://www.lig.com.tr/kampanyalar",
+  "kat": "Giyim",
+  "site": "http://www.lig.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Derimod": {
+  "url": "https://derimod.com.tr/pages/kampanyalar-ve-sartlar",
+  "kat": "Giyim",
+  "site": "https://www.derimod.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "LTB": {
+  "url": null,
+  "kat": "Giyim",
+  "site": "http://www.littlebig.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "SEG": {
+  "url": null,
+  "kat": "Ev & Yaşam",
+  "site": "https://www.seg.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Arzum": {
+  "url": "https://www.arzum.com.tr/kampanyalar",
+  "kat": "Ev & Yaşam",
+  "site": "https://www.arzum.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Uğur Soğutma": {
+  "url": "https://ugur.com.tr/kampanyalar",
+  "kat": "Ev & Yaşam",
+  "site": "https://www.ugur.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Baymak": {
+  "url": "https://www.baymak.com.tr/kampanyalar",
+  "kat": "Ev & Yaşam",
+  "site": "https://www.baymak.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Paşabahçe": {
+  "url": null,
+  "kat": "Ev & Yaşam",
+  "site": "http://www.pasabahce.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Yataş": {
+  "url": null,
+  "kat": "Ev & Yaşam",
+  "site": "https://www.yatasbedding.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "İstikbal": {
+  "url": "https://www.istikbal.com.tr/kampanyalar",
+  "kat": "Ev & Yaşam",
+  "site": "https://www.istikbal.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Bellona": {
+  "url": "https://www.bellona.com.tr/kampanyalar",
+  "kat": "Ev & Yaşam",
+  "site": "https://www.bellona.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Modalife": {
+  "url": "https://www.modalife.com/kampanyalar",
+  "kat": "Ev & Yaşam",
+  "site": "https://www.modalife.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Çilek Odası": {
+  "url": null,
+  "kat": "Ev & Yaşam",
+  "site": "https://www.cilek.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Madame Coco": {
+  "url": "https://www.madamecoco.com/kampanyalar",
+  "kat": "Ev & Yaşam",
+  "site": "https://www.madamecoco.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Winsa": {
+  "url": null,
+  "kat": "Ev & Yaşam",
+  "site": "http://www.winsa.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "DYO": {
+  "url": null,
+  "kat": "Ev & Yaşam",
+  "site": "http://www.dyo.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Evyap": {
+  "url": null,
+  "kat": "Kişisel Bakım",
+  "site": "http://www.evyap.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Arko": {
+  "url": null,
+  "kat": "Kişisel Bakım",
+  "site": "http://arkonem.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Eyüp Sabri Tuncer": {
+  "url": null,
+  "kat": "Kişisel Bakım",
+  "site": "https://www.eyupsabrituncer.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "General Mobile": {
+  "url": "https://www.generalmobile.com/kampanyalar",
+  "kat": "Teknoloji",
+  "site": "http://www.generalmobile.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Airties": {
+  "url": null,
+  "kat": "Teknoloji",
+  "site": "http://www.airties.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Akınsoft": {
+  "url": "https://www.akinsoft.com.tr/kampanyalar/guncel-kampanyalar/",
+  "kat": "Teknoloji",
+  "site": "http://www.akinsoft.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Scrikss": {
+  "url": null,
+  "kat": "Hobi & Oyuncak",
+  "site": "https://www.scrikss.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "İstanbul Agop": {
+  "url": null,
+  "kat": "Hobi & Oyuncak",
+  "site": "https://istanbulcymbals.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Makro Market": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.makromarket.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Uyum Gıda": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.uyum.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Bimeks": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.bimeks.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Tekzen": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.tekzen.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Özdilek": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.ozdilekholding.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "İstanbul Halk Ekmek": {
+  "url": null,
+  "kat": "Market",
+  "site": "https://www.ihe.istanbul",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Togg": {
+  "url": null,
+  "kat": "Oto & Mobilite",
+  "site": "https://www.togg.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Karsan": {
+  "url": null,
+  "kat": "Oto & Mobilite",
+  "site": "http://www.karsan.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Otokar": {
+  "url": null,
+  "kat": "Oto & Mobilite",
+  "site": "http://www.otokar.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Temsa": {
+  "url": null,
+  "kat": "Oto & Mobilite",
+  "site": "http://www.temsa.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "BMC": {
+  "url": null,
+  "kat": "Oto & Mobilite",
+  "site": "http://www.bmc.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Mondial": {
+  "url": "https://www.mondialmotor.com.tr/kampanyalar",
+  "kat": "Oto & Mobilite",
+  "site": "http://www.mondialmotor.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Lassa": {
+  "url": "https://www.lassa.com.tr/kampanyalar",
+  "kat": "Oto & Mobilite",
+  "site": "http://www.lassa.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Petlas": {
+  "url": "https://www.petlas.com.tr/kampanya",
+  "kat": "Oto & Mobilite",
+  "site": "http://www.petlas.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Opet": {
+  "url": "https://www.opet.com.tr/kampanyalar",
+  "kat": "Oto & Mobilite",
+  "site": "https://www.opet.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Petrol Ofisi": {
+  "url": "https://www.petrolofisi.com.tr/kampanyalar",
+  "kat": "Oto & Mobilite",
+  "site": "https://www.petrolofisi.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Aytemiz": {
+  "url": null,
+  "kat": "Oto & Mobilite",
+  "site": "https://www.aytemiz.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "TÜMOSAN": {
+  "url": null,
+  "kat": "Oto & Mobilite",
+  "site": "http://tumosan.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "TaleWorlds": {
+  "url": null,
+  "kat": "Oyun",
+  "site": "https://www.taleworlds.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "BiP": {
+  "url": null,
+  "kat": "Oyun",
+  "site": "https://bip.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Tabii": {
+  "url": null,
+  "kat": "Oyun",
+  "site": "https://www.tabii.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Puhutv": {
+  "url": null,
+  "kat": "Oyun",
+  "site": "https://puhutv.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Exxen": {
+  "url": null,
+  "kat": "Oyun",
+  "site": "https://www.exxen.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "GAİN": {
+  "url": null,
+  "kat": "Oyun",
+  "site": "https://www.gain.tv",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Getir": {
+  "url": null,
+  "kat": "Oyun",
+  "site": "https://www.getir.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Mynet": {
+  "url": null,
+  "kat": "Oyun",
+  "site": "https://www.mynet.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Pegasus Hava Yolları": {
+  "url": null,
+  "kat": "Seyahat",
+  "site": "https://www.flypgs.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "AJet": {
+  "url": null,
+  "kat": "Seyahat",
+  "site": "https://ajet.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Etstur": {
+  "url": "https://www.etstur.com/Kampanyalar",
+  "kat": "Seyahat",
+  "site": "http://www.etstur.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Jolly Tur": {
+  "url": "https://www.jollytur.com/kampanyalar",
+  "kat": "Seyahat",
+  "site": "http://www.jollytur.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "İstanbul Deniz Otobüsleri": {
+  "url": null,
+  "kat": "Seyahat",
+  "site": "http://www.ido.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "PTT": {
+  "url": null,
+  "kat": "Seyahat",
+  "site": "https://www.ptt.gov.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Nacar": {
+  "url": "https://www.nacar.com.tr/kampanya",
+  "kat": "Takı & Aksesuar",
+  "site": "https://www.nacar.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Hislon": {
+  "url": null,
+  "kat": "Takı & Aksesuar",
+  "site": "https://hislon.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Serhat Saat": {
+  "url": null,
+  "kat": "Takı & Aksesuar",
+  "site": "https://serhatsaat.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "TAF Watch": {
+  "url": null,
+  "kat": "Takı & Aksesuar",
+  "site": "https://tafwatch.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Pomander": {
+  "url": null,
+  "kat": "Takı & Aksesuar",
+  "site": "https://www.pomander.com.tr",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Svenn": {
+  "url": null,
+  "kat": "Takı & Aksesuar",
+  "site": "https://ahsapsaat.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Zebrino": {
+  "url": null,
+  "kat": "Takı & Aksesuar",
+  "site": "https://www.kargunlar.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Dice Kayek": {
+  "url": null,
+  "kat": "Takı & Aksesuar",
+  "site": "https://dicekayekwatches.com",
+  "t": 1793473776.61987,
+  "tarih": "31.10.2026"
+ },
+ "Hakmar": {
+  "url": "https://hakmar.com.tr/indirim/",
+  "kat": "Market",
+  "site": "https://hakmar.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Bizim Toptan": {
+  "url": "https://www.bizimtoptan.com.tr/s/online-kampanyalar",
+  "kat": "Market",
+  "site": "https://www.bizimtoptan.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Adese": {
+  "url": null,
+  "kat": "Market",
+  "site": "https://adese.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Esenlik Market": {
+  "url": "http://www.esenlik.com.tr/kampanyalar",
+  "kat": "Market",
+  "site": "http://www.esenlik.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Tarım Kredi": {
+  "url": "https://tarimkredi.org.tr/kampanyalar",
+  "kat": "Market",
+  "site": "http://www.tarimkredi.org.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "D&R": {
+  "url": "https://www.dr.com.tr/kampanyalar",
+  "kat": "Market",
+  "site": "https://www.dr.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Türk Telekom": {
+  "url": null,
+  "kat": "Teknoloji",
+  "site": "https://www.turktelekom.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Altus": {
+  "url": null,
+  "kat": "Ev & Yaşam",
+  "site": "http://www.altus.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Raks": {
+  "url": null,
+  "kat": "Ev & Yaşam",
+  "site": "http://www.raks.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Mondi": {
+  "url": null,
+  "kat": "Ev & Yaşam",
+  "site": "https://mondi.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Saray Halı": {
+  "url": null,
+  "kat": "Ev & Yaşam",
+  "site": "https://sarayhali.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Kinetix": {
+  "url": "https://www.kinetix.com.tr/indirim",
+  "kat": "Giyim",
+  "site": "http://kinetix.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Tamek": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.tamek.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Fiskobirlik": {
+  "url": null,
+  "kat": "Market",
+  "site": "https://www.fiskobirlik.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Golden Rose": {
+  "url": null,
+  "kat": "Kişisel Bakım",
+  "site": "http://www.goldenrose.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Kahve Dünyası": {
+  "url": "https://www.kahvedunyasi.com/haberler-ve-firsatlar",
+  "kat": "Yemek",
+  "site": "https://www.kahvedunyasi.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Simit Sarayı": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "https://www.simitsarayi.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Tavuk Dünyası": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "https://www.tavukdunyasi.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Baydöner": {
+  "url": "https://www.baydoner.com/kampanyalar",
+  "kat": "Yemek",
+  "site": "https://baydoner.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Koço Restaurant": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "https://kocorestaurant.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "The House Café": {
+  "url": null,
+  "kat": "Yemek",
+  "site": "http://www.thehousecafe.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Kristal Kola": {
+  "url": null,
+  "kat": "Market",
+  "site": "http://www.kristalkola.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Bambi Yatak": {
+  "url": "https://bambi.com.tr/kampanyalar",
+  "kat": "Ev & Yaşam",
+  "site": "https://bambi.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Atelier Rebul": {
+  "url": "https://www.atelierrebul.com.tr/indirimli-urunler/",
+  "kat": "Kişisel Bakım",
+  "site": "https://www.atelierrebul.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Turkcell": {
+  "url": "https://www.turkcell.com.tr/kampanyalar",
+  "kat": "Teknoloji",
+  "site": "https://www.turkcell.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Dost Kitabevi": {
+  "url": null,
+  "kat": "Hobi & Oyuncak",
+  "site": "http://www.dostyayinevi.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "File": {
+  "url": null,
+  "kat": "Market",
+  "site": "https://www.file.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Hattat Traktör": {
+  "url": null,
+  "kat": "Oto & Mobilite",
+  "site": "http://www.hattattraktor.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "BiTaksi": {
+  "url": null,
+  "kat": "Oyun",
+  "site": "http://www.bitaksi.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Cimri.com": {
+  "url": null,
+  "kat": "Oyun",
+  "site": "https://www.cimri.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Yurtiçi Kargo": {
+  "url": "https://www.yurticikargo.com/kampanyalar",
+  "kat": "Seyahat",
+  "site": "https://www.yurticikargo.com",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Sürat Kargo": {
+  "url": null,
+  "kat": "Seyahat",
+  "site": "http://www.suratkargo.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ },
+ "Metro Turizm": {
+  "url": "https://www.metroturizm.com.tr/kampanyalar",
+  "kat": "Seyahat",
+  "site": "https://www.metroturizm.com.tr",
+  "t": 1793482052.4220061,
+  "tarih": "01.11.2026"
+ }
+}
