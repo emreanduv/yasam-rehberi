@@ -67,7 +67,8 @@ struct VakitSaglayici: AppIntentTimelineProvider {
             return (lat, lon, Vakit.il[il - 1])
         }
         let m = CLLocationManager()
-        if m.isAuthorizedForWidgetUpdates, let l = m.location {
+        let izin = m.authorizationStatus
+        if izin == .authorizedWhenInUse || izin == .authorizedAlways, let l = m.location {
             return (l.coordinate.latitude, l.coordinate.longitude, "Konumum")
         }
         let (lat, lon) = Vakit.koord[33]
