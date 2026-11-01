@@ -243,7 +243,7 @@ function bugunView() {
   <main class="content">
     ${ust}
     <nav class="bg-mods" aria-label="Modüller">
-      ${mod("#/sor", ICON.search, "Sor")}${mod("#/tesbih", ICON.beads, "Tesbih")}${mod("#/namaz", ICON.compass, "Kıble")}${mod("#/menu", ICON.grid, "Menü")}
+      ${mod("#/namaz", ICON.compass, "Kıble")}${mod("#/saat", ICON.clock, "Saat")}${mod("#/carsi", ICON.bag, "Çarşı")}${mod("#/miras", ICON.scale, "Miras")}
     </nav>
     <section class="panel">
       <div class="panel-h">Gelen kutusu <span class="count">1</span></div>
