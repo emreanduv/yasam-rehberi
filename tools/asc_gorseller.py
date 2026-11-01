@@ -8,8 +8,8 @@ Ortam: ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_PATH (.p8 dosyası)
 import hashlib, os, sys, time, glob
 import jwt, requests
 
-APP_ID = "6826874224"
-TURLER = {"iphone": "APP_IPHONE_61", "ipad": "APP_IPAD_PRO_3GEN_129", "watch": "APP_WATCH_ULTRA"}
+APP_ID = os.environ.get("ASC_APP_ID") or "6826874224"   # Saat Vitrini: 6829435134
+TURLER = {"iphone67": "APP_IPHONE_67", "iphone": "APP_IPHONE_61", "ipad": "APP_IPAD_PRO_3GEN_129", "watch": "APP_WATCH_ULTRA"}
 API = "https://api.appstoreconnect.apple.com/v1/"
 
 

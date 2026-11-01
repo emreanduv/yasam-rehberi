@@ -5,6 +5,9 @@ on:
       klasor:
         description: "Görsel klasörü (iphone/, ipad/, watch/ içerir)"
         default: "store/gorseller/v1-vakit"
+      uygulama:
+        description: "App Store Connect uygulama no (Yaşam Rehberi 6826874224 · Saat Vitrini 6829435134)"
+        default: "6826874224"
 env:
   ASC_KEY_ID: DJSHKK6T3P
   ASC_ISSUER_ID: f4943ef8-df6f-42c8-a561-58554097ea35
@@ -18,5 +21,5 @@ jobs:
         env: { P8: "${{ secrets.ASC_KEY_P8 }}" }
         run: printf '%s' "$P8" > $RUNNER_TEMP/asc.p8
       - name: Görselleri yükle
-        env: { ASC_KEY_PATH: "${{ runner.temp }}/asc.p8" }
+        env: { ASC_KEY_PATH: "${{ runner.temp }}/asc.p8", ASC_APP_ID: "${{ inputs.uygulama }}" }
         run: python tools/asc_gorseller.py "${{ inputs.klasor }}"
