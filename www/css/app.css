@@ -265,3 +265,38 @@ a.nz-ozet { display: block; text-decoration: none; border-color: var(--go-edge);
 a.nz-ozet .nz-next { border-bottom: 0; }
 a.nz-ozet-bos { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px; min-height: 48px;
   text-decoration: none; color: var(--band); font-weight: 700; font-size: 15px; }
+
+/* Bugün — açılış ekranı (Al Fajr sadeliği, FM2010 paneli) */
+.bg-band { background: var(--band); padding: 10px 16px; border-bottom: 3px solid var(--gold); }
+.bg-tarih { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2px 12px; font-size: 13px; color: #cfe6d9; }
+.bg-next { border-color: var(--go-edge); }
+.bg-next-h { background: var(--go); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; padding: 7px 12px; }
+.bg-next-b { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; padding: 14px 14px 16px; text-decoration: none; color: var(--ink); }
+.bg-next-b > span { display: flex; flex-direction: column; gap: 4px; }
+.bg-ad { font-family: "PT Sans Narrow", "PT Sans", sans-serif; font-weight: 700; font-size: 38px; line-height: 1; }
+.bg-at { font-size: 15px; color: var(--ink-2); }
+.bg-kalan { text-align: right; align-items: flex-end; }
+.bg-kalan-l { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink-2); }
+.bg-sayac { font-family: "PT Sans Narrow", "PT Sans", sans-serif; font-weight: 700; font-size: 50px; line-height: .95;
+  font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bg-row { min-height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 14px; font-size: 18px;
+  border-bottom: 1px solid var(--panel-rule); }
+.bg-row:nth-child(even) { background: var(--panel-alt); }
+.bg-row:last-child { border-bottom: 0; }
+.bg-row b { font-family: "PT Sans Narrow", "PT Sans", sans-serif; font-variant-numeric: tabular-nums; }
+.bg-row.past { color: #7d7461; }
+.bg-row.past b { font-weight: 400; }
+.bg-row.on { background: #e9c766 !important; font-weight: 700; }
+.bg-mods { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.bg-mod { min-height: 72px; background: #2a3640; border: 1px solid #3c4852; border-radius: 3px; color: #efe8d4; text-decoration: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; font-size: 13px; font-weight: 700; }
+.bg-mod svg { color: var(--gold-text); width: 24px; height: 24px; }
+.bg-ayet { display: flex; gap: 10px; text-decoration: none; color: var(--ink); }
+.bg-ayet-c { width: 6px; border-radius: 3px; background: var(--go); flex: none; }
+.bg-ayet-t { display: block; font-size: 12px; color: var(--band); }
+.bg-ayet-m { display: block; font-size: 15px; line-height: 1.45; margin-top: 3px; }
+.bg-ayet-k { display: block; font-size: 11px; color: var(--ink-2); margin-top: 4px; }
+.bg-devam { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--bar); border: 1px solid #000;
+  border-radius: 3px; padding: 8px 8px 8px 12px; text-decoration: none; }
+.bg-devam-z { font-size: 13px; color: #c4cbd1; min-width: 0; }
+.bg-devam-b { flex: none; letter-spacing: 1px; }

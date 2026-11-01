@@ -100,7 +100,7 @@ function toast(msg) {
 const mealsOn = () => S.meals.filter((t) => E.meals.includes(t));
 
 // Ana sayfa dışındaki her ekranda sol üstte geri düğmesi olur (sekmeler değişse de geçerli kalsın diye)
-const anaSayfa = () => !location.hash || /^#\/?$/.test(location.hash);
+const anaSayfa = () => !location.hash || /^#\/?(sor)?$/.test(location.hash);
 function topbar(left = "brand") {
   if (left === "brand" && !anaSayfa()) left = "Geri";
   const l = left === "brand"
@@ -135,8 +135,8 @@ function verseCard(v, terms) {
 
 function renderNav(active) {
   const item = (id, href, icon, label) => `<a href="${href}" class="${active === id ? "on" : ""}"${active === id ? ' aria-current="page"' : ""}>${icon}${label}</a>`;
-  $nav.innerHTML = item("ara", "#/", ICON.search, "Ara") + item("sure", "#/sureler", ICON.book, "Sureler")
-    + item("namaz", "#/namaz", ICON.mosque, "Namaz") + item("tesbih", "#/tesbih", ICON.beads, "Tesbih")
+  $nav.innerHTML = item("bugun", "#/", ICON.mosque, "Bugün") + item("ara", "#/sor", ICON.search, "Sor")
+    + item("sure", "#/sureler", ICON.book, "Sureler") + item("tesbih", "#/tesbih", ICON.beads, "Tesbih")
     + item("menu", "#/menu", ICON.grid, "Menü");
 }
 
@@ -155,7 +155,6 @@ function homeView() {
     <div class="sub">${E.meals.length} meal · kısa tefsir · ${E.refs.length} ayet · internetsiz arama</div>
   </section>
   <main class="content">
-    ${vakitOzet()}
     <section class="panel">
       <div class="panel-h">Soru / Arama</div>
       <form class="panel-b search" data-act="search">
@@ -187,7 +186,81 @@ function homeView() {
   </main>`;
 }
 
-// Ana ekranın tepesi: Al Fajr sadeliğinde sıradaki vakit ve saniyeli geri sayım
+// ---------------------------------------------------------------------------
+// Bugün: açılış ekranı. Al Fajr sadeliği (tek bakışta sıradaki vakit ve geri sayım), FM2010 panelleri.
+// ---------------------------------------------------------------------------
+const ZIKIR_AD = { subhan: "Sübhânallah", hamd: "Elhamdülillah", ekber: "Allâhu Ekber", tevhid: "Lâ ilâhe illallah", istigfar: "Estağfirullah", salavat: "Salavat" };
+const ZIKIR_HEDEF = { subhan: 33, hamd: 33, ekber: 34, tevhid: 100, istigfar: 100, salavat: 100 };
+
+function tesbihDurum() {
+  try {
+    const t = JSON.parse(window.YR.oku("mrAnduvTesbih.v1") || "{}");
+    const cur = t.cur || "subhan";
+    const ozel = (t.custom || []).find((c) => c.id === cur);
+    const ad = ZIKIR_AD[cur] || ozel?.tr || ozel?.ad || "Zikir";
+    const n = (t.counts || {})[cur] || 0;
+    const h = (t.targets || {})[cur] ?? ZIKIR_HEDEF[cur] ?? ozel?.t ?? 0;
+    return { ad, n, h };
+  } catch { return { ad: "Sübhânallah", n: 0, h: 33 }; }
+}
+
+function bugunView() {
+  const pos = S.konum;
+  const now = new Date();
+  const h = V.hicri(now);
+  const tarih = now.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", weekday: "long" });
+  const mod = (href, icon, ad) => `<a class="bg-mod" href="${href}">${icon}<span>${esc(ad)}</span></a>`;
+  const tz = tesbihDurum();
+  let ust;
+  if (!pos) {
+    ust = `<section class="panel bg-next"><div class="bg-next-h">Sıradaki vakit</div>
+      <div class="panel-b nz-empty"><div>Vakitleri ve geri sayımı görmek için bulunduğun yeri seç. Konum yalnızca bu telefonda kullanılır.</div>
+      <button class="btn-go" data-act="konum">${ICON.compass}Konumumu kullan</button><div class="kb-msg" id="nz-msg"></div></div></section>`;
+  } else {
+    const t = V.times(pos.lat, pos.lon, now);
+    const nx = V.nextVakit(pos.lat, pos.lon, now);
+    const yarin = nx.at.toDateString() !== now.toDateString();
+    const rows = V.VAKITLER.map((v) => {
+      const on = !yarin && nx.key === v.key;
+      const past = t[v.key] <= now;
+      return `<div class="bg-row${on ? " on" : ""}${past && !on ? " past" : ""}"><span>${esc(v.ad)}</span><b>${V.hhmm(t[v.key])}</b></div>`;
+    }).join("");
+    ust = `<section class="panel bg-next"><div class="bg-next-h">Sıradaki vakit${yarin ? " · yarın" : ""}</div>
+      <a class="bg-next-b" href="#/namaz">
+        <span><span class="bg-ad">${esc(nx.ad)}</span><span class="bg-at">${V.hhmm(nx.at)}'de</span></span>
+        <span class="bg-kalan"><span class="bg-kalan-l">Kalan</span><span class="bg-sayac" id="nz-count">${V.sayac(nx.at - now)}</span></span>
+      </a></section>
+    <section class="panel"><div class="panel-h"><span>Vakitler</span><span>Bugün</span></div><div>${rows}</div></section>`;
+  }
+  const day = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 864e5);
+  const [ds, da] = DAILY[day % DAILY.length].split(":").map(Number);
+  const dv = E.verse(E.indexOf(ds, da), mealsOn());
+  const fm = Object.keys(dv.texts)[0];
+  return `${topbar()}
+  <section class="bg-band">
+    <div class="bg-tarih"><span>${esc(tarih)}</span>${h ? `<span>${h.gun} ${esc(h.ayAdi)} ${h.yil}</span>` : ""}</div>
+  </section>
+  <main class="content">
+    ${ust}
+    <nav class="bg-mods" aria-label="Modüller">
+      ${mod("#/sor", ICON.search, "Sor")}${mod("#/tesbih", ICON.beads, "Tesbih")}${mod("#/namaz", ICON.compass, "Kıble")}${mod("#/menu", ICON.grid, "Menü")}
+    </nav>
+    <section class="panel">
+      <div class="panel-h">Gelen kutusu <span class="count">1</span></div>
+      <a class="panel-b bg-ayet" href="#/ayet/${ds}/${da}">
+        <span class="bg-ayet-c"></span>
+        <span style="min-width:0"><b class="bg-ayet-t">Günün ayeti · ${esc(dv.title)}</b>
+        <span class="bg-ayet-m">${esc(dv.texts[fm])}</span>
+        <span class="bg-ayet-k">${esc(E.source(fm).credit)}</span></span>
+      </a>
+    </section>
+    <a class="bg-devam" href="#/tesbih"><span class="bg-devam-z">Son zikir · ${esc(tz.ad)}</span>
+      <span class="btn-go bg-devam-b">DEVAM ${tz.h ? `${tz.n}/${tz.h}` : tz.n} ${ICON.next}</span></a>
+    <div class="made">${esc(MAKER)}</div>
+  </main>`;
+}
+
+// (eski) Arama ekranının tepesindeki küçük vakit özeti — Bugün ekranı onun yerini aldı
 function vakitOzet() {
   const pos = S.konum;
   if (!pos) return `<a class="panel nz-ozet-bos" href="#/namaz"><span>Namaz vakitleri ve geri sayım için konumunu seç</span>${ICON.next}</a>`;
@@ -887,11 +960,13 @@ function route() {
   const p = new URLSearchParams(qs || "");
   const parts = path.split("/").filter(Boolean);
   let html = "", nav = "ara";
+  if (parts[0] === "sor") { html = homeView(); }
   if (parts[0] === "ara") {
     const q = (p.get("q") || "").trim();
-    if (!q) { location.replace("#/"); return; }
+    if (!q) { location.replace("#/sor"); return; }
     html = p.get("t") === "ozet" ? summaryView(q) : resultsView(q);
-  } else if (parts[0] === "ayet") { html = verseView(Number(parts[1]), Number(parts[2])); }
+  } else if (html) { /* sor */ }
+  else if (parts[0] === "ayet") { html = verseView(Number(parts[1]), Number(parts[2])); }
   else if (parts[0] === "sureler") { html = surahsView(); nav = "sure"; }
   else if (parts[0] === "sure") { html = surahView(Number(parts[1])); nav = "sure"; }
   else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "menu"; }
@@ -899,13 +974,13 @@ function route() {
   else if (parts[0] === "tesbih" || parts[0] === "saat") { html = modulView(parts[0]); nav = parts[0] === "tesbih" ? "tesbih" : "menu"; }
   else if (parts[0] === "carsi") { html = carsiRoute(parts); nav = "menu"; if (!html) { location.replace("#/carsi"); return; } }
   else if (parts[0] === "ayarlar") { html = settingsView(); nav = "ayar"; }
-  else if (parts[0] === "namaz" || parts[0] === "kible") { html = namazView(); nav = "namaz"; }
+  else if (parts[0] === "namaz" || parts[0] === "kible") { html = namazView(); nav = "bugun"; }
   else if (parts[0] === "miras") { html = mirasView(); nav = "menu"; }
-  else { html = homeView(); }
+  else if (!html) { html = bugunView(); nav = "bugun"; }
   if (!html) return;
   kibleStop();
   $app.innerHTML = html;
-  if (nav === "namaz") namazMount();
+  if (parts[0] === "namaz" || parts[0] === "kible") namazMount();
   else if (!parts[0] && S.konum) sayacBaslat();
   renderNav(nav);
   window.scrollTo(0, 0);
