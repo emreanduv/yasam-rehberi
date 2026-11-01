@@ -1,0 +1,44 @@
+{
+ "Fenerium": {
+  "url": [
+   "https://fenerium.com/saat",
+   "https://fenerium.com/cakmak",
+   "https://fenerium.com/tespih",
+   "https://fenerium.com/bileklik",
+   "https://fenerium.com/kol-saati",
+   "https://fenerium.com/saat-cakmak",
+   "https://fenerium.com/kolye-bileklik",
+   "https://fenerium.com/hikaye-bileklik"
+  ],
+  "t": 1793536005.3318276,
+  "v": 2,
+  "tarih": "01.11.2026"
+ },
+ "GS Store": {
+  "url": [
+   "https://www.gsstore.org/gsgaraj-saat/",
+   "https://www.gsstore.org/aksesuar-saat/",
+   "https://www.gsstore.org/aksesuar-tesbih/",
+   "https://www.gsstore.org/gsgaraj-bileklik/",
+   "https://www.gsstore.org/aksesuar-bileklik/",
+   "https://www.gsstore.org/gsgaraj-bileklik-2/",
+   "https://www.gsstore.org/gsgaraj-bileklik-3/",
+   "https://www.gsstore.org/gsgaraj-bileklik-4/"
+  ],
+  "t": 1793536005.3318276,
+  "v": 2,
+  "tarih": "01.11.2026"
+ },
+ "Kartal Yuvası": {
+  "url": [],
+  "t": 1793536005.3318276,
+  "v": 2,
+  "tarih": "01.11.2026"
+ },
+ "TS Club": {
+  "url": [],
+  "t": 1793536005.3318276,
+  "v": 2,
+  "tarih": "01.11.2026"
+ }
+}
