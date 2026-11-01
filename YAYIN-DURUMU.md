@@ -85,3 +85,13 @@
 - Çarşı: bir marka birden fazla reyonda görünebilir (carsi.js EK_REYON: Teknosa ve Vatan Teknoloji'de de, KVK Market'te de).
 - Wikidata'ya buluttan/Mac terminalinden erişim kapalıysa: `node tools/carsi_veri.mjs --sorgu` → query.wikidata.org'da çalıştır → `CARSI_JSON=sonuc.json npm run carsi`.
 - NOT (öbür sohbetler): Çarşı'ya dokunmadan önce `git pull`; carsi.json 01.11 itibarıyla 255 kayıt.
+
+## 1 Kasım 2026 · App Store'a gönderildi (1.0.0, yapı 26) — WAITING_FOR_REVIEW
+- Kur'an içeriği Diyanet onayına kadar KAPALI: `www/js/ozellik.js` → `KURAN = false`. Kapalıyken Sor, Sureler, ayet ekranları,
+  günün ayeti, miras ayet metinleri ve tesbihteki "Meallerde oku" yok; `tools/yayin_ayikla.mjs` veri dosyalarını pakete koymaz.
+- Uygulamada: Bugün (vakit + sayaç, kıble, bildirimler), Tesbih, Saat, Çarşı, Miras + Apple Watch (bildirim, kıble, kadran parçası, GPS).
+- Mağaza: alt başlık "Namaz vakti, kıble ve tesbih", kategori Yaşam Tarzı / Başvuru, yeni açıklama ve anahtar kelimeler,
+  görseller `store/gorseller/v1-vakit/` (iş akışı "App Store görselleri" ile API'den yüklendi), inceleme notu güncel.
+- Yayın ülkesi: yalnız Türkiye (saat uygulaması vakitleri Türkiye saatiyle hesaplıyor). Onaylanınca otomatik yayın.
+- Diyanet onayı gelince: `KURAN = true` → mağaza metinlerini `store/magaza-metinleri.md` (eski bölüm) ile birleştir,
+  görsellere meal ekranlarını ekle → 1.1.0 güncellemesi.
