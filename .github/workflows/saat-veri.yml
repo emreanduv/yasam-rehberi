@@ -1,0 +1,31 @@
+name: Saat Vitrini · veri (zamanlanmış tarama)
+# Saat Vitrini uygulamasının okuduğu vitrin.json'u üretir: saat-vitrini/tools/veri_guncelle.py
+# Çıktı "saat-veri" dalına yazılır → https://raw.githubusercontent.com/emreanduv/yasam-rehberi/saat-veri/vitrin.json
+on:
+  schedule:
+    - cron: "17 */6 * * *"     # 6 saatte bir (UTC)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: saat-veri, cancel-in-progress: false }
+jobs:
+  tara:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Önceki turun verisi (ulaşılamayan kaynakların son iyi ürünleri için)
+        run: |
+          git fetch --depth=1 origin saat-veri:saat-veri 2>/dev/null && git worktree add veri saat-veri || { mkdir -p veri; }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Tara
+        run: python3 saat-vitrini/tools/veri_guncelle.py veri
+      - name: saat-veri dalına yaz
+        run: |
+          cd veri
+          if [ ! -d .git ] && [ ! -f .git ]; then git init -q -b saat-veri; fi
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git add vitrin.json ham.json kulup_kesif.json 2>/dev/null || git add -A
+          git commit -qm "Saat Vitrini verisi $(date -u +%Y-%m-%dT%H:%MZ)" || { echo "değişiklik yok"; exit 0; }
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" HEAD:saat-veri

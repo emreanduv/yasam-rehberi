@@ -1,0 +1,38 @@
+name: Saat Vitrini · Android (Google Play paketi)
+on:
+  workflow_dispatch:
+    inputs:
+      version_name:
+        description: "Sürüm adı (ör. 1.0.0)"
+        default: "1.0.0"
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: saat-vitrini } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 21 }
+      - run: npm ci
+      - run: npx cap sync android
+      - name: AAB derle (imzasız; imza ayrı yapılır — Yaşam Rehberi'ndeki imzala.sh ile aynı yol)
+        working-directory: saat-vitrini/android
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: ${{ inputs.version_name }}
+        run: chmod +x gradlew && ./gradlew :app:bundleRelease --no-daemon
+      - name: Paketi builds-saat-vitrini dalına koy
+        run: |
+          OUT=saat-vitrini-${{ inputs.version_name }}-${{ github.run_number }}-unsigned.aab
+          mkdir -p /tmp/b/android && cp android/app/build/outputs/bundle/release/app-release.aab /tmp/b/android/$OUT && cd /tmp/b
+          git init -q -b builds-saat-vitrini && git config user.name "github-actions" && git config user.email "actions@github.com"
+          git add . && git commit -qm "Saat Vitrini Android paketi $OUT"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" builds-saat-vitrini
+      - uses: actions/upload-artifact@v4
+        with:
+          name: saat-vitrini-${{ inputs.version_name }}-${{ github.run_number }}-unsigned.aab
+          path: saat-vitrini/android/app/build/outputs/bundle/release/app-release.aab
