@@ -6,6 +6,7 @@ import * as V from "./vakit.js";
 import * as B from "./bildirim.js";
 import * as M from "./miras.js";
 import { initCarsi, carsiRoute } from "./carsi.js";
+import { KURAN } from "./ozellik.js";
 
 // ---------------------------------------------------------------------------
 // Ayarlanabilir sabitler (isim değişirse sadece burası ve capacitor.config.json)
@@ -137,8 +138,9 @@ function verseCard(v, terms) {
 function renderNav(active) {
   const item = (id, href, icon, label) => `<a href="${href}" class="${active === id ? "on" : ""}"${active === id ? ' aria-current="page"' : ""}>${icon}${label}</a>`;
   // Tek menü: her bölüm burada, sırayla
-  $nav.innerHTML = item("bugun", "#/", ICON.mosque, "Bugün") + item("ara", "#/sor", ICON.search, "Sor")
-    + item("sure", "#/sureler", ICON.book, "Sureler") + item("tesbih", "#/tesbih", ICON.beads, "Tesbih") + item("saat", "#/saat", ICON.clock, "Saat")
+  $nav.innerHTML = item("bugun", "#/", ICON.mosque, "Bugün")
+    + (KURAN ? item("ara", "#/sor", ICON.search, "Sor") + item("sure", "#/sureler", ICON.book, "Sureler") : "")
+    + item("tesbih", "#/tesbih", ICON.beads, "Tesbih") + item("saat", "#/saat", ICON.clock, "Saat")
     + item("carsi", "#/carsi", ICON.bag, "Çarşı") + item("miras", "#/miras", ICON.scale, "Miras");
 }
 
@@ -217,7 +219,7 @@ function kiblePanel(pos) {
         <div class="kb-msg" id="kb-msg">${pos ? kibleMetin(pos) : "Kıble yönü için konum ve pusula gerekir."}</div>
         <button class="btn-go" id="kb-start" data-act="kible">${ICON.compass}Pusulayı aç</button>
         <div class="kb-ipucu">Telefonu düz tut; metal eşya ve mıknatıslı kılıftan uzak dur. Ok kayıyorsa telefonla havada birkaç kez “8” çiz.
-          <a href="#/ayet/2/144">Kur'an'da kıble · Bakara 2:144 ›</a></div>
+          ${KURAN ? `<a href="#/ayet/2/144">Kur'an'da kıble · Bakara 2:144 ›</a>` : ""}</div>
       </div>
     </section>`;
 }
@@ -250,10 +252,22 @@ function bugunView() {
     <section class="panel"><div class="panel-h"><span>Vakitler</span><span>Bugün</span></div><div>${rows}</div>
       <div class="panel-b nz-foot">Diyanet yöntemiyle telefonda hesaplanır; resmî takvimle 1–2 dakika fark olabilir. <a href="#" data-act="konum">Konumu güncelle</a></div></section>`;
   }
-  const day = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 864e5);
-  const [ds, da] = DAILY[day % DAILY.length].split(":").map(Number);
-  const dv = E.verse(E.indexOf(ds, da), mealsOn());
-  const fm = Object.keys(dv.texts)[0];
+  let gunAyet = "";
+  if (KURAN) {
+    const day = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 864e5);
+    const [ds, da] = DAILY[day % DAILY.length].split(":").map(Number);
+    const dv = E.verse(E.indexOf(ds, da), mealsOn());
+    const fm = Object.keys(dv.texts)[0];
+    gunAyet = `<section class="panel">
+      <div class="panel-h">Gelen kutusu <span class="count">1</span></div>
+      <a class="panel-b bg-ayet" href="#/ayet/${ds}/${da}">
+        <span class="bg-ayet-c"></span>
+        <span style="min-width:0"><b class="bg-ayet-t">Günün ayeti · ${esc(dv.title)}</b>
+        <span class="bg-ayet-m">${esc(dv.texts[fm])}</span>
+        <span class="bg-ayet-k">${esc(E.source(fm).credit)}</span></span>
+      </a>
+    </section>`;
+  }
   return `${topbar()}
   <section class="bg-band">
     <div class="bg-tarih"><span>${esc(tarih)}</span>${h ? `<span>${h.gun} ${esc(h.ayAdi)} ${h.yil}</span>` : ""}</div>
@@ -262,15 +276,7 @@ function bugunView() {
     ${ramazanPanel(pos)}
     ${ust}
     ${pos ? kiblePanel(pos) : ""}
-    <section class="panel">
-      <div class="panel-h">Gelen kutusu <span class="count">1</span></div>
-      <a class="panel-b bg-ayet" href="#/ayet/${ds}/${da}">
-        <span class="bg-ayet-c"></span>
-        <span style="min-width:0"><b class="bg-ayet-t">Günün ayeti · ${esc(dv.title)}</b>
-        <span class="bg-ayet-m">${esc(dv.texts[fm])}</span>
-        <span class="bg-ayet-k">${esc(E.source(fm).credit)}</span></span>
-      </a>
-    </section>
+    ${gunAyet}
     <a class="bg-devam" href="#/tesbih"><span class="bg-devam-z">Son zikir · ${esc(tz.ad)}</span>
       <span class="btn-go bg-devam-b">DEVAM ${tz.h ? `${tz.n}/${tz.h}` : tz.n} ${ICON.next}</span></a>
     ${pos ? bildirimPanel(pos) : ""}
@@ -521,6 +527,17 @@ function savedView() {
 }
 
 function settingsView() {
+  if (!KURAN) {
+    return `${topbar("Geri")}
+  <section class="band"><div class="eyebrow">Ayarlar</div><h1>Hakkında</h1></section>
+  <main class="content">
+    <section class="panel"><div class="panel-h">Yaşam Rehberi</div><div class="panel-b" style="font-size:14px;line-height:1.55">
+      Namaz vakitleri, kıble, tesbih, saat, çarşı ve miras hesabı. Hepsi telefonda çalışır; internet ve üyelik gerekmez,
+      hiçbir veri toplanmaz. Vakitler Diyanet'in hesap yöntemiyle telefonda hesaplanır.</div></section>
+    <div class="made" style="font-style:normal;color:var(--muted)">Reklamsız ve ücretsiz · Sürüm ${VERSION}</div>
+    <div class="made">${esc(MAKER)}</div>
+  </main>`;
+  }
   const row = (label, key, checked, extra = "") => `<label class="opt">${label}<input type="checkbox" data-act="opt" data-key="${key}" ${extra} ${checked ? "checked" : ""}></label>`;
   return `${topbar("Geri")}
   <section class="band"><div class="eyebrow">Ayarlar</div><h1>Kaynaklar ve görünüm</h1></section>
@@ -705,6 +722,7 @@ async function tesbihBildirimKur() {
 }
 
 window.YR = {
+  kuran: KURAN,
   oku: (k) => modVeri[k] ?? null,
   yaz: (k, v) => {
     if (!MOD_KEYS.includes(k)) return;
@@ -911,7 +929,7 @@ function mirasView() {
       <button class="mr-x" data-act="mr-del" data-i="${i}" aria-label="Kaldır">×</button></div>
       ${stepper(`olmus.${i}.ogul`, c.ogul, 12, "Onun hayattaki oğulları")}${stepper(`olmus.${i}.kiz`, c.kiz, 12, "Onun hayattaki kızları")}</div>`).join("");
   const v = (s, a) => { const x = E.verse(E.indexOf(s, a), mealsOn()); return x; };
-  const ayetler = [[4, 11], [4, 12], [4, 176]].map(([s, a]) => { const x = v(s, a); const t0 = Object.keys(x.texts)[0];
+  const ayetler = !KURAN ? "" : [[4, 11], [4, 12], [4, 176]].map(([s, a]) => { const x = v(s, a); const t0 = Object.keys(x.texts)[0];
     return `<a class="row" href="#/ayet/${s}/${a}" style="align-items:flex-start"><span style="flex:none;width:58px;font-weight:700;color:var(--band)">${s}:${a}</span><span style="flex:1;font-size:14px;line-height:1.45">${esc(excerpt(x.texts[t0], 170))}</span></a>`; }).join("");
   return `${topbar()}
   <section class="band">
@@ -948,7 +966,7 @@ function mirasView() {
       <div class="panel-b"><input id="mr-tutar" class="mr-tutar" type="text" inputmode="numeric" placeholder="Örn. 3.000.000" value="${g.tutar ? g.tutar.toLocaleString("tr-TR") : ""}" data-act="mr-tutar" aria-label="Miras tutarı (TL)"></div>
     </section>
     <div id="mr-sonuc">${bos ? `<div class="note">Mirasçıları girdikçe sonuç burada belirir.</div>` : mirasSonuc(f, t, g.tutar || 0)}</div>
-    <section class="panel"><div class="panel-h">Kur'an'da miras ayetleri</div><div class="rows">${ayetler}</div></section>
+    ${KURAN ? `<section class="panel"><div class="panel-h">Kur'an'da miras ayetleri</div><div class="rows">${ayetler}</div></section>` : ""}
     <div class="note"><b>Bilgi amaçlıdır; fetva ya da hukuki görüş değildir.</b> Feraiz hesabı Hanefî mezhebine göre, Diyanet'in anlatımı esas alınarak yapılır. Türkiye'de tapu ve mahkemede Türk Medeni Kanunu uygulanır; Kur'an'daki paylara göre paylaşım ancak bütün mirasçıların rızasıyla yapılacak bir anlaşmayla mümkündür. Vasiyet, borç ve cenaze giderleri önce düşülür.</div>
   </main>`;
 }
@@ -979,6 +997,8 @@ function route() {
   const p = new URLSearchParams(qs || "");
   const parts = path.split("/").filter(Boolean);
   let html = "", nav = "ara";
+  // Kur'an içeriği kapalıyken bu ekranlar yok
+  if (!KURAN && ["sor", "ara", "ayet", "sureler", "sure", "kaydedilenler"].includes(parts[0])) { location.replace("#/"); return; }
   if (parts[0] === "sor") { html = homeView(); }
   if (parts[0] === "ara") {
     const q = (p.get("q") || "").trim();
@@ -1127,14 +1147,17 @@ document.addEventListener("input", (e) => {
 // başlat
 // ---------------------------------------------------------------------------
 async function boot() {
-  const [core, index] = await Promise.all([
-    // İnceleme sürümünde (tek HTML dosyası) veriler sayfanın içine gömülüdür
-    window.__CORE || fetch("data/core.json").then((r) => r.json()),
-    window.__INDEX || fetch("data/index.json").then((r) => r.json()),
-  ]);
-  E = new Engine(core, index);
+  if (!KURAN) document.documentElement.classList.add("kuransiz");
+  if (KURAN) {
+    const [core, index] = await Promise.all([
+      // İnceleme sürümünde (tek HTML dosyası) veriler sayfanın içine gömülüdür
+      window.__CORE || fetch("data/core.json").then((r) => r.json()),
+      window.__INDEX || fetch("data/index.json").then((r) => r.json()),
+    ]);
+    E = new Engine(core, index);
+  }
   S = { ...S, ...(await store.get("settings", {})) };
-  if (!Array.isArray(S.meals) || !S.meals.some((t) => E.meals.includes(t))) S.meals = [...E.meals];
+  if (KURAN && (!Array.isArray(S.meals) || !S.meals.some((t) => E.meals.includes(t)))) S.meals = [...E.meals];
   saved = await store.get("saved", []);
   const kayitliMiras = await store.get("miras", null);
   if (kayitliMiras && typeof kayitliMiras === "object") mg = { ...M.BOS, ...kayitliMiras };

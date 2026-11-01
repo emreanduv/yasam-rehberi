@@ -18,6 +18,8 @@ jobs:
         with: { distribution: temurin, java-version: 21 }
       - run: npm ci
       - run: npx cap sync android
+      - name: Kapalı içeriği paketten çıkar (www/js/ozellik.js)
+        run: node tools/yayin_ayikla.mjs
       - name: AAB derle (imzasız; imza ayrı yapılır)
         working-directory: android
         env:

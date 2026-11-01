@@ -1440,6 +1440,8 @@ body, body::before { background: #1e2226; }
   checkRemind();
   if (YRK.gomulu) hatirlatKur();
 })();
+  // Kur'an içeriği kapalıyken "Meallerde oku" bölümü gösterilmez
+  try { if (YRK.gomulu && !YRK.kuran) { var p = document.querySelector('[aria-labelledby="h-ayet"]'); if (p) p.remove(); } } catch (e) {}
 </script>
 
 </body></html>

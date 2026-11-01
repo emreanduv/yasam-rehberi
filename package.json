@@ -9,7 +9,7 @@
     "serve": "python3 -m http.server 8765 --directory www",
     "veri": "python3 tools/export_data.py ../kuran-terminal",
     "test": "node test/parity.mjs",
-    "sync": "npx cap sync",
+    "sync": "npx cap sync && node tools/yayin_ayikla.mjs",
     "android": "npx cap open android",
     "ios": "npx cap open ios",
     "carsi": "node tools/carsi_veri.mjs"

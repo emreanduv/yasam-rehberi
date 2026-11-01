@@ -23,6 +23,8 @@ jobs:
           xcodebuild -version
       - run: npm ci
       - run: npx cap sync ios
+      - name: Kapalı içeriği paketten çıkar (www/js/ozellik.js)
+        run: node tools/yayin_ayikla.mjs
       # Apple: Nisan 2027'den itibaren en az iOS 15 (cap sync Package.swift'i yeniden yazabilir)
       - run: sed -i '' 's/\.iOS(\.v1[0-4])/.iOS(.v15)/' ios/App/CapApp-SPM/Package.swift
       - name: App Store Connect anahtarı

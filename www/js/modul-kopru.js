@@ -8,6 +8,7 @@
   var mem = {};
   window.YRK = {
     gomulu: !!P,
+    kuran: P ? P.kuran !== false : true,      // Kur'an içeriği açık mı (uygulamanın yayın anahtarı)
     oku: function (k) { if (P) return P.oku(k); try { return localStorage.getItem(k); } catch (e) { return mem[k] || null; } },
     yaz: function (k, v) { if (P) { P.yaz(k, v); return; } try { localStorage.setItem(k, v); } catch (e) { mem[k] = v; } },
     konum: function () { return P ? P.konum() : null; },          // { lat, lon, ad } ya da null

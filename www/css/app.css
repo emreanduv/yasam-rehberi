@@ -310,3 +310,6 @@ a.nz-ozet-bos { display: flex; align-items: center; justify-content: space-betwe
 .bg-kayit b { color: var(--ink); font-size: 15px; }
 .kb-ipucu { font-size: 12px; line-height: 1.5; color: var(--ink-2); margin-top: 10px; text-align: center; }
 .kb-ipucu a { display: block; margin-top: 4px; font-weight: 700; }
+
+/* Kur'an içeriği kapalıyken ayet bağlantıları görünmez */
+.kuransiz a[href^="#/ayet"], .kuransiz a[href^="#/ara"], .kuransiz a[href^="#/sor"] { display: none !important; }
