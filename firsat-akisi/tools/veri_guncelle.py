@@ -110,8 +110,21 @@ ALAN = ("id", "store", "title", "headline", "offer", "detail", "category", "star
         "url", "source", "emoji", "oldPrice", "newPrice", "katalog")
 
 
+TEMA = re.compile(r"\b(?:yerli|Yerli|YERLİ)(?:\s+ve\s+(?:milli|Milli))?\s+(?=\w)")
+
+
+def temasiz(metin):
+    """Uygulama metinlerinde tema sözcükleri yazmaz (Emre'nin kuralı): 'Yerli dijital platform tabii' → 'Dijital platform tabii'."""
+    y = TEMA.sub("", metin)
+    return y[:1].upper() + y[1:] if y and metin[:1].isupper() else y
+
+
 def sade(d, tur):
     x = {k: d[k] for k in ALAN if d.get(k) not in (None, "", [])}
+    if tur != "canli":
+        for k in ("title", "headline", "detail"):
+            if isinstance(x.get(k), str):
+                x[k] = temasiz(x[k])
     if GENEL.search(x.get("offer", "")):
         x["offer"] = "Kampanya"
     x["store"] = re.sub(r"\s+Ekim kataloğu$", "", x.get("store", ""), flags=re.I)
