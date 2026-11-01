@@ -39,13 +39,14 @@ final class Pusula: NSObject, ObservableObject, CLLocationManagerDelegate {
 }
 
 struct KibleEkrani: View {
-    @AppStorage("il") private var il = 34
+    @ObservedObject private var konum = KonumYoneticisi.shared
     @StateObject private var pusula = Pusula()
     @State private var hizaliTitredi = false
 
     var body: some View {
-        let (lat, lon) = Vakit.koord[max(1, min(81, il)) - 1]
-        let kible = kibleAcisi(lat: lat, lon: lon)
+        let _ = konum.surum
+        let yer = Yer.simdiki()
+        let kible = kibleAcisi(lat: yer.lat, lon: yer.lon)
         let fark: Double? = pusula.yon.map { y in
             var d = (kible - y).truncatingRemainder(dividingBy: 360)
             if d > 180 { d -= 360 }
@@ -78,7 +79,7 @@ struct KibleEkrani: View {
                 Text(pusula.destek ? "Pusula hazırlanıyor…" : "Kuzeyden \(Int(kible.rounded()))°")
                     .font(.system(size: 14, weight: .bold)).foregroundStyle(Renk.panel)
             }
-            Text("\(Vakit.il[max(1, min(81, il)) - 1]) · kuzeyden \(Int(kible.rounded()))°")
+            Text("\(yer.ad) · kuzeyden \(Int(kible.rounded()))°")
                 .font(.system(size: 11)).foregroundStyle(Renk.soluk)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

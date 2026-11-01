@@ -406,6 +406,7 @@
 				AD00BEEF0000000000000003 /* AnaEkran.swift */,
 				AD00BEEF0000000000000016 /* SaatBildirim.swift */,
 				AD00BEEF0000000000000018 /* KibleEkrani.swift */,
+				AD00BEEF000000000000002B /* Konum.swift */,
 				AD00BEEF0000000000000014 /* Assets.xcassets */,
 			);
 			path = Watch;
@@ -420,6 +421,7 @@
 				AD00BEEF0000000000000007 /* AnaEkran.swift in Sources */,
 				AD00BEEF0000000000000017 /* SaatBildirim.swift in Sources */,
 				AD00BEEF0000000000000019 /* KibleEkrani.swift in Sources */,
+				AD00BEEF000000000000002C /* Konum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,6 +692,8 @@
 			target = AD00BEEF0000000000000024 /* YasamRehberiKomplikasyon */;
 			targetProxy = AD00BEEF0000000000000029 /* PBXContainerItemProxy */;
 		};
+		AD00BEEF000000000000002B /* Konum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Konum.swift; sourceTree = "<group>"; };
+		AD00BEEF000000000000002C /* Konum.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD00BEEF000000000000002B /* Konum.swift */; };
 /* End Watch */
 	};
 	rootObject = 504EC2FC1FED79650016851F /* Project object */;

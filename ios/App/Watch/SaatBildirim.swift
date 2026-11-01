@@ -9,7 +9,7 @@ enum SaatBildirim {
     private static let gun = 7                       // 7 gün × 5 vakit = 35 (watchOS sınırı 64)
     private static let onEk = "yr-vakit-"
 
-    static func kur(il: Int, acik: Bool) async {
+    static func kur(lat: Double, lon: Double, yerAdi: String, acik: Bool) async {
         let c = UNUserNotificationCenter.current()
         let bekleyen = await c.pendingNotificationRequests().map(\.identifier).filter { $0.hasPrefix(onEk) }
         c.removePendingNotificationRequests(withIdentifiers: bekleyen)
@@ -22,8 +22,6 @@ enum SaatBildirim {
         let son = await c.notificationSettings()
         guard son.authorizationStatus == .authorized || son.authorizationStatus == .provisional else { return }
 
-        let no = max(1, min(81, il))
-        let (lat, lon) = Vakit.koord[no - 1]
         let simdi = Date()
         var takvim = Calendar(identifier: .gregorian)
         takvim.timeZone = TimeZone(identifier: "Europe/Istanbul") ?? .current
@@ -38,7 +36,7 @@ enum SaatBildirim {
                 guard an > simdi.addingTimeInterval(30) else { continue }
                 let icerik = UNMutableNotificationContent()
                 icerik.title = "\(Vakit.ad[k]) vakti · \(Vakit.hhmm(v[k]))"
-                icerik.body = "\(Vakit.il[no - 1]) · \(Vakit.ad[k]) vakti girdi."
+                icerik.body = "\(yerAdi) · \(Vakit.ad[k]) vakti girdi."
                 icerik.sound = .default
                 let bilesen = takvim.dateComponents([.year, .month, .day, .hour, .minute], from: an)
                 let tetik = UNCalendarNotificationTrigger(dateMatching: bilesen, repeats: false)

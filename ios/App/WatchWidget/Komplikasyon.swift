@@ -1,8 +1,9 @@
 // Yaşam Rehberi — saat kadranı parçası (komplikasyon): sıradaki vakit ve kalan süre.
-// İl, kadrana eklerken seçilir (varsayılan İstanbul). Vakit hesabı uygulamayla aynı (Vakit.swift).
+// Varsayılan: saatin konumu (otomatik). İstenirse kadrana eklerken bir il seçilir. Vakit hesabı uygulamayla aynı (Vakit.swift).
 import WidgetKit
 import SwiftUI
 import AppIntents
+import CoreLocation
 
 // MARK: - İl seçimi (kadran ayarı)
 
@@ -21,13 +22,13 @@ struct IlSorgu: EntityQuery {
         (1...81).sorted { Vakit.il[$0 - 1].compare(Vakit.il[$1 - 1], locale: Locale(identifier: "tr_TR")) == .orderedAscending }
             .map { IlSecenek(id: $0) }
     }
-    func defaultResult() async -> IlSecenek? { IlSecenek(id: 34) }
+    func defaultResult() async -> IlSecenek? { nil }   // boş = konumum (otomatik)
 }
 
 struct VakitAyari: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Vakit"
     static var description = IntentDescription("Sıradaki namaz vakti ve kalan süre")
-    @Parameter(title: "İl") var il: IlSecenek?
+    @Parameter(title: "İl (boş: konumum)") var il: IlSecenek?
     init() {}
 }
 
@@ -47,6 +48,7 @@ struct VakitSaglayici: AppIntentTimelineProvider {
     }
     // watchOS'ta kadran ayarı öneri listesinden seçilir: her il bir seçenek (alfabetik)
     func recommendations() -> [AppIntentRecommendation<VakitAyari>] {
+        [AppIntentRecommendation(intent: VakitAyari(), description: "Konumum (otomatik)")] +
         (1...81).sorted { Vakit.il[$0 - 1].compare(Vakit.il[$1 - 1], locale: Locale(identifier: "tr_TR")) == .orderedAscending }
             .map { no in
                 var ayar = VakitAyari()
@@ -55,25 +57,38 @@ struct VakitSaglayici: AppIntentTimelineProvider {
             }
     }
     func snapshot(for configuration: VakitAyari, in context: Context) async -> VakitKaydi {
-        kayit(il: configuration.il?.id ?? 34, an: .now)
+        kayit(yer: yer(configuration), an: .now)
+    }
+
+    /// Seçili il varsa o; yoksa saatin bilinen konumu; o da yoksa saat uygulamasındaki il / İstanbul
+    private func yer(_ c: VakitAyari) -> (lat: Double, lon: Double, ad: String) {
+        if let il = c.il?.id {
+            let (lat, lon) = Vakit.koord[il - 1]
+            return (lat, lon, Vakit.il[il - 1])
+        }
+        let m = CLLocationManager()
+        if m.isAuthorizedForWidgetUpdates, let l = m.location {
+            return (l.coordinate.latitude, l.coordinate.longitude, "Konumum")
+        }
+        let (lat, lon) = Vakit.koord[33]
+        return (lat, lon, "İstanbul")
     }
     func timeline(for configuration: VakitAyari, in context: Context) async -> Timeline<VakitKaydi> {
-        let il = configuration.il?.id ?? 34
+        let y = yer(configuration)
         var kayitlar: [VakitKaydi] = []
         var an = Date()
         // Şimdiden başlayıp her vakit girişinde yeni kayıt: önümüzdeki ~24 saat
         for _ in 0..<7 {
-            let k = kayit(il: il, an: an)
+            let k = kayit(yer: y, an: an)
             kayitlar.append(k)
             an = k.zaman.addingTimeInterval(1)
         }
         return Timeline(entries: kayitlar, policy: .after(an))
     }
-    private func kayit(il: Int, an: Date) -> VakitKaydi {
-        let no = max(1, min(81, il))
-        let d = Vakit.durum(il: no, an)
+    private func kayit(yer: (lat: Double, lon: Double, ad: String), an: Date) -> VakitKaydi {
+        let d = Vakit.durum(lat: yer.lat, lon: yer.lon, an)
         let dk = Int((d.zaman.timeIntervalSince(Vakit.gunBasi(Vakit.trGun(d.zaman))) / 60).rounded())
-        return VakitKaydi(date: an, ad: Vakit.ad[d.siradaki], saat: Vakit.hhmm(dk), zaman: d.zaman, ilAdi: Vakit.il[no - 1])
+        return VakitKaydi(date: an, ad: Vakit.ad[d.siradaki], saat: Vakit.hhmm(dk), zaman: d.zaman, ilAdi: yer.ad)
     }
 }
 

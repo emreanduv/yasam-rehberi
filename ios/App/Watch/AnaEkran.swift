@@ -21,15 +21,20 @@ struct AnaEkran: View {
     @AppStorage("t_n") private var sayi = 0
     @AppStorage("t_h") private var hedef = 33
     @AppStorage("bildirim") private var bildirim = true
+    @AppStorage("otomatikKonum") private var otomatik = true
+    @ObservedObject private var konum = KonumYoneticisi.shared
+    @Environment(\.scenePhase) private var faz
 
     var body: some View {
         NavigationStack {
             TimelineView(.periodic(from: .now, by: 1)) { ctx in
-                let d = Vakit.durum(il: il, ctx.date)
+                let yer = Yer.simdiki()
+                let d = Vakit.durum(lat: yer.lat, lon: yer.lon, ctx.date)
                 ScrollView {
                     VStack(spacing: 6) {
                         NavigationLink { IlSecimi() } label: {
-                            Text("\(Vakit.il[il - 1]) ›").font(.footnote).foregroundStyle(Renk.soluk)
+                            Label("\(yer.ad) ›", systemImage: yer.otomatik ? "location.fill" : "mappin")
+                                .font(.footnote).foregroundStyle(Renk.soluk)
                         }.buttonStyle(.plain)
 
                         // Sıradaki vakit
@@ -88,8 +93,14 @@ struct AnaEkran: View {
             }
             .background(Renk.zemin)
         }
-        // Saatin kendi ezan bildirimleri: il ya da ayar değişince yeniden kurulur
-        .task(id: "\(il)-\(bildirim)") { await SaatBildirim.kur(il: il, acik: bildirim) }
+        // Konumu tazele (uygulama her öne geldiğinde)
+        .onAppear { konum.guncelle() }
+        .onChange(of: faz) { f in if f == .active { konum.guncelle() } }
+        // Saatin kendi ezan bildirimleri: konum, il ya da ayar değişince yeniden kurulur
+        .task(id: "\(il)-\(bildirim)-\(otomatik)-\(konum.surum)") {
+            let y = Yer.simdiki()
+            await SaatBildirim.kur(lat: y.lat, lon: y.lon, yerAdi: y.ad, acik: bildirim)
+        }
     }
 
     private func saat(_ t: Date) -> String {
@@ -142,17 +153,27 @@ struct TesbihEkrani: View {
 
 struct IlSecimi: View {
     @AppStorage("il") private var il = 34
+    @AppStorage("otomatikKonum") private var otomatik = true
     @Environment(\.dismiss) private var dismiss
     private let sirali = (1...81).sorted {
         Vakit.il[$0 - 1].compare(Vakit.il[$1 - 1], locale: Locale(identifier: "tr_TR")) == .orderedAscending
     }
 
     var body: some View {
-        List(sirali, id: \.self) { no in
-            Button { il = no; dismiss() } label: {
-                HStack {
-                    Text(Vakit.il[no - 1]).foregroundStyle(no == il ? Renk.sari : Renk.panel)
-                    if no == il { Spacer(); Image(systemName: "checkmark").foregroundStyle(Renk.sari) }
+        List {
+            Toggle(isOn: $otomatik) {
+                Label("Konumum (otomatik)", systemImage: "location.fill")
+            }
+            .tint(Renk.yesil)
+            .onChange(of: otomatik) { acik in if acik { KonumYoneticisi.shared.guncelle() } }
+            Section(otomatik ? "Konum izni yoksa kullanılacak il" : "İl") {
+                ForEach(sirali, id: \.self) { no in
+                    Button { il = no; if !otomatik { dismiss() } } label: {
+                        HStack {
+                            Text(Vakit.il[no - 1]).foregroundStyle(no == il ? Renk.sari : Renk.panel)
+                            if no == il { Spacer(); Image(systemName: "checkmark").foregroundStyle(Renk.sari) }
+                        }
+                    }
                 }
             }
         }

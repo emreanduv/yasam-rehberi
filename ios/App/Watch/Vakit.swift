@@ -64,6 +64,11 @@ enum Vakit {
 
     static func durum(il no: Int, _ now: Date = Date()) -> Durum {
         let (lat, lon) = koord[max(1, min(81, no)) - 1]
+        return durum(lat: lat, lon: lon, now)
+    }
+
+    /// Tam konuma göre (GPS) sıradaki vakit
+    static func durum(lat: Double, lon: Double, _ now: Date = Date()) -> Durum {
         let g = trGun(now), base = gunBasi(g)
         let v = hesapla(g.0, g.1, g.2, lat: lat, lon: lon)
         for k in 0..<6 {
