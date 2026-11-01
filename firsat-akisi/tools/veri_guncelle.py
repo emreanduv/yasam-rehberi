@@ -165,3 +165,10 @@ for x in items:
     say[x["bolum"]] = say.get(x["bolum"], 0) + 1
 print(f"firsat.json: {len(items)} kampanya · {sum(1 for x in items if x.get('live'))} canlı · {sum(1 for x in items if x.get('katalog'))} katalog · "
       f"{sum(1 for x in items if x.get('yerli'))} 🇹🇷 · {say} · {simdi}")
+gunluk = {}
+for x in items:
+    if x["bolum"] in ("market", "bakim", "yemek"):
+        gunluk[x["store"]] = gunluk.get(x["store"], 0) + 1
+print("günlük ihtiyaç mağazaları:", dict(sorted(gunluk.items(), key=lambda kv: -kv[1])))
+print("yanıt vermeyen:", ", ".join(cikti["kaynak"]["yanit_yok"]))
+

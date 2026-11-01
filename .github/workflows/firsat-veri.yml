@@ -38,7 +38,10 @@ jobs:
           git add firsat.json first_seen.json 2>/dev/null || git add -A
           git commit -qm "Fırsat Akışı verisi $(date -u +%Y-%m-%dT%H:%MZ)" || { echo "değişiklik yok"; exit 0; }
           git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" HEAD:firsat-veri
-      - name: Deneme turunun çıktısı (uygulama dalı)
+      - name: Deneme turunun çıktısı (uygulama dalı → firsat-veri-deneme dalı)
         if: github.ref != 'refs/heads/main'
-        uses: actions/upload-artifact@v4
-        with: { name: firsat-veri-deneme, path: veri/firsat.json }
+        run: |
+          mkdir -p /tmp/d && cp veri/firsat.json /tmp/d/ && cd /tmp/d
+          git init -q -b firsat-veri-deneme && git config user.name "github-actions" && git config user.email "actions@github.com"
+          git add firsat.json && git commit -qm "Fırsat Akışı deneme verisi $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" HEAD:firsat-veri-deneme
