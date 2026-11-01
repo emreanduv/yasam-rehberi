@@ -212,7 +212,7 @@
     const d = t.dataset;
     if('kapat' in d){ kapat(); return; }
     if(d.kalp){ e.stopPropagation(); await kalp(d.kalp); const acik = !$('#sheet').hidden; goster(); if(acik) detay(d.kalp); return; }
-    if(d.git){ const B = window.Capacitor?.Plugins?.Browser; if(B) B.open({ url: d.git }); else window.open(d.git, '_blank', 'noopener'); return; }
+    if(d.git){ window.open(d.git, '_blank', 'noopener'); return; }   // satıcının sitesi telefonun kendi tarayıcısında açılır (uygulama içi tarayıcı yok)
     if(d.markasil){ durum.markalar.delete(d.markasil); durum.goster = SAYFA; goster(); return; }
     if(d.s){ durum.ekran = d.s; window.scrollTo(0, 0); goster(); return; }
     if(d.bolum){ durum.bolum = d.bolum; durum.markalar.clear(); durum.goster = SAYFA; goster(); return; }

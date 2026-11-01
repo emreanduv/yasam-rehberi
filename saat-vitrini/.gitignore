@@ -5,3 +5,4 @@ android/.gradle/
 android/build/
 ios/App/build/
 ios/DerivedData/
+__pycache__/
