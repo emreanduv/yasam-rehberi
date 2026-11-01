@@ -55,9 +55,21 @@ def main(klasor):
                        "relationships": {"appStoreVersionLocalization": {"data": {"type": "appStoreVersionLocalizations", "id": loc["id"]}}}}})
             setler[tur] = yeni["data"]["id"]
         sid = setler[tur]
+        # Aynı adla ve işlenmesi bitmiş (COMPLETE) olanlar kalır; gerisi (eski ya da takılmış) silinip yeniden yüklenir
+        hazir = set()
         for eski in api("GET", f"appScreenshotSets/{sid}/appScreenshots")["data"]:
-            api("DELETE", f"appScreenshots/{eski['id']}")
+            ad = eski["attributes"]["fileName"]
+            durum = (eski["attributes"].get("assetDeliveryState") or {}).get("state")
+            md5 = eski["attributes"].get("sourceFileChecksum")
+            yerel = os.path.join(klasor, alt, ad)
+            if durum == "COMPLETE" and os.path.exists(yerel) and md5 == hashlib.md5(open(yerel, "rb").read()).hexdigest() and ad not in hazir:
+                hazir.add(ad)
+            else:
+                api("DELETE", f"appScreenshots/{eski['id']}")
         for f in dosyalar:
+            if os.path.basename(f) in hazir:
+                print(f"{tur}: {os.path.basename(f)} zaten hazır")
+                continue
             veri = open(f, "rb").read()
             c = api("POST", "appScreenshots", json={"data": {"type": "appScreenshots",
                     "attributes": {"fileName": os.path.basename(f), "fileSize": len(veri)},
@@ -70,10 +82,22 @@ def main(klasor):
                 "attributes": {"uploaded": True, "sourceFileChecksum": hashlib.md5(veri).hexdigest()}}})
             print(f"{tur}: {os.path.basename(f)} yüklendi")
 
-    # İşlenmeyi bekle ve durumu yaz
-    time.sleep(20)
+    # İşlenmeyi bekle (en fazla ~4 dk), sonra her sette sırayı dosya adına göre düzelt
+    for _ in range(16):
+        time.sleep(15)
+        bekleyen = 0
+        for tur, sid in setler.items():
+            for s in api("GET", f"appScreenshotSets/{sid}/appScreenshots")["data"]:
+                if (s["attributes"].get("assetDeliveryState") or {}).get("state") != "COMPLETE":
+                    bekleyen += 1
+        if not bekleyen:
+            break
     for tur, sid in setler.items():
-        for s in api("GET", f"appScreenshotSets/{sid}/appScreenshots")["data"]:
+        liste = api("GET", f"appScreenshotSets/{sid}/appScreenshots")["data"]
+        sira = sorted(liste, key=lambda s: s["attributes"]["fileName"])
+        api("PATCH", f"appScreenshotSets/{sid}/relationships/appScreenshots",
+            json={"data": [{"type": "appScreenshots", "id": s["id"]} for s in sira]})
+        for s in sira:
             d = (s["attributes"].get("assetDeliveryState") or {}).get("state")
             print(f"{tur}: {s['attributes']['fileName']} → {d}")
 
