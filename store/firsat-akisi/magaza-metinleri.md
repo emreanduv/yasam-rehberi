@@ -26,7 +26,7 @@ Fırsatlar
 • Ara, süz: en yeni, bitişi yakın, en çok indirim; son 3 gün
 
 Takip
-• Kampanyayı ♥ ile takibe al: bitmeden bir gün önce ve son gün sabahı hatırlatalım
+• Kampanyayı kalp simgesiyle takibe al: bitmeden bir gün önce ve son gün sabahı hatırlatalım
 
 Cüzdan
 • Hangi kartların var? Seç; yalnız sana uyan kampanyaları gör (kart numarası istenmez)
@@ -42,4 +42,4 @@ Bir Mr. Anduv! yapımıdır.
 Market katalogları ve kampanyalar tek yerde; son gün hatırlatması.
 
 ## İnceleme notu (App Review)
-Giriş/hesap yok. Uygulama açılınca Market sekmesi gelir (haftalık market katalogları ve günlük ihtiyaç kampanyaları). Bir kampanyaya dokununca ayrıntısı açılır; "Kampanya sayfasında aç" mağazanın kendi sayfasını telefonun tarayıcısında açar (uygulamada satış/ödeme yoktur, komisyon bağlantısı yoktur). ♥ ile takibe alınan kampanya için bitmeden yerel bildirim gösterilir; takip edilen mağazaya yeni kampanya gelince yerel bildirim gösterilir. Cüzdan'da yalnız kart programı adları seçilir (numara yok). Kampanya bilgileri herkese açık sayfalardan derlenir, 3 saatte bir güncellenir. Marka logosu kullanılmaz.
+Giriş/hesap yok. Uygulama açılınca Market sekmesi gelir (haftalık market katalogları ve günlük ihtiyaç kampanyaları). Bir kampanyaya dokununca ayrıntısı açılır; "Kampanya sayfasında aç" mağazanın kendi sayfasını telefonun tarayıcısında açar (uygulamada satış/ödeme yoktur, komisyon bağlantısı yoktur). kalp simgesiyle takibe alınan kampanya için bitmeden yerel bildirim gösterilir; takip edilen mağazaya yeni kampanya gelince yerel bildirim gösterilir. Cüzdan'da yalnız kart programı adları seçilir (numara yok). Kampanya bilgileri herkese açık sayfalardan derlenir, 3 saatte bir güncellenir. Marka logosu kullanılmaz.
