@@ -1,0 +1,22 @@
+name: App Store görselleri
+on:
+  workflow_dispatch:
+    inputs:
+      klasor:
+        description: "Görsel klasörü (iphone/, ipad/, watch/ içerir)"
+        default: "store/gorseller/v1-vakit"
+env:
+  ASC_KEY_ID: DJSHKK6T3P
+  ASC_ISSUER_ID: f4943ef8-df6f-42c8-a561-58554097ea35
+jobs:
+  yukle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pyjwt cryptography requests
+      - name: App Store Connect anahtarı
+        env: { P8: "${{ secrets.ASC_KEY_P8 }}" }
+        run: printf '%s' "$P8" > $RUNNER_TEMP/asc.p8
+      - name: Görselleri yükle
+        env: { ASC_KEY_PATH: "${{ runner.temp }}/asc.p8" }
+        run: python tools/asc_gorseller.py "${{ inputs.klasor }}"
