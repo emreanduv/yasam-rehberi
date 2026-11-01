@@ -22,7 +22,11 @@
   const tazelik = (k) => { const t = Date.parse(k.t || ''); return Number.isFinite(t) ? Math.min(t, Date.now()) : 0; };
   const yeni = (k) => Date.now() - tazelik(k) < 6 * 3600e3;
   const yuzde = (k) => { const m = String(k.offer || '').match(/%\s?(\d{1,2})\b/); return m ? Number(m[1]) : 0; };
-  const magaza = (k) => String(k.store || '').replace(/\s+×\s.*$/, '');
+  const TAKMA = { 'Cepte ŞOK':'ŞOK', 'Şok':'ŞOK', 'Bim':'BİM', 'File Market':'File', 'getirbüyük':'GetirBüyük', 'Domino’s':"Domino's" };
+  const magaza = (k) => { const m = String(k.store || '').replace(/\s+×\s.*$/, ''); return TAKMA[m] || m; };
+  // zincir şeridinde önce bunlar (her kesimin alışveriş yaptığı zincirler), sonra kampanya sayısına göre
+  const ONCELIK = ['BİM', 'A101', 'ŞOK', 'Migros', 'File', 'Tarım Kredi', 'CarrefourSA', 'Metro', 'Bizim Toptan', 'Hakmar', 'Hakmar Express', 'Macrocenter', 'Fiskomar', 'Gratis', 'Watsons', 'Rossmann'];
+  const onc = (m) => { const i = ONCELIK.indexOf(m); return i < 0 ? 99 : i; };
 
   // ── kalıcı kayıt (Capacitor Preferences varsa o, yoksa localStorage) ──
   const Pref = window.Capacitor?.Plugins?.Preferences;
@@ -68,7 +72,7 @@
     list.forEach((k) => { const d = Math.floor(tazelik(k) / 3600e3); if(!dilim.has(d)) dilim.set(d, []); dilim.get(d).push(k); });
     const out = [];
     for(const d of [...dilim.keys()].sort((a, b) => b - a)){
-      const grup = dilim.get(d), son = [];
+      const grup = dilim.get(d).sort((a, b) => (a.offer === 'Kampanya') - (b.offer === 'Kampanya')), son = [];   // tutarı belli olanlar önde
       while(grup.length){ const o = son[son.length - 1]; let i = grup.findIndex((k) => !o || magaza(k) !== magaza(o)); if(i < 0) i = 0; son.push(grup.splice(i, 1)[0]); }
       out.push(...son);
     }
@@ -130,7 +134,7 @@
       ust = fistik(`<b>${d.getDate()} ${AY[d.getMonth()]} ${GUN[d.getDay()]}</b> · günlük ihtiyaçta ${gun.length} kampanya${kat ? `, ${kat} katalog yayında` : ''}${biten ? ` · <span class="kirmizi">${biten} tanesi bugün bitiyor</span>` : ''}`);
       // zincir şeridi: o bölümdeki mağazalar, en çok kampanyası olan önde; ☆ ile mağaza takibi
       const z = {}; V.items.filter((k) => k.bolum === durum.gbolum).forEach((k) => { const m = magaza(k); z[m] = (z[m] || 0) + 1; });
-      const zl = Object.entries(z).sort((a, b) => (magazaTakip[b[0]] ? 1 : 0) - (magazaTakip[a[0]] ? 1 : 0) || b[1] - a[1] || a[0].localeCompare(b[0], 'tr'));
+      const zl = Object.entries(z).sort((a, b) => (magazaTakip[b[0]] ? 1 : 0) - (magazaTakip[a[0]] ? 1 : 0) || onc(a[0]) - onc(b[0]) || b[1] - a[1] || a[0].localeCompare(b[0], 'tr'));
       if(zl.length > 1) ust += `<div class="zincir">${zl.map(([m, n]) => `<button data-zincir="${esc(m)}" class="${durum.zincir === m ? 'on' : ''}">${magazaTakip[m] ? '★ ' : ''}${esc(m)}<em>${n}</em></button>`).join('')}</div>`;
     }
     $('#ekran').innerHTML = `

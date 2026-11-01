@@ -29,7 +29,7 @@ AD = {"bim": "BİM", "şok": "ŞOK", "sok": "ŞOK", "file market": "File", "tar�
       "hakmar express": "Hakmar Express", "gratis": "Gratis", "watsons": "Watsons", "rossmann": "Rossmann"}
 BAKIM = {"Gratis", "Watsons", "Rossmann", "Eve", "Flormar", "Oriflame", "Avon", "Farmasi"}
 # günlük ihtiyaç dışı (teknoloji, giyim…) → alınmaz
-DISARIDA = re.compile(r"vatan|vestel|arçelik|beko|teknosa|media ?markt|civil|mion|oriflame|avon|farmasi|lc ?waikiki|defacto|koton|ikea|koçtaş|bauhaus|tekzen|english home|madame coco|karaca|penti|flo\b|ayakkabı|mobilya|yatak|elektronik|bilgisayar", re.I)
+DISARIDA = re.compile(r"vatan|vestel|arçelik|beko|teknosa|media ?markt|civil|mion|oriflame|avon|farmasi|lc ?waikiki|defacto|koton|ikea|koçtaş|bauhaus|tekzen|english home|madame coco|karaca|penti|flo\b|ayakkabı|mobilya|yatak|elektronik|bilgisayar|evkur|tedi\b", re.I)
 SOSYAL = re.compile(r"instagram|facebook|twitter|tiktok|paylaşım", re.I)
 GIRDI = re.compile(r'<a\s[^>]*href="(/brosurler/([a-z0-9]+)-(\d{1,2})-(' + "|".join(AYLAR) + r')-(20\d\d)-[a-z0-9-]*?-(\d{3,}))"[^>]*>(.*?)</a>', re.S)
 MAGAZA = re.compile(r'<a\s[^>]*href="/brosurler/([a-z0-9-]+)"[^>]*>(.*?)</a>', re.S)
@@ -141,7 +141,7 @@ def tara(headers, robots_allows, bugun=None, log=print):
             kayitlar.append({
                 "id": "kat-" + hashlib.sha1(yol.encode()).hexdigest()[:12], "store": zincir, "title": baslik,
                 "category": "Kişisel Bakım" if zincir in BAKIM else "Market",
-                "offer": f"Katalog · {bas.day} {AYK[bas.month-1]}–{bitis.day} {AYK[bitis.month-1]}",
+                "offer": (f"{bas.day}–{bitis.day} {AYK[bitis.month-1]}" if bas.month == bitis.month else f"{bas.day} {AYK[bas.month-1]}–{bitis.day} {AYK[bitis.month-1]}"),
                 "start": bas.isoformat(), "end": bitis.isoformat(), "endGuess": tahmini, "katalog": True,
                 "detail": f"{zincir} kataloğu yayında. İndirimli ürünler ve fiyatlar kataloğun sayfasında." + (" Bitiş tarihi tahminidir." if tahmini else ""),
                 "how": ["Kataloğu bağlantıdan aç, almak istediklerini listele.", "Katalog fiyatları stokla sınırlıdır; erken git."],
