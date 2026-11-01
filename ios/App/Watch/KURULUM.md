@@ -9,7 +9,7 @@ Saat hedefini (target) Xcode'un kendisi oluşturmalı:
 3. Xcode'un oluşturduğu `YasamRehberiWatch Watch App` klasöründeki `ContentView.swift` ve
    `YasamRehberiWatchApp.swift` dosyalarını sil; bu klasördeki 3 dosyayı onların yerine sürükle
    (Target Membership: YasamRehberiWatch Watch App).
-4. Watch hedefinde Signing & Capabilities › Team: kendi hesabın. Deployment Target: watchOS 9.0.
+4. Watch hedefinde Signing & Capabilities › Team: kendi hesabın. Deployment Target: watchOS 10.0.
 5. Bir saat simülatörü seçip ▶︎.
 
 Sonra telefon uygulamasıyla birlikte App Store'a gider (aynı arşivde).

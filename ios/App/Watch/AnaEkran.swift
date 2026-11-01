@@ -20,6 +20,7 @@ struct AnaEkran: View {
     @AppStorage("il") private var il = 34
     @AppStorage("t_n") private var sayi = 0
     @AppStorage("t_h") private var hedef = 33
+    @AppStorage("bildirim") private var bildirim = true
 
     var body: some View {
         NavigationStack {
@@ -68,12 +69,27 @@ struct AnaEkran: View {
                                 .background(Renk.kutu).clipShape(RoundedRectangle(cornerRadius: 8))
                         }.buttonStyle(.plain)
 
+                        NavigationLink { KibleEkrani() } label: {
+                            Label("Kıble", systemImage: "location.north.circle")
+                                .font(.system(size: 15, weight: .bold)).foregroundStyle(Renk.sari)
+                                .frame(maxWidth: .infinity).padding(.vertical, 9)
+                                .background(Renk.kutu).clipShape(RoundedRectangle(cornerRadius: 8))
+                        }.buttonStyle(.plain)
+
+                        Toggle(isOn: $bildirim) {
+                            Text("Ezan bildirimi").font(.system(size: 14, weight: .bold)).foregroundStyle(Renk.panel)
+                        }
+                        .tint(Renk.yesil)
+                        .padding(.horizontal, 4)
+
                         Text("Bir Mr. Anduv! yapımıdır.").font(.system(size: 11)).foregroundStyle(Renk.altin)
                     }
                 }
             }
             .background(Renk.zemin)
         }
+        // Saatin kendi ezan bildirimleri: il ya da ayar değişince yeniden kurulur
+        .task(id: "\(il)-\(bildirim)") { await SaatBildirim.kur(il: il, acik: bildirim) }
     }
 
     private func saat(_ t: Date) -> String {

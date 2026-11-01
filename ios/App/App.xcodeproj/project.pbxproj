@@ -50,6 +50,7 @@
 				958DCC722DB07C7200EA8C5F /* debug.xcconfig */,
 				504EC3061FED79650016851F /* App */,
 				AD00BEEF0000000000000009 /* Watch */,
+				AD00BEEF0000000000000020 /* WatchWidget */,
 				504EC3051FED79650016851F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,6 +60,7 @@
 			children = (
 				504EC3041FED79650016851F /* App.app */,
 				AD00BEEF0000000000000004 /* YasamRehberiWatch.app */,
+				AD00BEEF000000000000001C /* YasamRehberiKomplikasyon.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -121,6 +123,9 @@
 					AD00BEEF000000000000000D = {
 						CreatedOnToolsVersion = 15.0;
 					};
+					AD00BEEF0000000000000024 = {
+						CreatedOnToolsVersion = 15.0;
+					};
 				};
 			};
 			buildConfigurationList = 504EC2FF1FED79650016851F /* Build configuration list for PBXProject "App" */;
@@ -141,6 +146,7 @@
 			targets = (
 				504EC3031FED79650016851F /* App */,
 				AD00BEEF000000000000000D /* YasamRehberiWatch */,
+				AD00BEEF0000000000000024 /* YasamRehberiKomplikasyon */,
 			);
 		};
 /* End PBXProject section */
@@ -398,6 +404,8 @@
 				AD00BEEF0000000000000001 /* YasamRehberiWatchApp.swift */,
 				AD00BEEF0000000000000002 /* Vakit.swift */,
 				AD00BEEF0000000000000003 /* AnaEkran.swift */,
+				AD00BEEF0000000000000016 /* SaatBildirim.swift */,
+				AD00BEEF0000000000000018 /* KibleEkrani.swift */,
 				AD00BEEF0000000000000014 /* Assets.xcassets */,
 			);
 			path = Watch;
@@ -410,6 +418,8 @@
 				AD00BEEF0000000000000005 /* YasamRehberiWatchApp.swift in Sources */,
 				AD00BEEF0000000000000006 /* Vakit.swift in Sources */,
 				AD00BEEF0000000000000007 /* AnaEkran.swift in Sources */,
+				AD00BEEF0000000000000017 /* SaatBildirim.swift in Sources */,
+				AD00BEEF0000000000000019 /* KibleEkrani.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,10 +445,12 @@
 				AD00BEEF000000000000000A /* Sources */,
 				AD00BEEF000000000000000B /* Frameworks */,
 				AD00BEEF000000000000000C /* Resources */,
+				AD00BEEF0000000000000028 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AD00BEEF000000000000002A /* PBXTargetDependency */,
 			);
 			name = YasamRehberiWatch;
 			productName = YasamRehberiWatch;
@@ -456,6 +468,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Yaşam Rehberi";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.anduv.yasamrehberi;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Kıble pusulasının saatin yönünü gösterebilmesi için kullanılır.";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -468,7 +481,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 			};
 			name = Debug;
@@ -484,6 +497,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Yaşam Rehberi";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.anduv.yasamrehberi;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Kıble pusulasının saatin yönünü gösterebilmesi için kullanılır.";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -496,7 +510,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -535,6 +549,147 @@
 		};
 		AD00BEEF0000000000000014 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AD00BEEF0000000000000015 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD00BEEF0000000000000014 /* Assets.xcassets */; };
+		AD00BEEF0000000000000016 /* SaatBildirim.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaatBildirim.swift; sourceTree = "<group>"; };
+		AD00BEEF0000000000000017 /* SaatBildirim.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD00BEEF0000000000000016 /* SaatBildirim.swift */; };
+		AD00BEEF0000000000000018 /* KibleEkrani.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KibleEkrani.swift; sourceTree = "<group>"; };
+		AD00BEEF0000000000000019 /* KibleEkrani.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD00BEEF0000000000000018 /* KibleEkrani.swift */; };
+		AD00BEEF000000000000001A /* Komplikasyon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Komplikasyon.swift; sourceTree = "<group>"; };
+		AD00BEEF000000000000001B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD00BEEF000000000000001C /* YasamRehberiKomplikasyon.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = YasamRehberiKomplikasyon.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD00BEEF000000000000001D /* Komplikasyon.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD00BEEF000000000000001A /* Komplikasyon.swift */; };
+		AD00BEEF000000000000001E /* Vakit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD00BEEF0000000000000002 /* Vakit.swift */; };
+		AD00BEEF000000000000001F /* YasamRehberiKomplikasyon.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AD00BEEF000000000000001C /* YasamRehberiKomplikasyon.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AD00BEEF0000000000000020 /* WatchWidget */ = {
+			isa = PBXGroup;
+			children = (
+				AD00BEEF000000000000001A /* Komplikasyon.swift */,
+				AD00BEEF000000000000001B /* Info.plist */,
+			);
+			path = WatchWidget;
+			sourceTree = "<group>";
+		};
+		AD00BEEF0000000000000021 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD00BEEF000000000000001D /* Komplikasyon.swift in Sources */,
+				AD00BEEF000000000000001E /* Vakit.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD00BEEF0000000000000022 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD00BEEF0000000000000023 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD00BEEF0000000000000024 /* YasamRehberiKomplikasyon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD00BEEF0000000000000025 /* Build configuration list for PBXNativeTarget "YasamRehberiKomplikasyon" */;
+			buildPhases = (
+				AD00BEEF0000000000000021 /* Sources */,
+				AD00BEEF0000000000000022 /* Frameworks */,
+				AD00BEEF0000000000000023 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YasamRehberiKomplikasyon;
+			productName = YasamRehberiKomplikasyon;
+			productReference = AD00BEEF000000000000001C /* YasamRehberiKomplikasyon.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		AD00BEEF0000000000000026 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = WatchWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.anduv.yasamrehberi.watchkitapp.komplikasyon;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+			};
+			name = Debug;
+		};
+		AD00BEEF0000000000000027 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = WatchWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.anduv.yasamrehberi.watchkitapp.komplikasyon;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		AD00BEEF0000000000000025 /* Build configuration list for PBXNativeTarget "YasamRehberiKomplikasyon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD00BEEF0000000000000026 /* Debug */,
+				AD00BEEF0000000000000027 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD00BEEF0000000000000028 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AD00BEEF000000000000001F /* YasamRehberiKomplikasyon.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD00BEEF0000000000000029 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD00BEEF0000000000000024;
+			remoteInfo = YasamRehberiKomplikasyon;
+		};
+		AD00BEEF000000000000002A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD00BEEF0000000000000024 /* YasamRehberiKomplikasyon */;
+			targetProxy = AD00BEEF0000000000000029 /* PBXContainerItemProxy */;
+		};
 /* End Watch */
 	};
 	rootObject = 504EC2FC1FED79650016851F /* Project object */;
