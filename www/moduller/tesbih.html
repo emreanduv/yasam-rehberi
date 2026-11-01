@@ -1188,7 +1188,21 @@ body, body::before { background: #1e2226; }
   $("goalSel").addEventListener("change", function () { S.goal = +this.value; save(); render(); });
   sndBtn();
 
-  function vib(p) { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} }
+  // Titreşim: iPhone ve Android uygulamasında Capacitor Haptics (iPhone tarayıcı titreşimini desteklemez),
+  // tarayıcıda navigator.vibrate. Modül iframe içinde açıldığı için eklenti üst pencereden alınır.
+  function haptics() {
+    try { return (window.parent && window.parent.Capacitor || window.Capacitor || {}).Plugins.Haptics || null; } catch (e) { return null; }
+  }
+  function vib(p) {
+    var H = haptics();
+    try {
+      if (H) {
+        if (Array.isArray(p)) H.notification({ type: "SUCCESS" });   // tur / hedef tamam
+        else if (p >= 60) H.impact({ style: "MEDIUM" });              // 33'lük tur
+        else H.impact({ style: "LIGHT" });                            // her çekiş
+      } else if (navigator.vibrate) navigator.vibrate(p);
+    } catch (e) {}
+  }
   var toastT;
   function toast(msg) {
     var t = $("toast"); t.textContent = msg; t.hidden = false;
