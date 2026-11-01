@@ -15,3 +15,11 @@
 2. developer.apple.com → Identifiers → **com.anduv.firsatakisi** App ID kaydı · App Store Connect'te uygulama kaydı (ad: Fırsat Akışı, SKU `firsatakisi`, Türkçe)
 3. Actions → "Fırsat Akışı · iOS" → Run workflow (1.0.0) → TestFlight "Dahili Test" grubu
 4. Mağazaya sunma: Saat Vitrini gibi şimdilik bekletilebilir (aynı anda çok uygulama → spam uyarısı riski)
+
+## 2 Kasım 2026
+- App Store Connect kaydı: **Fırsat Akışı** · uygulama no `6829551444` · bundle `com.anduv.firsatakisi` · SKU `firsatakisi`
+- Kategoriler (Alışveriş / Yaşam Tarzı), alt başlık, gizlilik ve destek adresleri, açıklama, anahtar kelimeler, tanıtım metni, telif: API ile girildi
+- iPhone 6.7" ekran görüntüleri (6 adet) yüklendi
+- 1.0.0 (derleme 1) TestFlight'a yüklendi → "Mr. Anduv! Test" grubu (4 testçi) → beta incelemesine gönderildi
+- Mağazaya gönderim: Saat Vitrini'deki gibi şimdilik beklemede (yalnız TestFlight)
+- Google Play: Play Console'da uygulama kaydı henüz açılmadı (imzasız AAB builds-firsat-akisi dalında hazır)
