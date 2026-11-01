@@ -38,10 +38,13 @@ jobs:
           git add firsat.json first_seen.json 2>/dev/null || git add -A
           git commit -qm "Fırsat Akışı verisi $(date -u +%Y-%m-%dT%H:%MZ)" || { echo "değişiklik yok"; exit 0; }
           git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" HEAD:firsat-veri
+      - name: Market sitelerini tanıla (yalnız uygulama dalında)
+        if: github.ref != 'refs/heads/main'
+        run: python3 firsat-akisi/tools/tani_market.py veri || true
       - name: Deneme turunun çıktısı (uygulama dalı → firsat-veri-deneme dalı)
         if: github.ref != 'refs/heads/main'
         run: |
-          mkdir -p /tmp/d && cp veri/firsat.json /tmp/d/ && cd /tmp/d
+          mkdir -p /tmp/d && cp -r veri/firsat.json veri/tani /tmp/d/ 2>/dev/null; cd /tmp/d
           git init -q -b firsat-veri-deneme && git config user.name "github-actions" && git config user.email "actions@github.com"
-          git add firsat.json && git commit -qm "Fırsat Akışı deneme verisi $(date -u +%Y-%m-%dT%H:%MZ)"
+          git add -A && git commit -qm "Fırsat Akışı deneme verisi $(date -u +%Y-%m-%dT%H:%MZ)"
           git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" HEAD:firsat-veri-deneme
