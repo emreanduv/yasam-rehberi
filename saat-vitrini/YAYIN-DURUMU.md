@@ -15,7 +15,11 @@
 - [x] iOS derlemesi 1.0.0 (2) App Store Connect'e yüklendi · TestFlight "Dahili Test" grubu (Emre, otomatik dağıtım)
 - [x] Android imzasız AAB → `builds-saat-vitrini` dalı
 
-## Emre'nin onayı bekleyenler
+## Karar (1 Kasım 2026, Emre)
+- Şimdilik **mağazalara sunulmuyor** (aynı anda çok uygulama → spam uyarısı riski). Yalnız TestFlight'ta deneniyor; Play'de uygulama da oluşturulmadı.
+- TestFlight: 1.0.0 (2) "Dahili Test" grubunda, kurulmaya hazır.
+
+## Sunma zamanı gelince (Emre'nin onayı)
 1. App Store Connect → App Privacy → **Publish**
 2. App Information → **Content Rights** (üçüncü taraf içerik: satıcıların herkese açık ürün bilgileri/fotoğrafları)
 3. Sürüm sayfası → App Review iletişim bilgileri (ad, telefon, e-posta) → derleme seç → **Add for Review / Submit**
