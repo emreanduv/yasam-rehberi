@@ -1,0 +1,28 @@
+// Yaşam Rehberi — Wear OS saat uygulaması (telefon uygulamasıyla aynı paket adı: Play'de birlikte yayınlanır)
+apply plugin: 'com.android.application'
+
+android {
+    namespace "com.anduv.yasamrehberi.wear"
+    compileSdk rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.anduv.yasamrehberi"
+        minSdkVersion 30
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        def vc = System.getenv("VERSION_CODE")
+        def vn = System.getenv("VERSION_NAME")
+        // Saat sürümünün kodu telefonunkinden ayrı olmalı: 1.000.000 + telefon kodu
+        versionCode = 1000000 + ((vc ? vc : "1") as Integer)
+        versionName = (vn ? vn : "1.0.0")
+    }
+    buildTypes {
+        release { minifyEnabled false }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core:$androidxCoreVersion"
+}

@@ -29,6 +29,13 @@ export function nextVakit(lat, lon, now = new Date()) {
   return { ...VAKITLER[0], at: times(lat, lon, tom).imsak };
 }
 
+// Al Fajr tarzı büyük sayaç: SS:DD:ss
+export function sayac(ms) {
+  const s = Math.max(0, Math.floor(ms / 1000));
+  const p = (n) => String(n).padStart(2, "0");
+  return `${p(Math.floor(s / 3600))}:${p(Math.floor((s % 3600) / 60))}:${p(s % 60)}`;
+}
+
 export function kalan(ms) {
   const m = Math.max(0, Math.floor(ms / 60000));
   const h = Math.floor(m / 60), d = m % 60;

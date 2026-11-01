@@ -23,7 +23,15 @@ jobs:
         env:
           VERSION_CODE: ${{ github.run_number }}
           VERSION_NAME: ${{ inputs.version_name }}
-        run: chmod +x gradlew && ./gradlew bundleRelease --no-daemon
+        run: chmod +x gradlew && ./gradlew :app:bundleRelease --no-daemon
+      - name: Wear OS saat paketi (imzasız)
+        id: wear
+        continue-on-error: true
+        working-directory: android
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: ${{ inputs.version_name }}
+        run: ./gradlew :wear:bundleRelease --no-daemon
       - name: Paketi builds dalına koy
         run: |
           OUT=yasam-rehberi-${{ inputs.version_name }}-${{ github.run_number }}-unsigned.aab
@@ -36,3 +44,8 @@ jobs:
         with:
           name: yasam-rehberi-${{ inputs.version_name }}-${{ github.run_number }}-unsigned.aab
           path: android/app/build/outputs/bundle/release/app-release.aab
+      - uses: actions/upload-artifact@v4
+        if: steps.wear.outcome == 'success'
+        with:
+          name: yasam-rehberi-wear-${{ inputs.version_name }}-${{ github.run_number }}-unsigned.aab
+          path: android/wear/build/outputs/bundle/release/wear-release.aab

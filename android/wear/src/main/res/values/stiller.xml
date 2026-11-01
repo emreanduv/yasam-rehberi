@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="zemin">#14171A</color>
+    <color name="panel">#EFE8D4</color>
+    <color name="murekkep">#1F2328</color>
+    <color name="murekkep2">#5E5645</color>
+    <color name="yesil">#2E7D46</color>
+    <color name="altin">#D4A017</color>
+    <color name="kutu">#2A3640</color>
+    <color name="soluk">#9AA3AB</color>
+    <style name="YR" parent="android:Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">@color/zemin</item>
+        <item name="android:textColor">@color/panel</item>
+    </style>
+</resources>

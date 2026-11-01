@@ -258,3 +258,10 @@ table.src tr:nth-child(even) td { background: var(--panel-alt); }
 .c-empty-row { padding: 12px 10px; font-size: 14px; color: var(--ink-2); border-top: 1px solid var(--panel-rule); }
 .c-kunye th { width: 38%; text-align: left; color: var(--ink-2); font-weight: 700; border-bottom: 1px solid var(--panel-rule); padding: 8px 10px; vertical-align: top; }
 .c-actions { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); }
+
+/* Al Fajr sadeliği: büyük, saniyeli geri sayım */
+.nz-next .nz-count { font-size: 46px; line-height: 1.05; font-variant-numeric: tabular-nums; letter-spacing: .5px; }
+a.nz-ozet { display: block; text-decoration: none; border-color: var(--go-edge); }
+a.nz-ozet .nz-next { border-bottom: 0; }
+a.nz-ozet-bos { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px; min-height: 48px;
+  text-decoration: none; color: var(--band); font-weight: 700; font-size: 15px; }

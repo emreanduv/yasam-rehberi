@@ -155,6 +155,7 @@ function homeView() {
     <div class="sub">${E.meals.length} meal · kısa tefsir · ${E.refs.length} ayet · internetsiz arama</div>
   </section>
   <main class="content">
+    ${vakitOzet()}
     <section class="panel">
       <div class="panel-h">Soru / Arama</div>
       <form class="panel-b search" data-act="search">
@@ -184,6 +185,30 @@ function homeView() {
     </section>
     <div class="made">${esc(MAKER)}</div>
   </main>`;
+}
+
+// Ana ekranın tepesi: Al Fajr sadeliğinde sıradaki vakit ve saniyeli geri sayım
+function vakitOzet() {
+  const pos = S.konum;
+  if (!pos) return `<a class="panel nz-ozet-bos" href="#/namaz"><span>Namaz vakitleri ve geri sayım için konumunu seç</span>${ICON.next}</a>`;
+  const now = new Date();
+  const nx = V.nextVakit(pos.lat, pos.lon, now);
+  return `<a class="panel nz-ozet" href="#/namaz" aria-label="Sıradaki vakit ${esc(nx.ad)} ${V.hhmm(nx.at)}, namaz ekranını aç">
+    <div class="nz-next"><div class="eyebrow-d">Sıradaki vakit · ${esc(nx.ad)} ${V.hhmm(nx.at)}</div><div class="nz-count" id="nz-count">${V.sayac(nx.at - now)}</div></div></a>`;
+}
+
+// Geri sayımı saniye saniye yürüt (ana ekran ve Namaz ekranı)
+function sayacBaslat() {
+  kible.tick = setInterval(() => {
+    const el = document.getElementById("nz-count");
+    if (!el || !S.konum) return;
+    const now = new Date();
+    const nx = V.nextVakit(S.konum.lat, S.konum.lon, now);
+    if (nx.at - now < 1000) { route(); return; }  // vakit girdi: tabloyu yenile
+    el.textContent = V.sayac(nx.at - now);
+    const r = document.getElementById("nz-ram");
+    if (r && now.getSeconds() === 0) { const m = r.closest(".nz-ram").querySelector(".eyebrow-d").textContent.match(/(\d\d:\d\d)/); if (m) { const [hh, mm] = m[1].split(":").map(Number); const at = new Date(now); at.setHours(hh, mm, 0, 0); if (at < now) at.setDate(at.getDate() + 1); r.textContent = V.kalan(at - now); } }
+  }, 1000);
 }
 
 function resultHeader(q, tab, n) {
@@ -474,7 +499,7 @@ function vakitPanel(pos) {
   }).join("");
   const dateStr = now.toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "long" });
   return `<section class="panel"><div class="panel-h">Bugünün vakitleri<span class="nz-date">${esc(dateStr)}${h ? ` · ${h.gun} ${h.ayAdi} ${h.yil}` : ""}</span></div>
-    <div class="nz-next"><div class="eyebrow-d">Sıradaki · ${esc(nx.ad)} ${V.hhmm(nx.at)}</div><div class="nz-count" id="nz-count">${V.kalan(nx.at - now)}</div></div>
+    <div class="nz-next"><div class="eyebrow-d">Sıradaki · ${esc(nx.ad)} ${V.hhmm(nx.at)}</div><div class="nz-count" id="nz-count">${V.sayac(nx.at - now)}</div></div>
     <div class="rows">${rows}</div>
     <div class="panel-b nz-foot">Konum: ${pos.lat.toFixed(2)}, ${pos.lon.toFixed(2)} · <a href="#" data-act="konum">Konumu güncelle</a><br>
     Vakitler telefonda Diyanet yöntemiyle hesaplanır; resmî takvimle 1–2 dakikalık fark olabilir.</div></section>`;
@@ -655,17 +680,7 @@ function namazMount() {
   const pos = S.konum;
   if (pos) kibleRender(true);
   bildirimDurum();
-  // geri sayım
-  kible.tick = setInterval(() => {
-    const el = document.getElementById("nz-count");
-    if (!el || !S.konum) return;
-    const now = new Date();
-    const nx = V.nextVakit(S.konum.lat, S.konum.lon, now);
-    if (nx.at - now < 1000) { route(); return; }  // vakit girdi: tabloyu yenile
-    el.textContent = V.kalan(nx.at - now);
-    const r = document.getElementById("nz-ram");
-    if (r) { const m = r.closest(".nz-ram").querySelector(".eyebrow-d").textContent.match(/(\d\d:\d\d)/); if (m) { const [hh, mm] = m[1].split(":").map(Number); const at = new Date(now); at.setHours(hh, mm, 0, 0); if (at < now) at.setDate(at.getDate() + 1); r.textContent = V.kalan(at - now); } }
-  }, 20000);
+  sayacBaslat();
 }
 
 function kibleStop() {
@@ -891,6 +906,7 @@ function route() {
   kibleStop();
   $app.innerHTML = html;
   if (nav === "namaz") namazMount();
+  else if (!parts[0] && S.konum) sayacBaslat();
   renderNav(nav);
   window.scrollTo(0, 0);
 }
