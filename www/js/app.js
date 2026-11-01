@@ -138,8 +138,7 @@ function renderNav(active) {
   const item = (id, href, icon, label) => `<a href="${href}" class="${active === id ? "on" : ""}"${active === id ? ' aria-current="page"' : ""}>${icon}${label}</a>`;
   // Tek menü: her bölüm burada, sırayla
   $nav.innerHTML = item("bugun", "#/", ICON.mosque, "Bugün") + item("ara", "#/sor", ICON.search, "Sor")
-    + item("sure", "#/sureler", ICON.book, "Sureler") + item("kible", "#/kible", ICON.compass, "Kıble")
-    + item("tesbih", "#/tesbih", ICON.beads, "Tesbih") + item("saat", "#/saat", ICON.clock, "Saat")
+    + item("sure", "#/sureler", ICON.book, "Sureler") + item("tesbih", "#/tesbih", ICON.beads, "Tesbih") + item("saat", "#/saat", ICON.clock, "Saat")
     + item("carsi", "#/carsi", ICON.bag, "Çarşı") + item("miras", "#/miras", ICON.scale, "Miras");
 }
 
@@ -208,6 +207,21 @@ function tesbihDurum() {
   } catch { return { ad: "Sübhânallah", n: 0, h: 33 }; }
 }
 
+// Kıble pusulası paneli (Bugün ekranında)
+function kiblePanel(pos) {
+  return `<section class="panel kb" id="kible">
+      <div class="panel-h" id="kb-h">Kıble pusulası</div>
+      <div class="panel-b kb-b">
+        <div class="kb-wrap">${compassSvg()}</div>
+        <div class="kb-big" id="kb-big">${pos ? `${Math.round(K.qiblaBearing(pos.lat, pos.lon))}°` : "—"}</div>
+        <div class="kb-msg" id="kb-msg">${pos ? kibleMetin(pos) : "Kıble yönü için konum ve pusula gerekir."}</div>
+        <button class="btn-go" id="kb-start" data-act="kible">${ICON.compass}Pusulayı aç</button>
+        <div class="kb-ipucu">Telefonu düz tut; metal eşya ve mıknatıslı kılıftan uzak dur. Ok kayıyorsa telefonla havada birkaç kez “8” çiz.
+          <a href="#/ayet/2/144">Kur'an'da kıble · Bakara 2:144 ›</a></div>
+      </div>
+    </section>`;
+}
+
 function bugunView() {
   const pos = S.konum;
   const now = new Date();
@@ -233,7 +247,8 @@ function bugunView() {
         <span><span class="bg-ad">${esc(nx.ad)}</span><span class="bg-at">${V.hhmm(nx.at)}'de</span></span>
         <span class="bg-kalan"><span class="bg-kalan-l">Kalan</span><span class="bg-sayac" id="nz-count">${V.sayac(nx.at - now)}</span></span>
       </a></section>
-    <section class="panel"><div class="panel-h"><span>Vakitler</span><span>Bugün</span></div><div>${rows}</div></section>`;
+    <section class="panel"><div class="panel-h"><span>Vakitler</span><span>Bugün</span></div><div>${rows}</div>
+      <div class="panel-b nz-foot">Diyanet yöntemiyle telefonda hesaplanır; resmî takvimle 1–2 dakika fark olabilir. <a href="#" data-act="konum">Konumu güncelle</a></div></section>`;
   }
   const day = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 864e5);
   const [ds, da] = DAILY[day % DAILY.length].split(":").map(Number);
@@ -244,7 +259,9 @@ function bugunView() {
     <div class="bg-tarih"><span>${esc(tarih)}</span>${h ? `<span>${h.gun} ${esc(h.ayAdi)} ${h.yil}</span>` : ""}</div>
   </section>
   <main class="content">
+    ${ramazanPanel(pos)}
     ${ust}
+    ${pos ? kiblePanel(pos) : ""}
     <section class="panel">
       <div class="panel-h">Gelen kutusu <span class="count">1</span></div>
       <a class="panel-b bg-ayet" href="#/ayet/${ds}/${da}">
@@ -256,6 +273,8 @@ function bugunView() {
     </section>
     <a class="bg-devam" href="#/tesbih"><span class="bg-devam-z">Son zikir · ${esc(tz.ad)}</span>
       <span class="btn-go bg-devam-b">DEVAM ${tz.h ? `${tz.n}/${tz.h}` : tz.n} ${ICON.next}</span></a>
+    ${pos ? bildirimPanel(pos) : ""}
+    <div class="note">Konumun yalnızca bu telefonda saklanır ve vakit ile kıble hesabı için kullanılır; hiçbir yere gönderilmez. Bildirimler telefonun kendisine kurulur.</div>
     <div class="made">${esc(MAKER)}</div>
   </main>`;
 }
@@ -974,16 +993,16 @@ function route() {
   else if (parts[0] === "tesbih" || parts[0] === "saat") { html = modulView(parts[0]); nav = parts[0]; }
   else if (parts[0] === "carsi") { html = carsiRoute(parts); nav = "carsi"; if (!html) { location.replace("#/carsi"); return; } }
   else if (parts[0] === "ayarlar") { html = settingsView(); nav = "ayar"; }
-  else if (parts[0] === "namaz" || parts[0] === "kible") { html = namazView(); nav = "kible"; }
+  else if (parts[0] === "namaz" || parts[0] === "kible") { html = bugunView(); nav = "bugun"; }
   else if (parts[0] === "miras") { html = mirasView(); nav = "miras"; }
   else if (!html) { html = bugunView(); nav = "bugun"; }
   if (!html) return;
   kibleStop();
   $app.innerHTML = html;
-  if (parts[0] === "namaz" || parts[0] === "kible") namazMount();
-  else if (!parts[0] && S.konum) sayacBaslat();
+  if (!parts[0] || parts[0] === "namaz" || parts[0] === "kible") namazMount();
+  if (parts[0] === "kible") setTimeout(() => document.getElementById("kible")?.scrollIntoView({ block: "start" }), 50);
   renderNav(nav);
-  window.scrollTo(0, 0);
+  if (parts[0] !== "kible") window.scrollTo(0, 0);
 }
 
 // Uygulama arka plandan dönünce: bildirimleri ileriye yenile, Namaz ekranındaysa vakitleri tazele
@@ -992,7 +1011,7 @@ document.addEventListener("visibilitychange", () => {
   bildirimKur().catch(() => {});
   saatBildirimKur().catch(() => {});
   tesbihBildirimKur().catch(() => {});
-  if (/^#\/(namaz|kible)/.test(location.hash) && !kible.stop) route();
+  if (/^(#\/?)?$|^#\/(namaz|kible)/.test(location.hash) && !kible.stop) route();
 });
 
 let lastHash = "";
