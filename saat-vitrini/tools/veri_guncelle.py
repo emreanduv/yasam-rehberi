@@ -41,5 +41,16 @@ for u in d.get("items", []):
     items.append(x)
 cikti = {"checkedAt": d.get("checkedAt"), "markalar": S.MARKALAR, "aksesuar": sorted(S.AKSESUAR),
          "akilli": sorted(S.AKILLI), "kulup": sorted(S.KULUP), "items": items}
+# güvenlik: bu tur çok az ürün geldiyse (siteler GitHub'ı engelledi vb.) önceki vitrin korunur, uygulama boşalmaz
+onceki = hedef / "vitrin.json"
+if not onceki.exists():
+    onceki = ROOT.parent / "www" / "data" / "vitrin.json"
+try:
+    eski_say = len(json.loads(onceki.read_text(encoding="utf-8")).get("items", []))
+except Exception:
+    eski_say = 0
+if eski_say and len(items) < eski_say * 0.5:
+    print(f"::warning::Bu tur {len(items)} ürün geldi (önceki {eski_say}); vitrin.json değiştirilmedi")
+    sys.exit(0)
 (hedef / "vitrin.json").write_text(json.dumps(cikti, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 print(f"vitrin.json: {len(items)} ürün · {d.get('checkedAt')}")
