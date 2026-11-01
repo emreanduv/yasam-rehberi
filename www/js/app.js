@@ -100,7 +100,8 @@ function toast(msg) {
 const mealsOn = () => S.meals.filter((t) => E.meals.includes(t));
 
 // Ana sayfa dışındaki her ekranda sol üstte geri düğmesi olur (sekmeler değişse de geçerli kalsın diye)
-const anaSayfa = () => !location.hash || /^#\/?(sor)?$/.test(location.hash);
+// Alt menüdeki bölümlerin kendisi "ana sayfa" sayılır (Geri düğmesi yerine uygulama adı)
+const anaSayfa = () => !location.hash || /^#\/?(sor|sureler|kible|namaz|tesbih|saat|carsi|miras)?$/.test(location.hash);
 function topbar(left = "brand") {
   if (left === "brand" && !anaSayfa()) left = "Geri";
   const l = left === "brand"
@@ -135,9 +136,11 @@ function verseCard(v, terms) {
 
 function renderNav(active) {
   const item = (id, href, icon, label) => `<a href="${href}" class="${active === id ? "on" : ""}"${active === id ? ' aria-current="page"' : ""}>${icon}${label}</a>`;
+  // Tek menü: her bölüm burada, sırayla
   $nav.innerHTML = item("bugun", "#/", ICON.mosque, "Bugün") + item("ara", "#/sor", ICON.search, "Sor")
-    + item("sure", "#/sureler", ICON.book, "Sureler") + item("tesbih", "#/tesbih", ICON.beads, "Tesbih")
-    + item("menu", "#/menu", ICON.grid, "Menü");
+    + item("sure", "#/sureler", ICON.book, "Sureler") + item("kible", "#/kible", ICON.compass, "Kıble")
+    + item("tesbih", "#/tesbih", ICON.beads, "Tesbih") + item("saat", "#/saat", ICON.clock, "Saat")
+    + item("carsi", "#/carsi", ICON.bag, "Çarşı") + item("miras", "#/miras", ICON.scale, "Miras");
 }
 
 // ---------------------------------------------------------------------------
@@ -163,6 +166,7 @@ function homeView() {
         <button class="btn-go" type="submit">Sor ${ICON.next}</button>
       </form>
     </section>
+    <a class="panel bg-kayit" href="#/kaydedilenler"><span>${ICON.mark}<b>Kayıtlı ayetler</b></span><span class="meta">${saved.length ? `<span class="count">${saved.length}</span> ` : ""}›</span></a>
     <section class="panel">
       <div class="panel-h">Sık sorulanlar</div>
       <div class="rows">${FAQ.map(([q, t]) => `<a class="row" href="#/ara?q=${enc(q)}">${esc(q)}<span class="meta">${esc(t)} ›</span></a>`).join("")}</div>
@@ -209,7 +213,6 @@ function bugunView() {
   const now = new Date();
   const h = V.hicri(now);
   const tarih = now.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", weekday: "long" });
-  const mod = (href, icon, ad) => `<a class="bg-mod" href="${href}">${icon}<span>${esc(ad)}</span></a>`;
   const tz = tesbihDurum();
   let ust;
   if (!pos) {
@@ -242,9 +245,6 @@ function bugunView() {
   </section>
   <main class="content">
     ${ust}
-    <nav class="bg-mods" aria-label="Modüller">
-      ${mod("#/namaz", ICON.compass, "Kıble")}${mod("#/saat", ICON.clock, "Saat")}${mod("#/carsi", ICON.bag, "Çarşı")}${mod("#/miras", ICON.scale, "Miras")}
-    </nav>
     <section class="panel">
       <div class="panel-h">Gelen kutusu <span class="count">1</span></div>
       <a class="panel-b bg-ayet" href="#/ayet/${ds}/${da}">
@@ -644,7 +644,7 @@ function menuView() {
 
 const MODULLER = { tesbih: "Tesbih", saat: "Saat" };
 function modulView(ad) {
-  return `${ad === "tesbih" ? topbar() : topbar("Menü")}<iframe class="modul" src="moduller/${ad}.html" title="${esc(MODULLER[ad])}"></iframe>`;
+  return `${topbar()}<iframe class="modul" src="moduller/${ad}.html" title="${esc(MODULLER[ad])}"></iframe>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -894,7 +894,7 @@ function mirasView() {
   const v = (s, a) => { const x = E.verse(E.indexOf(s, a), mealsOn()); return x; };
   const ayetler = [[4, 11], [4, 12], [4, 176]].map(([s, a]) => { const x = v(s, a); const t0 = Object.keys(x.texts)[0];
     return `<a class="row" href="#/ayet/${s}/${a}" style="align-items:flex-start"><span style="flex:none;width:58px;font-weight:700;color:var(--band)">${s}:${a}</span><span style="flex:1;font-size:14px;line-height:1.45">${esc(excerpt(x.texts[t0], 170))}</span></a>`; }).join("");
-  return `${topbar("Menü")}
+  return `${topbar()}
   <section class="band">
     <div class="eyebrow">Miras</div>
     <h1>Kime ne düşer?</h1>
@@ -969,13 +969,13 @@ function route() {
   else if (parts[0] === "ayet") { html = verseView(Number(parts[1]), Number(parts[2])); }
   else if (parts[0] === "sureler") { html = surahsView(); nav = "sure"; }
   else if (parts[0] === "sure") { html = surahView(Number(parts[1])); nav = "sure"; }
-  else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "menu"; }
-  else if (parts[0] === "menu") { html = menuView(); nav = "menu"; }
-  else if (parts[0] === "tesbih" || parts[0] === "saat") { html = modulView(parts[0]); nav = parts[0] === "tesbih" ? "tesbih" : "menu"; }
-  else if (parts[0] === "carsi") { html = carsiRoute(parts); nav = "menu"; if (!html) { location.replace("#/carsi"); return; } }
+  else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "ara"; }
+  else if (parts[0] === "menu") { location.replace("#/"); return; }
+  else if (parts[0] === "tesbih" || parts[0] === "saat") { html = modulView(parts[0]); nav = parts[0]; }
+  else if (parts[0] === "carsi") { html = carsiRoute(parts); nav = "carsi"; if (!html) { location.replace("#/carsi"); return; } }
   else if (parts[0] === "ayarlar") { html = settingsView(); nav = "ayar"; }
-  else if (parts[0] === "namaz" || parts[0] === "kible") { html = namazView(); nav = "bugun"; }
-  else if (parts[0] === "miras") { html = mirasView(); nav = "menu"; }
+  else if (parts[0] === "namaz" || parts[0] === "kible") { html = namazView(); nav = "kible"; }
+  else if (parts[0] === "miras") { html = mirasView(); nav = "miras"; }
   else if (!html) { html = bugunView(); nav = "bugun"; }
   if (!html) return;
   kibleStop();
@@ -1121,7 +1121,7 @@ async function boot() {
   if (kayitliMiras && typeof kayitliMiras === "object") mg = { ...M.BOS, ...kayitliMiras };
   for (const k of MOD_KEYS) modVeri[k] = await store.get("mod:" + k, null);
   await initCarsi({ store, esc, toast, topbar, ICON, MAKER, APP_NAME, rerender: () => route(),
-    fail: (err) => { $app.innerHTML = `${topbar("Menü")}<div class="empty">Çarşı verisi yüklenemedi.<br>${esc(err.message)}</div>`; } });
+    fail: (err) => { $app.innerHTML = `${topbar()}<div class="empty">Çarşı verisi yüklenemedi.<br>${esc(err.message)}</div>`; } });
   document.title = APP_NAME;
   // Bildirimleri her açılışta ileriye doğru yenile (iOS en fazla 64 bekleyen bildirim tutar)
   bildirimKur().catch(() => {});

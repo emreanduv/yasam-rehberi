@@ -127,7 +127,7 @@ function homeView() {
   const pick = D.items[day % D.items.length];
   const results = ui.q ? D.items.filter((x) => x.k.includes(fold(ui.q))).sort((a, b) => a.n.localeCompare(b.n, "tr")) : [];
   const b = barkodBilgi(ui.barkod, ui.barkodTam);
-  return `${ctx.topbar("Menü")}
+  return `${ctx.topbar()}
   ${band("Çarşı", "Ne alacaksın?", `${D.items.length} marka · ${REYON.length} reyon · kaynaklı bilgi`)}
   <main class="content">
     <section class="panel">
@@ -251,7 +251,7 @@ function listeView() {
 // app.js'in yönlendiricisi çağırır. Veri yüklü değilse yükleyip yeniden çizdirir.
 // ---------------------------------------------------------------------------
 export function carsiRoute(parts) {
-  if (!D) { load().then(() => ctx.rerender()).catch((e) => ctx.fail(e)); return `${ctx.topbar("Menü")}<div class="loading">Çarşı açılıyor…</div>`; }
+  if (!D) { load().then(() => ctx.rerender()).catch((e) => ctx.fail(e)); return `${ctx.topbar()}<div class="loading">Çarşı açılıyor…</div>`; }
   if (parts[1] === "r") return reyonView(parts[2]);
   if (parts[1] === "m") return markaView(parts[2]);
   if (parts[1] === "liste") return listeView();
