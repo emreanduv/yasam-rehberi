@@ -9,9 +9,9 @@
 - **Telif:** 2026 Mr. Anduv!
 
 ## App Store
-- **Alt başlık (≤30):** Market katalogları, kampanyalar
+- **Alt başlık (≤30):** Market katalogları, fırsatlar
 - **Promosyon metni (≤170):** Haftanın market katalogları ve kampanyalar tek yerde; en yeni en üstte. Takip ettiğin kampanya bitmeden, sevdiğin markete yeni katalog düşünce haber verelim.
-- **Anahtar kelimeler (≤100):** aktüel,katalog,broşür,indirim,kampanya,market,bim,a101,şok,migros,kart,son gün,fırsat
+- **Anahtar kelimeler (≤100):** aktüel,katalog,broşür,indirim,kampanya,market,kart,son gün,fırsat,haftalık,kupon,alışveriş
 
 ## Açıklama (App Store + Play uzun açıklama)
 Haftanın market katalogları, mağaza ve kart kampanyaları tek yerde; en yeni kampanya her zaman en üstte.

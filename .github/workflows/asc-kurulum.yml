@@ -1,0 +1,25 @@
+name: App Store Connect kurulumu (bundle ID, metinler, TestFlight)
+# Yeni uygulama için: Bundle ID kaydı, mağaza metinleri ve kategoriler, TestFlight "Mr. Anduv! Test" grubu.
+# "testflight" seçilirse son derleme gruba eklenir ve beta incelemesine gönderilir.
+on:
+  workflow_dispatch:
+    inputs:
+      bundle: { description: "Bundle ID", default: "com.anduv.firsatakisi" }
+      klasor: { description: "store/ altındaki klasör", default: "firsat-akisi" }
+      testflight: { description: "Son derlemeyi TestFlight testçilerine gönder", type: boolean, default: false }
+env:
+  ASC_KEY_ID: DJSHKK6T3P
+  ASC_ISSUER_ID: f4943ef8-df6f-42c8-a561-58554097ea35
+jobs:
+  kur:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pyjwt cryptography requests
+      - name: App Store Connect anahtarı
+        env: { P8: "${{ secrets.ASC_KEY_P8 }}" }
+        run: printf '%s' "$P8" > $RUNNER_TEMP/asc.p8
+      - name: Kurulum
+        env: { ASC_KEY_PATH: "${{ runner.temp }}/asc.p8" }
+        run: python tools/asc_kurulum.py "${{ inputs.bundle }}" "${{ inputs.klasor }}" ${{ inputs.testflight && '--testflight' || '' }}
