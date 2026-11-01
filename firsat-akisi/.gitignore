@@ -1,0 +1,9 @@
+node_modules/
+veri/
+android/app/build/
+android/.gradle/
+android/build/
+ios/App/build/
+ios/DerivedData/
+__pycache__/
+tools/secili.json

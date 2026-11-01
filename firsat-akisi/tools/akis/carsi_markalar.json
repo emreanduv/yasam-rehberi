@@ -1,0 +1,2045 @@
+{
+"kaynak": "Yaşam Rehberi › Çarşı (carsi.json)",
+"items": [
+{
+"id": "Q334789",
+"n": "Ülker",
+"r": "gida",
+"w": "http://www.ulker.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6090589",
+"n": "Eti",
+"r": "gida",
+"w": "http://www.etietieti.com/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6049099",
+"n": "Torku",
+"r": "gida",
+"w": "https://torku.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q63209808",
+"n": "Pınar",
+"r": "gida",
+"w": "http://pinar.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q5994473",
+"n": "Sütaş",
+"r": "gida",
+"w": "https://www.sutas.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q31190884",
+"n": "Yörsan",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q119442968",
+"n": "Eker",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q118496649",
+"n": "Sakıpağa",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q19613996",
+"n": "Şölen",
+"r": "gida",
+"w": "http://www.solen.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q65219957",
+"n": "Anı Bisküvi",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q65219971",
+"n": "BİFA Bisküvi",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q65219984",
+"n": "Hazal Bisküvi",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q17513065",
+"n": "Dardanel",
+"r": "gida",
+"w": "http://www.dardanel.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q20471706",
+"n": "Tat Gıda",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6033790",
+"n": "Alâeddin Konserveleri",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6031553",
+"n": "Nuh'un Ankara Makarnası",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q118929542",
+"n": "Şenpiliç",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6009987",
+"n": "Banvit",
+"r": "gida",
+"w": "https://www.banvit.com/",
+"yd": true,
+"kat": "Market"
+},
+{
+"id": "Q118929548",
+"n": "Beypiliç",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q118929547",
+"n": "Erpiliç",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q109383852",
+"n": "Gedik Piliç",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q20472507",
+"n": "Keskinoğlu",
+"r": "gida",
+"w": "http://www.keskinoglu.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q123784262",
+"n": "Namet",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q4779832",
+"n": "Apikoğlu",
+"r": "gida",
+"w": "http://www.apikoglu.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q20474291",
+"n": "Cumhuriyet Sucukları",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q118929382",
+"n": "Şahin Sucukları",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q12810467",
+"n": "Kurukahveci Mehmet Efendi",
+"r": "gida",
+"w": "http://www.mehmetefendi.com/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q25475766",
+"n": "Altıparmak Gıda",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q104853262",
+"n": "Balsu",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q118946806",
+"n": "Çotanak",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6012986",
+"n": "Panda",
+"r": "gida",
+"w": "http://www.panda.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q118946921",
+"n": "Tadım",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q118946919",
+"n": "Peyman",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q25478119",
+"n": "Konya Şeker",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6096616",
+"n": "Türkiye Şeker Fabrikaları",
+"r": "gida",
+"w": "http://www.turkseker.gov.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6772111",
+"n": "Marmarabirlik",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q65220186",
+"n": "Kervan Gıda",
+"r": "gida",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6051584",
+"n": "Aytaç",
+"r": "gida",
+"w": "http://www.aytac.com.tr",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q126125081",
+"n": "Köfteci Yusuf",
+"r": "lokanta",
+"w": "https://kofteciyusuf.com/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q108919263",
+"n": "Komagene",
+"r": "lokanta",
+"w": "https://www.komagene.com.tr",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q19612651",
+"n": "Tarihi Sultanahmet Köftecisi",
+"r": "lokanta",
+"w": "http://www.sultanahmetkoftesi.com/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q6037042",
+"n": "Köfteci Ramiz",
+"r": "lokanta",
+"w": "https://www.kofteciramiz.com/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q28940632",
+"n": "Bolulu Hasan Usta",
+"r": "lokanta",
+"w": "https://www.bhu.com.tr/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q118929749",
+"n": "Levent Börek",
+"r": "lokanta",
+"w": null,
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q6057390",
+"n": "Pasaport Pizza",
+"r": "lokanta",
+"w": "https://www.pasaportpizza.com",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q6056425",
+"n": "Terra Pizza",
+"r": "lokanta",
+"w": "https://www.terrapizza.com.tr",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q97599057",
+"n": "Emirgan Sütiş",
+"r": "lokanta",
+"w": null,
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q17116336",
+"n": "Mado",
+"r": "lokanta",
+"w": "https://www.mado.com.tr/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q20472928",
+"n": "Özsüt",
+"r": "lokanta",
+"w": "https://ozsut.com.tr/tr/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q6030568",
+"n": "Vefa Bozacısı",
+"r": "lokanta",
+"w": "http://www.vefa.com.tr/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q135429022",
+"n": "Bebek Badem Ezmecisi",
+"r": "lokanta",
+"w": null,
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q1567297",
+"n": "Ali Muhiddin Hacı Bekir",
+"r": "lokanta",
+"w": "http://www.hacibekir.com/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q6021512",
+"n": "Çaykur",
+"r": "icecek",
+"w": "http://www.caykur.gov.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q118929513",
+"n": "Doğuş Çay",
+"r": "icecek",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q61075548",
+"n": "Doğadan",
+"r": "icecek",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q116249221",
+"n": "Beypazarı Maden Suyu",
+"r": "icecek",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6032036",
+"n": "Kızılay Maden Suyu",
+"r": "icecek",
+"w": "https://www.kizilaymadensuyu.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q122731633",
+"n": "Erikli",
+"r": "icecek",
+"w": "http://www.erikli.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q1557571",
+"n": "Uludağ Gazoz",
+"r": "icecek",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6035639",
+"n": "Çamlıca Gazoz",
+"r": "icecek",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6015522",
+"n": "Elvan Gazoz",
+"r": "icecek",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6012039",
+"n": "Niğde Gazozu",
+"r": "icecek",
+"w": "http://www.nigdegazozu.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6013562",
+"n": "Cincibir",
+"r": "icecek",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q61075558",
+"n": "Fruko",
+"r": "icecek",
+"w": "https://fruko.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q1107571",
+"n": "Cola Turka",
+"r": "icecek",
+"w": "http://www.colaturka.com.tr",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6031872",
+"n": "Dimes",
+"r": "icecek",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q118946367",
+"n": "Seğmenler Su",
+"r": "icecek",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6074379",
+"n": "SEK",
+"r": "icecek",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q3205965",
+"n": "LC Waikiki",
+"r": "giyim",
+"w": "http://www.lcwaikiki.com",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q6059861",
+"n": "Defacto",
+"r": "giyim",
+"w": "https://www.defacto.com.tr/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q6063877",
+"n": "Koton",
+"r": "giyim",
+"w": "https://www.koton.com/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q1911924",
+"n": "Mavi",
+"r": "giyim",
+"w": "http://www.mavi.com",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q6041719",
+"n": "Kiğılı",
+"r": "giyim",
+"w": "https://www.kigili.com/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q143174",
+"n": "Sarar",
+"r": "giyim",
+"w": "https://sarar.com/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q120761946",
+"n": "Hatemoğlu",
+"r": "giyim",
+"w": "https://www.hatemoglu.com/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q119167433",
+"n": "AVVA",
+"r": "giyim",
+"w": null,
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q6084348",
+"n": "Damat Tween",
+"r": "giyim",
+"w": "http://www.damattween.com/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q22312972",
+"n": "Ramsey",
+"r": "giyim",
+"w": "https://www.ramsey.com.tr",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q7909026",
+"n": "Vakko",
+"r": "giyim",
+"w": "http://www.vakko.com",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q20472219",
+"n": "Beymen",
+"r": "giyim",
+"w": "http://www.beymen.com/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q28729986",
+"n": "Penti",
+"r": "giyim",
+"w": "https://www.penti.com/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q6057571",
+"n": "Collezione",
+"r": "giyim",
+"w": "http://www.collezione.com",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q6049876",
+"n": "Lescon",
+"r": "giyim",
+"w": "http://www.lescon.com.tr/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q6067589",
+"n": "LiG",
+"r": "giyim",
+"w": "http://www.lig.com.tr/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q97235771",
+"n": "Greyder",
+"r": "giyim",
+"w": null,
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q17373410",
+"n": "Derimod",
+"r": "giyim",
+"w": "https://www.derimod.com.tr/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q17513880",
+"n": "Desa",
+"r": "giyim",
+"w": "https://www.desa.com.tr/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q118946455",
+"n": "Gezer Ayakkabı",
+"r": "giyim",
+"w": null,
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q2714156",
+"n": "Haşema",
+"r": "giyim",
+"w": null,
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q28059537",
+"n": "Mudo",
+"r": "giyim",
+"w": "http://www.mudo.com.tr/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q118929077",
+"n": "Esem Spor",
+"r": "giyim",
+"w": null,
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q6059308",
+"n": "Yards",
+"r": "giyim",
+"w": null,
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q6080115",
+"n": "Sevenhill",
+"r": "giyim",
+"w": null,
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q16968139",
+"n": "LTB",
+"r": "giyim",
+"w": "http://www.littlebig.com.tr",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q6057885",
+"n": "Rodi Mood",
+"r": "giyim",
+"w": null,
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q640497",
+"n": "Arçelik",
+"r": "ev",
+"w": "https://www.arcelik.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q631792",
+"n": "Beko",
+"r": "ev",
+"w": "https://www.bekocorporate.com/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q2191408",
+"n": "Vestel",
+"r": "ev",
+"w": "https://www.vestel.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q61073330",
+"n": "Regal",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q97924909",
+"n": "SEG",
+"r": "ev",
+"w": "https://www.seg.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q31191295",
+"n": "Arzum",
+"r": "ev",
+"w": "https://www.arzum.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q109383865",
+"n": "Kumtel",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q118929724",
+"n": "Raks Ev Aletleri",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q109390397",
+"n": "Simfer",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q31188760",
+"n": "Silverline Ankastre",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q12812404",
+"n": "Uğur Soğutma",
+"r": "ev",
+"w": "https://www.ugur.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q97321083",
+"n": "Baymak",
+"r": "ev",
+"w": "https://www.baymak.com.tr",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q118929315",
+"n": "Korkmaz",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q86661237",
+"n": "Paşabahçe",
+"r": "ev",
+"w": "http://www.pasabahce.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q17515320",
+"n": "Kütahya Porselen",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q7937213",
+"n": "VitrA",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q19613071",
+"n": "Yataş",
+"r": "ev",
+"w": "https://www.yatasbedding.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q6031999",
+"n": "İstikbal",
+"r": "ev",
+"w": "https://www.istikbal.com.tr",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q6042498",
+"n": "Bellona",
+"r": "ev",
+"w": "https://www.bellona.com.tr",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q6042684",
+"n": "Doğtaş",
+"r": "ev",
+"w": "https://www.dogtas.com/tr",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q98382016",
+"n": "Modalife",
+"r": "ev",
+"w": "https://www.modalife.com/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q124621711",
+"n": "Lazzoni",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q119999913",
+"n": "Çilek Odası",
+"r": "ev",
+"w": "https://www.cilek.com.tr",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q106803513",
+"n": "English Home",
+"r": "ev",
+"w": "https://englishhome.com/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q28605887",
+"n": "Madame Coco",
+"r": "ev",
+"w": "https://www.madamecoco.com/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q6072162",
+"n": "Winsa",
+"r": "ev",
+"w": "http://www.winsa.com.tr",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q119167832",
+"n": "Warmhaus",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q4821155",
+"n": "DYO",
+"r": "ev",
+"w": "http://www.dyo.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q6094453",
+"n": "Evyap",
+"r": "bakim",
+"w": "http://www.evyap.com.tr/",
+"yd": false,
+"kat": "Kişisel Bakım"
+},
+{
+"id": "Q30140671",
+"n": "Arko",
+"r": "bakim",
+"w": "http://arkonem.com.tr/",
+"yd": false,
+"kat": "Kişisel Bakım"
+},
+{
+"id": "Q6060664",
+"n": "Hacı Şakir",
+"r": "bakim",
+"w": null,
+"yd": false,
+"kat": "Kişisel Bakım"
+},
+{
+"id": "Q25474944",
+"n": "Eyüp Sabri Tuncer",
+"r": "bakim",
+"w": "https://www.eyupsabrituncer.com/",
+"yd": false,
+"kat": "Kişisel Bakım"
+},
+{
+"id": "Q119168262",
+"n": "Farmasi",
+"r": "bakim",
+"w": null,
+"yd": false,
+"kat": "Kişisel Bakım"
+},
+{
+"id": "Q5942099",
+"n": "Hunca Kozmetik",
+"r": "bakim",
+"w": null,
+"yd": false,
+"kat": "Kişisel Bakım"
+},
+{
+"id": "Q20476663",
+"n": "Selpak",
+"r": "bakim",
+"w": null,
+"yd": false,
+"kat": "Kişisel Bakım"
+},
+{
+"id": "Q6058218",
+"n": "Casper",
+"r": "teknoloji",
+"w": "http://www.casper.com.tr",
+"yd": false,
+"kat": "Teknoloji"
+},
+{
+"id": "Q2698771",
+"n": "General Mobile",
+"r": "teknoloji",
+"w": "http://www.generalmobile.com",
+"yd": false,
+"kat": "Teknoloji"
+},
+{
+"id": "Q12808343",
+"n": "Airties",
+"r": "teknoloji",
+"w": "http://www.airties.com",
+"yd": false,
+"kat": "Teknoloji"
+},
+{
+"id": "Q31188765",
+"n": "Akınsoft",
+"r": "teknoloji",
+"w": "http://www.akinsoft.com.tr/",
+"yd": false,
+"kat": "Teknoloji"
+},
+{
+"id": "Q20474138",
+"n": "Adel Kalemcilik",
+"r": "hobi",
+"w": null,
+"yd": false,
+"kat": "Hobi & Oyuncak"
+},
+{
+"id": "Q6079511",
+"n": "Scrikss",
+"r": "hobi",
+"w": "https://www.scrikss.com.tr/",
+"yd": false,
+"kat": "Hobi & Oyuncak"
+},
+{
+"id": "Q124424310",
+"n": "Fatoş Oyuncakları",
+"r": "hobi",
+"w": null,
+"yd": false,
+"kat": "Hobi & Oyuncak"
+},
+{
+"id": "Q6088571",
+"n": "İstanbul Agop",
+"r": "hobi",
+"w": "https://istanbulcymbals.com/",
+"yd": false,
+"kat": "Hobi & Oyuncak"
+},
+{
+"id": "Q105972959",
+"n": "Agean Cymbals",
+"r": "hobi",
+"w": null,
+"yd": false,
+"kat": "Hobi & Oyuncak"
+},
+{
+"id": "Q1022075",
+"n": "BİM",
+"r": "market",
+"w": "https://www.bim.com.tr",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6034496",
+"n": "A101",
+"r": "market",
+"w": "https://www.a101.com.tr",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q19613992",
+"n": "Şok",
+"r": "market",
+"w": "https://www.sokmarket.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q1754510",
+"n": "Migros",
+"r": "market",
+"w": "https://www.migros.com.tr",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q19611869",
+"n": "Makro Market",
+"r": "market",
+"w": "http://www.makromarket.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q118929561",
+"n": "Seç Market",
+"r": "market",
+"w": null,
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q19612914",
+"n": "Uyum Gıda",
+"r": "market",
+"w": "http://www.uyum.com/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6559269",
+"n": "Teknosa",
+"r": "market",
+"w": "http://www.teknosa.com/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6048050",
+"n": "Vatan Bilgisayar",
+"r": "market",
+"w": "https://www.vatanbilgisayar.com",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q17332548",
+"n": "Bimeks",
+"r": "market",
+"w": "http://www.bimeks.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6057541",
+"n": "Koçtaş",
+"r": "market",
+"w": "http://www.koctas.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q25475379",
+"n": "Tekzen",
+"r": "market",
+"w": "http://www.tekzen.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q28605813",
+"n": "Gratis",
+"r": "market",
+"w": "http://www.gratis.com/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q4952569",
+"n": "Boyner",
+"r": "market",
+"w": "https://www.boyner.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6103457",
+"n": "Özdilek",
+"r": "market",
+"w": "http://www.ozdilekholding.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6073041",
+"n": "İstanbul Halk Ekmek",
+"r": "market",
+"w": "https://www.ihe.istanbul/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6039733",
+"n": "Togg",
+"r": "yol",
+"w": "https://www.togg.com.tr",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q1734420",
+"n": "Karsan",
+"r": "yol",
+"w": "http://www.karsan.com.tr",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q206228",
+"n": "Otokar",
+"r": "yol",
+"w": "http://www.otokar.com.tr",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q2094576",
+"n": "Temsa",
+"r": "yol",
+"w": "http://www.temsa.com/",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q796295",
+"n": "BMC",
+"r": "yol",
+"w": "http://www.bmc.com.tr",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q12810915",
+"n": "Mondial",
+"r": "yol",
+"w": "http://www.mondialmotor.com.tr/",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q85972256",
+"n": "Kuba Motor",
+"r": "yol",
+"w": null,
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q118929934",
+"n": "RKS Motor",
+"r": "yol",
+"w": null,
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q1728197",
+"n": "Kanuni",
+"r": "yol",
+"w": null,
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q6049915",
+"n": "Lassa",
+"r": "yol",
+"w": "http://www.lassa.com.tr/",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q19612269",
+"n": "Petlas",
+"r": "yol",
+"w": "http://www.petlas.com.tr/",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q6094539",
+"n": "İnci GS Yuasa Akü",
+"r": "yol",
+"w": null,
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q7072824",
+"n": "Opet",
+"r": "yol",
+"w": "https://www.opet.com.tr/",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q1278087",
+"n": "Petrol Ofisi",
+"r": "yol",
+"w": "https://www.petrolofisi.com.tr/",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q62274352",
+"n": "Aytemiz",
+"r": "yol",
+"w": "https://www.aytemiz.com.tr/",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q6013486",
+"n": "Türkpetrol",
+"r": "yol",
+"w": null,
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q1790346",
+"n": "Ford Otosan",
+"r": "yol",
+"w": "https://www.fordotosan.com.tr/",
+"yd": true,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q1136056",
+"n": "TOFAŞ",
+"r": "yol",
+"w": "http://www.tofas.com.tr",
+"yd": true,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q20988315",
+"n": "Başak Traktör",
+"r": "yol",
+"w": null,
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q21525084",
+"n": "Erkunt Traktör",
+"r": "yol",
+"w": null,
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q6046717",
+"n": "TÜMOSAN",
+"r": "yol",
+"w": "http://tumosan.com.tr",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q2352604",
+"n": "TaleWorlds",
+"r": "dijital",
+"w": "https://www.taleworlds.com/",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q29364771",
+"n": "BiP",
+"r": "dijital",
+"w": "https://bip.com",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q118134711",
+"n": "Tabii",
+"r": "dijital",
+"w": "https://www.tabii.com",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q29840121",
+"n": "Puhutv",
+"r": "dijital",
+"w": "https://puhutv.com/",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q100250512",
+"n": "Exxen",
+"r": "dijital",
+"w": "https://www.exxen.com",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q104654149",
+"n": "GAİN",
+"r": "dijital",
+"w": "https://www.gain.tv/",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q85970774",
+"n": "Getir",
+"r": "dijital",
+"w": "https://www.getir.com/",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q6084252",
+"n": "Çiçeksepeti",
+"r": "dijital",
+"w": "https://www.ciceksepeti.com",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q6090601",
+"n": "Yemeksepeti",
+"r": "dijital",
+"w": "https://www.yemeksepeti.com/",
+"yd": true,
+"kat": "Oyun"
+},
+{
+"id": "Q54258978",
+"n": "Peak Games",
+"r": "dijital",
+"w": "https://peak.games",
+"yd": true,
+"kat": "Oyun"
+},
+{
+"id": "Q4044731",
+"n": "Mynet",
+"r": "dijital",
+"w": "https://www.mynet.com/",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q4548",
+"n": "Türk Hava Yolları",
+"r": "yolculuk",
+"w": "https://www.turkishairlines.com/",
+"yd": false,
+"kat": "Seyahat"
+},
+{
+"id": "Q1100424",
+"n": "Pegasus Hava Yolları",
+"r": "yolculuk",
+"w": "https://www.flypgs.com/",
+"yd": false,
+"kat": "Seyahat"
+},
+{
+"id": "Q483676",
+"n": "AJet",
+"r": "yolculuk",
+"w": "https://ajet.com/",
+"yd": false,
+"kat": "Seyahat"
+},
+{
+"id": "Q19313474",
+"n": "Etstur",
+"r": "yolculuk",
+"w": "http://www.etstur.com",
+"yd": false,
+"kat": "Seyahat"
+},
+{
+"id": "Q20471091",
+"n": "Jolly Tur",
+"r": "yolculuk",
+"w": "http://www.jollytur.com/",
+"yd": false,
+"kat": "Seyahat"
+},
+{
+"id": "Q2905397",
+"n": "İstanbul Deniz Otobüsleri",
+"r": "yolculuk",
+"w": "http://www.ido.com.tr",
+"yd": false,
+"kat": "Seyahat"
+},
+{
+"id": "Q3079259",
+"n": "PTT",
+"r": "yolculuk",
+"w": "https://www.ptt.gov.tr/",
+"yd": false,
+"kat": "Seyahat"
+},
+{
+"id": "Q110454434",
+"n": "Hakmar",
+"r": "market",
+"w": "https://hakmar.com.tr",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q127414799",
+"n": "Bizim Toptan",
+"r": "market",
+"w": "https://www.bizimtoptan.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q17507971",
+"n": "Adese",
+"r": "market",
+"w": "https://adese.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q28605791",
+"n": "Esenlik Market",
+"r": "market",
+"w": "http://www.esenlik.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q28870164",
+"n": "CarrefourSA",
+"r": "market",
+"w": "https://www.carrefoursa.com/",
+"yd": true,
+"kat": "Market"
+},
+{
+"id": "Q20010130",
+"n": "Tarım Kredi",
+"r": "market",
+"w": "http://www.tarimkredi.org.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q27431235",
+"n": "D&R",
+"r": "market",
+"w": "https://www.dr.com.tr",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q263700",
+"n": "Türk Telekom",
+"r": "teknoloji",
+"w": "https://www.turktelekom.com.tr/",
+"yd": false,
+"kat": "Teknoloji"
+},
+{
+"id": "Q6014219",
+"n": "Altus",
+"r": "ev",
+"w": "http://www.altus.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q6047234",
+"n": "Raks",
+"r": "ev",
+"w": "http://www.raks.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q61074958",
+"n": "Merinos",
+"r": "ev",
+"w": null,
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q106803578",
+"n": "Mondi",
+"r": "ev",
+"w": "https://mondi.com.tr/",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q126728119",
+"n": "Saray Halı",
+"r": "ev",
+"w": "https://sarayhali.com.tr",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q28940536",
+"n": "Kinetix",
+"r": "giyim",
+"w": "http://kinetix.com.tr/",
+"yd": false,
+"kat": "Giyim"
+},
+{
+"id": "Q20471647",
+"n": "Tamek",
+"r": "gida",
+"w": "http://www.tamek.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q131431803",
+"n": "Fiskobirlik",
+"r": "gida",
+"w": "https://www.fiskobirlik.com.tr",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q6020841",
+"n": "Dalin",
+"r": "bakim",
+"w": null,
+"yd": false,
+"kat": "Kişisel Bakım"
+},
+{
+"id": "Q28940506",
+"n": "Golden Rose",
+"r": "bakim",
+"w": "http://www.goldenrose.com.tr/",
+"yd": false,
+"kat": "Kişisel Bakım"
+},
+{
+"id": "Q28606323",
+"n": "Toyzz Shop",
+"r": "hobi",
+"w": "https://www.toyzzshop.com/",
+"yd": false,
+"kat": "Hobi & Oyuncak"
+},
+{
+"id": "Q28008050",
+"n": "Kahve Dünyası",
+"r": "lokanta",
+"w": "https://www.kahvedunyasi.com/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q28042608",
+"n": "Simit Sarayı",
+"r": "lokanta",
+"w": "https://www.simitsarayi.com/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q126924105",
+"n": "Tavuk Dünyası",
+"r": "lokanta",
+"w": "https://www.tavukdunyasi.com",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q28940521",
+"n": "Baydöner",
+"r": "lokanta",
+"w": "https://baydoner.com/",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q18411994",
+"n": "Ferrero Fındık",
+"r": "gida",
+"w": "http://www.oltangida.com.tr/",
+"yd": true,
+"kat": "Market"
+},
+{
+"id": "Q6037571",
+"n": "Hacı Abdullah Lokantası",
+"r": "lokanta",
+"w": null,
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q135429027",
+"n": "Baylan Pastanesi",
+"r": "lokanta",
+"w": null,
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q98091529",
+"n": "Tahmis Kahvesi",
+"r": "lokanta",
+"w": null,
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q138820377",
+"n": "Koço Restaurant",
+"r": "lokanta",
+"w": "https://kocorestaurant.com",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q6049061",
+"n": "The House Café",
+"r": "lokanta",
+"w": "http://www.thehousecafe.com",
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q115264889",
+"n": "Lebon Pastanesi ve Kahvesi",
+"r": "lokanta",
+"w": null,
+"yd": false,
+"kat": "Yemek"
+},
+{
+"id": "Q2659408",
+"n": "Kristal Kola",
+"r": "icecek",
+"w": "http://www.kristalkola.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q106803706",
+"n": "Bambi Yatak",
+"r": "ev",
+"w": "https://bambi.com.tr",
+"yd": false,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q17090872",
+"n": "Viko",
+"r": "ev",
+"w": "http://www.viko.com.tr/",
+"yd": true,
+"kat": "Ev & Yaşam"
+},
+{
+"id": "Q126811307",
+"n": "Atelier Rebul",
+"r": "bakim",
+"w": "https://www.atelierrebul.com.tr/",
+"yd": false,
+"kat": "Kişisel Bakım"
+},
+{
+"id": "Q6017141",
+"n": "KVK",
+"r": "teknoloji",
+"w": null,
+"yd": false,
+"kat": "Teknoloji"
+},
+{
+"id": "Q283852",
+"n": "Turkcell",
+"r": "teknoloji",
+"w": "https://www.turkcell.com.tr/",
+"yd": false,
+"kat": "Teknoloji"
+},
+{
+"id": "Q1784943",
+"n": "Vodafone Türkiye",
+"r": "teknoloji",
+"w": "http://www.vodafone.com.tr/",
+"yd": true,
+"kat": "Teknoloji"
+},
+{
+"id": "Q28940735",
+"n": "Dost Kitabevi",
+"r": "hobi",
+"w": "http://www.dostyayinevi.com",
+"yd": false,
+"kat": "Hobi & Oyuncak"
+},
+{
+"id": "Q112228237",
+"n": "File",
+"r": "market",
+"w": "https://www.file.com.tr/",
+"yd": false,
+"kat": "Market"
+},
+{
+"id": "Q30252253",
+"n": "Brisa",
+"r": "yol",
+"w": null,
+"yd": true,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q3547051",
+"n": "Türk Traktör",
+"r": "yol",
+"w": "http://turktraktor.com.tr",
+"yd": true,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q21293367",
+"n": "Hattat Traktör",
+"r": "yol",
+"w": "http://www.hattattraktor.com/",
+"yd": false,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q1854061",
+"n": "Oyak-Renault",
+"r": "yol",
+"w": "http://www.renault.com.tr/",
+"yd": true,
+"kat": "Oto & Mobilite"
+},
+{
+"id": "Q6042123",
+"n": "Hepsiburada",
+"r": "dijital",
+"w": "http://www.hepsiburada.com",
+"yd": true,
+"kat": "Oyun"
+},
+{
+"id": "Q20472794",
+"n": "BiTaksi",
+"r": "dijital",
+"w": "http://www.bitaksi.com/",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q31191454",
+"n": "Cimri.com",
+"r": "dijital",
+"w": "https://www.cimri.com/",
+"yd": false,
+"kat": "Oyun"
+},
+{
+"id": "Q6094691",
+"n": "Aras Kargo",
+"r": "yolculuk",
+"w": "https://www.araskargo.com.tr",
+"yd": true,
+"kat": "Seyahat"
+},
+{
+"id": "Q6505802",
+"n": "Yurtiçi Kargo",
+"r": "yolculuk",
+"w": "https://www.yurticikargo.com/",
+"yd": false,
+"kat": "Seyahat"
+},
+{
+"id": "Q6051265",
+"n": "Sürat Kargo",
+"r": "yolculuk",
+"w": "http://www.suratkargo.com.tr/",
+"yd": false,
+"kat": "Seyahat"
+},
+{
+"id": "Q19611974",
+"n": "Metro Turizm",
+"r": "yolculuk",
+"w": "https://www.metroturizm.com.tr/",
+"yd": false,
+"kat": "Seyahat"
+},
+{
+"id": "Q6052726",
+"n": "Kâmil Koç",
+"r": "yolculuk",
+"w": "https://www.flixbus.com.tr/",
+"yd": true,
+"kat": "Seyahat"
+},
+{
+"id": "x-nacar",
+"n": "Nacar",
+"r": "saat",
+"w": "https://www.nacar.com.tr",
+"yd": false,
+"kat": "Takı & Aksesuar"
+},
+{
+"id": "x-quantum",
+"n": "Quantum",
+"r": "saat",
+"w": null,
+"yd": false,
+"kat": "Takı & Aksesuar"
+},
+{
+"id": "x-momentus",
+"n": "Momentus",
+"r": "saat",
+"w": null,
+"yd": false,
+"kat": "Takı & Aksesuar"
+},
+{
+"id": "x-hislon",
+"n": "Hislon",
+"r": "saat",
+"w": "https://hislon.com",
+"yd": false,
+"kat": "Takı & Aksesuar"
+},
+{
+"id": "x-serhat-saat",
+"n": "Serhat Saat",
+"r": "saat",
+"w": "https://serhatsaat.com",
+"yd": false,
+"kat": "Takı & Aksesuar"
+},
+{
+"id": "x-taf-watch",
+"n": "TAF Watch",
+"r": "saat",
+"w": "https://tafwatch.com",
+"yd": false,
+"kat": "Takı & Aksesuar"
+},
+{
+"id": "x-pomander",
+"n": "Pomander",
+"r": "saat",
+"w": "https://www.pomander.com.tr",
+"yd": false,
+"kat": "Takı & Aksesuar"
+},
+{
+"id": "x-svenn",
+"n": "Svenn",
+"r": "saat",
+"w": "https://ahsapsaat.com",
+"yd": false,
+"kat": "Takı & Aksesuar"
+},
+{
+"id": "x-zebrino",
+"n": "Zebrino",
+"r": "saat",
+"w": "https://www.kargunlar.com",
+"yd": false,
+"kat": "Takı & Aksesuar"
+},
+{
+"id": "x-dice-kayek",
+"n": "Dice Kayek",
+"r": "saat",
+"w": "https://dicekayekwatches.com/tr",
+"yd": false,
+"kat": "Takı & Aksesuar"
+}
+]
+}

@@ -1,0 +1,44 @@
+name: Fırsat Akışı · veri (zamanlanmış tarama)
+# Fırsat Akışı uygulamasının okuduğu firsat.json'u üretir: firsat-akisi/tools/secili.mjs + veri_guncelle.py
+# Çıktı "firsat-veri" dalına yazılır → https://raw.githubusercontent.com/emreanduv/yasam-rehberi/firsat-veri/firsat.json
+on:
+  schedule:
+    - cron: "41 */3 * * *"     # 3 saatte bir (UTC) — kampanyalar saatten hızlı değişir
+  workflow_dispatch:
+  push:                        # uygulama dalında veri hattı değişince bir tur dene
+    branches: [firsat-akisi]
+    paths: ["firsat-akisi/tools/**", "firsat-akisi/kaynak/**", ".github/workflows/firsat-veri.yml"]
+permissions:
+  contents: write
+concurrency: { group: firsat-veri, cancel-in-progress: false }
+jobs:
+  tara:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Önceki turun verisi (ulaşılamayan kaynaklar ve "ilk görülme" zamanları için)
+        run: |
+          git fetch --depth=1 origin firsat-veri:firsat-veri 2>/dev/null && git worktree add veri firsat-veri || { mkdir -p veri; }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Seçilmiş kampanyalar
+        run: node firsat-akisi/tools/secili.mjs
+      - name: Tara
+        env: { PYTHONUNBUFFERED: "1", TZ: "Europe/Istanbul" }
+        run: python3 firsat-akisi/tools/veri_guncelle.py veri
+      - name: firsat-veri dalına yaz
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd veri
+          if [ ! -d .git ] && [ ! -f .git ]; then git init -q -b firsat-veri; fi
+          git config user.name "github-actions"; git config user.email "actions@github.com"
+          git add firsat.json first_seen.json 2>/dev/null || git add -A
+          git commit -qm "Fırsat Akışı verisi $(date -u +%Y-%m-%dT%H:%MZ)" || { echo "değişiklik yok"; exit 0; }
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" HEAD:firsat-veri
+      - name: Deneme turunun çıktısı (uygulama dalı)
+        if: github.ref != 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with: { name: firsat-veri-deneme, path: veri/firsat.json }
