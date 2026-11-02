@@ -100,3 +100,4 @@
 - iPhone'da sayfa yana kayıyordu: Saat'te küçük yazılı kutuya (15px) dokununca iOS ekranı yakınlaştırıp öyle bırakıyordu. index.html viewport `maximum-scale=1, user-scalable=no`; tüm giriş kutuları ≥16px (app.css, tesbih.html, saat.html); html/body overflow-x gizli.
 - Tesbih: namaz tesbihatında sayı hedefi aşıyordu (Allâhu Ekber 231/34). Hedef dolunca dokunuş sıradaki zikre geçer, üçü bitince yeni tesbihat 1'den başlar; eski taşmış sayılar açılışta hedefe indirilir.
 - Not: test/e2e.py, moduller.py, namaz.py, kible.py yeni "Bugün" düzenine göre güncellenmeli (eski seçicileri arıyor).
+- 02.11 21:05: 1.0.0 Apple'dan Guideline 2.1 "Information Needed" ile döndü (ekran kaydı + notlar istendi). Kullanıcının kaydı kırpılıp (2:53, 26'daki hatalı anlar çıkarıldı) docs/inceleme/yasam-rehberi-app-review.mp4 olarak yayınlandı; inceleme notlarındaki [VIDEO_LINK] bu bağlantıyla dolduruldu; sürüme yapı 27 bağlandı. "Update Review" düğmesi kullanıcıda.
