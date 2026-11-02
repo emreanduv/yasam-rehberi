@@ -101,3 +101,4 @@
 - Tesbih: namaz tesbihatında sayı hedefi aşıyordu (Allâhu Ekber 231/34). Hedef dolunca dokunuş sıradaki zikre geçer, üçü bitince yeni tesbihat 1'den başlar; eski taşmış sayılar açılışta hedefe indirilir.
 - Not: test/e2e.py, moduller.py, namaz.py, kible.py yeni "Bugün" düzenine göre güncellenmeli (eski seçicileri arıyor).
 - 02.11 21:05: 1.0.0 Apple'dan Guideline 2.1 "Information Needed" ile döndü (ekran kaydı + notlar istendi). Kullanıcının kaydı kırpılıp (2:53, 26'daki hatalı anlar çıkarıldı) docs/inceleme/yasam-rehberi-app-review.mp4 olarak yayınlandı; inceleme notlarındaki [VIDEO_LINK] bu bağlantıyla dolduruldu; sürüme yapı 27 bağlandı. "Update Review" düğmesi kullanıcıda.
+- 03.11 00:27: 1.0.0 (yapı 27) ONAYLANDI ve App Store'da yayında (READY_FOR_SALE, yalnız Türkiye): https://apps.apple.com/app/id6826874224
