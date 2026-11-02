@@ -95,3 +95,8 @@
 - Yayın ülkesi: yalnız Türkiye (saat uygulaması vakitleri Türkiye saatiyle hesaplıyor). Onaylanınca otomatik yayın.
 - Diyanet onayı gelince: `KURAN = true` → mağaza metinlerini `store/magaza-metinleri.md` (eski bölüm) ile birleştir,
   görsellere meal ekranlarını ekle → 1.1.0 güncellemesi.
+
+## 2 Kasım 2026 · Video incelemesi düzeltmeleri (yapı 27)
+- iPhone'da sayfa yana kayıyordu: Saat'te küçük yazılı kutuya (15px) dokununca iOS ekranı yakınlaştırıp öyle bırakıyordu. index.html viewport `maximum-scale=1, user-scalable=no`; tüm giriş kutuları ≥16px (app.css, tesbih.html, saat.html); html/body overflow-x gizli.
+- Tesbih: namaz tesbihatında sayı hedefi aşıyordu (Allâhu Ekber 231/34). Hedef dolunca dokunuş sıradaki zikre geçer, üçü bitince yeni tesbihat 1'den başlar; eski taşmış sayılar açılışta hedefe indirilir.
+- Not: test/e2e.py, moduller.py, namaz.py, kible.py yeni "Bugün" düzenine göre güncellenmeli (eski seçicileri arıyor).

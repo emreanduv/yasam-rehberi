@@ -291,6 +291,7 @@ body, body::before { background: #1e2226; }
 .gomulu .wrap { padding-left: 16px; padding-right: 16px; }
 .gomulu body.focus .counter-panel .body { min-height: calc(100vh - 60px); }
 .targets button, .mats button { color: var(--ink); }
+input, select, textarea { font-size: 16px !important; }
 .targets button[aria-pressed="true"] { color: #fff; }
 </style>
 
@@ -525,6 +526,8 @@ body, body::before { background: #1e2226; }
   var S = { custom: [], counts: {}, targets: {}, history: {}, inbox: [], mode: "tesbihat", cur: "subhan" };
   try { var raw = YRK.oku(KEY); if (raw) Object.assign(S, JSON.parse(raw)); } catch (e) {}
   function save() { try { YRK.yaz(KEY, JSON.stringify(S)); } catch (e) {} }
+  // Eski sürümde hedefi aşmış tesbihat sayılarını hedefe indir (ör. 231/34 → 34/34)
+  BASE.forEach(function (x) { if (x.seq && (S.counts[x.id] || 0) > (S.targets[x.id] || x.t)) S.counts[x.id] = S.targets[x.id] || x.t; });
 
   // Esmâü'l-Hüsnâ — isim ve kısa anlamı
   var ESMA = [
@@ -1214,7 +1217,18 @@ body, body::before { background: #1e2226; }
     S.inbox = S.inbox.slice(0, 50);
   }
 
+  // Namaz tesbihatında hedef dolunca sayı aşılmaz: dokunuş sıradaki zikre geçer,
+  // üçü de bitince yeni tesbihat 1'den başlar (33 · 33 · 34 düzeni hiç bozulmaz).
+  function tesbihatIlerle() {
+    var z = cur();
+    if (S.mode !== "tesbihat" || !z.seq || cnt(z) < tgt(z)) return;
+    var seq = BASE.filter(function (x) { return x.seq; });
+    var nxt = seq.find(function (x) { return cnt(x) < tgt(x); });
+    if (!nxt) { seq.forEach(function (x) { S.counts[x.id] = 0; }); nxt = seq[0]; toast("Yeni tesbihat"); }
+    S.cur = nxt.id;
+  }
   function count(delta) {
+    if (delta > 0) tesbihatIlerle();
     var z = cur(), t = tgt(z), n = cnt(z) + delta;
     if (n < 0) return;
     if (delta < 0) sfx("undo");

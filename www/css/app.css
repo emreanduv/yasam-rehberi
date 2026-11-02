@@ -313,3 +313,7 @@ a.nz-ozet-bos { display: flex; align-items: center; justify-content: space-betwe
 
 /* Kur'an içeriği kapalıyken ayet bağlantıları görünmez */
 .kuransiz a[href^="#/ayet"], .kuransiz a[href^="#/ara"], .kuransiz a[href^="#/sor"] { display: none !important; }
+
+/* iPhone: küçük yazılı kutuya dokununca sayfa kendiliğinden yakınlaşıp öyle kalmasın */
+input, select, textarea { font-size: max(16px, 1em); }
+html, body { overflow-x: hidden; }
