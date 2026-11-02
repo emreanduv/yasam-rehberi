@@ -4,8 +4,8 @@ name: Yaşam Rehberi VR (Meta Quest APK)
 on:
   workflow_dispatch:
     inputs:
-      version_name: { description: "Sürüm adı", default: "1.0.0" }
-      version_code: { description: "Sürüm kodu", default: "1" }
+      version_name: { description: "Sürüm adı", default: "1.0.1" }
+      version_code: { description: "Sürüm kodu", default: "2" }
 permissions:
   contents: write
 jobs:
@@ -26,6 +26,7 @@ jobs:
           cat > proje/twa-manifest.json <<JSON
           {
             "packageId": "com.anduv.yasamrehberi.vr",
+            "applicationId": "1486654221191848",
             "host": "emreanduv.github.io",
             "name": "Yaşam Rehberi VR",
             "launcherName": "Yaşam Rehberi VR",
@@ -37,7 +38,7 @@ jobs:
             "navigationDividerColorDark": "#1d4d36",
             "backgroundColor": "#14171a",
             "enableNotifications": false,
-            "startUrl": "/yasam-rehberi-vr/index.html",
+            "startUrl": "/yasam-rehberi-vr/index.html?quest=1",
             "iconUrl": "https://emreanduv.github.io/yasam-rehberi-vr/simge-512.png",
             "maskableIconUrl": "https://emreanduv.github.io/yasam-rehberi-vr/simge-512.png",
             "splashScreenFadeOutDuration": 300,
@@ -49,13 +50,13 @@ jobs:
             "webManifestUrl": "https://emreanduv.github.io/yasam-rehberi-vr/manifest.webmanifest",
             "fallbackType": "customtabs",
             "features": {},
-            "alphaDependencies": { "enabled": false },
+            "alphaDependencies": { "enabled": true },
             "enableSiteSettingsShortcut": false,
             "isChromeOSOnly": false,
             "isMetaQuest": true,
             "horizonOSAppMode": "immersive",
             "fullScopeUrl": "https://emreanduv.github.io/yasam-rehberi-vr/",
-            "minSdkVersion": 29,
+            "minSdkVersion": 23,
             "orientation": "landscape",
             "fingerprints": [],
             "additionalTrustedOrigins": [],
