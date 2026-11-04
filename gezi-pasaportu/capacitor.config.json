@@ -1,0 +1,8 @@
+{
+  "appId": "com.anduv.gezipasaportu",
+  "appName": "Pasaportum",
+  "webDir": "www",
+  "backgroundColor": "#0b1e22",
+  "android": { "backgroundColor": "#0b1e22" },
+  "ios": { "backgroundColor": "#0b1e22", "contentInset": "never" }
+}

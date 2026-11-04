@@ -1,0 +1,37 @@
+{
+  "name": "gezi-pasaportu",
+  "version": "1.0.0",
+  "description": "Gezi Pasaportu — gezdiğin ülkeler, şehirler, damgalar ve istatistikler (iOS + Android, Capacitor). Bir Mr. Anduv! yapımıdır.",
+  "private": true,
+  "scripts": {
+    "serve": "python3 -m http.server 8791 --directory www",
+    "veri": "node tools/veri.mjs www/data",
+    "sync": "npx cap sync",
+    "ios": "npx cap open ios",
+    "android": "npx cap open android"
+  },
+  "dependencies": {
+    "@capacitor-community/in-app-review": "7.1.0",
+    "@capacitor/app": "^7.0.2",
+    "@capacitor/core": "^7.6.9",
+    "@capacitor/preferences": "^7.0.4",
+    "@capacitor/share": "^7.0.2",
+    "@capacitor/filesystem": "^7.1.4"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^7.6.9",
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.6.9",
+    "@capacitor/ios": "^7.6.9",
+    "@fontsource/barlow-condensed": "^5.3.0",
+    "@fontsource/dm-sans": "^5.3.0",
+    "@fontsource/pacifico": "^5.3.0",
+    "world-atlas": "^2.0.2",
+    "countries-list": "^3.1.1",
+    "i18n-iso-countries": "^7.14.0",
+    "all-the-cities": "^3.1.0",
+    "topojson-client": "^3.1.0",
+    "topojson-simplify": "^3.0.3",
+    "d3-geo": "^3.1.1"
+  }
+}

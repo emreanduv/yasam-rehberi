@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#0b1e22">
+<title>Gezi Pasaportu</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/gezi.css">
+</head>
+<body>
+<div id="app">
+  <header class="band">
+    <div class="crest" aria-hidden="true"><svg viewBox="0 0 64 64"><rect x="15" y="8" width="34" height="46" rx="5" fill="#173b40"/><circle cx="32" cy="27" r="10" fill="none" stroke="#ffd23f" stroke-width="2.6"/><path d="M22 27h20M32 17c-4 5-4 15 0 20M32 17c4 5 4 15 0 20" stroke="#ffd23f" stroke-width="2" fill="none"/><rect x="23" y="42" width="18" height="3" rx="1.5" fill="#ffd23f"/></svg></div>
+    <div class="band-txt">
+      <h1 id="hBaslik">Pasaportum</h1>
+      <div class="band-sub" id="hAlt">hazırlanıyor…</div>
+    </div>
+    <div class="imza">Bir <b>Mr. Anduv!</b> yapımıdır.</div>
+  </header>
+
+  <main id="ekran"></main>
+
+  <button class="fab" id="fab" aria-label="Seyahat ekle" hidden>＋</button>
+
+  <nav class="tabbar" id="tabbar">
+    <button data-s="pasaport" class="on"><i>🛂</i><span>Pasaport</span></button>
+    <button data-s="harita"><i>🗺️</i><span>Harita</span></button>
+    <button data-s="seyahat"><i>✈️</i><span>Seyahatler</span></button>
+    <button data-s="ulkeler"><i>🏳️</i><span>Ülkeler</span></button>
+    <button data-s="bilgi"><i>☰</i><span>Daha</span></button>
+  </nav>
+
+  <div class="sheet" id="sheet" hidden><div class="sheet-bg" data-kapat></div><div class="sheet-in" id="sheetIn"></div></div>
+  <div class="toast" id="toast" hidden></div>
+  <input type="file" id="dosya" accept="application/json,.json,.txt" hidden>
+</div>
+<script>window.REHBER_AYAR = {"ad": "Gezi Pasaportu", "onek": "gp", "surum": "1.0.0", "appleId": "6830736627", "paket": "com.anduv.gezipasaportu", "ilk": "pasaport",
+ "gizlilik": "https://emreanduv.github.io/yasam-rehberi/gezi-pasaportu/gizlilik.html",
+ "giris": "Gezi Pasaportu gezdiğin ülkeleri, şehirleri ve seyahatlerini senin yerine hatırlar. Her şey yalnız bu telefonda tutulur; üyelik ve internet gerekmez. Telefon değiştirirken Daha > Yedekle ile tek dosyada yanına al.",
+ "paylasMetni": "Gezi Pasaportu: gezdiğin ülkeler haritada, her ülkeye bir damga. Reklamsız, ücretsiz, üyeliksiz.",
+ "silMetni": "Ülkelerin, seyahatlerin, notların ve rehber bu telefondan silinir (önce yedek almayı unutma).",
+ "sira": ["pasaport", "harita", "seyahat", "ulkeler", "bilgi"],
+ "ipucu": {
+  "pasaport": ["Pasaportun", "Burada özetin var: kaç ülke, kaç şehir, yolda kaç gün. Aşağıda her ülkenin damgası; damgaya dokununca o ülkenin sayfası açılır. Sağ alttaki + ile seyahat eklersin."],
+  "harita": ["Dünya haritan", "Gittiğin ülkeler yeşil, hayal listen turuncu, ev ülken altın. İki parmakla yaklaş, sürükle; bir ülkeye dokununca sayfası açılır."],
+  "seyahat": ["Seyahatlerin", "Her seyahatin tarihi, ülkeleri, şehirleri, kiminle gittiğin ve notunla yıllara göre dizilir. Tarihi tam hatırlamıyorsan yalnız yılı seçmen yeter."],
+  "ulkeler": ["Hızlı işaretle", "Satırın sağındaki ✓ ile ülkeyi 'gittim', ☆ ile 'hayalim' yaparsın. Şehir eklemek için ülkenin adına dokun."],
+  "bilgi": ["Yedek ve ayarlar", "Yedekle ile bütün pasaportun tek dosya olur; yeni telefonda Geri yükle ile geri gelir. Gezi kartını paylaş ile haritanı resim olarak gönderirsin."]
+ }};</script>
+<script src="data/ulkeler.js"></script>
+<script src="data/harita.js"></script>
+<script src="data/sehirler.js" defer></script>
+<script src="js/app.js"></script>
+<script src="js/rehber.js"></script>
+</body>
+</html>
