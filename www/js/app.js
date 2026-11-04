@@ -7,13 +7,14 @@ import * as B from "./bildirim.js";
 import * as M from "./miras.js";
 import { initCarsi, carsiRoute } from "./carsi.js";
 import { KURAN } from "./ozellik.js";
+import * as RH from "./rehber.js";
 
 // ---------------------------------------------------------------------------
 // Ayarlanabilir sabitler (isim değişirse sadece burası ve capacitor.config.json)
 // ---------------------------------------------------------------------------
 const APP_NAME = "Yaşam Rehberi";
 const MAKER = "Bir Mr. Anduv! yapımıdır.";
-const VERSION = "1.0.0";
+const VERSION = "1.0.1";
 const QURANENC = { rowwad: "turkish_rwwad", ozek: "turkish_shahin", saban: "turkish_shaban", muhtasar: "turkish_mokhtasar" };
 const SHORT = { rowwad: "Rowwad", ozek: "Ali Özek", saban: "Ş. Britiş" };
 const COLOR = { rowwad: "var(--c-rowwad)", ozek: "var(--c-ozek)", saban: "var(--c-saban)" };
@@ -49,7 +50,7 @@ const store = {
 let E = null;              // arama motoru
 let S = { meals: null, arabic: true, tafsir: true };
 let saved = [];            // kaydedilen ayet indeksleri
-const view = { mealFilter: "all", tafsirOpen: false };
+const view = { mealFilter: "all", tafsirOpen: false, silOnay: false };
 
 // ---------------------------------------------------------------------------
 // yardımcılar
@@ -280,6 +281,7 @@ function bugunView() {
     <a class="bg-devam" href="#/tesbih"><span class="bg-devam-z">Son zikir · ${esc(tz.ad)}</span>
       <span class="btn-go bg-devam-b">DEVAM ${tz.h ? `${tz.n}/${tz.h}` : tz.n} ${ICON.next}</span></a>
     ${pos ? bildirimPanel(pos) : ""}
+    <div class="rh-dugmeler"><a class="btn-light" href="#/rehber">? Nasıl kullanılır</a><button class="btn-light" data-act="rh-oner">↗ Arkadaşına öner</button></div>
     <div class="note">Konumun yalnızca bu telefonda saklanır ve vakit ile kıble hesabı için kullanılır; hiçbir yere gönderilmez. Bildirimler telefonun kendisine kurulur.</div>
     <div class="made">${esc(MAKER)}</div>
   </main>`;
@@ -534,6 +536,7 @@ function settingsView() {
     <section class="panel"><div class="panel-h">Yaşam Rehberi</div><div class="panel-b" style="font-size:14px;line-height:1.55">
       Namaz vakitleri, kıble, tesbih, saat, çarşı ve miras hesabı. Hepsi telefonda çalışır; internet ve üyelik gerekmez,
       hiçbir veri toplanmaz. Vakitler Diyanet'in hesap yöntemiyle telefonda hesaplanır.</div></section>
+    ${RH.ayarPanelleri(view.silOnay)}
     <div class="made" style="font-style:normal;color:var(--muted)">Reklamsız ve ücretsiz · Sürüm ${VERSION}</div>
     <div class="made">${esc(MAKER)}</div>
   </main>`;
@@ -557,6 +560,7 @@ function settingsView() {
     </section>
     <a class="btn-go btn-dark" href="https://quranenc.com/tr/browse/turkish_rwwad">${ICON.note}Mealle ilgili not gönder</a>
     <div class="credits" style="text-align:center">Veri sürümü: ${esc(E.core.meta.built)}</div>
+    ${RH.ayarPanelleri(view.silOnay)}
     <div class="made" style="font-style:normal;color:var(--muted)">Reklamsız ve ücretsiz · Sürüm ${VERSION}</div>
     <div class="made">${esc(MAKER)}</div>
   </main>`;
@@ -1013,16 +1017,22 @@ function route() {
   else if (parts[0] === "tesbih" || parts[0] === "saat") { html = modulView(parts[0]); nav = parts[0]; }
   else if (parts[0] === "carsi") { html = carsiRoute(parts); nav = "carsi"; if (!html) { location.replace("#/carsi"); return; } }
   else if (parts[0] === "ayarlar") { html = settingsView(); nav = "ayar"; }
+  else if (parts[0] === "rehber") { html = RH.rehberView(topbar, MAKER); nav = "ayar"; }
   else if (parts[0] === "namaz" || parts[0] === "kible") { html = bugunView(); nav = "bugun"; }
   else if (parts[0] === "miras") { html = mirasView(); nav = "miras"; }
   else if (!html) { html = bugunView(); nav = "bugun"; }
   if (!html) return;
+  if (parts[0] !== "ayarlar") view.silOnay = false;
   kibleStop();
   $app.innerHTML = html;
   if (!parts[0] || parts[0] === "namaz" || parts[0] === "kible") namazMount();
   if (parts[0] === "kible") setTimeout(() => document.getElementById("kible")?.scrollIntoView({ block: "start" }), 50);
   renderNav(nav);
   if (parts[0] !== "kible") window.scrollTo(0, 0);
+  // rehber: ekran ilk kez açılınca ipucu kartı; Bugün'de kullanım eşiğinde nazik puan sorusu
+  const ekran = !parts[0] || parts[0] === "namaz" || parts[0] === "kible" ? "bugun" : parts[0];
+  RH.ekranAcildi(ekran);
+  if (ekran === "bugun" && RH.puanSorulsunMu()) setTimeout(() => { if (/^(#\/?)?$|^#\/(namaz|kible)/.test(location.hash)) RH.puanKarti(); }, 2500);
 }
 
 // Uygulama arka plandan dönünce: bildirimleri ileriye yenile, Namaz ekranındaysa vakitleri tazele
@@ -1060,6 +1070,13 @@ document.addEventListener("click", async (e) => {
   const el = e.target.closest("[data-act]");
   if (!el || el.tagName === "INPUT" || el.tagName === "FORM") return;
   const act = el.dataset.act;
+  if (act === "rh-tamam" || act === "rh-kapat") { RH.ipucuTamam(act === "rh-kapat"); return; }
+  if (act === "rh-bastan") { RH.bastan(); toast("Rehber baştan başladı"); if (location.hash && location.hash !== "#/") location.hash = "#/"; else route(); return; }
+  if (act === "rh-oner" || act === "rh-paylas-kart") { RH.puanKartKapat(); RH.paylas(toast); return; }
+  if (act === "rh-yaz") { RH.puanKartKapat(); RH.bizeYaz(VERSION, `konum ${S.konum ? "seçili" : "yok"} · bildirim ${S.vakit?.on ? "açık" : "kapalı"}`); return; }
+  if (act === "rh-puan") { RH.puanVer(); return; }
+  if (act === "rh-sonra") { RH.puanKartKapat(); return; }
+  if (act === "rh-sil") { if (!view.silOnay) { view.silOnay = true; route(); return; } await RH.verileriSil(); return; }
   if (act === "back") { if (history.length > 1) history.back(); else location.hash = "#/"; }
   else if (act === "mr-step" || act === "mr-olen" || act === "mr-olmus" || act === "mr-del") {
     const g = mirasGirdi();
@@ -1169,6 +1186,7 @@ async function boot() {
   bildirimKur().catch(() => {});
   saatBildirimKur().catch(() => {});
   tesbihBildirimKur().catch(() => {});
+  await RH.rehberHazirla(store, !!(S.konum || saved.length || Object.values(modVeri).some(Boolean)));
   lastHash = location.hash;
   route();
 }

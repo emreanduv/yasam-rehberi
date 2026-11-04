@@ -102,3 +102,14 @@
 - Not: test/e2e.py, moduller.py, namaz.py, kible.py yeni "Bugün" düzenine göre güncellenmeli (eski seçicileri arıyor).
 - 02.11 21:05: 1.0.0 Apple'dan Guideline 2.1 "Information Needed" ile döndü (ekran kaydı + notlar istendi). Kullanıcının kaydı kırpılıp (2:53, 26'daki hatalı anlar çıkarıldı) docs/inceleme/yasam-rehberi-app-review.mp4 olarak yayınlandı; inceleme notlarındaki [VIDEO_LINK] bu bağlantıyla dolduruldu; sürüme yapı 27 bağlandı. "Update Review" düğmesi kullanıcıda.
 - 03.11 00:27: 1.0.0 (yapı 27) ONAYLANDI ve App Store'da yayında (READY_FOR_SALE, yalnız Türkiye): https://apps.apple.com/app/id6826874224
+
+## 4 Kasım 2026 · Test önerileri paketi (1.0.1 · Yaşam Rehberi VR 1.0.2)
+- Rehber (`www/js/rehber.js`): ekran ilk açılınca ipucu kartı ("Anladım" / "Rehberi kapat"); eski kullanıcıya (konum/kayıt/modül verisi olan) Bugün ipucu gösterilmez; durum Preferences'ta (`yr.rehber`).
+- Nasıl kullanılır ekranı `#/rehber` (Bugün ekranındaki "? Nasıl kullanılır" ve Ayarlar'dan): bütün ipuçları, görülmeyenler altın çerçeveli, "Rehberi baştan göster", Arkadaşına öner, Bize yaz.
+- Ayarlar'a eklendi: ★ Puan ver (yalnız iOS/Android), Arkadaşına öner, Görüş ve öneri → Bize yaz (mailto, konu "Yaşam Rehberi – Görüş ve öneri (sürüm, platform)"), Verilerimi sil (onaylı; Preferences.clear + yerel depo + bekleyen bildirimler; satın alma yok).
+- Puan sorusu: 3. ve 10. farklı kullanım gününde Bugün ekranında ("Puan ver / Önerim var / Paylaş / Sonra"), en çok 2 kez, açık ipucu kartının üstüne binmez.
+- Eklenti: `@capacitor-community/in-app-review@7.1.0` (Capacitor 7; 8.0.0 Capacitor 8 ister). Paylaşım zaten `@capacitor/share` ile. İş akışları `npm ci` + `cap sync` yapar.
+- Gizlilik (docs/gizlilik.html): sahip, cihazda kalanlara rehber/puan sayacı, puan-paylaşım-e-posta-barındırma, silme talebi (uygulama içi + e-posta, 30 gün), İngilizce bölüm.
+- Mağaza metni: açıklamanın ilk paragrafı aranan kelimelerle, Play kısa açıklaması, 1.0.1 sürüm notları (store/magaza-metinleri.md).
+- Not: test/moduller.py `#/menu`'yü arıyor; menü 31.10'da kaldırıldığı için zaten güncellenmesi gerekiyordu (bu paketle ilgisi yok).
+- Derleme: iOS ve Android iş akışları sürüm adı **1.0.1** (yapı/sürüm kodu iş akışı numarasından otomatik). Quest (VR): **1.0.2 / 3**.

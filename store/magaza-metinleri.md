@@ -11,7 +11,7 @@ Görseller: `store/gorseller/v1-vakit/` (iphone 1206×2622 ×6, ipad 2064×2752 
 - **Promosyon metni:** Sıradaki vakit ve geri sayım tek bakışta; kıble, tesbih ve Apple Watch'ta da.
 
 ### Açıklama
-Sıradaki namaz vakti ve kalan süre, uygulamayı açtığın an karşında.
+Sıradaki namaz vakti ve kalan süre, uygulamayı açtığın an karşında: Diyanet yöntemiyle hesaplanan ezan vakitleri, imsak ve iftar geri sayımı, kıble pusulası, zikirmatik tesbih ve miras hesabı tek uygulamada. İnternetsiz, reklamsız, ücretsiz.
 
 Bugün
 • Kocaman sıradaki vakit ve saniye saniye geri sayım
@@ -43,6 +43,20 @@ Reklam yok, üyelik yok, hiçbir veri toplanmaz. Konumun yalnızca cihazında ku
 Uygulama fetva vermez; dinî sorular için Diyanet İşleri Başkanlığı'nı (ALO 190) esas alın.
 
 Bir Mr. Anduv! yapımıdır.
+
+### Google Play
+- **Kısa açıklama (≤80):** Namaz vakitleri, ezan bildirimi, kıble pusulası, tesbih ve miras hesabı
+- **Tam açıklama:** App Store açıklamasının aynısı.
+
+### Sürüm notları — 1.0.1
+Kapalı test ekibimizin önerileriyle:
+- Rehber: bir ekranı ilk açtığında kısa bir ipucu kartı ("Anladım" ya da "Rehberi kapat").
+- Nasıl kullanılır: bütün ipuçları tek yerde, görmediklerin vurgulu; rehberi baştan gösterme.
+- Ayarlar: Puan ver, Arkadaşına öner, Bize yaz (görüş ve öneri), Verilerimi sil.
+- Gizlilik politikası güncellendi (veri silme yolu).
+Test ekibimize teşekkürler!
+
+(App Store "What's New" alanına emoji olmadan, olduğu gibi; Google Play'de de aynısı.)
 
 ### İnceleme notu (App Review)
 Giriş/hesap yok. Uygulama açılınca "Bugün" ekranı gelir; vakitler için "Konumumu kullan"a dokunun (konum yalnızca cihazda kullanılır). Bildirimler Bugün ekranının altındaki "Vakit bildirimleri" bölümünden açılır. Apple Watch uygulaması eşleşmiş saatte otomatik yüklenir; kadran parçası "Yaşam Rehberi" adıyla listelenir. İnternet bağlantısı gerekmez.
