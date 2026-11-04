@@ -14,6 +14,9 @@ import jwt, requests
 
 API = "https://api.appstoreconnect.apple.com/v1/"
 TESTCILER = ["emreanduv@hotmail.com", "zeynepbayramcavus@icloud.com", "mbayramcavus@icloud.com", "mebayramcavus@icloud.com"]
+if os.environ.get("TESTCILER"):   # iş akışından: virgülle ayrılmış özel liste
+    TESTCILER = [e.strip().lower() for e in os.environ["TESTCILER"].split(",") if e.strip()]
+KATEGORI = (os.environ.get("KATEGORI") or "SHOPPING,LIFESTYLE").split(",")
 GRUP = "Mr. Anduv! Test"
 S = requests.Session()
 
@@ -67,13 +70,13 @@ def main(bundle, klasor):
         if info["attributes"].get("appStoreState") not in (None, "PREPARE_FOR_SUBMISSION", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED"):
             continue
         api("PATCH", f"appInfos/{info['id']}", json={"data": {"type": "appInfos", "id": info["id"], "relationships": {
-            "primaryCategory": {"data": {"type": "appCategories", "id": "SHOPPING"}},
-            "secondaryCategory": {"data": {"type": "appCategories", "id": "LIFESTYLE"}}}}})
+            "primaryCategory": {"data": {"type": "appCategories", "id": KATEGORI[0]}},
+            "secondaryCategory": {"data": {"type": "appCategories", "id": KATEGORI[-1]}}}}})
         for loc in (api("GET", f"appInfos/{info['id']}/appInfoLocalizations") or {"data": []})["data"]:
             if loc["attributes"]["locale"] == "tr":
                 api("PATCH", f"appInfoLocalizations/{loc['id']}", json={"data": {"type": "appInfoLocalizations", "id": loc["id"],
                     "attributes": {"subtitle": M["alt"][:30], "privacyPolicyUrl": M["gizlilik"]}}})
-                print("Uygulama bilgileri: alt başlık, gizlilik adresi, kategoriler (Alışveriş / Yaşam Tarzı)")
+                print(f"Uygulama bilgileri: alt başlık, gizlilik adresi, kategoriler ({' / '.join(KATEGORI)})")
     # sürüm metinleri
     surum = [v for v in (api("GET", f"apps/{app['id']}/appStoreVersions", params={"filter[platform]": "IOS"}) or {"data": []})["data"]
              if v["attributes"]["appStoreState"] in ("PREPARE_FOR_SUBMISSION", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED")]
@@ -128,7 +131,7 @@ def testflight(bundle, klasor):
     if det and ref.get("contactEmail"):
         api("PATCH", f"betaAppReviewDetails/{det['data']['id']}", json={"data": {"type": "betaAppReviewDetails", "id": det["data"]["id"], "attributes": {
             k: ref.get(k) for k in ("contactFirstName", "contactLastName", "contactPhone", "contactEmail")} | {"demoAccountRequired": False,
-            "notes": "Giriş/hesap yok. Uygulama açılınca Market ekranı gelir; kampanyaya dokununca ayrıntısı açılır."}}})
+            "notes": os.environ.get("INCELEME_NOTU") or "Giriş/hesap yok. Uygulama açılınca Market ekranı gelir; kampanyaya dokununca ayrıntısı açılır."}}})
     locs = (api("GET", f"apps/{app['id']}/betaAppLocalizations") or {"data": []})["data"]
     if not [l for l in locs if l["attributes"]["locale"] == "tr"]:
         api("POST", "betaAppLocalizations", json={"data": {"type": "betaAppLocalizations", "attributes": {"locale": "tr",

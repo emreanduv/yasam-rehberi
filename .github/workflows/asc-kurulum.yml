@@ -7,6 +7,9 @@ on:
       bundle: { description: "Bundle ID", default: "com.anduv.firsatakisi" }
       klasor: { description: "store/ altındaki klasör", default: "firsat-akisi" }
       testflight: { description: "Son derlemeyi TestFlight testçilerine gönder", type: boolean, default: false }
+      testciler: { description: "Testçiler (virgülle; boş = varsayılan dört kişi)", default: "" }
+      kategori: { description: "Kategoriler (birincil,ikincil)", default: "SHOPPING,LIFESTYLE" }
+      not: { description: "TestFlight inceleme notu (boş = varsayılan)", default: "" }
 env:
   ASC_KEY_ID: DJSHKK6T3P
   ASC_ISSUER_ID: f4943ef8-df6f-42c8-a561-58554097ea35
@@ -21,5 +24,5 @@ jobs:
         env: { P8: "${{ secrets.ASC_KEY_P8 }}" }
         run: printf '%s' "$P8" > $RUNNER_TEMP/asc.p8
       - name: Kurulum
-        env: { ASC_KEY_PATH: "${{ runner.temp }}/asc.p8" }
+        env: { ASC_KEY_PATH: "${{ runner.temp }}/asc.p8", TESTCILER: "${{ inputs.testciler }}", KATEGORI: "${{ inputs.kategori }}", INCELEME_NOTU: "${{ inputs.not }}" }
         run: python tools/asc_kurulum.py "${{ inputs.bundle }}" "${{ inputs.klasor }}" ${{ inputs.testflight && '--testflight' || '' }}
