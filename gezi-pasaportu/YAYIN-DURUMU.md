@@ -18,3 +18,9 @@
 - `python3 test/ekranlar.py` — boş açılış, örnek veriyle tüm sekmeler, ülke işaretleme, şehir ekleme, seyahat formu; konsol hatası olursa başarısız.
 
 Bir Mr. Anduv! yapımıdır.
+
+## 4 Kasım 2026 · TestFlight
+- iOS 1.0.0 (3) App Store Connect'e yüklendi (macOS arm64 kuyruğu dolu olduğundan ilk deneme iptal oldu; iş akışına `runner` seçeneği eklendi).
+- "Mr. Anduv! Dahili" grubu: Emre (hesap sahibi) her derlemeyi incelemesiz alır.
+- "Mr. Anduv! Test" dış grubu: emreanduv@hotmail.com, mebayramcavus@icloud.com · derleme 3 TestFlight beta incelemesine gönderildi; onaylanınca davet e-postası gider.
+- Android imzasız AAB → `builds-gezi-pasaportu` dalı (Play'de uygulama henüz açılmadı).
