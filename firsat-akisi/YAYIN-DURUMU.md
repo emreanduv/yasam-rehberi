@@ -23,3 +23,7 @@
 - 1.0.0 (derleme 1) TestFlight'a yüklendi → "Mr. Anduv! Test" grubu (4 testçi) → beta incelemesine gönderildi
 - Mağazaya gönderim: Saat Vitrini'deki gibi şimdilik beklemede (yalnız TestFlight)
 - Google Play: Play Console'da uygulama kaydı henüz açılmadı (imzasız AAB builds-firsat-akisi dalında hazır)
+
+## 4 Kasım 2026 · 1.0.1
+- Test önerileri paketi: sekmelerde ipucu kartı, Bilgi > Nasıl kullanılır, Rehberi baştan göster, Puan ver (3. ve 10. kullanım gününde nazik soru), Arkadaşına öner, Bize yaz, Verilerimi sil (Yaşam Rehberi 1.0.1 ile aynı)
+- Ortak dosya: tools/rehber-vitrin.js → www/js/rehber.js

@@ -25,3 +25,7 @@
 3. Sürüm sayfası → App Review iletişim bilgileri (ad, telefon, e-posta) → derleme seç → **Add for Review / Submit**
 4. Play Console → yeni uygulama formu hazır: iki beyan kutusu → **Uygulama oluştur**
 5. Play: AAB'yi Mac'teki yükleme anahtarıyla imzala (Yaşam Rehberi'ndeki `imzala.sh` yolu), dahili teste yükle
+
+## 4 Kasım 2026 · 1.0.1
+- Test önerileri paketi: sekmelerde ipucu kartı, Bilgi > Nasıl kullanılır, Rehberi baştan göster, Puan ver (3. ve 10. kullanım gününde nazik soru), Arkadaşına öner, Bize yaz, Verilerimi sil (Yaşam Rehberi 1.0.1 ile aynı)
+- Ortak dosya: tools/rehber-vitrin.js → www/js/rehber.js

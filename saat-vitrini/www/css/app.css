@@ -141,3 +141,32 @@ main{padding:0 0 calc(76px + var(--bot))}
 
 .toast{position:fixed;left:50%;bottom:calc(84px + var(--bot));transform:translateX(-50%);z-index:60;max-width:90%;padding:10px 16px;border-radius:12px;background:var(--ink);color:#fff;font-weight:800;font-size:14px;box-shadow:0 6px 18px #0006}
 @media (min-width:520px){.grid{grid-template-columns:1fr 1fr 1fr}}
+
+/* Rehber: ipucu kartı, Nasıl kullanılır, Bilgi'deki ayar satırları (test önerileri paketi) */
+.rh-kart{position:fixed;left:10px;right:10px;bottom:calc(74px + var(--bot));z-index:40;max-width:520px;margin:0 auto;background:var(--card);border-radius:14px;box-shadow:0 0 0 2px var(--line),0 12px 30px #0b1e2266;overflow:hidden}
+.rh-h{background:linear-gradient(#123036,#0b1e22);color:#fff;font:800 11px/1 'DM Sans',sans-serif;letter-spacing:1.2px;text-transform:uppercase;padding:8px 12px;border-bottom:3px solid var(--gold)}
+.rh-b{padding:10px 12px 12px}
+.rh-b b{display:block;font:900 16px/1.2 'DM Sans',sans-serif;margin-bottom:4px}
+.rh-b p{margin:0 0 10px;font-size:14px;line-height:1.45}
+.rh-d,.rh-dugmeler{display:flex;gap:8px;flex-wrap:wrap}
+.rh-d .btn{height:38px;font-size:14px}
+.rh-ic{padding:12px 14px 20px}
+.rh-giris{margin:0 0 10px;font-size:14px;line-height:1.5}
+.rh-ara{font:800 11px/1.2 'DM Sans',sans-serif;letter-spacing:1px;color:var(--mute);text-transform:uppercase;margin:6px 0 8px}
+.rh-liste{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.rh-sat{padding:9px 11px;background:#fff;border-radius:10px;box-shadow:0 0 0 2px var(--line)}
+.rh-sat.yeni{box-shadow:0 0 0 2px var(--gold),inset 4px 0 0 var(--gold);background:#fff8dc}
+.rh-sat.yeni b::after{content:" · YENİ";font-size:10px;letter-spacing:1px;color:#7a5b00}
+.rh-sat b{font-size:15px}
+.rh-sat p{margin:3px 0 0;font-size:13px;line-height:1.45;color:var(--mute)}
+.rh-satir{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:none;padding:9px 2px;border-top:1px solid var(--line);cursor:pointer}
+.rh-satir:first-of-type{border-top:0}
+.rh-satir b{display:block;font-size:14.5px}
+.rh-satir small{display:block;font-size:12.5px;color:var(--mute);line-height:1.35}
+.rh-satir>span:nth-child(2){flex:1}
+.rh-satir i{font-style:normal;color:var(--mute);font-size:18px}
+.rh-ik{flex:0 0 30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--ink);color:var(--gold);font-weight:900}
+.rh-sil b{color:#9b1c1c}
+.rh-sil.onay{background:#f7dcd6;border-radius:10px}
+.rh-alt{font-size:12.5px;color:var(--mute)}
+.rh-alt a{color:var(--teal)}

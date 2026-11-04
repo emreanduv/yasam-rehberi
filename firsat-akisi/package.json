@@ -1,6 +1,6 @@
 {
   "name": "firsat-akisi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fırsat Akışı — market katalogları, mağaza ve kart kampanyaları tek yerde (iOS + Android, Capacitor). Bir Mr. Anduv! yapımıdır.",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "ios": "npx cap open ios"
   },
   "dependencies": {
+    "@capacitor-community/in-app-review": "7.1.0",
     "@capacitor/app": "^7.0.2",
     "@capacitor/core": "^7.6.9",
     "@capacitor/local-notifications": "^7.0.7",
