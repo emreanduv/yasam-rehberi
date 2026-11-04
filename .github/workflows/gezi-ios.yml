@@ -5,13 +5,16 @@ on:
       version_name:
         description: "Sürüm adı (ör. 1.0.0)"
         default: "1.0.0"
+      runner:
+        description: "Mac makinesi (kuyruk uzunsa macos-15-intel dene)"
+        default: "macos-latest"
 env:
   ASC_KEY_ID: DJSHKK6T3P
   ASC_ISSUER_ID: f4943ef8-df6f-42c8-a561-58554097ea35
   APPLE_TEAM_ID: 4UFRQ97N4C
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ${{ inputs.runner || 'macos-latest' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
