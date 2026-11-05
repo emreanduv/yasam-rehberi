@@ -24,3 +24,8 @@ Bir Mr. Anduv! yapımıdır.
 - "Mr. Anduv! Dahili" grubu: Emre (hesap sahibi) her derlemeyi incelemesiz alır.
 - "Mr. Anduv! Test" dış grubu: emreanduv@hotmail.com, mebayramcavus@icloud.com · derleme 3 TestFlight beta incelemesine gönderildi; onaylanınca davet e-postası gider.
 - Android imzasız AAB → `builds-gezi-pasaportu` dalı (Play'de uygulama henüz açılmadı).
+
+## 5 Kasım 2026 · Harita düzeltmesi + şehirden ülkeye
+- Hata (Emre): Paris seçilince Fransa ile birlikte Fransız Guyanası da (Güney Amerika) boyanıyordu. Natural Earth'te Fransa/Hollanda/Yeni Zelanda tek parça; tools/veri.mjs artık 2.500 km'den uzak parçaları en yakın denizaşırı toprağa (GF, GP, MQ, RE, YT, BQ…) ayırıyor.
+- Yeni giriş: "Gittiğin bir şehri yaz…" (Pasaport'ta) → dünya çapında şehir arama, ülke kendiliğinden işaretlenir. Ülkeler aramasında ve seyahat formunun "Nereye?" alanında da şehirler çıkar. Şehirler Türkçe ve orijinal adıyla aranır (Krakov / Kraków).
+- Test: `python3 test/sehirden_ulke.py` (Paris → yalnız Fransa, denizaşırı topraklar boyanmaz, 2 kıta).

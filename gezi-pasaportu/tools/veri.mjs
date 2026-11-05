@@ -13,12 +13,36 @@ const TERR = 'AS AI AQ AW AX BL BM BQ BV CC CK CW CX EH FK FO GF GG GI GL GP GS 
 let w = require('world-atlas/countries-50m.json');
 w = simp.presimplify(w); w = simp.simplify(w, simp.quantile(w, 0.35));
 const fc = topo.feature(w, w.objects.countries);
+// başkentler (denizaşırı parçaları doğru toprağa bağlamak için)
+const baskent = {};
+for (const c of cities) if (c.featureCode === 'PPLC') baskent[c.country] = c.loc.coordinates;   // [lng, lat]
+// Fransa, Hollanda, Yeni Zelanda gibi ülkelerin haritadaki başka kıtalardaki parçaları (Fransız Guyanası, Réunion, Karayip Hollandası…)
+// ayrılır: en yakın denizaşırı toprağa (GF, GP, MQ, RE, YT, BQ, TK…) bağlanır; o toprak işaretlenmedikçe boyanmaz.
+const AYIR = new Set(['FR', 'NL', 'NZ', 'NO', 'GB', 'DK', 'PT', 'ES']);
+const parcalar = [];
+for (const f of fc.features) {
+  let a2 = f.id ? iso.numericToAlpha2(f.id) : null;
+  if (!AYIR.has(a2) || f.geometry.type !== 'MultiPolygon') continue;
+  const ps = f.geometry.coordinates.map((c) => ({ type: 'Polygon', coordinates: c }));
+  const ana = ps.reduce((x, y) => d3.geoArea(x) > d3.geoArea(y) ? x : y), am = d3.geoCentroid(ana);
+  const kalan = [];
+  for (const p of ps) {
+    const m = d3.geoCentroid(p);
+    if (d3.geoDistance(m, am) * 6371 < 2500) { kalan.push(p.coordinates); continue; }
+    let en = null, ed = 1e9;
+    for (const [k, b] of Object.entries(baskent)) if (TERR.includes(k)) { const d = d3.geoDistance(m, b) * 6371; if (d < ed) { ed = d; en = k; } }
+    parcalar.push({ type: 'Feature', id: null, properties: { name: ed < 1500 ? en : '_' + a2 + '_uzak', a2: ed < 1500 ? en : null }, geometry: p });
+    console.log('ayrıldı:', a2, '→', ed < 1500 ? en : '(boyanmaz)', Math.round(ed) + ' km');
+  }
+  f.geometry = { type: 'MultiPolygon', coordinates: kalan };
+}
+fc.features.push(...parcalar);
 const W = 1000, H = 520;
 const proj = d3.geoNaturalEarth1().fitExtent([[4,4],[W-4,H-4]], {type:'Sphere'});
 const path = d3.geoPath(proj).digits(1);
 const yollar = {}; const merk = {};
 for (const f of fc.features) {
-  let a2 = f.id ? iso.numericToAlpha2(f.id) : null;
+  let a2 = f.properties.a2 || (f.id ? iso.numericToAlpha2(f.id) : null);
   if (!a2 && f.properties.name === 'Kosovo') a2 = 'XK';
   if (!a2 && /Cyprus/.test(f.properties.name)) a2 = 'CY';   // Kuzey Kıbrıs → Kıbrıs adası
   if (!a2 && /Somaliland/.test(f.properties.name)) a2 = 'SO';
@@ -26,24 +50,23 @@ for (const f of fc.features) {
   const d = path(f); if (!d) continue;
   yollar[a2] = (yollar[a2] || '') + d;
   // en büyük parçanın merkezi
-  merk[a2] = proj(d3.geoCentroid(f)).map(v => Math.round(v * 10) / 10);
+  merk[a2] ||= proj(d3.geoCentroid(f)).map(v => Math.round(v * 10) / 10);
 }
 // başkentler / şehirler
-const sehir = {}; const baskent = {};
+const sehir = {};
 for (const c of cities) {
   const [lng, lat] = c.loc.coordinates;
-  if (c.featureCode === 'PPLC') baskent[c.country] = [lat, lng];
   if (c.population < 5000 && !/^PPL(C|A)$/.test(c.featureCode)) continue;
-  (sehir[c.country] ||= []).push([TR_AD[c.name] || c.name, +lat.toFixed(2), +lng.toFixed(2), c.population]);
+  (sehir[c.country] ||= []).push([TR_AD[c.name] || c.name, +lat.toFixed(2), +lng.toFixed(2), c.population, TR_AD[c.name] ? c.name : (c.altName && c.altName !== c.name ? c.altName : '')]);
 }
-for (const k in sehir) sehir[k] = sehir[k].sort((a, b) => b[3] - a[3]).map(x => [x[0], x[1], x[2], Math.round(x[3] / 1000)]);
+for (const k in sehir) sehir[k] = sehir[k].sort((a, b) => b[3] - a[3]).map(x => [x[0], x[1], x[2], Math.round(x[3] / 1000), x[4]]);
 const ULKE = [];
 for (const [a2, c] of Object.entries(countries)) {
   if (a2 === 'AQ') continue;
   let kita = c.continent; if (a2 === 'RU') kita = 'EU'; if (a2 === 'TR') kita = 'AS';
   const ad = iso.getName(a2, 'tr') || c.name;
   let m = merk[a2];
-  if (!yollar[a2]) { const b = baskent[a2]; if (b) m = proj([b[1], b[0]]).map(v => Math.round(v * 10) / 10); }
+  if (!yollar[a2]) { const b = baskent[a2]; if (b) m = proj(b).map(v => Math.round(v * 10) / 10); }
   ULKE.push({ k: a2, a: ad, en: c.name, kt: kita, b: TR_AD[c.capital] || c.capital || '', s: TERR.includes(a2) ? 0 : 1, m, h: yollar[a2] ? 1 : 0, kk: c.continents && c.continents.length > 1 ? c.continents : undefined });
 }
 ULKE.sort((a, b) => a.a.localeCompare(b.a, 'tr'));
@@ -51,7 +74,7 @@ console.log('ülke', ULKE.length, 'egemen', ULKE.filter(u => u.s).length, 'harit
 fs.writeFileSync(OUT + '/ulkeler.js', 'window.ULKELER=' + JSON.stringify(ULKE) + ';');
 fs.writeFileSync(OUT + '/harita.js', 'window.HARITA={w:' + W + ',h:' + H + ',p:' + JSON.stringify(yollar) + ',kure:' + JSON.stringify(path({type:'Sphere'})) + ',g:' + JSON.stringify(path(d3.geoGraticule10())) + '};');
 // şehirler: projeksiyon koordinatlarıyla
-const S2 = {}; for (const k in sehir) S2[k] = sehir[k].map(([n, la, lo, p]) => { const [x, y] = proj([lo, la]); return [n, Math.round(x * 10) / 10, Math.round(y * 10) / 10, p]; });
+const S2 = {}; for (const k in sehir) S2[k] = sehir[k].map(([n, la, lo, p, o]) => { const [x, y] = proj([lo, la]); const r = [n, Math.round(x * 10) / 10, Math.round(y * 10) / 10, p]; if (o) r.push(o); return r; });
 fs.writeFileSync(OUT + '/sehirler.js', 'window.SEHIRLER=' + JSON.stringify(S2) + ';');
 // projeksiyon tersi için ölçek bilgisi (serbest şehir eklerken gerekmez)
 for (const f of ['ulkeler.js', 'harita.js', 'sehirler.js']) console.log(f, (fs.statSync(OUT + '/' + f).size / 1024).toFixed(0) + ' KB');

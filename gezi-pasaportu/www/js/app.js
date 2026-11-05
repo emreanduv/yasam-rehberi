@@ -206,7 +206,8 @@
         <svg viewBox="0 0 120 120">${damga('TR', '', 120).replace(/^<svg[^>]*>|<\/svg>$/g, '')}</svg>
         <h3>Pasaportun hazır</h3>
         <p>Gezdiğin ülkeleri işaretle, her birine bir damga basalım. Sonra seyahatlerini tarih, şehir ve notlarıyla ekle; gerisini biz hatırlayalım.</p>
-        <button class="btn tur" data-git="ulkeler">✓ Gittiğim ülkeleri işaretle</button>
+        <button class="btn tur" data-sehirler="1">🏙️ Gittiğim şehirleri yaz</button>
+        <button class="btn sec" data-git="ulkeler">✓ Ülke listesinden işaretle</button>
         <button class="btn" data-yeni="1">＋ İlk seyahatimi ekle</button>
         <button class="btn sec" data-geri="1">Yedekten geri yükle</button></div>
         ${imzaKutu()}`;
@@ -231,6 +232,7 @@
         <div class="sayi"><b>${H.kodlar.length}</b><span>ÜLKE<small>${V.ev && H.gittim.has(V.ev) ? esc(U[V.ev]?.a) + ' dahil' : ''}</small></span></div>
         <div class="cubuk"><i style="width:${Math.min(100, yuzde)}%"></i></div>
         <small>Dünyanın %${String(yuzde).replace('.', ',')}'i · ${EGEMEN} ülkeden ${H.egemenSay} · 6 kıtadan ${H.kitalar.size}</small></div>
+      <button class="sehir-cubuk" data-sehirler="1"><span>🔎</span><b>Gittiğin bir şehri yaz…</b><i>ülkesini biz buluruz</i></button>
       <div class="tiles">
         <div class="tile"><b>${NF.format(H.sehirSay)}</b><span>Şehir</span><small>${sehirli && sehirli[1].sehir.size ? 'en çok ' + esc(U[sehirli[0]]?.a) : 'ülke sayfasından ekle'}</small></div>
         <div class="tile"><b>${NF.format(H.gun)}</b><span>Yolda gün</span><small>${V.geziler.length} seyahat</small></div>
@@ -309,8 +311,10 @@
     const L = UL.filter(uy);
     const kitaya = KSIRA.map((k) => [k, L.filter((u) => u.kt === k)]).filter(([, l]) => l.length);
     $('#ekran').innerHTML = `
-      <div class="arac"><label class="ara">🔎<input id="ulkeAra" type="search" placeholder="Ülke ya da başkent ara" value="${esc(durum.ulkeAra)}" autocomplete="off"></label></div>
+      <div class="arac"><label class="ara">🔎<input id="ulkeAra" type="search" placeholder="Ülke ya da şehir ara" value="${esc(durum.ulkeAra)}" autocomplete="off"></label></div>
       <div class="h-ust" style="padding-top:2px"><div class="secenek">${[['tumu', 'Tümü'], ['gittim', `Gittiklerim · ${H.kodlar.length}`], ['hayal', `Hayalim · ${H.hayal.length}`]].map(([k, a]) => `<button data-uf="${k}" class="${f === k ? 'on' : ''}">${a}</button>`).join('')}</div></div>
+      ${durum.ulkeAra.trim().length >= 2 ? (() => { const L = dunyaAra(durum.ulkeAra, 5); return L.length ? `<div class="u-bas"><span>Şehirler</span><b>dokun, ekle</b></div><div class="liste-kutu">${L.map((x) => { const var_ = H.gittim.get(x[2])?.sehir.has(x[1]);
+        return `<div class="u-satir ${var_ ? 'g' : ''}"><span class="bayrak">${bayrak(x[2])}</span><div class="ad" data-ulke="${x[2]}"><b>${esc(x[1])}</b><small>${esc(U[x[2]].a)}${x[3] ? ' · ' + nufus(x[3]) : ''}</small></div><button class="isaret ok ${var_ ? 'on' : ''}" data-u-sehir="${x[2]}|${esc(x[1])}" aria-label="Gittim">✓</button></div>`; }).join('')}</div>` : ''; })() : ''}
       <div id="ulkeListe">${kitaya.map(([k, l]) => {
         const n = l.filter((u) => H.gittim.has(u.k)).length;
         return `<div class="u-bas"><span>${KITA[k]}</span><b>${n}/${l.length}</b></div><div class="liste-kutu">${l.map(satir).join('')}</div>`; }).join('') ||
@@ -353,6 +357,64 @@
     for (const c of L) { const n = katla(c[0]); if (!h.has(n) && n.startsWith(a)) { out.push(c); if (out.length >= 6) break; } }
     if (out.length < 6) for (const c of L) { const n = katla(c[0]); if (!h.has(n) && !n.startsWith(a) && n.includes(a) && !out.includes(c)) { out.push(c); if (out.length >= 6) break; } }
     return out;
+  }
+  // ── dünya çapında şehir arama: şehri yazarsın, ülkesini uygulama bulur ──
+  let DIZIN = null;
+  const dizin = () => {
+    if (DIZIN || !window.SEHIRLER) return DIZIN;
+    DIZIN = [];
+    for (const [k, L] of Object.entries(window.SEHIRLER)) if (U[k]) for (const c of L) { DIZIN.push([katla(c[0]), c[0], k, c[3]]); if (c[4]) for (const o of c[4].split(',').slice(0, 3)) if (o.trim() && katla(o) !== katla(c[0])) DIZIN.push([katla(o.trim()), c[0], k, c[3]]); }
+    DIZIN.sort((a, b) => b[3] - a[3]);   // kalabalık şehir önce: "Paris" yazınca önce Fransa'daki Paris
+    return DIZIN;
+  };
+  function dunyaAra(q, n = 8) {
+    const a = katla(q.trim()); if (a.length < 2 || !dizin()) return [];
+    const bas = [], ic = [], gor = new Set();
+    for (const x of DIZIN) {
+      const anahtar = x[2] + '|' + x[0]; if (gor.has(anahtar)) continue;
+      if (x[0].startsWith(a)) { bas.push(x); gor.add(anahtar); if (bas.length >= n) break; }
+      else if (ic.length < n && a.length >= 3 && x[0].includes(a)) { ic.push(x); gor.add(anahtar); }
+    }
+    return [...bas, ...ic].slice(0, n);
+  }
+  const ulkeAra = (q, haric = new Set(), n = 4) => {
+    const a = katla(q.trim()); if (!a) return [];
+    return UL.filter((u) => !haric.has(u.k) && (katla(u.a).startsWith(a) || katla(u.en).startsWith(a))).slice(0, n);
+  };
+  function sehirEkle(k, ad) {
+    const y = (V.ulkeler[k] ||= {});
+    const yeniUlke = !H.gittim.has(k);
+    y.s = [...new Set([...(y.s || []), ad])]; if (!y.d || y.d === 'h') y.d = 'g';
+    kaydet(); yenile();
+    return yeniUlke;
+  }
+  // "Gittiğim şehirler" ekranı: art arda şehir yazıp eklenir
+  let eklenen = [];
+  function sehirSayfasi() {
+    eklenen = [];
+    sheet(`<div class="s-bas"><h2>Gittiğim şehirler</h2><button data-kapat aria-label="Kapat">✕</button></div>
+      <div class="alan"><label>Şehir yaz, listeden seç</label>
+        <input type="text" id="dSehir" placeholder="ör. Paris, Roma, Kyoto" autocomplete="off" enterkeyhint="search">
+        <div class="oneri" id="dOneri"></div>
+        <p class="ipucu-yazi">Ülkeyi ve haritayı uygulama kendisi işaretler. Aynı adlı şehirlerde ülkesine bak (Paris · Fransa / Paris · ABD).</p></div>
+      <div class="alan" id="dEklenen"></div>`);
+    const inp = $('#dSehir'), on = $('#dOneri');
+    const ciz = () => {
+      const q = inp.value.trim(), L = dunyaAra(q);
+      on.innerHTML = L.map((x) => `<button data-d-ekle="${x[2]}|${esc(x[1])}"><span><span class="bayrak" style="font-size:18px">${bayrak(x[2])}</span> <b>${esc(x[1])}</b> · ${esc(U[x[2]].a)}</span><small>${nufus(x[3])}</small></button>`).join('')
+        + (q.length >= 2 ? ulkeAra(q, new Set(), 2).map((u) => `<button data-d-ulke="${u.k}"><span><span class="bayrak" style="font-size:18px">${bayrak(u.k)}</span> ${esc(u.a)} <small style="display:inline">(yalnız ülke)</small></span><small>ülke</small></button>`).join('') : '');
+    };
+    inp.oninput = ciz;
+    on.onclick = (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      let k, ad;
+      if (b.dataset.dEkle) { [k, ad] = b.dataset.dEkle.split('|'); ad = b.querySelector('b').textContent; const yeni = sehirEkle(k, ad); eklenen.unshift([k, ad]); toast(yeni ? `${ad} · ${U[k].a} pasaportuna eklendi 🛂` : `${ad} eklendi`); }
+      else { k = b.dataset.dUlke; const y = (V.ulkeler[k] ||= {}); const yeni = !H.gittim.has(k); y.d = 'g'; kaydet(); yenile(); eklenen.unshift([k, '']); toast(yeni ? `${U[k].a} · damga basıldı 🛂` : U[k].a + ' zaten pasaportunda'); }
+      inp.value = ''; on.innerHTML = ''; inp.focus();
+      $('#dEklenen').innerHTML = `<label>Az önce eklenenler · ${eklenen.length}</label><div class="cip-yaz">${eklenen.map(([k, a]) => `<span class="cip pasif"><span class="bayrak" style="font-size:15px">${bayrak(k)}</span> ${esc(a || U[k].a)}</span>`).join('')}</div>`;
+      goster();
+    };
+    setTimeout(() => inp.focus(), 250);
   }
   const nufus = (p) => p >= 1000 ? (Math.round(p / 100) / 10).toString().replace('.', ',') + ' mn' : p ? p + ' bin' : '';
 
@@ -418,7 +480,7 @@
         <div id="yerler">${F.yerler.map((p, i) => `<div class="yer-kart"><div class="yk-bas"><span class="bayrak">${bayrak(p.u)}</span><span>${esc(U[p.u]?.a || p.u)}</span><button data-yer-sil="${i}" aria-label="Ülkeyi çıkar">✕</button></div>
           <div class="cip-yaz">${p.s.map((s, j) => `<span class="cip">${esc(s)}<button data-f-sehir-sil="${i}:${j}" aria-label="Kaldır">✕</button></span>`).join('')}</div>
           <input type="text" class="girdi" data-f-sehir="${i}" placeholder="Şehir ekle" autocomplete="off" enterkeyhint="done"><div class="oneri" data-f-oneri="${i}"></div></div>`).join('')}</div>
-        <input type="text" class="girdi" id="fUlke" placeholder="${F.yerler.length ? '＋ Bir ülke daha' : 'Ülke ara (ör. İtalya)'}" autocomplete="off">
+        <input type="text" class="girdi" id="fUlke" placeholder="${F.yerler.length ? '＋ Bir şehir ya da ülke daha' : 'Şehir ya da ülke yaz (ör. Roma)'}" autocomplete="off">
         <div class="oneri" id="fUlkeOneri"></div></div>
       <div class="alan"><label>Ne zaman?</label>
         <div class="iki"><div><small>Gidiş</small><input type="date" id="fBas" value="${esc(F.bas)}"></div><div><small>Dönüş</small><input type="date" id="fBit" value="${esc(F.bit)}"></div></div>
@@ -436,8 +498,9 @@
     uInp.oninput = () => {
       const a = katla(uInp.value.trim()); if (!a) { uOn.innerHTML = ''; return; }
       const var_ = new Set(F.yerler.map((p) => p.u));
+      const S = dunyaAra(uInp.value, 6).map((x) => `<button data-f-sehir-ekle="${x[2]}|${esc(x[1])}"><span><span class="bayrak" style="font-size:18px">${bayrak(x[2])}</span> <b>${esc(x[1])}</b> · ${esc(U[x[2]].a)}</span><small>${nufus(x[3])}</small></button>`).join('');
       const L = UL.filter((u) => !var_.has(u.k) && (katla(u.a).startsWith(a) || katla(u.en).startsWith(a))).concat(UL.filter((u) => !var_.has(u.k) && !katla(u.a).startsWith(a) && !katla(u.en).startsWith(a) && katla(u.a + ' ' + u.en + ' ' + u.b).includes(a))).slice(0, 6);
-      uOn.innerHTML = L.map((u) => `<button data-f-ulke="${u.k}"><span><span class="bayrak" style="font-size:18px">${bayrak(u.k)}</span> ${esc(u.a)}</span><small>${esc(KITA[u.kt] || '')}</small></button>`).join('');
+      uOn.innerHTML = S + L.slice(0, 3).map((u) => `<button data-f-ulke="${u.k}"><span><span class="bayrak" style="font-size:18px">${bayrak(u.k)}</span> ${esc(u.a)}</span><small>${esc(KITA[u.kt] || '')}</small></button>`).join('');
     };
     document.querySelectorAll('[data-f-sehir]').forEach((inp) => {
       const i = +inp.dataset.fSehir, on = $(`[data-f-oneri="${i}"]`);
@@ -572,8 +635,11 @@
     if (d.yedek) { yedekle(); return; }
     if (d.geri) { geriYukle(); return; }
     if (d.kart) { geziKarti(); return; }
+    if (d.sehirler) { sehirSayfasi(); return; }
+    if (d.uSehir) { const [k, ad] = d.uSehir.split('|'); const yeni = sehirEkle(k, t.closest('.u-satir').querySelector('b').textContent); toast(yeni ? `${ad} · ${U[k].a} pasaportuna eklendi 🛂` : `${ad} eklendi`); ulkeler(); return; }
     // form
     if (F && $('#sheetIn [data-f-kaydet]')) {
+      if (d.fSehirEkle) { F.al(); const [k] = d.fSehirEkle.split('|'), ad = t.querySelector('b').textContent; let p = F.yerler.find((x) => x.u === k); if (!p) F.yerler.push(p = { u: k, s: [] }); if (!p.s.includes(ad)) p.s.push(ad); formCiz(); setTimeout(() => $('#fUlke')?.focus(), 30); return; }
       if (d.fUlke) { F.al(); F.yerler.push({ u: d.fUlke, s: [] }); formCiz(); setTimeout(() => $(`[data-f-sehir="${F.yerler.length - 1}"]`)?.focus(), 30); return; }
       if (d.yerSil) { F.al(); F.yerler.splice(+d.yerSil, 1); formCiz(); return; }
       if (d.fSehirSil) { F.al(); const [i, j] = d.fSehirSil.split(':').map(Number); F.yerler[i].s.splice(j, 1); formCiz(); return; }

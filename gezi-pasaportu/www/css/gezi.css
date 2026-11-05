@@ -167,3 +167,9 @@ svg .sehir{fill:#e3262c;stroke:#fff;stroke-width:.8;vector-effect:non-scaling-st
 .imza-kutu{text-align:center;margin:18px 12px 8px;color:var(--mute);font-size:13px}
 .imza-kutu b{font:400 20px/1.2 Pacifico,cursive;color:var(--orange)}
 .kaynak{font-size:11.5px;color:var(--mute);line-height:1.45}
+
+/* şehirden ülkeye: Pasaport'taki arama çubuğu */
+.sehir-cubuk{display:flex;align-items:center;gap:10px;width:calc(100% - 24px);margin:10px 12px 0;height:52px;padding:0 14px;border:0;border-radius:14px;background:#fff;box-shadow:0 0 0 2px var(--gold),0 4px 12px #0b1e2214;text-align:left;cursor:pointer;color:var(--ink)}
+.sehir-cubuk span{font-size:18px}
+.sehir-cubuk b{flex:1;font-size:15.5px}
+.sehir-cubuk i{font-style:normal;font-size:12px;font-weight:800;color:var(--mute)}
