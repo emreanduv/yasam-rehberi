@@ -7,6 +7,8 @@ srv = subprocess.Popen([sys.executable, '-m', 'http.server', '8792', '--director
 hata = []
 with sync_playwright() as p:
     b = p.chromium.launch(); s = b.new_page(viewport={'width': 390, 'height': 844}, device_scale_factor=2, is_mobile=True, has_touch=True)
+    sf_init = None
+    s.add_init_script("try{if(!localStorage.getItem('gp.dil'))localStorage.setItem('gp.dil','tr')}catch(e){}")
     s.on('pageerror', lambda e: hata.append(str(e))); s.on('console', lambda m: m.type == 'error' and hata.append(m.text))
     s.goto('http://localhost:8792/index.html'); s.evaluate('localStorage.setItem("gp.rehber", JSON.stringify({kapali:true}))'); s.reload(); s.wait_for_timeout(1200)
     s.click('[data-sehirler]'); s.wait_for_timeout(300)

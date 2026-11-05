@@ -7,6 +7,7 @@
 (() => {
   'use strict';
   const A = window.REHBER_AYAR; if (!A) return;
+  const EN = A.dil === 'en', T = (tr, en) => (EN ? en : tr);   // Gezi Pasaportu: Türkçe / English
   const $ = (s) => document.querySelector(s);
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const platform = () => { try { const p = window.Capacitor?.getPlatform?.(); if (p && p !== 'web') return p; } catch (e) {} return 'web'; };
@@ -29,30 +30,30 @@
     const x = A.ipucu[ekran];
     if (!x || D.kapali || D.gor[ekran] || kart || document.querySelector('.rh-puan')) return;
     kart = document.createElement('div'); kart.className = 'rh-kart'; kart.dataset.ekran = ekran; kart.setAttribute('role', 'status');
-    kart.innerHTML = `<div class="rh-h">İpucu · ${esc(A.ad)}</div><div class="rh-b"><b>${esc(x[0])}</b><p>${esc(x[1])}</p>
-      <div class="rh-d"><button class="btn" data-rh="tamam">Anladım</button><button class="btn sec" data-rh="kapat">Rehberi kapat</button></div></div>`;
+    kart.innerHTML = `<div class="rh-h">${T('İpucu', 'Tip')} · ${esc(A.ad)}</div><div class="rh-b"><b>${esc(x[0])}</b><p>${esc(x[1])}</p>
+      <div class="rh-d"><button class="btn" data-rh="tamam">${T('Anladım', 'Got it')}</button><button class="btn sec" data-rh="kapat">${T('Rehberi kapat', 'Turn off tips')}</button></div></div>`;
     document.body.appendChild(kart);
   }
 
   function nasil() {
     const liste = A.sira.map((k) => `<div class="rh-sat${D.gor[k] ? '' : ' yeni'}"><b>${esc(A.ipucu[k][0])}</b><p>${esc(A.ipucu[k][1])}</p></div>`).join('');
-    $('#sheetIn').innerHTML = `<div class="s-bas"><h2>Nasıl kullanılır</h2><button data-kapat aria-label="Kapat">✕</button></div>
-      <div class="rh-ic"><p class="rh-giris">${esc(A.giris)}</p><div class="rh-ara">Bütün ipuçları · altın çerçeveliler henüz görmediklerin</div>
+    $('#sheetIn').innerHTML = `<div class="s-bas"><h2>${T('Nasıl kullanılır', 'How to use')}</h2><button data-kapat aria-label="${T('Kapat', 'Close')}">✕</button></div>
+      <div class="rh-ic"><p class="rh-giris">${esc(A.giris)}</p><div class="rh-ara">${T('Bütün ipuçları · altın çerçeveliler henüz görmediklerin', 'All tips · the gold ones are new to you')}</div>
       <div class="rh-liste">${liste}</div>
-      <div class="rh-dugmeler"><button class="btn" data-rh="bastan">↺ Rehberi baştan göster</button><button class="btn sec" data-rh="oner">Arkadaşına öner</button><button class="btn sec" data-rh="yaz">Bize yaz</button></div></div>`;
+      <div class="rh-dugmeler"><button class="btn" data-rh="bastan">↺ ${T('Rehberi baştan göster', 'Show tips again')}</button><button class="btn sec" data-rh="oner">${T('Arkadaşına öner', 'Tell a friend')}</button><button class="btn sec" data-rh="yaz">${T('Bize yaz', 'Write to us')}</button></div></div>`;
     $('#sheet').hidden = false; $('#sheetIn').scrollTop = 0;
   }
 
   function ayarPaneli() {
     const sat = (rh, ic, b, h, cls = '') => `<button class="rh-satir ${cls}" data-rh="${rh}"><span class="rh-ik">${ic}</span><span><b>${esc(b)}</b><small>${esc(h)}</small></span><i>›</i></button>`;
-    return `<div class="bilgi-kutu rh-ayar"><h4>Rehber ve ayarlar</h4>
-      ${sat('nasil', '?', 'Nasıl kullanılır', 'Bütün ipuçları, görmediklerin vurgulu')}
-      ${sat('bastan', '↺', 'Rehberi baştan göster', 'İpucu kartları sekmeleri ilk açışındaki gibi yeniden çıkar')}
-      ${mobil() ? sat('puan', '★', 'Puan ver', 'Mağazanın kendi puan ekranı açılır') : ''}
-      ${sat('oner', '↗', 'Arkadaşına öner', 'Telefonun paylaşım menüsüyle')}
-      ${sat('yaz', '✉', 'Bize yaz', 'emreanduvart@gmail.com · sürüm ve cihaz bilgisi hazır gelir')}
-      ${sat('sil', '×', silOnay ? 'Emin misin? Bir daha dokun, silinsin' : 'Verilerimi sil', A.silMetni + ' Bizde senin hakkında hiçbir kayıt yok.', 'rh-sil' + (silOnay ? ' onay' : ''))}
-      <p class="rh-alt">Uygulama hiçbir kişisel veri toplamaz. <a href="${esc(A.gizlilik)}">Gizlilik politikası</a> · Sürüm ${esc(A.surum)}</p></div>`;
+    return `<div class="bilgi-kutu rh-ayar"><h4>${T('Rehber ve ayarlar', 'Help and settings')}</h4>
+      ${sat('nasil', '?', T('Nasıl kullanılır', 'How to use'), T('Bütün ipuçları, görmediklerin vurgulu', 'All tips, new ones highlighted'))}
+      ${sat('bastan', '↺', T('Rehberi baştan göster', 'Show tips again'), T('İpucu kartları sekmeleri ilk açışındaki gibi yeniden çıkar', 'Tip cards appear again as on first use'))}
+      ${mobil() ? sat('puan', '★', T('Puan ver', 'Rate the app'), T('Mağazanın kendi puan ekranı açılır', 'Opens the store’s own rating screen')) : ''}
+      ${sat('oner', '↗', T('Arkadaşına öner', 'Tell a friend'), T('Telefonun paylaşım menüsüyle', 'With your phone’s share menu'))}
+      ${sat('yaz', '✉', T('Bize yaz', 'Write to us'), T('emreanduvart@gmail.com · sürüm ve cihaz bilgisi hazır gelir', 'emreanduvart@gmail.com · version and device info included'))}
+      ${sat('sil', '×', silOnay ? T('Emin misin? Bir daha dokun, silinsin', 'Sure? Tap again to delete') : T('Verilerimi sil', 'Delete my data'), A.silMetni + T(' Bizde senin hakkında hiçbir kayıt yok.', ' We keep no records about you.'), 'rh-sil' + (silOnay ? ' onay' : ''))}
+      <p class="rh-alt">${T('Uygulama hiçbir kişisel veri toplamaz.', 'The app collects no personal data.')} <a href="${esc(A.gizlilik)}">${T('Gizlilik politikası', 'Privacy policy')}</a> · ${T('Sürüm', 'Version')} ${esc(A.surum)}</p></div>`;
   }
   function ayarEkle() {
     if (aktifEkran() !== 'bilgi') return;
@@ -73,8 +74,8 @@
     const e = ESIK.filter((x) => gunler.length >= x).pop();
     P.son = e; P.n++; kayit.koy(KP, P);
     const el = document.createElement('div'); el.className = 'rh-kart rh-puan'; el.setAttribute('role', 'status');
-    el.innerHTML = `<div class="rh-h">${e}. gün · teşekkürler</div><div class="rh-b"><b>${esc(A.ad)} işine yarıyor mu?</b><p>Bir puan, başkalarının da bulmasına yardım eder. Önerin varsa doğrudan bize yaz.</p>
-      <div class="rh-d"><button class="btn" data-rh="puan">★ Puan ver</button><button class="btn sec" data-rh="yaz">Önerim var</button><button class="btn sec" data-rh="oner">Paylaş</button><button class="btn sec" data-rh="sonra">Sonra</button></div></div>`;
+    el.innerHTML = `<div class="rh-h">${T(e + '. gün · teşekkürler', 'Day ' + e + ' · thank you')}</div><div class="rh-b"><b>${esc(T(A.ad + ' işine yarıyor mu?', 'Is ' + A.ad + ' useful to you?'))}</b><p>${T('Bir puan, başkalarının da bulmasına yardım eder. Önerin varsa doğrudan bize yaz.', 'A rating helps others find it. Got an idea? Write to us directly.')}</p>
+      <div class="rh-d"><button class="btn" data-rh="puan">★ ${T('Puan ver', 'Rate')}</button><button class="btn sec" data-rh="yaz">${T('Önerim var', 'I have an idea')}</button><button class="btn sec" data-rh="oner">${T('Paylaş', 'Share')}</button><button class="btn sec" data-rh="sonra">${T('Sonra', 'Later')}</button></div></div>`;
     document.body.appendChild(el);
   }
   async function puanVer() {
@@ -86,25 +87,27 @@
   async function paylas() {
     const url = MAGAZA(), S = window.Capacitor?.Plugins?.Share;
     try {
-      if (S?.share) { await S.share({ title: A.ad, text: A.paylasMetni, url, dialogTitle: 'Arkadaşına öner' }); return; }
+      if (S?.share) { await S.share({ title: A.ad, text: A.paylasMetni, url, dialogTitle: T('Arkadaşına öner', 'Tell a friend') }); return; }
       if (navigator.share) { await navigator.share({ title: A.ad, text: A.paylasMetni, url }); return; }
     } catch (e) { if (/cancel|abort/i.test(e?.message || e?.name || '')) return; }
-    try { await navigator.clipboard.writeText(A.paylasMetni + ' ' + url); toast('Bağlantı kopyalandı, istediğin yere yapıştır'); } catch (e) { toast(url); }
+    try { await navigator.clipboard.writeText(A.paylasMetni + ' ' + url); toast(T('Bağlantı kopyalandı, istediğin yere yapıştır', 'Link copied, paste it anywhere')); } catch (e) { toast(url); }
   }
   function bizeYaz() {
-    const konu = `${A.ad} – Görüş ve öneri (${A.surum}, ${platform()})`;
-    const govde = `Merhaba, ${A.ad} ile ilgili görüşüm:\n\n\n— ${A.surum} · ${platform()} · ${gunler.length}. kullanım günü`;
+    const konu = `${A.ad} – ${T('Görüş ve öneri', 'Feedback')} (${A.surum}, ${platform()}, ${EN ? 'EN' : 'TR'})`;
+    const govde = T(`Merhaba, ${A.ad} ile ilgili görüşüm:\n\n\n— ${A.surum} · ${platform()} · ${gunler.length}. kullanım günü`, `Hi, my feedback about ${A.ad}:\n\n\n— ${A.surum} · ${platform()} · day ${gunler.length} of use`);
     location.href = 'mailto:emreanduvart@gmail.com?subject=' + encodeURIComponent(konu) + '&body=' + encodeURIComponent(govde);
   }
   async function verileriSil() {
     const C = window.Capacitor?.Plugins || {};
     try { const LN = C.LocalNotifications; if (LN) { const p = await LN.getPending(); if (p?.notifications?.length) await LN.cancel({ notifications: p.notifications.map((n) => ({ id: n.id })) }); } } catch (e) {}
     try { if (C.Preferences?.clear) await C.Preferences.clear(); } catch (e) {}
-    try { localStorage.clear(); } catch (e) {}
+    let dil = null; try { dil = localStorage.getItem('gp.dil'); } catch (e) {}
+    try { localStorage.clear(); if (dil) localStorage.setItem('gp.dil', dil); } catch (e) {}
+    try { if (dil && C.Preferences?.set) await C.Preferences.set({ key: 'gp.dil', value: JSON.stringify(dil.replace(/"/g, '')) }); } catch (e) {}
     try { sessionStorage.clear(); } catch (e) {}
     location.reload();
   }
-  function bastan() { D = { gor: {}, kapali: false }; kayit.koy(K, D); kartKaldir(); toast('Rehber baştan başladı'); setTimeout(() => ipucu(aktifEkran()), 300); }
+  function bastan() { D = { gor: {}, kapali: false }; kayit.koy(K, D); kartKaldir(); toast(T('Rehber baştan başladı', 'Tips will show again')); setTimeout(() => ipucu(aktifEkran()), 300); }
 
   document.addEventListener('click', async (e) => {
     const t = e.target.closest('[data-rh]'); if (!t) return;

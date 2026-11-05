@@ -7,7 +7,7 @@ const topo = require('topojson-client'); const simp = require('topojson-simplify
 const d3 = require('d3-geo');
 const cities = require('all-the-cities');
 const OUT = process.argv[2];
-const TR_AD = {"Athens": "Atina", "Rome": "Roma", "Vienna": "Viyana", "Prague": "Prag", "London": "Londra", "Moscow": "Moskova", "Belgrade": "Belgrad", "Cairo": "Kahire", "Beijing": "Pekin", "Venice": "Venedik", "Florence": "Floransa", "Naples": "Napoli", "Munich": "Münih", "Cologne": "Köln", "Lisbon": "Lizbon", "Warsaw": "Varşova", "Brussels": "Brüksel", "Copenhagen": "Kopenhag", "Bucharest": "Bükreş", "Sofia": "Sofya", "Damascus": "Şam", "Jerusalem": "Kudüs", "Tehran": "Tahran", "Baghdad": "Bağdat", "Mecca": "Mekke", "Medina": "Medine", "Skopje": "Üsküp", "Sarajevo": "Saraybosna", "Budapest": "Budapeşte", "Geneva": "Cenevre", "Zürich": "Zürih", "Alexandria": "İskenderiye", "Seville": "Sevilla", "Milan": "Milano", "Kyiv": "Kiev", "Tbilisi": "Tiflis", "Baku": "Bakü", "Algiers": "Cezayir", "Tunis": "Tunus", "Lucerne": "Luzern", "Kraków": "Krakov", "Thessaloníki": "Selanik", "Nicosia": "Lefkoşa", "The Hague": "Lahey", "Antwerp": "Anvers", "Bruges": "Brugge", "Edinburgh": "Edinburg", "Seoul": "Seul", "New Delhi": "Yeni Delhi", "Mexico City": "Meksiko", "Havana": "Havana", "Marrakesh": "Marakeş", "Fès": "Fes", "Casablanca": "Kazablanka", "Hong Kong": "Hong Kong", "Dubai": "Dubai", "Doha": "Doha", "Riyadh": "Riyad", "Amman": "Amman", "Beirut": "Beyrut", "Tashkent": "Taşkent", "Samarkand": "Semerkant", "Bukhara": "Buhara", "Almaty": "Almatı", "Bishkek": "Bişkek", "Ashgabat": "Aşkabat", "Dushanbe": "Duşanbe", "Pristina": "Priştine", "Tirana": "Tiran", "Podgorica": "Podgoritsa", "Chisinau": "Kişinev", "Riga": "Riga", "Vilnius": "Vilnius", "Tallinn": "Tallinn", "Helsinki": "Helsinki", "Stockholm": "Stokholm", "Oslo": "Oslo", "Reykjavík": "Reykjavik", "Dublin": "Dublin", "Bern": "Bern", "Ljubljana": "Lübliyana", "Zagreb": "Zagreb", "Bratislava": "Bratislava", "Marseille": "Marsilya", "Lyon": "Lyon", "Nice": "Nice", "Hamburg": "Hamburg", "Salzburg": "Salzburg", "Dubrovnik": "Dubrovnik", "Valletta": "Valletta", "Bangkok": "Bangkok", "Kuala Lumpur": "Kuala Lumpur", "Singapore": "Singapur", "Abu Dhabi": "Abu Dabi", "Rio de Janeiro": "Rio de Janeiro", "Barcelona": "Barselona", "Madrid": "Madrid", "Berlin": "Berlin", "Paris": "Paris", "Amsterdam": "Amsterdam", "Washington, D.C.": "Washington", "Ottawa": "Ottava", "Canberra": "Kanberra", "Kabul": "Kabil", "Islamabad": "İslamabad", "Lahore": "Lahor", "Jeddah": "Cidde", "Tripoli": "Trablus", "Khartoum": "Hartum", "Addis Ababa": "Addis Ababa", "Pyongyang": "Pyongyang", "Taipei": "Taipei", "Manila": "Manila", "Jakarta": "Cakarta", "Hanoi": "Hanoi", "Kathmandu": "Katmandu", "Mostar": "Mostar", "Plovdiv": "Filibe", "Edirne": "Edirne", "Nafplio": "Nafplio", "Batumi": "Batum", "Ganja": "Gence", "Shusha": "Şuşa", "Prizren": "Prizren", "Ohrid": "Ohri", "Bitola": "Manastır", "Varna": "Varna", "Constanța": "Köstence", "Kazan": "Kazan", "Saint Petersburg": "St. Petersburg", "Ulaanbaatar": "Ulan Batur", "Astana": "Astana", "Tokyo": "Tokyo", "Kyoto": "Kyoto", "Osaka": "Osaka", "Luxembourg": "Lüksemburg", "Monaco": "Monako", "Rabat": "Rabat"};
+const TR_AD = {"Nicosia":"Güney Lefkoşa","Athens": "Atina", "Rome": "Roma", "Vienna": "Viyana", "Prague": "Prag", "London": "Londra", "Moscow": "Moskova", "Belgrade": "Belgrad", "Cairo": "Kahire", "Beijing": "Pekin", "Venice": "Venedik", "Florence": "Floransa", "Naples": "Napoli", "Munich": "Münih", "Cologne": "Köln", "Lisbon": "Lizbon", "Warsaw": "Varşova", "Brussels": "Brüksel", "Copenhagen": "Kopenhag", "Bucharest": "Bükreş", "Sofia": "Sofya", "Damascus": "Şam", "Jerusalem": "Kudüs", "Tehran": "Tahran", "Baghdad": "Bağdat", "Mecca": "Mekke", "Medina": "Medine", "Skopje": "Üsküp", "Sarajevo": "Saraybosna", "Budapest": "Budapeşte", "Geneva": "Cenevre", "Zürich": "Zürih", "Alexandria": "İskenderiye", "Seville": "Sevilla", "Milan": "Milano", "Kyiv": "Kiev", "Tbilisi": "Tiflis", "Baku": "Bakü", "Algiers": "Cezayir", "Tunis": "Tunus", "Lucerne": "Luzern", "Kraków": "Krakov", "Thessaloníki": "Selanik", "The Hague": "Lahey", "Antwerp": "Anvers", "Bruges": "Brugge", "Edinburgh": "Edinburg", "Seoul": "Seul", "New Delhi": "Yeni Delhi", "Mexico City": "Meksiko", "Havana": "Havana", "Marrakesh": "Marakeş", "Fès": "Fes", "Casablanca": "Kazablanka", "Hong Kong": "Hong Kong", "Dubai": "Dubai", "Doha": "Doha", "Riyadh": "Riyad", "Amman": "Amman", "Beirut": "Beyrut", "Tashkent": "Taşkent", "Samarkand": "Semerkant", "Bukhara": "Buhara", "Almaty": "Almatı", "Bishkek": "Bişkek", "Ashgabat": "Aşkabat", "Dushanbe": "Duşanbe", "Pristina": "Priştine", "Tirana": "Tiran", "Podgorica": "Podgoritsa", "Chisinau": "Kişinev", "Riga": "Riga", "Vilnius": "Vilnius", "Tallinn": "Tallinn", "Helsinki": "Helsinki", "Stockholm": "Stokholm", "Oslo": "Oslo", "Reykjavík": "Reykjavik", "Dublin": "Dublin", "Bern": "Bern", "Ljubljana": "Lübliyana", "Zagreb": "Zagreb", "Bratislava": "Bratislava", "Marseille": "Marsilya", "Lyon": "Lyon", "Nice": "Nice", "Hamburg": "Hamburg", "Salzburg": "Salzburg", "Dubrovnik": "Dubrovnik", "Valletta": "Valletta", "Bangkok": "Bangkok", "Kuala Lumpur": "Kuala Lumpur", "Singapore": "Singapur", "Abu Dhabi": "Abu Dabi", "Rio de Janeiro": "Rio de Janeiro", "Barcelona": "Barselona", "Madrid": "Madrid", "Berlin": "Berlin", "Paris": "Paris", "Amsterdam": "Amsterdam", "Washington, D.C.": "Washington", "Ottawa": "Ottava", "Canberra": "Kanberra", "Kabul": "Kabil", "Islamabad": "İslamabad", "Lahore": "Lahor", "Jeddah": "Cidde", "Tripoli": "Trablus", "Khartoum": "Hartum", "Addis Ababa": "Addis Ababa", "Pyongyang": "Pyongyang", "Taipei": "Taipei", "Manila": "Manila", "Jakarta": "Cakarta", "Hanoi": "Hanoi", "Kathmandu": "Katmandu", "Mostar": "Mostar", "Plovdiv": "Filibe", "Edirne": "Edirne", "Nafplio": "Nafplio", "Batumi": "Batum", "Ganja": "Gence", "Shusha": "Şuşa", "Prizren": "Prizren", "Ohrid": "Ohri", "Bitola": "Manastır", "Varna": "Varna", "Constanța": "Köstence", "Kazan": "Kazan", "Saint Petersburg": "St. Petersburg", "Ulaanbaatar": "Ulan Batur", "Astana": "Astana", "Tokyo": "Tokyo", "Kyoto": "Kyoto", "Osaka": "Osaka", "Luxembourg": "Lüksemburg", "Monaco": "Monako", "Rabat": "Rabat"};
 const TERR = 'AS AI AQ AW AX BL BM BQ BV CC CK CW CX EH FK FO GF GG GI GL GP GS GU HK HM IM IO JE KY MF MO MP MQ MS NC NF NU PF PM PN PR RE SH SJ SX TC TF TK UM VG VI WF YT XK TW AC TA'.split(' ');
 // harita
 let w = require('world-atlas/countries-50m.json');
@@ -44,7 +44,7 @@ const yollar = {}; const merk = {};
 for (const f of fc.features) {
   let a2 = f.properties.a2 || (f.id ? iso.numericToAlpha2(f.id) : null);
   if (!a2 && f.properties.name === 'Kosovo') a2 = 'XK';
-  if (!a2 && /Cyprus/.test(f.properties.name)) a2 = 'CY';   // Kuzey Kıbrıs → Kıbrıs adası
+  if (!a2 && /N\. Cyprus/.test(f.properties.name)) a2 = 'XN';   // Kuzey Kıbrıs Türk Cumhuriyeti: kendi ülkesi
   if (!a2 && /Somaliland/.test(f.properties.name)) a2 = 'SO';
   if (!a2) { yollar['_' + f.properties.name] = path(f); continue; }
   const d = path(f); if (!d) continue;
@@ -54,12 +54,23 @@ for (const f of fc.features) {
 }
 // başkentler / şehirler
 const sehir = {};
+const KKTC = fc.features.find((f) => f.properties.name === 'N. Cyprus');
+const KKTC_SEHIR = [   // [Türkçe, İngilizce, enlem, boylam, nüfus (GeoNames; bilinmiyorsa 0)]
+  ['Lefkoşa', 'North Nicosia', 35.19, 33.36, 61378], ['Gazimağusa', 'Famagusta', 35.12, 33.94, 42526], ['Girne', 'Kyrenia', 35.34, 33.32, 26701],
+  ['Güzelyurt', 'Morphou', 35.20, 32.99, 14833], ['Lefke', 'Lefka', 35.11, 32.85, 7835], ['Lapta', 'Lapithos', 35.34, 33.17, 5215],
+  ['Dipkarpaz', 'Rizokarpaso', 35.60, 34.38, 5215], ['İskele', 'Trikomo', 35.29, 33.89, 4490], ['Geçitkale', 'Lefkoniko', 35.26, 33.73, 3187],
+  ['Alsancak', 'Karavas', 35.34, 33.20, 0], ['Değirmenlik', 'Kythrea', 35.25, 33.48, 0], ['Beylerbeyi', 'Bellapais', 35.30, 33.35, 0],
+  ['Esentepe', 'Agios Amvrosios', 35.33, 33.58, 0], ['Tatlısu', 'Akanthou', 35.37, 33.76, 0], ['Mehmetçik', 'Galateia', 35.42, 34.07, 0],
+  ['Yenierenköy', 'Agialousa', 35.53, 34.19, 0], ['Boğaz', 'Bogazi', 35.30, 33.95, 0], ['Karpaz', 'Karpas', 35.55, 34.25, 0]];
+const kktcte = (lng, lat) => KKTC && d3.geoContains(KKTC, [lng, lat]);
 for (const c of cities) {
   const [lng, lat] = c.loc.coordinates;
   if (c.population < 5000 && !/^PPL(C|A)$/.test(c.featureCode)) continue;
-  (sehir[c.country] ||= []).push([TR_AD[c.name] || c.name, +lat.toFixed(2), +lng.toFixed(2), c.population, TR_AD[c.name] ? c.name : (c.altName && c.altName !== c.name ? c.altName : '')]);
+  if (c.country === 'CY' && c.name !== 'Nicosia' && kktcte(lng, lat)) continue;   // kuzeydekiler KKTC listesinde
+  (sehir[c.country] ||= []).push([TR_AD[c.name] || c.name, +lat.toFixed(2), +lng.toFixed(2), c.population, TR_AD[c.name] ? c.name : '', c.altName && c.altName !== c.name ? c.altName : '']);
 }
-for (const k in sehir) sehir[k] = sehir[k].sort((a, b) => b[3] - a[3]).map(x => [x[0], x[1], x[2], Math.round(x[3] / 1000), x[4]]);
+sehir.XN = KKTC_SEHIR.map(([tr, en, la, lo, p]) => [tr, la, lo, p, en, '']);
+for (const k in sehir) sehir[k] = sehir[k].sort((a, b) => b[3] - a[3]).map(x => [x[0], x[1], x[2], Math.round(x[3] / 1000), x[4], x[5]]);
 const ULKE = [];
 for (const [a2, c] of Object.entries(countries)) {
   if (a2 === 'AQ') continue;
@@ -67,14 +78,16 @@ for (const [a2, c] of Object.entries(countries)) {
   const ad = iso.getName(a2, 'tr') || c.name;
   let m = merk[a2];
   if (!yollar[a2]) { const b = baskent[a2]; if (b) m = proj(b).map(v => Math.round(v * 10) / 10); }
-  ULKE.push({ k: a2, a: ad, en: c.name, kt: kita, b: TR_AD[c.capital] || c.capital || '', s: TERR.includes(a2) ? 0 : 1, m, h: yollar[a2] ? 1 : 0, kk: c.continents && c.continents.length > 1 ? c.continents : undefined });
+  ULKE.push({ k: a2, a: ad, en: c.name, kt: kita, b: TR_AD[c.capital] || c.capital || '', be: c.capital || '', s: TERR.includes(a2) ? 0 : 1, m, h: yollar[a2] ? 1 : 0, kk: c.continents && c.continents.length > 1 ? c.continents : undefined });
 }
+ULKE.push({ k: 'XN', a: 'Kuzey Kıbrıs Türk Cumhuriyeti', en: 'Turkish Republic of Northern Cyprus', ks: 'KKTC', kse: 'TRNC', kt: 'AS', b: 'Lefkoşa', be: 'North Nicosia', s: 1, m: merk.XN, h: yollar.XN ? 1 : 0 });
+const cy = ULKE.find((u) => u.k === 'CY'); cy.kt = 'AS'; cy.b = 'Lefkoşa (Güney)'; cy.be = 'Nicosia';
 ULKE.sort((a, b) => a.a.localeCompare(b.a, 'tr'));
 console.log('ülke', ULKE.length, 'egemen', ULKE.filter(u => u.s).length, 'haritasız', ULKE.filter(u => !u.h).map(u => u.k).join(' '));
 fs.writeFileSync(OUT + '/ulkeler.js', 'window.ULKELER=' + JSON.stringify(ULKE) + ';');
 fs.writeFileSync(OUT + '/harita.js', 'window.HARITA={w:' + W + ',h:' + H + ',p:' + JSON.stringify(yollar) + ',kure:' + JSON.stringify(path({type:'Sphere'})) + ',g:' + JSON.stringify(path(d3.geoGraticule10())) + '};');
 // şehirler: projeksiyon koordinatlarıyla
-const S2 = {}; for (const k in sehir) S2[k] = sehir[k].map(([n, la, lo, p, o]) => { const [x, y] = proj([lo, la]); const r = [n, Math.round(x * 10) / 10, Math.round(y * 10) / 10, p]; if (o) r.push(o); return r; });
+const S2 = {}; for (const k in sehir) S2[k] = sehir[k].map(([n, la, lo, p, en, alt]) => { const [x, y] = proj([lo, la]); const r = [n, Math.round(x * 10) / 10, Math.round(y * 10) / 10, p]; if (en || alt) r.push(en); if (alt) r.push(alt); return r; });   // [tr, x, y, nüfus(bin), en?, diğer adlar?]
 fs.writeFileSync(OUT + '/sehirler.js', 'window.SEHIRLER=' + JSON.stringify(S2) + ';');
 // projeksiyon tersi için ölçek bilgisi (serbest şehir eklerken gerekmez)
 for (const f of ['ulkeler.js', 'harita.js', 'sehirler.js']) console.log(f, (fs.statSync(OUT + '/' + f).size / 1024).toFixed(0) + ' KB');

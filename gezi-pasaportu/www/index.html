@@ -36,19 +36,32 @@
   <div class="toast" id="toast" hidden></div>
   <input type="file" id="dosya" accept="application/json,.json,.txt" hidden>
 </div>
-<script>window.REHBER_AYAR = {"ad": "Gezi Pasaportu", "onek": "gp", "surum": "1.0.0", "appleId": "6830736627", "paket": "com.anduv.gezipasaportu", "ilk": "pasaport",
- "gizlilik": "https://emreanduv.github.io/yasam-rehberi/gezi-pasaportu/gizlilik.html",
- "giris": "Gezi Pasaportu gezdiğin ülkeleri, şehirleri ve seyahatlerini senin yerine hatırlar. Her şey yalnız bu telefonda tutulur; üyelik ve internet gerekmez. Telefon değiştirirken Daha > Yedekle ile tek dosyada yanına al.",
- "paylasMetni": "Gezi Pasaportu: gezdiğin ülkeler haritada, her ülkeye bir damga. Reklamsız, ücretsiz, üyeliksiz.",
- "silMetni": "Ülkelerin, seyahatlerin, notların ve rehber bu telefondan silinir (önce yedek almayı unutma).",
- "sira": ["pasaport", "harita", "seyahat", "ulkeler", "bilgi"],
- "ipucu": {
-  "pasaport": ["Pasaportun", "Burada özetin var: kaç ülke, kaç şehir, yolda kaç gün. Aşağıda her ülkenin damgası; damgaya dokununca o ülkenin sayfası açılır. Sağ alttaki + ile seyahat eklersin."],
-  "harita": ["Dünya haritan", "Gittiğin ülkeler yeşil, hayal listen turuncu, ev ülken altın. İki parmakla yaklaş, sürükle; bir ülkeye dokununca sayfası açılır."],
-  "seyahat": ["Seyahatlerin", "Her seyahatin tarihi, ülkeleri, şehirleri, kiminle gittiğin ve notunla yıllara göre dizilir. Tarihi tam hatırlamıyorsan yalnız yılı seçmen yeter."],
-  "ulkeler": ["Hızlı işaretle", "Satırın sağındaki ✓ ile ülkeyi 'gittim', ☆ ile 'hayalim' yaparsın. Şehir eklemek için ülkenin adına dokun."],
-  "bilgi": ["Yedek ve ayarlar", "Yedekle ile bütün pasaportun tek dosya olur; yeni telefonda Geri yükle ile geri gelir. Gezi kartını paylaş ile haritanı resim olarak gönderirsin."]
- }};</script>
+<script>(function () {
+ var en = false; try { en = (localStorage.getItem('gp.dil') || '').replace(/"/g, '') === 'en'; } catch (e) {}
+ var ortak = {"onek": "gp", "surum": "1.0.0", "appleId": "6830736627", "paket": "com.anduv.gezipasaportu", "ilk": "pasaport", "dil": en ? "en" : "tr",
+  "gizlilik": "https://emreanduv.github.io/yasam-rehberi/gezi-pasaportu/gizlilik.html", "sira": ["pasaport", "harita", "seyahat", "ulkeler", "bilgi"]};
+ var tr = {"ad": "Gezi Pasaportu",
+  "giris": "Gezi Pasaportu gezdiğin ülkeleri, şehirleri ve seyahatlerini senin yerine hatırlar. Her şey yalnız bu telefonda tutulur; üyelik ve internet gerekmez. Telefon değiştirirken Daha > Yedekle ile tek dosyada yanına al.",
+  "paylasMetni": "Gezi Pasaportu: gittiğin şehri yaz, ülke haritada boyansın, pasaportuna damga basılsın. Reklamsız, ücretsiz, üyeliksiz.",
+  "silMetni": "Ülkelerin, şehirlerin, seyahatlerin, notların ve rehber bu telefondan silinir (önce yedek almayı unutma).",
+  "ipucu": {
+   "pasaport": ["Pasaportun", "Üstteki kutuya gittiğin bir şehri yaz; ülkesini, damgasını ve haritanı biz işaretleriz. Aşağıda özetin ve her ülkenin damgası var. Sağ alttaki + ile tarihli seyahat eklersin."],
+   "harita": ["Dünya haritan", "Gittiğin ülkeler yeşil, hayal listen turuncu, ev ülken altın. İki parmakla yaklaş, sürükle; bir ülkeye dokununca sayfası açılır."],
+   "seyahat": ["Seyahatlerin", "Her seyahatin tarihi, şehirleri, kiminle gittiğin ve notunla yıllara göre dizilir. Tarihi tam hatırlamıyorsan yalnız yılı seçmen yeter."],
+   "ulkeler": ["Hızlı işaretle", "Ara kutusuna ülke ya da şehir yaz. ✓ ile 'gittim', ☆ ile 'hayalim' yaparsın; ülkenin adına dokununca sayfası açılır."],
+   "bilgi": ["Dil, yedek ve ayarlar", "Dili buradan değiştirirsin. Yedekle ile bütün pasaportun tek dosya olur; yeni telefonda Geri yükle ile geri gelir."]}};
+ var enT = {"ad": "Travel Passport",
+  "giris": "Travel Passport remembers the countries, cities and trips you have been on. Everything stays on this phone; no sign-up or internet needed. Changing phones? Use More > Back up to take it with you in a single file.",
+  "paylasMetni": "Travel Passport: type a city you have visited, the country lights up on your map and gets a stamp. Free, no ads, no sign-up.",
+  "silMetni": "Your countries, cities, trips, notes and tips are deleted from this phone (back up first).",
+  "ipucu": {
+   "pasaport": ["Your passport", "Type a city you have visited in the box at the top; we stamp the country and colour your map. Below are your totals and a stamp for every country. Use + at the bottom right to add a dated trip."],
+   "harita": ["Your world map", "Visited countries are green, your wish list orange, your home country gold. Pinch to zoom, drag to move; tap a country to open it."],
+   "seyahat": ["Your trips", "Each trip with its dates, cities, who you went with and your notes, sorted by year. Can’t remember the dates? Just pick the year."],
+   "ulkeler": ["Quick tick", "Type a country or city in the search box. ✓ marks it visited, ☆ adds it to your wish list; tap a name to open its page."],
+   "bilgi": ["Language, backup and settings", "Change the language here. Back up turns your whole passport into one file; restore it on your new phone."]}};
+ var x = en ? enT : tr; for (var k in ortak) x[k] = ortak[k]; window.REHBER_AYAR = x;
+})();</script>
 <script src="data/ulkeler.js"></script>
 <script src="data/harita.js"></script>
 <script src="data/sehirler.js" defer></script>

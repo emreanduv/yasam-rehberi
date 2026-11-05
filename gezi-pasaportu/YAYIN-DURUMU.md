@@ -29,3 +29,11 @@ Bir Mr. Anduv! yapımıdır.
 - Hata (Emre): Paris seçilince Fransa ile birlikte Fransız Guyanası da (Güney Amerika) boyanıyordu. Natural Earth'te Fransa/Hollanda/Yeni Zelanda tek parça; tools/veri.mjs artık 2.500 km'den uzak parçaları en yakın denizaşırı toprağa (GF, GP, MQ, RE, YT, BQ…) ayırıyor.
 - Yeni giriş: "Gittiğin bir şehri yaz…" (Pasaport'ta) → dünya çapında şehir arama, ülke kendiliğinden işaretlenir. Ülkeler aramasında ve seyahat formunun "Nereye?" alanında da şehirler çıkar. Şehirler Türkçe ve orijinal adıyla aranır (Krakov / Kraków).
 - Test: `python3 test/sehirden_ulke.py` (Paris → yalnız Fransa, denizaşırı topraklar boyanmaz, 2 kıta).
+
+## 5 Kasım 2026 · Türkçe / English, KKTC, test önerileri paketi
+- İlk açılışta tam ekran dil sorusu (🇹🇷 Türkçe / 🇬🇧 English); Daha > Dil · Language ile değişir (`gp.dil`, localStorage + Preferences). "Bir Mr. Anduv! yapımıdır." imzası iki dilde de aynı.
+- Bütün arayüz, ipuçları, rehber paketi (rehber.js), gezi kartı ve paylaşım metni iki dilli. Ülke/başkent/şehir adları iki dilde; kayıtta şehrin Türkçe (kanonik) adı tutulur, ekranda seçili dilde gösterilir (Roma/Rome tek şehir sayılır).
+- Kuzey Kıbrıs Türk Cumhuriyeti (kod `XN`, KKTC/TRNC damgası, kendi bayrak çizimi): haritada ayrı ülke, 18 şehir (Lefkoşa, Girne, Gazimağusa, Güzelyurt, İskele, Lefke…); kuzeydeki GeoNames şehirleri Güney Kıbrıs listesinden çıkarıldı. Ülke sayısı 196.
+- Türk cumhuriyetleri (Azerbaycan, Kazakistan, Kırgızistan, Özbekistan, Türkmenistan) Türkçe adlarıyla; başkent/şehirleri Türkçe (Bakü, Taşkent, Semerkant, Buhara, Almatı, Bişkek, Aşkabat…).
+- Test önerileri paketi (Yaşam Rehberi / Malazgirt kapalı testinden): ipucu kartları, Nasıl kullanılır, Rehberi baştan göster, Puan ver (3. ve 10. gün), Arkadaşına öner, Bize yaz, Verilerimi sil — iki dilde. Gizlilik sayfasına silme, puan/paylaşım, sahip ve İngilizce bölüm eklendi.
+- Test: `test/dil_kktc.py`, `test/sehirden_ulke.py`, `test/ekranlar.py`.

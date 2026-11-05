@@ -22,6 +22,8 @@ hatalar = []
 with sync_playwright() as p:
     b = p.chromium.launch()
     sf = b.new_page(viewport={'width': 390, 'height': 844}, device_scale_factor=2, is_mobile=True, has_touch=True)
+    sf_init = None
+    sf.add_init_script("try{if(!localStorage.getItem('gp.dil'))localStorage.setItem('gp.dil','tr')}catch(e){}")
     sf.on('console', lambda m: m.type == 'error' and hatalar.append(m.text))
     sf.on('pageerror', lambda e: hatalar.append(str(e)))
     sf.goto('http://localhost:8791/index.html'); sf.wait_for_timeout(900)

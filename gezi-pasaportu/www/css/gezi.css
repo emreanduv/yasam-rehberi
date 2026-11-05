@@ -173,3 +173,18 @@ svg .sehir{fill:#e3262c;stroke:#fff;stroke-width:.8;vector-effect:non-scaling-st
 .sehir-cubuk span{font-size:18px}
 .sehir-cubuk b{flex:1;font-size:15.5px}
 .sehir-cubuk i{font-style:normal;font-size:12px;font-weight:800;color:var(--mute)}
+
+.bayrak-svg{display:inline-block;width:1.33em;height:.9em;vertical-align:-.08em;border-radius:2px;box-shadow:0 0 0 1px #0002}
+
+/* dil seçimi (ilk açılış) */
+.dil-ekran{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 30% 0,#2c5d63,transparent 60%),linear-gradient(160deg,#123036,#0b1e22)}
+.dil-kutu{width:100%;max-width:360px;text-align:center;color:#fff}
+.dil-crest{width:84px!important;height:92px!important;margin:0 auto 14px}
+.dil-crest svg{width:58px!important;height:58px!important}
+.dil-kutu h2{margin:0 0 18px;font:900 30px/1.1 'DM Sans',sans-serif}
+.dil-kutu h2 small{display:block;font:800 15px/1.4 'DM Sans',sans-serif;color:#9fc3bd;letter-spacing:.5px}
+.dil-kutu p{margin:0 0 16px;font:800 17px/1.4 'DM Sans',sans-serif}
+.dil-kutu p span{color:#9fc3bd;font-weight:700}
+.dil-kutu .btn{width:100%;height:58px;justify-content:center;font-size:19px;margin-top:10px;gap:10px}
+.dil-kutu .btn:not(.tur){background:#fffdf8;color:var(--ink)}
+.dil-kutu .imza-kutu{color:#9fc3bd;margin-top:22px}
