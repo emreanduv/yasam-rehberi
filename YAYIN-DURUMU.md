@@ -113,3 +113,11 @@
 - Mağaza metni: açıklamanın ilk paragrafı aranan kelimelerle, Play kısa açıklaması, 1.0.1 sürüm notları (store/magaza-metinleri.md).
 - Not: test/moduller.py `#/menu`'yü arıyor; menü 31.10'da kaldırıldığı için zaten güncellenmesi gerekiyordu (bu paketle ilgisi yok).
 - Derleme: iOS ve Android iş akışları sürüm adı **1.0.1** (yapı/sürüm kodu iş akışı numarasından otomatik). Quest (VR): **1.0.2 / 3**.
+
+## 7 Kasım 2026 · 1.1.0 — Kur'an içeriği açıldı, App Review'da
+- Diyanet ön onayı geldi (Emre): `KURAN = true`. Sor, Sureler, ayet ekranları, günün ayeti, miras ayetleri, tesbihte "Meallerde oku", kıble kartında 2:144 geri geldi; alt menü Bugün · Sor · Sureler · Tesbih · Saat · Çarşı · Miras. 1.0.1'in rehber/Ayarlar paketi de bu sürümde (1.0.1 App Store'a hiç gönderilmedi).
+- Testler: parity 44/44, miras 33/33; tarayıcıda Sor, arama, sureler, ayet, Bugün, Miras, Ayarlar, Rehber hatasız.
+- iOS: yapı 29 (1.1.0) → sürüm sayfası `tools/asc_surum.py hazirla` (iş akışı "App Store sürümü"): metinler `store/surum/1.1.0.json`, alt başlık "Kur'an, namaz vakti ve kıble", içerik hakları USES_THIRD_PARTY_CONTENT, inceleme notu (QuranEnc/Tanzil lisansı, Diyanet ön onayı, video bağlantısı). Görseller `store/gorseller/v11/` (`node tools/magaza_gorsel.js` ile; iPhone 9, iPad 9, Watch 3).
+- 7.11 09:3x (TR): **WAITING_FOR_REVIEW**. Onaylanınca otomatik yayın (yalnız Türkiye).
+- Android: 1.1.0 imzasız .aab `builds` dalında → Emre dönünce Mac'te `bash imzala.sh` → Play kapalı test.
+- Diyanet aksi bir karar verirse: `KURAN = false` → 1.1.1 (veri dosyaları paketten otomatik çıkar).
