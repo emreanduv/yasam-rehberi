@@ -64,7 +64,7 @@ export function rehberView(topbar, MAKER) {
   <section class="band"><div class="eyebrow">Rehber</div><h1>Nasıl kullanılır</h1><div class="sub">Altın çerçeveliler henüz görmediğin ipuçları</div></section>
   <main class="content">
     <section class="panel"><div class="panel-h">Yaşam Rehberi</div><div class="panel-b" style="font-size:14px;line-height:1.55">
-      Namaz vakitleri, kıble, tesbih, saat, çarşı ve miras hesabı tek uygulamada. Hepsi telefonda çalışır; internet ve üyelik gerekmez, hiçbir veri toplanmaz.<br>
+      ${KURAN ? "Kur'an'da arama ve meal karşılaştırma, " : ""}Namaz vakitleri, kıble, tesbih, saat, çarşı ve miras hesabı tek uygulamada. Hepsi telefonda çalışır; internet ve üyelik gerekmez, hiçbir veri toplanmaz.<br>
       <b>Başlamak için:</b> Bugün ekranında “Konumumu kullan”a dokun; vakitler, geri sayım ve kıble bulunduğun yere göre hesaplanır. Alttaki menüden öbür bölümlere geç.</div></section>
     <section class="panel"><div class="panel-h">Bütün ipuçları</div><div class="panel-b rh-liste">${liste}</div></section>
     <div class="rh-dugmeler"><button class="btn-go" data-act="rh-bastan">↺ Rehberi baştan göster</button><button class="btn-light" data-act="rh-oner">Arkadaşına öner</button><button class="btn-light" data-act="rh-yaz">Bize yaz</button></div>
