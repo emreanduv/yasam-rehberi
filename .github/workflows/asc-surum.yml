@@ -1,0 +1,27 @@
+name: App Store sürümü (durum / hazırla / gönder)
+on:
+  workflow_dispatch:
+    inputs:
+      is: { description: "durum | hazirla | gonder", default: "durum" }
+      surum: { description: "store/surum/ altındaki dosya", default: "store/surum/1.1.0.json" }
+      gorseller: { description: "Hazırlarken görselleri de yükle (store/gorseller/ klasörü; boş = yükleme)", default: "" }
+env:
+  ASC_KEY_ID: DJSHKK6T3P
+  ASC_ISSUER_ID: f4943ef8-df6f-42c8-a561-58554097ea35
+jobs:
+  is:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pyjwt cryptography requests
+      - name: Anahtar
+        env: { P8: "${{ secrets.ASC_KEY_P8 }}" }
+        run: printf '%s' "$P8" > $RUNNER_TEMP/asc.p8
+      - name: İşlem
+        env: { ASC_KEY_PATH: "${{ runner.temp }}/asc.p8" }
+        run: python tools/asc_surum.py "${{ inputs.is }}" "${{ inputs.surum }}"
+      - name: Görseller
+        if: ${{ inputs.gorseller != '' }}
+        env: { ASC_KEY_PATH: "${{ runner.temp }}/asc.p8" }
+        run: python tools/asc_gorseller.py "${{ inputs.gorseller }}"
