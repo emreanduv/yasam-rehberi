@@ -132,3 +132,9 @@ Ezan Vakti Pro'nun mağaza sayfasıyla özellik karşılaştırması sonrası (k
 - Metinler: `store/surum/1.2.0.json`. 1.1.0 onaylanınca: iOS/Android 1.2.0 derle → `asc-surum` hazirla (+ `node tools/magaza_gorsel.js` ile görseller) → gonder.
 - Her yıl: `DINI_GUNLER` listesine Diyanet'in yeni yıl tarihlerini ekle.
 - Sırada: telefon ana ekran/kilit ekranı widget'ları, ezan sesi seçimi, hatim takibi.
+
+## 9 Kasım 2026 · 1.3.0 derlendi (TestFlight dahili; 1.2.0 incelemede)
+- Hatim takibi `#/hatim` (Sureler'in üstünde kart): 30 cüz (Medine mushafı cüz başları, `CUZ`), okudum işareti, kaldığın yer (sure/ayet açınca otomatik), tamamlanan hatim sayısı; `#/sure/2?a=142` ayete atlar.
+- iPhone widget'ı (iOS 17+): ana ekran küçük/orta, kilit ekranı dikdörtgen/yuvarlak/satır. Yeni hedef `YasamRehberiWidget` (com.anduv.yasamrehberi.widget), kod saat komplikasyonuyla ortak: `ios/App/WatchWidget/Komplikasyon.swift` (#if os(watchOS)/os(iOS)). Konum: telefonun konum izni (NSWidgetUsesLocation) ya da widget ayarında il; yoksa İstanbul.
+- Android widget'ı (4×2, boyutlanabilir): `widget/VakitWidget.java` + `res/layout/widget_vakit.xml`; konum CapacitorStorage "settings".konum; vakit girince AlarmManager ile tazelenir; uygulamadan çıkınca da.
+- Derlemeler: iOS 1.3.0 ✓ (imza otomatik, widget kimliği kaydedildi), Android 1.3.0 .aab ✓. 1.2.0 onaylanınca: `store/surum/1.3.0.json` + görseller (widget) → hazirla/gonder.
