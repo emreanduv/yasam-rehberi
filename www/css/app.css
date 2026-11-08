@@ -337,3 +337,36 @@ html, body { overflow-x: hidden; }
 .rh-row { font: inherit; }
 .rh-sil b { color: #9b1c1c; }
 .rh-sil.onay { background: #f7dcd6 !important; }
+
+/* 1.2 — kerahat, kıble saati, dinî günler, imsakiye, kaza */
+.bg-kerahat { border-color: #b5651d; }
+.bg-kerahat .panel-b { display: grid; gap: 3px; background: #f6e3c8; font-size: 14px; color: var(--ink); }
+.bg-kerahat b { color: #8a4a12; font-size: 15px; }
+.kb-saat { margin: 10px 0 2px; padding: 8px 10px; border: 1px solid var(--panel-line); background: var(--panel-alt); border-radius: 3px; font-size: 13px; line-height: 1.45; color: var(--ink-2); text-align: left; }
+.kb-saat b { color: var(--ink); }
+.bg-dini, .bg-kaza { display: grid; gap: 2px; padding: 12px 14px; text-decoration: none; color: var(--ink); }
+.bg-dini-l { font: 800 11px/1 "PT Sans", sans-serif; letter-spacing: 1.2px; text-transform: uppercase; color: var(--ink-2); }
+.bg-dini-a { font: 700 20px/1.2 "PT Sans", sans-serif; color: var(--band, #1d4d36); margin-top: 3px; }
+.bg-dini-t, .bg-kaza-s { font-size: 14px; color: var(--ink-2); }
+.bg-dini-m { display: flex; align-items: center; gap: 4px; justify-content: flex-end; font-size: 12px; font-weight: 700; color: var(--go, #2e7d46); }
+.bg-dini-m svg { width: 14px; height: 14px; }
+.ims-kap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.ims { width: 100%; border-collapse: collapse; font: 13px/1.2 "PT Sans Narrow", "PT Sans", sans-serif; font-variant-numeric: tabular-nums; }
+.ims th { background: var(--panel-alt); font: 700 11px "PT Sans", sans-serif; text-transform: uppercase; letter-spacing: .4px; color: var(--ink-2); padding: 7px 4px; text-align: center; position: sticky; top: 0; }
+.ims td { padding: 7px 4px; text-align: center; border-bottom: 1px solid var(--panel-line); white-space: nowrap; }
+.ims td:first-child { text-align: left; padding-left: 10px; }
+.ims td small { display: block; font-size: 10px; color: #7d7461; }
+.ims tr.on td { background: #e9c766; font-weight: 700; }
+.ims tr.cuma td:first-child b { color: var(--go, #2e7d46); }
+.ims td.ks { color: var(--ink-2); }
+.bg-row.dini { min-height: 54px; font-size: 16px; }
+.bg-row.dini span small { display: block; font-size: 12px; color: #7d7461; font-weight: 400; }
+.kz-row { display: grid; grid-template-columns: 1fr 44px 56px auto; align-items: center; gap: 8px; padding: 8px 14px; border-bottom: 1px solid var(--panel-line); font-size: 17px; }
+.kz-row:nth-child(even) { background: var(--panel-alt); }
+.kz-b { width: 44px; height: 40px; border: 1px solid var(--panel-line); background: var(--panel); border-radius: 3px; font: 700 20px "PT Sans", sans-serif; color: var(--ink); cursor: pointer; }
+.kz-n { text-align: center; font: 700 22px "PT Sans Narrow", sans-serif; font-variant-numeric: tabular-nums; }
+.kz-kil { padding: 9px 12px; font-size: 14px; }
+.kz-kil[disabled] { opacity: .45; }
+.kz-toplu { display: grid; gap: 10px; font-size: 14px; color: var(--ink-2); }
+.kz-toplu-d { display: flex; gap: 8px; }
+.kz-toplu-d input { flex: 1; min-width: 0; padding: 10px; font-size: 16px; border: 1px solid var(--panel-line); border-radius: 3px; background: #fff; }

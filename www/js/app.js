@@ -49,6 +49,7 @@ const store = {
 
 let E = null;              // arama motoru
 let S = { meals: null, arabic: true, tafsir: true };
+let kaza = {};            // kaza takibi: { sabah: 3, ogle: 0, … }
 let saved = [];            // kaydedilen ayet indeksleri
 const view = { mealFilter: "all", tafsirOpen: false, silOnay: false };
 
@@ -218,11 +219,91 @@ function kiblePanel(pos) {
         <div class="kb-wrap">${compassSvg()}</div>
         <div class="kb-big" id="kb-big">${pos ? `${Math.round(K.qiblaBearing(pos.lat, pos.lon))}°` : "—"}</div>
         <div class="kb-msg" id="kb-msg">${pos ? kibleMetin(pos) : "Kıble yönü için konum ve pusula gerekir."}</div>
+        ${pos ? kibleSaatiSatir(pos) : ""}
         <button class="btn-go" id="kb-start" data-act="kible">${ICON.compass}Pusulayı aç</button>
         <div class="kb-ipucu">Telefonu düz tut; metal eşya ve mıknatıslı kılıftan uzak dur. Ok kayıyorsa telefonla havada birkaç kez “8” çiz.
           ${KURAN ? `<a href="#/ayet/2/144">Kur'an'da kıble · Bakara 2:144 ›</a>` : ""}</div>
       </div>
     </section>`;
+}
+
+// Kıble saati: güneş tam kıble yönündeyken güneşe dönen kıbleye dönmüş olur (pusulasız doğrulama)
+function kibleSaatiSatir(pos) {
+  const t = V.kibleSaati(pos.lat, pos.lon, K.qiblaBearing(pos.lat, pos.lon));
+  if (!t) return "";
+  const gecti = t < new Date();
+  return `<div class="kb-saat"><b>Kıble saati ${V.hhmm(t)}</b> · ${gecti ? "bugün geçti; yarın da hemen hemen aynı saatte" : "o an güneşe dön: Kâbe tam önünde, gölgen tam arkanda kalır"}. Pusulanın doğru gösterip göstermediğini böyle sınayabilirsin.</div>`;
+}
+
+// Kerahat uyarısı (Bugün)
+function kerahatPanel(pos, now) {
+  const k = V.kerahatSimdi(pos.lat, pos.lon, now);
+  if (!k) return "";
+  return `<section class="panel bg-kerahat"><div class="panel-b"><b>Kerahat vakti · ${V.hhmm(k.bas)}–${V.hhmm(k.bit)}</b>
+    <span>${esc(k.ad)}. Bu sürede namaz kılınması mekruhtur; vaktin çıkmasını bekle.</span></div></section>`;
+}
+
+// Sıradaki dinî gün kartı (Bugün)
+function diniGunPanel(now) {
+  const g = V.diniGunler(now, 1)[0];
+  if (!g) return "";
+  const tarih = g.gun.toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "long" });
+  const ne = g.kalanGun === 0 ? "bugün" : g.kalanGun === 1 ? "yarın" : `${g.kalanGun} gün sonra`;
+  return `<a class="panel bg-dini" href="#/imsakiye"><span class="bg-dini-l">Sıradaki dinî gün</span>
+    <span class="bg-dini-a">${esc(g.ad)}</span><span class="bg-dini-t">${esc(tarih)}${/Kandil|Gecesi/.test(g.ad) ? " akşamı" : ""} · <b>${ne}</b>${g.tahmini ? " · tahmini" : ""}</span>
+    <span class="bg-dini-m">İmsakiye ve tüm dinî günler ${ICON.next}</span></a>`;
+}
+
+// İmsakiye (30 gün) + dinî günler
+function imsakiyeView() {
+  const pos = S.konum, now = new Date();
+  const gunAd = ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"];
+  let tablo = `<div class="panel-b nz-empty"><div>İmsakiye için konum gerekir.</div><button class="btn-go" data-act="konum">${ICON.compass}Konumumu kullan</button><div class="kb-msg" id="nz-msg"></div></div>`;
+  if (pos) {
+    const qa = K.qiblaBearing(pos.lat, pos.lon);
+    const satir = V.imsakiye(pos.lat, pos.lon, now, 30).map((r, i) => {
+      const ks = V.kibleSaati(pos.lat, pos.lon, qa, r.gun);
+      return `<tr class="${i === 0 ? "on" : ""}${r.gun.getDay() === 5 ? " cuma" : ""}"><td><b>${r.gun.getDate()}</b> ${gunAd[r.gun.getDay()]}${r.h ? `<small>${r.h.gun} ${esc(r.h.ayAdi.slice(0, 3))}</small>` : ""}</td>
+        ${V.VAKITLER.map((v) => `<td>${V.hhmm(r.t[v.key])}</td>`).join("")}<td class="ks">${ks ? V.hhmm(ks) : "—"}</td></tr>`;
+    }).join("");
+    tablo = `<div class="ims-kap"><table class="ims"><thead><tr><th>Gün</th>${V.VAKITLER.map((v) => `<th>${esc(v.ad)}</th>`).join("")}<th>Kıble s.</th></tr></thead><tbody>${satir}</tbody></table></div>
+      <div class="panel-b nz-foot">Bulunduğun yere göre, Diyanet yöntemiyle telefonda hesaplanır. Kıble saati: güneşin tam kıble yönünde olduğu an.</div>`;
+  }
+  const dini = V.diniGunler(now, 14).map((g) => `<div class="bg-row dini${g.kalanGun === 0 ? " on" : ""}"><span>${esc(g.ad)}<small>${esc(g.gun.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", weekday: "long" }))}${g.tahmini ? " · tahmini" : ""}</small></span><b>${g.kalanGun === 0 ? "bugün" : g.kalanGun + " gün"}</b></div>`).join("");
+  return `${topbar("Geri")}
+  <section class="band"><div class="eyebrow">Bugün</div><h1>İmsakiye ve dinî günler</h1></section>
+  <main class="content">
+    <section class="panel"><div class="panel-h"><span>İmsakiye</span><span>30 gün</span></div>${tablo}</section>
+    <section class="panel"><div class="panel-h"><span>Dinî günler</span><span>Kandiller akşamdan başlar</span></div><div>${dini}</div>
+      <div class="panel-b nz-foot">Tarihler Diyanet İşleri Başkanlığı takviminden; "tahmini" olanlar hicri takvimle hesaplandı, 1 gün fark olabilir.</div></section>
+    <div class="made">${esc(MAKER)}</div>
+  </main>`;
+}
+
+// Kaza takibi
+const KAZA = [["sabah", "Sabah"], ["ogle", "Öğle"], ["ikindi", "İkindi"], ["aksam", "Akşam"], ["yatsi", "Yatsı"], ["vitir", "Vitir"], ["oruc", "Oruç"]];
+const kazaToplam = () => KAZA.slice(0, 6).reduce((t, [k]) => t + (kaza[k] || 0), 0);
+function kazaPanel() {
+  const n = kazaToplam(), o = kaza.oruc || 0;
+  return `<a class="panel bg-kaza" href="#/kaza"><span class="bg-dini-l">Kaza takibi</span>
+    <span class="bg-kaza-s">${n || o ? `<b>${n}</b> namaz${o ? ` · <b>${o}</b> oruç` : ""} borcun var` : "Kaza borcun yok ya da henüz eklemedin"}</span><span class="bg-dini-m">Aç ${ICON.next}</span></a>`;
+}
+function kazaView() {
+  const satir = KAZA.map(([k, ad]) => `<div class="kz-row"><span class="kz-ad">${esc(ad)}</span>
+    <button class="kz-b" data-act="kaza" data-k="${k}" data-d="1" aria-label="${esc(ad)} ekle">+</button>
+    <b class="kz-n">${kaza[k] || 0}</b>
+    <button class="btn-go kz-kil" data-act="kaza" data-k="${k}" data-d="-1" ${kaza[k] ? "" : "disabled"}>${k === "oruc" ? "Tuttum" : "Kıldım"} −1</button></div>`).join("");
+  return `${topbar("Geri")}
+  <section class="band"><div class="eyebrow">Bugün</div><h1>Kaza takibi</h1></section>
+  <main class="content">
+    <section class="panel"><div class="panel-h"><span>Kaza borcum</span><span>${kazaToplam()} namaz · ${kaza.oruc || 0} oruç</span></div>${satir}</section>
+    <section class="panel"><div class="panel-h">Toplu ekle</div><div class="panel-b kz-toplu">
+      <span>Kılamadığın gün sayısı: her vakit ve vitir için o kadar eklenir.</span>
+      <div class="kz-toplu-d"><input id="kz-gun" type="number" min="1" max="36500" inputmode="numeric" placeholder="Gün"><button class="btn-go" data-act="kaza-toplu">Ekle</button></div>
+      <button class="btn-light" data-act="kaza-sifir">${view.kazaSifir ? "Emin misin? Tekrar dokun" : "Hepsini sıfırla"}</button></div></section>
+    <div class="note">Sayılar yalnızca bu telefonda saklanır. Kaza namazı, kerahat vakitleri dışında her zaman kılınabilir; ayrıntı için Diyanet İşleri Başkanlığı'nı (ALO 190) esas alın.</div>
+    <div class="made">${esc(MAKER)}</div>
+  </main>`;
 }
 
 function bugunView() {
@@ -251,7 +332,8 @@ function bugunView() {
         <span class="bg-kalan"><span class="bg-kalan-l">Kalan</span><span class="bg-sayac" id="nz-count">${V.sayac(nx.at - now)}</span></span>
       </a></section>
     <section class="panel"><div class="panel-h"><span>Vakitler</span><span>Bugün</span></div><div>${rows}</div>
-      <div class="panel-b nz-foot">Diyanet yöntemiyle telefonda hesaplanır; resmî takvimle 1–2 dakika fark olabilir. <a href="#" data-act="konum">Konumu güncelle</a></div></section>`;
+      <div class="panel-b nz-foot">Diyanet yöntemiyle telefonda hesaplanır; resmî takvimle 1–2 dakika fark olabilir. <a href="#" data-act="konum">Konumu güncelle</a> · <a href="#/imsakiye">İmsakiye</a></div></section>
+    ${kerahatPanel(pos, now)}`;
   }
   let gunAyet = "";
   if (KURAN) {
@@ -277,9 +359,11 @@ function bugunView() {
     ${ramazanPanel(pos)}
     ${ust}
     ${pos ? kiblePanel(pos) : ""}
+    ${diniGunPanel(now)}
     ${gunAyet}
     <a class="bg-devam" href="#/tesbih"><span class="bg-devam-z">Son zikir · ${esc(tz.ad)}</span>
       <span class="btn-go bg-devam-b">DEVAM ${tz.h ? `${tz.n}/${tz.h}` : tz.n} ${ICON.next}</span></a>
+    ${kazaPanel()}
     ${pos ? bildirimPanel(pos) : ""}
     <div class="rh-dugmeler"><a class="btn-light" href="#/rehber">? Nasıl kullanılır</a><button class="btn-light" data-act="rh-oner">↗ Arkadaşına öner</button></div>
     <div class="note">Konumun yalnızca bu telefonda saklanır ve vakit ile kıble hesabı için kullanılır; hiçbir yere gönderilmez. Bildirimler telefonun kendisine kurulur.</div>
@@ -1020,9 +1104,12 @@ function route() {
   else if (parts[0] === "rehber") { html = RH.rehberView(topbar, MAKER); nav = "ayar"; }
   else if (parts[0] === "namaz" || parts[0] === "kible") { html = bugunView(); nav = "bugun"; }
   else if (parts[0] === "miras") { html = mirasView(); nav = "miras"; }
+  else if (parts[0] === "imsakiye") { html = imsakiyeView(); nav = "bugun"; }
+  else if (parts[0] === "kaza") { html = kazaView(); nav = "bugun"; }
   else if (!html) { html = bugunView(); nav = "bugun"; }
   if (!html) return;
   if (parts[0] !== "ayarlar") view.silOnay = false;
+  if (parts[0] !== "kaza") view.kazaSifir = false;
   kibleStop();
   $app.innerHTML = html;
   if (!parts[0] || parts[0] === "namaz" || parts[0] === "kible") namazMount();
@@ -1071,6 +1158,10 @@ document.addEventListener("click", async (e) => {
   if (!el || el.tagName === "INPUT" || el.tagName === "FORM") return;
   const act = el.dataset.act;
   if (act === "rh-tamam" || act === "rh-kapat") { RH.ipucuTamam(act === "rh-kapat"); return; }
+  if (act === "kaza") { const k = el.dataset.k; kaza[k] = Math.max(0, (kaza[k] || 0) + Number(el.dataset.d)); await store.set("kaza", kaza); try { window.Capacitor?.Plugins?.Haptics?.impact({ style: "LIGHT" }); } catch {} route(); return; }
+  if (act === "kaza-toplu") { const n = Math.min(36500, Math.max(0, parseInt(document.getElementById("kz-gun")?.value, 10) || 0)); if (!n) { toast("Gün sayısını yaz"); return; }
+    for (const [k] of KAZA.slice(0, 6)) kaza[k] = (kaza[k] || 0) + n; await store.set("kaza", kaza); toast(`${n} günlük kaza eklendi`); route(); return; }
+  if (act === "kaza-sifir") { if (!view.kazaSifir) { view.kazaSifir = true; route(); return; } kaza = {}; view.kazaSifir = false; await store.set("kaza", kaza); toast("Kaza sayıları sıfırlandı"); route(); return; }
   if (act === "rh-bastan") { RH.bastan(); toast("Rehber baştan başladı"); if (location.hash && location.hash !== "#/") location.hash = "#/"; else route(); return; }
   if (act === "rh-oner" || act === "rh-paylas-kart") { RH.puanKartKapat(); RH.paylas(toast); return; }
   if (act === "rh-yaz") { RH.puanKartKapat(); RH.bizeYaz(VERSION, `konum ${S.konum ? "seçili" : "yok"} · bildirim ${S.vakit?.on ? "açık" : "kapalı"}`); return; }
@@ -1176,6 +1267,7 @@ async function boot() {
   S = { ...S, ...(await store.get("settings", {})) };
   if (KURAN && (!Array.isArray(S.meals) || !S.meals.some((t) => E.meals.includes(t)))) S.meals = [...E.meals];
   saved = await store.get("saved", []);
+  kaza = await store.get("kaza", {});
   const kayitliMiras = await store.get("miras", null);
   if (kayitliMiras && typeof kayitliMiras === "object") mg = { ...M.BOS, ...kayitliMiras };
   for (const k of MOD_KEYS) modVeri[k] = await store.get("mod:" + k, null);

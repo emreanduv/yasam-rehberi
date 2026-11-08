@@ -134,6 +134,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .targets { display: flex; gap: 6px; align-items: center; justify-content: center; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
 .targets button { font: 600 13px var(--f-head); min-width: 44px; padding: 5px 8px; border: 1px solid var(--line); background: var(--paper); border-radius: 3px; cursor: pointer; font-variant-numeric: tabular-nums; }
 .targets button[aria-pressed="true"] { background: var(--navy); color: #fff; border-color: var(--navy); }
+#tgtGir { display: inline-flex; gap: 4px; } #tgtGir[hidden] { display: none; }
+#tgtSayi { width: 96px; font: 600 14px var(--f-head); padding: 5px 6px; border: 1px solid var(--line); border-radius: 3px; background: #fff; color: var(--ink); }
 
 /* Gelen kutusu / istatistik */
 .stat { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px 10px; font-size: 14px; }
@@ -370,6 +372,8 @@ input, select, textarea { font-size: 16px !important; }
         <button data-t="99">99</button>
         <button data-t="100">100</button>
         <button data-t="1000">1000</button>
+        <button id="tgtOzel" aria-label="Özel hedef yaz">Özel</button>
+        <span id="tgtGir" hidden><input id="tgtSayi" type="number" min="1" max="1000000" inputmode="numeric" aria-label="Özel hedef" placeholder="ör. 500"><button id="tgtTamam">Tamam</button></span>
       </div>
       <div class="controls" id="controls">
         <button class="btn" id="undo">−1 Geri al</button>
@@ -724,9 +728,12 @@ input, select, textarea { font-size: 16px !important; }
       });
     }
 
+    var hazir = false;
     document.querySelectorAll(".targets button[data-t]").forEach(function (b) {
-      b.setAttribute("aria-pressed", String(+b.dataset.t === t));
+      b.setAttribute("aria-pressed", String(+b.dataset.t === t)); if (+b.dataset.t === t) hazir = true;
     });
+    $("tgtOzel").setAttribute("aria-pressed", String(!hazir && t > 0));
+    $("tgtOzel").textContent = !hazir && t > 0 ? "Özel: " + t.toLocaleString("tr-TR") : "Özel";
 
     // Sıra (tesbihat)
     var seq = $("seq"); seq.innerHTML = "";
@@ -1297,6 +1304,15 @@ input, select, textarea { font-size: 16px !important; }
   document.querySelectorAll(".targets button[data-t]").forEach(function (b) {
     b.onclick = function () { S.targets[cur().id] = +b.dataset.t; save(); render(); };
   });
+  // Özel hedef: 1 – 1.000.000 arası istediğin sayı (ör. 500, 70.000)
+  $("tgtOzel").onclick = function () { $("tgtOzel").hidden = true; $("tgtGir").hidden = false; $("tgtSayi").value = ""; $("tgtSayi").focus(); };
+  function ozelKaydet() {
+    var n = Math.round(+$("tgtSayi").value);
+    $("tgtGir").hidden = true; $("tgtOzel").hidden = false;
+    if (n >= 1 && n <= 1000000) { S.targets[cur().id] = n; save(); render(); toast("Hedef: " + n.toLocaleString("tr-TR")); }
+  }
+  $("tgtTamam").onclick = ozelKaydet;
+  $("tgtSayi").onkeydown = function (e) { if (e.key === "Enter") ozelKaydet(); if (e.key === "Escape") { $("tgtGir").hidden = true; $("tgtOzel").hidden = false; } };
   $("mTesbihat").onclick = function () {
     S.mode = "tesbihat";
     if (!cur().seq) S.cur = "subhan";
