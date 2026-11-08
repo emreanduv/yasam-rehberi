@@ -122,7 +122,7 @@
 - Android: 1.1.0 imzasız .aab `builds` dalında → Emre dönünce Mac'te `bash imzala.sh` → Play kapalı test.
 - Diyanet aksi bir karar verirse: `KURAN = false` → 1.1.1 (veri dosyaları paketten otomatik çıkar).
 
-## 8 Kasım 2026 · 1.2.0 hazır (1.1.0 onayını bekliyor)
+## 8 Kasım 2026 · 1.1.0 YAYINDA · 1.2.0 App Review'da (yapı 30, WAITING_FOR_REVIEW)
 Ezan Vakti Pro'nun mağaza sayfasıyla özellik karşılaştırması sonrası (kod/tasarım kopyası yok; yalnız ortak işlevler):
 - Kerahat uyarısı (Bugün; güneş doğuşu +45 dk, öğle −45 dk, akşam −45 dk) — `V.kerahatler`
 - Kıble saati (güneş azimutu = kıble açısı; NOAA formülü; İstanbul 9.11 → 11:03) — `V.kibleSaati`, kıble kartında
