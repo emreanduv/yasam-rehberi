@@ -24,6 +24,19 @@ jobs:
               with urllib.request.urlopen(urllib.request.Request(r["url"], headers={"User-Agent": "YasamRehberi/1.3 (Mr. Anduv!)"})) as u: open(ad, "wb").write(u.read())
               print(ad, r["lisans"], r["yazar"])
           PY
+      - name: Ses analizi (süre, kanal, loudness, gürültü tabanı, kırpılma, sessizlikler)
+        if: ${{ inputs.incele != '' }}
+        run: |
+          sudo apt-get -qq update >/dev/null && sudo apt-get -qq install -y ffmpeg >/dev/null
+          for f in incele/*; do
+            echo "=== $f"
+            ffprobe -v error -show_entries stream=codec_type,codec_name,sample_rate,channels,bit_rate:format=duration -of compact "$f"
+            ffmpeg -hide_banner -nostats -i "$f" -vn -af ebur128=peak=true -f null - 2>&1 | grep -E "^\s+(I:|LRA:|Peak:)" | tr -s ' '
+            ffmpeg -hide_banner -nostats -i "$f" -vn -af astats=metadata=0 -f null - 2>&1 | grep -E "Overall|Noise floor dB|Peak level dB|RMS level dB|Number of samples|Flat factor|Peak count" | tail -8 | tr -s ' '
+            ffmpeg -hide_banner -nostats -i "$f" -vn -af silencedetect=n=-40dB:d=0.6 -f null - 2>&1 | grep -oE "silence_(start|end): [0-9.]+" | tr '\n' ' '; echo
+            # 1 sn'lik dilimlerde RMS (sesin nerede yoğun olduğunu görmek için)
+            ffmpeg -hide_banner -nostats -i "$f" -vn -af "asetnsamples=n=44100,astats=metadata=1:reset=1,ametadata=print:key=lavfi.astats.Overall.RMS_level" -ar 44100 -f null - 2>&1 | grep -oE "RMS_level=-?[0-9.]+|inf" | sed 's/RMS_level=//' | awk '{printf "%d ", $1} END {print ""}'
+          done
       - uses: actions/upload-artifact@v4
         if: ${{ inputs.incele != '' }}
         with: { name: ezan-incele, path: incele/ }
