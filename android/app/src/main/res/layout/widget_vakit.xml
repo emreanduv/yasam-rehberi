@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ana ekran widget'ı (FM2010 çizgisi: krem panel, yeşil bant, altın vurgu) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/w_kok" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="horizontal" android:background="#EFE8D4" android:padding="8dp">
+    <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:paddingEnd="8dp">
+        <TextView android:id="@+id/w_baslik" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="SIRADAKİ VAKİT" android:textSize="10sp" android:textStyle="bold" android:letterSpacing="0.1"
+            android:textColor="#FFFFFF" android:background="#1D4D36" android:paddingStart="6dp" android:paddingEnd="6dp" android:paddingTop="2dp" android:paddingBottom="2dp" />
+        <TextView android:id="@+id/w_ad" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Öğle" android:textSize="24sp" android:textStyle="bold" android:textColor="#1F2328" android:maxLines="1" />
+        <TextView android:id="@+id/w_saat" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="12:53'de" android:textSize="12sp" android:textColor="#5E5645" />
+        <Chronometer android:id="@+id/w_sayac" android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="1"
+            android:gravity="bottom" android:textSize="22sp" android:textStyle="bold" android:textColor="#1F2328" android:fontFeatureSettings="tnum" />
+        <TextView android:id="@+id/w_yer" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Konumuna göre" android:textSize="9sp" android:textColor="#7D7461" android:maxLines="1" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1.1" android:orientation="vertical"
+        android:background="#C8BC9A" android:padding="1dp">
+            <LinearLayout android:id="@+id/w_s0" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:orientation="horizontal" android:gravity="center_vertical" android:paddingStart="8dp" android:paddingEnd="8dp" android:background="#EFE8D4">
+                <TextView android:id="@+id/w_a0" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:text="İmsak" android:textSize="13sp" android:textColor="#1F2328" />
+                <TextView android:id="@+id/w_t0" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="--:--" android:textSize="13sp" android:textStyle="bold" android:textColor="#1F2328" android:fontFeatureSettings="tnum" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/w_s1" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:orientation="horizontal" android:gravity="center_vertical" android:paddingStart="8dp" android:paddingEnd="8dp" android:background="#EFE8D4">
+                <TextView android:id="@+id/w_a1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:text="Güneş" android:textSize="13sp" android:textColor="#1F2328" />
+                <TextView android:id="@+id/w_t1" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="--:--" android:textSize="13sp" android:textStyle="bold" android:textColor="#1F2328" android:fontFeatureSettings="tnum" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/w_s2" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:orientation="horizontal" android:gravity="center_vertical" android:paddingStart="8dp" android:paddingEnd="8dp" android:background="#EFE8D4">
+                <TextView android:id="@+id/w_a2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:text="Öğle" android:textSize="13sp" android:textColor="#1F2328" />
+                <TextView android:id="@+id/w_t2" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="--:--" android:textSize="13sp" android:textStyle="bold" android:textColor="#1F2328" android:fontFeatureSettings="tnum" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/w_s3" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:orientation="horizontal" android:gravity="center_vertical" android:paddingStart="8dp" android:paddingEnd="8dp" android:background="#EFE8D4">
+                <TextView android:id="@+id/w_a3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:text="İkindi" android:textSize="13sp" android:textColor="#1F2328" />
+                <TextView android:id="@+id/w_t3" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="--:--" android:textSize="13sp" android:textStyle="bold" android:textColor="#1F2328" android:fontFeatureSettings="tnum" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/w_s4" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:orientation="horizontal" android:gravity="center_vertical" android:paddingStart="8dp" android:paddingEnd="8dp" android:background="#EFE8D4">
+                <TextView android:id="@+id/w_a4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:text="Akşam" android:textSize="13sp" android:textColor="#1F2328" />
+                <TextView android:id="@+id/w_t4" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="--:--" android:textSize="13sp" android:textStyle="bold" android:textColor="#1F2328" android:fontFeatureSettings="tnum" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/w_s5" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+                android:orientation="horizontal" android:gravity="center_vertical" android:paddingStart="8dp" android:paddingEnd="8dp" android:background="#EFE8D4">
+                <TextView android:id="@+id/w_a5" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                    android:text="Yatsı" android:textSize="13sp" android:textColor="#1F2328" />
+                <TextView android:id="@+id/w_t5" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="--:--" android:textSize="13sp" android:textStyle="bold" android:textColor="#1F2328" android:fontFeatureSettings="tnum" />
+            </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

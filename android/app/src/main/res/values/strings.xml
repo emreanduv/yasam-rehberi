@@ -4,4 +4,6 @@
     <string name="title_activity_main">Yaşam Rehberi</string>
     <string name="package_name">com.anduv.yasamrehberi</string>
     <string name="custom_url_scheme">com.anduv.yasamrehberi</string>
+    <string name="widget_ad">Sıradaki vakit</string>
+    <string name="widget_aciklama">Sıradaki namaz vakti, geri sayım ve günün vakitleri</string>
 </resources>
