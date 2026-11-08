@@ -49,7 +49,8 @@ const store = {
 
 let E = null;              // arama motoru
 let S = { meals: null, arabic: true, tafsir: true };
-let kaza = {};            // kaza takibi: { sabah: 3, ogle: 0, … }
+let kaza = {};
+let hatim = { done: [], sayi: 0, son: null };   // hatim takibi: okunan cüzler, tamamlanan hatim sayısı, son okunan yer            // kaza takibi: { sabah: 3, ogle: 0, … }
 let saved = [];            // kaydedilen ayet indeksleri
 const view = { mealFilter: "all", tafsirOpen: false, silOnay: false };
 
@@ -575,10 +576,42 @@ function verseView(s, a) {
   </main>`;
 }
 
+// Hatim takibi: 30 cüz (Medine mushafı cüz başları), kaldığın yer
+const CUZ = [[1,1],[2,142],[2,253],[3,93],[4,24],[4,148],[5,83],[6,111],[7,88],[8,41],[9,93],[11,6],[12,53],[15,1],[17,1],[18,75],[21,1],[23,1],[25,21],[27,56],[29,46],[33,31],[36,28],[39,32],[41,47],[46,1],[51,31],[58,1],[67,1],[78,1]];
+const hatimKaydet = () => store.set("hatim", hatim);
+function sonOkunan(sure, ayet) { if (!sure || !ayet) return; hatim.son = { s: sure, a: ayet }; hatimKaydet(); }
+function hatimKart() {
+  const n = hatim.done.length, son = hatim.son;
+  return `<a class="panel bg-dini" href="#/hatim"><span class="bg-dini-l">Hatim takibi${hatim.sayi ? ` · ${hatim.sayi} hatim` : ""}</span>
+    <span class="hz-bar"><span style="width:${Math.round(n / 30 * 100)}%"></span></span>
+    <span class="bg-dini-t"><b>${n}/30 cüz</b>${son ? ` · kaldığın yer ${esc(E.surahs[son.s - 1]?.name || "")} ${son.a}` : ""}</span>
+    <span class="bg-dini-m">Cüzler ${ICON.next}</span></a>`;
+}
+function hatimView() {
+  const n = hatim.done.length, son = hatim.son;
+  const cuzler = CUZ.map(([cs, ca], i) => {
+    const no = i + 1, ok = hatim.done.includes(no);
+    return `<div class="hz-cuz${ok ? " ok" : ""}"><a href="#/sure/${cs}?a=${ca}"><b>${no}. cüz</b><small>${esc(E.surahs[cs - 1].name)} ${ca}</small></a>
+      <button data-act="cuz" data-n="${no}" aria-pressed="${ok}" aria-label="${no}. cüzü ${ok ? "okunmadı say" : "okudum say"}">${ok ? "✓" : "○"}</button></div>`;
+  }).join("");
+  return `${topbar("Geri")}
+  <section class="band"><div class="eyebrow">Sureler</div><h1>Hatim takibi</h1></section>
+  <main class="content">
+    <section class="panel"><div class="panel-h"><span>Bu hatim</span><span>${n}/30 cüz${hatim.sayi ? ` · ${hatim.sayi} hatim tamam` : ""}</span></div>
+      <div class="panel-b hz-ust"><span class="hz-bar"><span style="width:${Math.round(n / 30 * 100)}%"></span></span>
+      ${son ? `<a class="btn-go" href="#/sure/${son.s}?a=${son.a}">${ICON.next}Kaldığın yerden devam · ${esc(E.surahs[son.s - 1].name)} ${son.a}</a>` : `<a class="btn-go" href="#/sure/1">${ICON.next}Fâtiha'dan başla</a>`}
+      ${n === 30 ? `<button class="btn-go" data-act="hatim-yeni">Hatmi tamamla ve yenisine başla</button>` : ""}</div></section>
+    <section class="panel"><div class="panel-h"><span>Cüzler</span><span>Okuduğunu işaretle</span></div><div class="hz-grid">${cuzler}</div></section>
+    <div class="note">Cüz başları Medine mushafına göredir. Bir sureyi ya da ayeti açtığında kaldığın yer kendiliğinden kaydedilir. Hepsi yalnızca bu telefonda saklanır.</div>
+    <div class="made">${esc(MAKER)}</div>
+  </main>`;
+}
+
 function surahsView() {
   return `${topbar()}
   <section class="band"><div class="eyebrow">Mushaf sırası</div><h1>Sureler</h1></section>
   <main class="content">
+    ${hatimKart()}
     <section class="panel"><div class="panel-b search">
       <label for="sf" class="sr">Sure ara</label>
       <input id="sf" type="search" placeholder="Sure adı veya numarası" data-act="sfilter" autocomplete="off">
@@ -596,7 +629,7 @@ function surahView(no) {
   let rows = "";
   for (let k = 0; k < s.count; k++) {
     const v = E.verse(start + k, [first]);
-    rows += `<a class="row" href="#/ayet/${no}/${v.ayah}" style="align-items:flex-start"><b style="flex:none;width:34px;color:var(--band)">${v.ayah}</b><span style="flex:1;font-size:15px;line-height:1.5">${esc(v.texts[first])}${v.footnotes[first] ? ` <span style="color:var(--ink-2)">[dipnot]</span>` : ""}</span></a>`;
+    rows += `<a class="row" id="a${v.ayah}" href="#/ayet/${no}/${v.ayah}" style="align-items:flex-start"><b style="flex:none;width:34px;color:var(--band)">${v.ayah}</b><span style="flex:1;font-size:15px;line-height:1.5">${esc(v.texts[first])}${v.footnotes[first] ? ` <span style="color:var(--ink-2)">[dipnot]</span>` : ""}</span></a>`;
   }
   return `${topbar("Sureler")}
   <section class="band"><div class="eyebrow">${no}. sure · ${s.count} ayet</div><h1>${esc(s.name)}</h1><div class="sub">${esc(E.source(first).name)} meali</div></section>
@@ -1086,16 +1119,17 @@ function route() {
   const parts = path.split("/").filter(Boolean);
   let html = "", nav = "ara";
   // Kur'an içeriği kapalıyken bu ekranlar yok
-  if (!KURAN && ["sor", "ara", "ayet", "sureler", "sure", "kaydedilenler"].includes(parts[0])) { location.replace("#/"); return; }
+  if (!KURAN && ["sor", "ara", "ayet", "sureler", "sure", "kaydedilenler", "hatim"].includes(parts[0])) { location.replace("#/"); return; }
   if (parts[0] === "sor") { html = homeView(); }
   if (parts[0] === "ara") {
     const q = (p.get("q") || "").trim();
     if (!q) { location.replace("#/sor"); return; }
     html = p.get("t") === "ozet" ? summaryView(q) : resultsView(q);
   } else if (html) { /* sor */ }
-  else if (parts[0] === "ayet") { html = verseView(Number(parts[1]), Number(parts[2])); }
+  else if (parts[0] === "ayet") { html = verseView(Number(parts[1]), Number(parts[2])); sonOkunan(Number(parts[1]), Number(parts[2])); }
   else if (parts[0] === "sureler") { html = surahsView(); nav = "sure"; }
-  else if (parts[0] === "sure") { html = surahView(Number(parts[1])); nav = "sure"; }
+  else if (parts[0] === "sure") { html = surahView(Number(parts[1])); nav = "sure"; sonOkunan(Number(parts[1]), Number(p.get("a")) || 1); }
+  else if (parts[0] === "hatim") { html = hatimView(); nav = "sure"; }
   else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "ara"; }
   else if (parts[0] === "menu") { location.replace("#/"); return; }
   else if (parts[0] === "tesbih" || parts[0] === "saat") { html = modulView(parts[0]); nav = parts[0]; }
@@ -1116,6 +1150,7 @@ function route() {
   if (parts[0] === "kible") setTimeout(() => document.getElementById("kible")?.scrollIntoView({ block: "start" }), 50);
   renderNav(nav);
   if (parts[0] !== "kible") window.scrollTo(0, 0);
+  if (parts[0] === "sure" && Number(p.get("a")) > 1) setTimeout(() => document.getElementById("a" + p.get("a"))?.scrollIntoView({ block: "start" }), 50);
   // rehber: ekran ilk kez açılınca ipucu kartı; Bugün'de kullanım eşiğinde nazik puan sorusu
   const ekran = !parts[0] || parts[0] === "namaz" || parts[0] === "kible" ? "bugun" : parts[0];
   RH.ekranAcildi(ekran);
@@ -1158,6 +1193,8 @@ document.addEventListener("click", async (e) => {
   if (!el || el.tagName === "INPUT" || el.tagName === "FORM") return;
   const act = el.dataset.act;
   if (act === "rh-tamam" || act === "rh-kapat") { RH.ipucuTamam(act === "rh-kapat"); return; }
+  if (act === "cuz") { const n = Number(el.dataset.n); hatim.done = hatim.done.includes(n) ? hatim.done.filter((x) => x !== n) : [...hatim.done, n].sort((a, b) => a - b); await hatimKaydet(); if (hatim.done.length === 30) toast("Maşallah, 30 cüz tamam!"); const y = window.scrollY; route(); window.scrollTo(0, y); return; }
+  if (act === "hatim-yeni") { hatim.sayi = (hatim.sayi || 0) + 1; hatim.done = []; await hatimKaydet(); toast(`${hatim.sayi}. hatim tamamlandı`); route(); return; }
   if (act === "kaza") { const k = el.dataset.k; kaza[k] = Math.max(0, (kaza[k] || 0) + Number(el.dataset.d)); await store.set("kaza", kaza); try { window.Capacitor?.Plugins?.Haptics?.impact({ style: "LIGHT" }); } catch {} route(); return; }
   if (act === "kaza-toplu") { const n = Math.min(36500, Math.max(0, parseInt(document.getElementById("kz-gun")?.value, 10) || 0)); if (!n) { toast("Gün sayısını yaz"); return; }
     for (const [k] of KAZA.slice(0, 6)) kaza[k] = (kaza[k] || 0) + n; await store.set("kaza", kaza); toast(`${n} günlük kaza eklendi`); route(); return; }
@@ -1268,6 +1305,7 @@ async function boot() {
   if (KURAN && (!Array.isArray(S.meals) || !S.meals.some((t) => E.meals.includes(t)))) S.meals = [...E.meals];
   saved = await store.get("saved", []);
   kaza = await store.get("kaza", {});
+  hatim = { done: [], sayi: 0, son: null, ...(await store.get("hatim", {})) };
   const kayitliMiras = await store.get("miras", null);
   if (kayitliMiras && typeof kayitliMiras === "object") mg = { ...M.BOS, ...kayitliMiras };
   for (const k of MOD_KEYS) modVeri[k] = await store.get("mod:" + k, null);

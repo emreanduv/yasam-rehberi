@@ -13,7 +13,7 @@ export const MAGAZA = () => platform() === "ios" ? "https://apps.apple.com/app/i
 const IPUCU = {
   bugun: ["Bugün", "Sıradaki vakit ve geri sayım en üstte; “Konumumu kullan” ile vakitler bulunduğun yere göre telefonda hesaplanır. Altında kıble, son zikrin ve vakit bildirimleri. Sağ üstteki dişli Ayarlar'ı açar."],
   sor: ["Sor", "Bir soru ya da kelime yaz: ilgili ayetler üç mealde yan yana gelir; kaynak ve sürüm her ayetin altında yazar."],
-  sureler: ["Sureler", "114 sure sırayla. Bir sureye dokun, ayetleri meallerle açılsın; ayeti kaydedip paylaşabilirsin."],
+  sureler: ["Sureler", "114 sure sırayla. Bir sureye dokun, ayetleri meallerle açılsın; ayeti kaydedip paylaşabilirsin. Üstteki Hatim takibi kartında okuduğun cüzleri işaretle, kaldığın yerden devam et."],
   tesbih: ["Tesbih", "Ekrana dokundukça sayar; hedef dolunca sıradaki zikre geçer. Esmâ, serbest zikir ve tesbih atölyesi de burada. Sayın yalnız bu telefonda kalır."],
   saat: ["Saat", "Kadranlar, kadran atölyesi, hatırlatıcılar, zamanlayıcı ve kronometre. Vakit ve konum uygulamadan gelir; hatırlatıcılar telefonun kendi bildirimiyle çalışır."],
   carsi: ["Çarşı", "Reyon reyon markalar ve kaynaklı künyeleri. Barkodu kamerayla okut ya da yaz, markayı listene ekle."],

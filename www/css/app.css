@@ -370,3 +370,13 @@ html, body { overflow-x: hidden; }
 .kz-toplu { display: grid; gap: 10px; font-size: 14px; color: var(--ink-2); }
 .kz-toplu-d { display: flex; gap: 8px; }
 .kz-toplu-d input { flex: 1; min-width: 0; padding: 10px; font-size: 16px; border: 1px solid var(--panel-line); border-radius: 3px; background: #fff; }
+/* hatim takibi */
+.hz-bar { display: block; height: 8px; margin: 6px 0 2px; background: var(--panel-alt); border: 1px solid var(--panel-line); border-radius: 4px; overflow: hidden; }
+.hz-bar span { display: block; height: 100%; background: var(--go); }
+.hz-ust { display: grid; gap: 10px; }
+.hz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 6px; padding: 10px; }
+.hz-cuz { display: flex; align-items: stretch; border: 1px solid var(--panel-line); border-radius: 3px; background: var(--field); overflow: hidden; }
+.hz-cuz a { flex: 1; min-width: 0; padding: 7px 8px; text-decoration: none; color: var(--ink); display: grid; }
+.hz-cuz a b { font-size: 14px; } .hz-cuz a small { font-size: 11px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hz-cuz button { width: 36px; border: 0; border-left: 1px solid var(--panel-line); background: var(--panel-alt); font: 700 16px "PT Sans", sans-serif; color: var(--ink-2); cursor: pointer; }
+.hz-cuz.ok { border-color: var(--go-edge); } .hz-cuz.ok button { background: var(--go); color: #fff; }
