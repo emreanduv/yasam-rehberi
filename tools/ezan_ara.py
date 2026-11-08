@@ -2,14 +2,23 @@
 import json, re, sys, urllib.parse, urllib.request
 API = "https://commons.wikimedia.org/w/api.php"
 UA = {"User-Agent": "YasamRehberi/1.3 (Mr. Anduv!; github.com/emreanduv/yasam-rehberi)"}
+import time, urllib.error
 def q(**p):
     p.update(format="json", maxlag="5")
-    with urllib.request.urlopen(urllib.request.Request(API + "?" + urllib.parse.urlencode(p), headers=UA), timeout=60) as r:
-        return json.load(r)
+    for deneme in range(8):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(API + "?" + urllib.parse.urlencode(p), headers=UA), timeout=60) as r:
+                return json.load(r)
+        except urllib.error.HTTPError as e:
+            if e.code not in (429, 503): raise
+            bekle = int(e.headers.get("Retry-After") or 0) or 10 * (deneme + 1)
+            print(f"{e.code}: {bekle} sn bekleniyor", file=sys.stderr); time.sleep(bekle)
+    raise SystemExit("Commons API yanıt vermedi")
 basliklar = set()
 for terim in ["adhan", "azan", "ezan", "adhaan", "call to prayer", "athan", "ezan sesi"]:
     for x in q(action="query", list="search", srsearch=f"{terim} filetype:audio", srnamespace=6, srlimit=50)["query"]["search"]:
         basliklar.add(x["title"])
+    time.sleep(2)
 for kat in ["Category:Adhan", "Category:Audio files of adhan", "Category:Adhan audio"]:
     try:
         for x in q(action="query", list="categorymembers", cmtitle=kat, cmtype="file", cmlimit=200)["query"]["categorymembers"]: basliklar.add(x["title"])
@@ -19,7 +28,7 @@ b = sorted(basliklar)
 import time
 print("aday:", len(b), file=sys.stderr)
 for i in range(0, len(b), 10):
-    time.sleep(1)
+    time.sleep(3)
     r = q(action="query", titles="|".join(b[i:i+10]), prop="videoinfo", viprop="url|size|extmetadata|mime")
     for pg in r["query"]["pages"].values():
         ii = (pg.get("videoinfo") or [{}])[0]; m = ii.get("extmetadata", {})
