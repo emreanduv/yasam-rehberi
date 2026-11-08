@@ -673,6 +673,7 @@ function settingsView() {
       <div class="panel-b" style="font-size:13px;line-height:1.5;color:#3d382d;border-top:1px solid var(--panel-line)">
         Mealler ve tefsir <a href="https://quranenc.com">QuranEnc.com</a>'dan alınmıştır ve hiçbir değişiklik yapılmadan gösterilir.
         ${linkTanzil(E.core.meta.arabic_credit)}
+        <br>Ezan bildirim sesi: <a href="https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg">“Beautiful adhan”</a>, Adam-synagda, Wikimedia Commons (CC0, kamu malı); ilk 30 saniyesi.
       </div>
     </section>
     <a class="btn-go btn-dark" href="https://quranenc.com/tr/browse/turkish_rwwad">${ICON.note}Mealle ilgili not gönder</a>
@@ -686,7 +687,7 @@ function settingsView() {
 // ---------------------------------------------------------------------------
 // Namaz: vakitler, bildirimler, kıble
 // ---------------------------------------------------------------------------
-const VAKIT_VARSAYILAN = { on: false, keys: { imsak: true, gunes: false, ogle: true, ikindi: true, aksam: true, yatsi: true }, once: 0, sahur: true };
+const VAKIT_VARSAYILAN = { on: false, keys: { imsak: true, gunes: false, ogle: true, ikindi: true, aksam: true, yatsi: true }, once: 0, sahur: true, ses: "dit" };
 const kible = { stop: null, heading: null, gotEvent: false, timer: null, tick: null, decl: 0 };
 const ayarVakit = () => ({ ...VAKIT_VARSAYILAN, ...(S.vakit || {}), keys: { ...VAKIT_VARSAYILAN.keys, ...((S.vakit || {}).keys || {}) } });
 
@@ -765,6 +766,9 @@ function bildirimPanel(pos) {
     ${V.VAKITLER.map((v) => row(`${v.ad}${v.key === "aksam" ? " <small>(Ramazan'da iftar)</small>" : v.key === "gunes" ? " <small>(doğuş)</small>" : ""}`, "k:" + v.key, a.keys[v.key], !a.on)).join("")}
     ${row("Ramazan'da sahur hatırlatması <small>(imsaktan 45 dk önce)</small>", "sahur", a.sahur, !a.on)}
     ${onceSel}
+    <label class="opt"><span>Bildirim sesi${a.ses === "ezan" && a.once ? ` <small>(ezan yalnız vakit girince çalar; önceden haberde kısa ses)</small>` : ""}</span>
+    <select data-act="vses" class="nz-sel" ${a.on ? "" : "disabled"}>${[["dit", "Kısa ses"], ["ezan", "Ezan (ilk 30 sn)"], ["sistem", "Telefonun sesi"]]
+      .map(([k, l]) => `<option value="${k}" ${a.ses === k ? "selected" : ""}>${l}</option>`).join("")}</select></label>
     </div>
     <div class="panel-b nz-foot" id="nz-bstat">${!pos ? "Bildirimler için önce konumu kullan." : a.on ? "Kuruluyor…" : "Kapalı."}</div>
     <div class="panel-b" style="padding-top:0"><button class="btn-light" data-act="vdeneme">Deneme bildirimi gönder</button></div>
@@ -994,7 +998,7 @@ async function bildirimKur() {
   if (!B.destekli()) return null;
   if (!a.on || !S.konum) { await B.iptal(); return 0; }
   const list = V.plan(S.konum.lat, S.konum.lon, a);
-  await B.kur(list);
+  await B.kur(list, undefined, a.ses);
   return list;
 }
 
@@ -1221,7 +1225,7 @@ document.addEventListener("click", async (e) => {
   else if (act === "kible") { kibleStart(); }
   else if (act === "konum") { e.preventDefault(); if (await konumAl("nz-msg")) { await bildirimKur(); route(); } }
   else if (act === "vdeneme") {
-    if (await B.izinIste()) { await B.deneme(); toast("5 saniye içinde deneme bildirimi gelecek"); }
+    if (await B.izinIste()) { await B.deneme(ayarVakit().ses); toast("5 saniye içinde deneme bildirimi gelecek"); }
     else toast("Bildirim izni verilmedi");
   }
   else if (act === "vexact") { e.preventDefault(); await B.tamZamanliAyar(); }
@@ -1249,9 +1253,10 @@ document.addEventListener("click", async (e) => {
 document.addEventListener("change", async (e) => {
   const el = e.target;
   if (el.dataset.act === "mr-tog") { const g = mirasGirdi(); g[el.dataset.k] = el.dataset.k === "es" ? (el.checked ? 1 : 0) : el.checked; await mirasDegisti(); return; }
-  if (el.dataset.act === "vopt" || el.dataset.act === "vonce") {
+  if (el.dataset.act === "vopt" || el.dataset.act === "vonce" || el.dataset.act === "vses") {
     const a = ayarVakit();
     if (el.dataset.act === "vonce") a.once = Number(el.value);
+    else if (el.dataset.act === "vses") a.ses = el.value;
     else if (el.dataset.key === "on") {
       if (el.checked && !(await B.izinIste())) { el.checked = false; toast("Bildirim izni verilmedi. Telefonun Ayarlar bölümünden açabilirsin."); return; }
       a.on = el.checked;

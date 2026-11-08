@@ -88,12 +88,12 @@ export function plan(lat, lon, ayar, now = new Date()) {
       if (v.key === "gunes") body = once ? `Güneşin doğmasına ${ayar.once} dakika kaldı.` : "Güneş doğdu; kerahat vakti.";
       if (ram && v.key === "aksam") { title = `İftar vakti · ${hhmm(t.aksam)}`; body = once ? `İftara ${ayar.once} dakika kaldı.` : "İftar vakti. Hayırlı iftarlar!"; }
       if (ram && v.key === "imsak") { title = `İmsak · ${hhmm(t.imsak)}`; body = once ? `İmsaka ${ayar.once} dakika kaldı.` : "İmsak vakti girdi; oruç başladı."; }
-      gunluk.push({ slot: VAKITLER.indexOf(v), at, title, body });
+      gunluk.push({ slot: VAKITLER.indexOf(v), at, title, body, ezan: !once && v.key !== "gunes" });   // ezan sesi yalnız vakit girince (güneşte ezan okunmaz)
     }
     for (const n of gunluk.sort((a, b) => a.at - b.at)) {
       if (n.at <= now) continue;
       if (out.length >= MAX_BEKLEYEN) break;
-      out.push({ id: ID_BASE + g * 10 + n.slot, at: n.at, title: n.title, body: n.body });
+      out.push({ id: ID_BASE + g * 10 + n.slot, at: n.at, title: n.title, body: n.body, ezan: !!n.ezan });
     }
   }
   return out;
