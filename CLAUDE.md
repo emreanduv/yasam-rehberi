@@ -26,3 +26,21 @@ Yayın sırası: incelemedeki/testteki mağazada gönderilen sürüme onay gelen
 
 ### Reklam panoları (Mr. Anduv! marka tutarlılığı)
 Herhangi bir oyunda/uygulamada reklam ya da reklam panosu (stadyum panosu, tabela, kayan şerit) varsa **yalnız Mr. Anduv! ortak pano seti** kullanılır. Kaynak: emreanduv/kaptan-mecit `km3/veri/takimlar.json` → `"panolar"` (Champion Battle Manager ile aynı). Aynı metinler, aynı zemin/yazı renkleri; dönen panolarda 7 saniyede bir değişim (`(i*5 + tur*3) % n`). Başka marka, kurum ya da uydurma marka yok. Listeye yeni oyun/hesap eklenince önce kaynak listeye eklenir, sonra bütün repolarda güncellenir.
+
+### Klasik kumanda (Gameboy modu) standardı — Emre'nin onayladığı ölçü (Kurt Yolu 1.3.5, 11 Kasım 2026)
+Bütün oyun ve uygulamalarda bundan sonra bu tarif uygulanır. Kendi kumandasını sıfırdan yazma; en son çalışan sürümü kopyala: Phaser oyunlarında emreanduv/kurt-yolu `src/kumanda.js` (+ `src/theme.js` gbGenislik), DOM/canvas oyunlarında emreanduv/legend-heads `www/kumanda.js`, emreanduv/kaptan-mecit `www/klasik/kumanda.js`.
+
+**Ölçü (dik ekran):**
+- Oyun ekranı altın/tema çerçevenin içine **boşluksuz** oturur: içeride siyah bant yok, çerçeve ekranın iki kenarına yapışık (kenar payı ≈6 px, çerçeve iç payı ≈7 px, ince çift halka).
+- Çerçeve saatin/çentiğin hemen altından başlar (güvenli alan + ≈6 px), kumandanın hemen üstünde biter; arada boş zemin kalmaz.
+- Kumanda altta kendi zemininde, ≈222–240 px yükseklik; yön haçı ≈130 px, A/B ≈66 px, MENÜ hapı, oyunun adı ve "Bir Mr. Anduv! yapımıdır.".
+- Boşluğu oyun alanını büyüterek kapat, çerçeveyi daraltarak değil: oyunun görüş alanı (genişlik/yükseklik) kumandanın üstünde kalan kutunun oranına göre seçilir (Kurt Yolu: genişlik 360–480; Legend Heads/Kaptan Mecit: sahne oranı serbest, kamera izler). Karakterler küçülmez, daha fazla alan görünür.
+- Kutunun ölçüsü telefonun gerçek ölçüsüyle (güvenli alan dahil) yerleşim oturduktan sonra hesaplanır ve cihazda saklanır; açılıştaki tahminden farklıysa oyun ana menüdeyken bir kez yeniden kurulur. iPhone açılışın ilk anında güvenli alanı 0 bildirebilir.
+
+**Kurallar:**
+- Yerleşim JS ile piksel olarak; `vh`, `cqw/cqh` ve dolguya güvenilmez (WebKit'te taşma). Güvenli alan ölçüm kutusuyla `env(safe-area-inset-*)`'ten okunur; döndürme/yeniden boyutlanmada birkaç kez yeniden ölçülür.
+- Oklar CSS üçgen (ya da `&#xFE0E;`); iPhone ◀ ▶'yı emojiye çeviriyor.
+- Yan ekranda: yön haçı solda, A/B sağda, oyun ortada tam yükseklikte; paneller ≈150–190 px.
+- Odak çerçevesi kamera kaymasını ve düğmenin kendi boyunu hesaba katar. Menülerde yön tuşları gezer, A basar, B geri, MENÜ mola. Bluetooth oyun kolu (Gamepad API) ve klavye her modda çalışır.
+- Ayar varsayılan olarak kapalı, Ayarlar'dan açılır; ipucu kartı. Klasik kumanda kapalıyken oyunun desteklemediği yönde "telefonu çevir ya da klasik kumandayı aç" perdesi.
+- Her oyunun kabuğu kendi temasında (renk, yazı, logo).
