@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fırsat Akışı — market katalogları (haftalık aktüel / indirim broşürleri).
+"""Fırsat Vitrini — market katalogları (haftalık aktüel / indirim broşürleri).
 
 Zincirlerin çoğu kataloğunu görsel olarak ya da kendi uygulamasında yayımlıyor; bu yüzden herkese açık
 katalog dizininden (akakce.com/brosurler, robots.txt izinli) yalnız ŞU BİLGİLER alınır: zincir adı, katalog adı,

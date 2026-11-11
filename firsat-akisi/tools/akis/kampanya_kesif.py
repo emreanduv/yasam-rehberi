@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Çarşı markalarının kampanya sayfalarını bulur (Fırsat Akışı canlı taramasına ekler).
+"""Çarşı markalarının kampanya sayfalarını bulur (Fırsat Vitrini canlı taramasına ekler).
 
 carsi_markalar.json'daki her markanın kendi web sitesinde /kampanyalar, /kampanya, /indirim … yollarını yoklar.
 Sayfa açılıyor, aynı sitede kalıyor, ana sayfaya dönmüyor ve içinde kampanya/indirim sözcükleri geçiyorsa

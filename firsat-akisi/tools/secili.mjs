@@ -1,5 +1,5 @@
-// Fırsat Akışı — seçilmiş kampanyalar ve marka dizini → JSON (veri hattının ilk adımı).
-// kaynak/ klasöründeki dosyalar yayındaki Fırsat Akışı ile aynıdır (deals*.js, brands.js, carsi-markalar.js);
+// Fırsat Vitrini — seçilmiş kampanyalar ve marka dizini → JSON (veri hattının ilk adımı).
+// kaynak/ klasöründeki dosyalar yayındaki Fırsat Vitrini ile aynıdır (deals*.js, brands.js, carsi-markalar.js);
 // yayında değişince buraya da kopyalanır. Bu betik onları tarayıcı yerine Node içinde çalıştırır ve
 //   tools/secili.json  → { deals:[…], markalar:[{n,a,t,off,cat}] }
 // yazar. Kullanım: node tools/secili.mjs

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Saat Vitrini veri hattı — GitHub Actions'ta zamanlanmış çalışır (ücretsiz).
 
-Yayındaki tarayıcının (tools/saat_kaynak.py, Fırsat Akışı'ndaki saat/saat_kaynak.py ile aynı) bir turunu çalıştırır;
+Yayındaki tarayıcının (tools/saat_kaynak.py, Fırsat Vitrini'ndaki saat/saat_kaynak.py ile aynı) bir turunu çalıştırır;
 fotoğrafları indirmez (uygulama satıcının kendi adresinden gösterir), sonucu uygulamanın okuduğu sade biçimde yazar:
   çıktı: <hedef>/vitrin.json   (varsayılan hedef: ./veri)
 Bir kaynak o tur ulaşılamazsa önceki turdaki ürünleri korunur (saat_kaynak'ın kendi kuralı).

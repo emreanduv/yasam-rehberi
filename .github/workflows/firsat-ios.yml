@@ -1,4 +1,4 @@
-name: Fırsat Akışı · iOS (App Store Connect / TestFlight)
+name: Fırsat Vitrini · iOS (App Store Connect / TestFlight)
 on:
   workflow_dispatch:
     inputs:

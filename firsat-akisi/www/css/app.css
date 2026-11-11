@@ -1,4 +1,4 @@
-/* Fırsat Akışı — Fırsat/Borsa/Futbol Akışı menajer (FM2010) çizgisi, telefon için (Saat Vitrini ile aynı iskelet) */
+/* Fırsat Vitrini — Fırsat/Borsa/Futbol Vitrini menajer (FM2010) çizgisi, telefon için (Saat Vitrini ile aynı iskelet) */
 :root{--ink:#173b40;--deep:#0f2a30;--teal:#1f8a70;--orange:#ed713c;--gold:#ffd23f;--paper:#fbf7ef;--card:#fffdf8;--line:#e2d8c6;--red:#e3262c;--mute:#5f7477;
   --top:env(safe-area-inset-top,0px);--bot:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -142,7 +142,7 @@ main{padding:0 0 calc(76px + var(--bot))}
 .toast{position:fixed;left:50%;bottom:calc(84px + var(--bot));transform:translateX(-50%);z-index:60;max-width:90%;padding:10px 16px;border-radius:12px;background:var(--ink);color:#fff;font-weight:800;font-size:14px;box-shadow:0 6px 18px #0006}
 @media (min-width:520px){.grid{grid-template-columns:1fr 1fr 1fr}}
 
-/* ───────── Fırsat Akışı ───────── */
+/* ───────── Fırsat Vitrini ───────── */
 .crest svg.yuz{width:44px;height:44px;margin-top:2px}
 .fistik-bant{display:flex;align-items:flex-end;gap:6px;margin:10px 12px 2px}
 .fistik-yer{flex:0 0 92px;height:70px}

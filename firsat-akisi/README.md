@@ -1,6 +1,6 @@
-# Fırsat Akışı
+# Fırsat Vitrini
 
-Market kataloglarını, mağaza ve kart kampanyalarını tek yerde gösteren uygulama (iOS + Android, Capacitor). Yayındaki Fırsat Akışı'nın telefon hâli; Saat Vitrini ile aynı iskelet. **Bir Mr. Anduv! yapımıdır.**
+Market kataloglarını, mağaza ve kart kampanyalarını tek yerde gösteren uygulama (iOS + Android, Capacitor). Yayındaki Fırsat Vitrini'nin telefon hâli; Saat Vitrini ile aynı iskelet. **Bir Mr. Anduv! yapımıdır.**
 
 - **Satış yok:** her kampanya mağazanın / bankanın kendi sayfasında açılır ("Kampanya sayfasında aç").
 - **Sıra:** en yeni kampanya her zaman en üstte (saatlik dilimler yeniden eskiye, aynı mağaza art arda gelmez; tutarı belli olanlar dilimin başında).

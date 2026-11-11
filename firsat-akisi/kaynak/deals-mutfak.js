@@ -1,4 +1,4 @@
-// Fırsat Akışı — 🇹🇷 evin temel ihtiyaçları: zeytinyağı, süt, yağ, çay, fındık (10.10.2026)
+// Fırsat Vitrini — 🇹🇷 evin temel ihtiyaçları: zeytinyağı, süt, yağ, çay, fındık (10.10.2026)
 (function(){
   const D = (o) => Object.assign({ cards:[], channels:['Online'], checked:'2026-10-10', added:'2026-10-10T11:20:00+03:00', value:0, start:null, end:null, category:'Market' }, o);
   window.FIRSAT_DEALS.push(

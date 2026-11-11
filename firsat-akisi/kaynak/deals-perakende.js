@@ -1,4 +1,4 @@
-// Fırsat Akışı — perakende / zincir market taraması (04.10.2026, 23.00)
+// Fırsat Vitrini — perakende / zincir market taraması (04.10.2026, 23.00)
 // Ulusal zincirler + bölgesel zincirlerin güncel indirim katalogları. Kaynak: zincirlerin katalog sayfaları ve katalog dizinleri (cimri.com/brosur, okatalog.com).
 (function(){
   const D = (o) => Object.assign({ cards:[], channels:['Mağaza'], checked:'2026-10-04', added:'2026-10-04T22:55:00+03:00', value:0, start:null, end:null,

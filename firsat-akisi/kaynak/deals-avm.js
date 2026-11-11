@@ -1,4 +1,4 @@
-// Fırsat Akışı — AVM ve havalimanı mağaza taraması (04.10.2026, akşam)
+// Fırsat Vitrini — AVM ve havalimanı mağaza taraması (04.10.2026, akşam)
 // Flormar, Watsons, Evidea, Tudors, Desa, İpekyol, Twist
 (function(){
   const D = (o) => Object.assign({ cards:[], channels:['Mağaza','Online'], checked:'2026-10-04', added:'2026-10-04T22:15:00+03:00', value:0, start:null, end:null }, o);

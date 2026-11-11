@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fırsat Akışı veri hattı — GitHub Actions'ta zamanlanmış çalışır (ücretsiz).
+"""Fırsat Vitrini veri hattı — GitHub Actions'ta zamanlanmış çalışır (ücretsiz).
 
 1) tools/secili.json   seçilmiş kampanyalar + marka dizini (node tools/secili.mjs üretir; kaynak/ = yayındaki dosyalar)
 2) tools/akis/server.py  yayındaki canlı tarayıcının bir turu (mağaza ve banka kampanya sayfaları, robots.txt'ye uyar)

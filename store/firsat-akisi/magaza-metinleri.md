@@ -1,6 +1,6 @@
-# Mağaza metinleri — Fırsat Akışı
+# Mağaza metinleri — Fırsat Vitrini
 
-- **Ad:** Fırsat Akışı   (alınmışsa: "Fırsat Akışı: Mr. Anduv!")
+- **Ad:** Fırsat Vitrini   (alınmışsa: "Fırsat Vitrini: Mr. Anduv!")
 - **Bundle ID / paket:** com.anduv.firsatakisi · Sürüm 1.0.0
 - **Kategori:** Alışveriş (birincil), Yaşam Tarzı (ikincil) · Play: Alışveriş
 - **Yaş:** 4+ · **Fiyat:** Ücretsiz · **Reklam:** yok · **Gizlilik:** Data Not Collected / veri toplanmıyor

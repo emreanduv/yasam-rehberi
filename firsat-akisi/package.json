@@ -1,7 +1,7 @@
 {
   "name": "firsat-akisi",
   "version": "1.0.1",
-  "description": "Fırsat Akışı — market katalogları, mağaza ve kart kampanyaları tek yerde (iOS + Android, Capacitor). Bir Mr. Anduv! yapımıdır.",
+  "description": "Fırsat Vitrini — market katalogları, mağaza ve kart kampanyaları tek yerde (iOS + Android, Capacitor). Bir Mr. Anduv! yapımıdır.",
   "private": true,
   "scripts": {
     "serve": "python3 -m http.server 8791 --directory www",

@@ -1,5 +1,5 @@
 /* Rehber, Nasıl kullanılır ve Ayarlar eylemleri — test önerileri paketi (Yaşam Rehberi 1.0.1, Malazgirt, Hisar, Topçular,
-   Legend Heads ile aynı yaklaşım). Saat Vitrini ve Fırsat Akışı ortak dosyası: uygulamalar bu dosyanın kopyasını www/js/rehber.js olarak taşır.
+   Legend Heads ile aynı yaklaşım). Saat Vitrini ve Fırsat Vitrini ortak dosyası: uygulamalar bu dosyanın kopyasını www/js/rehber.js olarak taşır.
    - bir sekme ilk kez açılınca kısa ipucu kartı ("Anladım" / "Rehberi kapat"); hangi ipucunun görüldüğü yalnız bu telefonda,
    - Bilgi sekmesinde: Nasıl kullanılır, Rehberi baştan göster, Puan ver, Arkadaşına öner, Bize yaz, Verilerimi sil,
    - uygulama içinden puan: yalnız telefonda, 3. ve 10. kullanım gününde, en çok iki kez.

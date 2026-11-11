@@ -1,4 +1,4 @@
-// Fırsat Akışı — 🇹🇷 yerli yeme içme zincirleri (10.10.2026)
+// Fırsat Vitrini — 🇹🇷 yerli yeme içme zincirleri (10.10.2026)
 // Not: “helal” etiketi yalnız Helal Akreditasyon Kurumu (HAK) onaylı bir belgeyle doğrulanabilen markalara konur; şu an doğrulanmış kayıt yok.
 (function(){
   const D = (o) => Object.assign({ cards:[], channels:['Mağaza','Uygulama'], checked:'2026-10-10', added:'2026-10-10T11:10:00+03:00', value:0, start:null, end:null, category:'Yemek' }, o);

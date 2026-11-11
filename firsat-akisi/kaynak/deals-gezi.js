@@ -1,4 +1,4 @@
-// Fırsat Akışı — “gezmesi keyifli” mağazalar taraması (04.10.2026)
+// Fırsat Vitrini — “gezmesi keyifli” mağazalar taraması (04.10.2026)
 // IKEA, Mudo, Tchibo, Decathlon, Nike, adidas, Sephora, Rossmann, Paribu Cineverse, Domino's, Penti, Toyzz Shop, Miniso, Pandora
 (function(){
   const D = (o) => Object.assign({ cards:[], channels:['Mağaza','Online'], checked:'2026-10-04', value:0, start:null, end:null }, o);

@@ -1,4 +1,4 @@
-// Fırsat Akışı — TROY (yerli ve milli ödeme sistemi, BKM) kampanyaları (10.10.2026, 13.05)
+// Fırsat Vitrini — TROY (yerli ve milli ödeme sistemi, BKM) kampanyaları (10.10.2026, 13.05)
 // Kaynak: troyodeme.com → Bireysel → Kampanya ve Fırsatlar (yalnız "Devam Eden Kampanyalar").
 (function(){
   const D = (o) => Object.assign({ cards:['TROY'], channels:['Online'], checked:'2026-10-10', added:'2026-10-10T13:05:00+03:00', value:0,

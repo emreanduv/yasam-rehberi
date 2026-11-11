@@ -1,4 +1,4 @@
-// Fırsat Akışı — herkese hitap eden perakende & kooperatif marketleri (10.10.2026, 11.30)
+// Fırsat Vitrini — herkese hitap eden perakende & kooperatif marketleri (10.10.2026, 11.30)
 // Güncel indirim katalogları. Kaynak: cimri.com/brosur ve okatalog.com katalog dizinleri.
 (function(){
   const AY = ['', 'Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];

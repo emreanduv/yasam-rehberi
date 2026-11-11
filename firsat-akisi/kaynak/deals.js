@@ -1,4 +1,4 @@
-// Fırsat Akışı — seçilmiş kampanya kayıtları
+// Fırsat Vitrini — seçilmiş kampanya kayıtları
 // Her kayıt mağazanın veya bankanın kendi kampanya sayfasından kontrol edildi (checked).
 // Alanlar:
 //   start / end   : ISO tarih (YYYY-MM-DD). end:null → bitiş tarihi kaynakta yazmıyor.

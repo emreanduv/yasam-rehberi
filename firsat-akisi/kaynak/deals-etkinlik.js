@@ -1,4 +1,4 @@
-// Fırsat Akışı — etkinlik, konser, tiyatro: bilet kampanyaları ve ücretsiz/ucuz belediye etkinlikleri (04.10.2026, 23.10)
+// Fırsat Vitrini — etkinlik, konser, tiyatro: bilet kampanyaları ve ücretsiz/ucuz belediye etkinlikleri (04.10.2026, 23.10)
 (function(){
   const D = (o) => Object.assign({ cards:[], channels:['Etkinlik'], checked:'2026-10-04', added:'2026-10-04T23:00:00+03:00', value:0, start:null, end:null,
     category:'Eğlence', type:'gift', emoji:'🎭' }, o);

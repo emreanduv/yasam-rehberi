@@ -1,4 +1,4 @@
-// Fırsat Akışı — genişletilmiş tarama (04.10.2026): ağırlıklı olarak yerli markalar
+// Fırsat Vitrini — genişletilmiş tarama (04.10.2026): ağırlıklı olarak yerli markalar
 // Her kayıt markanın kendi kampanya sayfasından kontrol edildi. Alanlar deals.js ile aynıdır.
 (function(){
   const D = (o) => Object.assign({ cards:[], channels:['Mağaza','Online'], checked:'2026-10-04', value:0, start:null, end:null }, o);

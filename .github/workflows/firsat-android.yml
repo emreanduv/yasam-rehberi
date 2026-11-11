@@ -1,4 +1,4 @@
-name: Fırsat Akışı · Android (Google Play paketi)
+name: Fırsat Vitrini · Android (Google Play paketi)
 on:
   workflow_dispatch:
     inputs:
@@ -30,7 +30,7 @@ jobs:
           OUT=firsat-akisi-${{ inputs.version_name }}-${{ github.run_number }}-unsigned.aab
           mkdir -p /tmp/b/android && cp android/app/build/outputs/bundle/release/app-release.aab /tmp/b/android/$OUT && cd /tmp/b
           git init -q -b builds-firsat-akisi && git config user.name "github-actions" && git config user.email "actions@github.com"
-          git add . && git commit -qm "Fırsat Akışı Android paketi $OUT"
+          git add . && git commit -qm "Fırsat Vitrini Android paketi $OUT"
           git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" builds-firsat-akisi
       - uses: actions/upload-artifact@v4
         with:

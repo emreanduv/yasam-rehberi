@@ -1,4 +1,4 @@
-// Fırsat Akışı — çocuk dünyası: oyuncak, bebek, çocuk giyim (05.10.2026, 21.50)
+// Fırsat Vitrini — çocuk dünyası: oyuncak, bebek, çocuk giyim (05.10.2026, 21.50)
 (function(){
   const D = (o) => Object.assign({ cards:[], channels:['Mağaza','Online'], checked:'2026-10-05', added:'2026-10-05T21:50:00+03:00', value:0, start:null, end:null, kids:true }, o);
   window.FIRSAT_DEALS.push(

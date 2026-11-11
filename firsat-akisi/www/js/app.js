@@ -1,4 +1,4 @@
-/* Fırsat Akışı — Bir Mr. Anduv! yapımıdır.
+/* Fırsat Vitrini — Bir Mr. Anduv! yapımıdır.
    Market katalogları, mağaza ve kart kampanyaları tek yerde; en yeni kampanya her zaman en üstte.
    Veri: GitHub'da zamanlanmış tarama (tools/veri_guncelle.py) → VERI_URL; ağ yoksa son kayıt, o da yoksa uygulamayla gelen ilk veri.
    Satış yok: her kampanya mağazanın / bankanın kendi sayfasında açılır. Kişisel veri toplanmaz; takip ve cüzdan yalnız cihazda tutulur. */
@@ -175,7 +175,7 @@
     const mk = new Set(V.items.map(magaza)), kat = V.items.filter((k) => k.katalog).length, can = V.items.filter((k) => k.live).length;
     const kn = V.kaynak || {};
     $('#ekran').innerHTML = `
-      <div class="bilgi-kutu"><h4>Fırsat Akışı nedir?</h4><p>Market kataloglarını, mağaza ve kart kampanyalarını tek yerde, tarihi ve koşuluyla gösteren bir pano. En yeni kampanya her zaman en üstte.</p>
+      <div class="bilgi-kutu"><h4>Fırsat Vitrini nedir?</h4><p>Market kataloglarını, mağaza ve kart kampanyalarını tek yerde, tarihi ve koşuluyla gösteren bir pano. En yeni kampanya her zaman en üstte.</p>
         <p><b>Satış bizde değil.</b> "Kampanya sayfasında aç" seni mağazanın ya da bankanın kendi sayfasına götürür; fiyat, stok ve koşullar oradadır.</p></div>
       <div class="bilgi-kutu"><h4>Pano şu an</h4><p>${V.items.length} kampanya · ${mk.size} mağaza · ${kat} katalog · ${can} canlı başlık<br>Son güncelleme: ${esc(tarih(V.checkedAt))}${kn.toplam ? `<br>Tarama: ${kn.ok}/${kn.toplam} kaynak yanıt verdi` : ''}</p></div>
       <div class="bilgi-kutu"><h4>Kurallarımız</h4><ul><li>Kampanyalar mağazaların, bankaların ve katalog dizininin herkese açık sayfalarından alınır; sitelerin robots.txt kurallarına uyulur.</li><li>Kaynağında yazmayan iddia gösterilmez; bitiş tarihi geçen kampanya listeden kendiliğinden düşer.</li><li>Marka logosu kullanılmaz; adlar bilgi amaçlıdır. Gösterilen mağaza ve bankalarla ücretli iş birliği yoktur.</li><li>Kişisel verin toplanmaz; takip listen ve cüzdanın yalnız telefonunda tutulur.</li></ul></div>
@@ -270,8 +270,8 @@
   }
   async function paylas(id){
     const k = V.byId.get(id); if(!k) return;
-    const metin = `${magaza(k)}: ${k.title} · ${k.offer || ''}${k.end ? ` · ${gunAy(k.end)}'e kadar` : ''}\n${k.url}\n— Fırsat Akışı`;
-    try { const S = window.Capacitor?.Plugins?.Share; if(S){ await S.share({ title: 'Fırsat Akışı', text: metin, dialogTitle: 'Paylaş' }); return; } if(navigator.share){ await navigator.share({ text: metin }); return; } } catch(e){ return; }
+    const metin = `${magaza(k)}: ${k.title} · ${k.offer || ''}${k.end ? ` · ${gunAy(k.end)}'e kadar` : ''}\n${k.url}\n— Fırsat Vitrini`;
+    try { const S = window.Capacitor?.Plugins?.Share; if(S){ await S.share({ title: 'Fırsat Vitrini', text: metin, dialogTitle: 'Paylaş' }); return; } if(navigator.share){ await navigator.share({ text: metin }); return; } } catch(e){ return; }
     try { await navigator.clipboard.writeText(metin); toast('Kopyalandı'); } catch(e){}
   }
 

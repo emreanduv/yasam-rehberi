@@ -1,6 +1,6 @@
 // Çarşı verisini Wikidata'dan yeniden üretir → www/data/carsi.json
 // Kullanım (Mac terminali, internet gerekir): npm run carsi
-// 31.10: Fırsat Akışı dizinindeki markalardan Wikidata ile doğrulananlar da eklendi (ülke/merkez Türkiye, yurt dışı sahip yok; yer adı ve kapanmış şirket eşleşmeleri elendi).
+// 31.10: Fırsat Vitrini dizinindeki markalardan Wikidata ile doğrulananlar da eklendi (ülke/merkez Türkiye, yurt dışı sahip yok; yer adı ve kapanmış şirket eşleşmeleri elendi).
 // Seçim: Türkçe Vikipedi'nin "Türkiye merkezli ... şirketleri" / "Türk ... markaları" kategorilerinden elle seçilmiş tüketici markaları.
 // Bilerek dışarıda: alkol, tütün, banka/finans, savunma, holding, kapanmış şirketler.
 import { writeFileSync, readFileSync } from "node:fs";

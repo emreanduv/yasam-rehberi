@@ -665,7 +665,7 @@ if __name__ == "__main__":
         threading.Thread(target=SAAT.dongu, daemon=True).start()
     base = f"http://127.0.0.1:{PORT}"
     print(
-        f"\n🐿️  Fırsat Akışı hazır\n"
+        f"\n🐿️  Fırsat Vitrini hazır\n"
         f"   Uygulama : {base}\n"
         f"   Yayın    : {base}/?yayin=1  (OBS tarayıcı kaynağı 1920×1080 · menajer görünümü)\n"
         f"   Klasik   : {base}/?yayin=1&gorunum=klasik\n"

@@ -1,4 +1,4 @@
-// Fırsat Akışı — gençlerin sevdiği giyim · sneaker · outdoor markaları (04.10.2026, gece)
+// Fırsat Vitrini — gençlerin sevdiği giyim · sneaker · outdoor markaları (04.10.2026, gece)
 // Dockers, Converse, Levi's, New Balance, PUMA, Columbia, Lacoste, Vans, Hummel, Lescon, Superstep
 (function(){
   const D = (o) => Object.assign({ cards:[], channels:['Online'], checked:'2026-10-04', added:'2026-10-04T22:45:00+03:00', value:0, start:null, end:null,

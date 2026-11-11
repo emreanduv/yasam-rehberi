@@ -1,4 +1,4 @@
-// Fırsat Akışı — 🇹🇷 Yerli gündem ve yerli marka fırsatları (10.10.2026)
+// Fırsat Vitrini — 🇹🇷 Yerli gündem ve yerli marka fırsatları (10.10.2026)
 // İzleyici isteği: yerli ve milli markalar, ürünler ve duyurular öne çıksın.
 (function(){
   const D = (o) => Object.assign({ cards:[], channels:['Mağaza','Online'], checked:'2026-10-10', added:'2026-10-10T10:50:00+03:00', value:0, start:null, end:null, yerliGundem:true }, o);
