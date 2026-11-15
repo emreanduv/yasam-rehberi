@@ -1,18 +1,9 @@
 {
  "Fenerium": {
-  "url": [
-   "https://fenerium.com/saat",
-   "https://fenerium.com/cakmak",
-   "https://fenerium.com/tespih",
-   "https://fenerium.com/bileklik",
-   "https://fenerium.com/kol-saati",
-   "https://fenerium.com/saat-cakmak",
-   "https://fenerium.com/kolye-bileklik",
-   "https://fenerium.com/hikaye-bileklik"
-  ],
-  "t": 1794145197.47941,
+  "url": [],
+  "t": 1794769005.469942,
   "v": 2,
-  "tarih": "08.11.2026"
+  "tarih": "15.11.2026"
  },
  "GS Store": {
   "url": [
@@ -25,9 +16,9 @@
    "https://www.gsstore.org/gsgaraj-bileklik-2/",
    "https://www.gsstore.org/gsgaraj-bileklik-3/"
   ],
-  "t": 1794145197.47941,
+  "t": 1794769005.469942,
   "v": 2,
-  "tarih": "08.11.2026"
+  "tarih": "15.11.2026"
  },
  "Kartal Yuvası": {
   "url": [],
