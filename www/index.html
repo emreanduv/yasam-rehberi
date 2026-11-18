@@ -10,6 +10,8 @@
 <body>
 <div id="app"><div class="loading">Yükleniyor…</div></div>
 <nav class="nav" id="nav" aria-label="Ana menü"></nav>
+<script src="dil-en.js"></script>
+<script src="dil.js"></script>
 <script type="module" src="js/app.js"></script>
 <script>/* Ekran uyanık kalsın (web, PWA, VR tarayıcı): dokunulmasa da kararmasın */(function(){var k=null;function al(){try{if(!k&&navigator.wakeLock&&document.visibilityState==='visible')navigator.wakeLock.request('screen').then(function(x){k=x;x.addEventListener('release',function(){k=null;});}).catch(function(){});}catch(e){}}['pointerdown','keydown','touchend'].forEach(function(e){addEventListener(e,al,{passive:true});});document.addEventListener('visibilitychange',al);al();})();</script>
 </body>

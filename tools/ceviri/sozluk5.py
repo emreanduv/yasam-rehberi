@@ -1,0 +1,23 @@
+# Yaşam Rehberi — kısaltmalar, tesbih/saat düğmeleri ve kalan sözcükler · Türkçe → English
+SOZ = {
+"{0} Oca {1}": "{0} Jan {1}", "{0} Şub {1}": "{0} Feb {1}", "{0} Mar {1}": "{0} Mar {1}", "{0} Nis {1}": "{0} Apr {1}", "{0} May {1}": "{0} May {1}", "{0} Haz {1}": "{0} Jun {1}",
+"{0} Tem {1}": "{0} Jul {1}", "{0} Ağu {1}": "{0} Aug {1}", "{0} Eyl {1}": "{0} Sep {1}", "{0} Eki {1}": "{0} Oct {1}", "{0} Kas {1}": "{0} Nov {1}", "{0} Ara {1}": "{0} Dec {1}",
+"{0} Muh": "{0} Muh", "{0} Saf": "{0} Saf", "{0} Reb": "{0} Rab", "{0} Cem": "{0} Jum", "{0} Rec": "{0} Raj", "{0} Şab": "{0} Sha", "{0} Ram": "{0} Ram", "{0} Şev": "{0} Shw", "{0} Zil": "{0} Dhu",
+"Hicri {0}": "Hijri {0}", "{0}'de": "at {0}", "{0}'da": "at {0}", "{0}'te": "at {0}", "{0}'ta": "at {0}", "Kalan": "Remaining", "KALAN": "REMAINING", "K": "N",
+"+ {0} bardak": "+ {0} glass", "{0} zikir": "{0} dhikr", "Toplam {0} zikir": "Total {0} dhikr", "{0} kez": "{0} times", "{0} tane": "{0} beads", "{0} mm": "{0} mm",
+"20 dakikada bir 20 saniye": "20 seconds every 20 minutes", "Akik": "Agate", "Arpa": "Barleycorn", "Asistan": "Assistant", "Atla": "Skip",
+"Celal ve azamet sahibi": "Lord of majesty and grandeur", "Dakika": "Minutes", "Damla": "Drop", "Devam ›": "Continue ›", "Devam ▸": "Continue ▸", "Durak taneleri": "Marker beads",
+"Elinde": "In hand", "Esmâ": "Beautiful Names", "Ezelî ve ebedî diri": "Ever-living, without beginning or end", "Fayda verenleri yaratan": "Creator of what benefits",
+"Gelen": "Incoming", "Gong": "Gong", "Hedef": "Target", "Hedef:": "Target:", "Her isim": "Each name", "Her isim:": "Each name:", "Hidayet veren": "Giver of guidance",
+"Kadran": "Dial", "Kadran galerisi": "Dial gallery", "Kapat ✕": "Close ✕", "Kaydet ve kullan": "Save and use", "Kehribar": "Amber", "Kendi zikrini": "Your own dhikr",
+"Kendi zikrini ekle": "Add your own dhikr", "Kesme": "Faceted", "Klasik": "Classic", "Kod": "Code", "Konum ve vakitler": "Location and times", "Kopyala": "Copy", "Kronometre": "Stopwatch",
+"Kuka": "Kuka wood", "Lacivert": "Navy", "Lale": "Tulip", "Mahiyeti gizli": "Whose essence is hidden", "Malzeme": "Material", "Meallerde oku": "Read in the translations",
+"Minare": "Minaret", "Mod": "Mode", "Mutlak adalet sahibi": "The Absolutely Just", "Namaz vakitleri": "Prayer times", "Ne istersen": "Anything you like", "Ney": "Ney flute",
+"Odak modu": "Focus mode", "Sedef": "Mother-of-pearl", "Serbest": "Free", "Seri": "Streak", "Ses ve bildirim": "Sound and notifications", "Ses: Normal": "Sound: Normal",
+"Siyah": "Black", "Tamam": "OK", "Temizle": "Clear", "Tesbih tasarla": "Design a tasbih", "Tesbih:": "Tasbih:", "Vakit bildirimleri": "Prayer-time notifications", "Vakitler": "Prayer times",
+"Vakitten sonra": "After the prayer time", "Yatma saati": "Bedtime", "Yedek": "Backup", "Yedek metni": "Backup text", "Yok": "None", "Yoktan yaratan": "Who creates from nothing",
+"Yuvarlak": "Round", "Zarar verenleri de yaratan": "Creator of what harms as well", "Zikirler": "Dhikrs", "Zil": "Bell", "dk": "min", "sonra": "later", "· Dokun": "· Tap", "Dokun": "Tap",
+"−1 Geri al": "−1 Undo", "Geri al": "Undo", "{0} · Dokun": "{0} · Tap",
+"Marmaduke Pickthall": "Marmaduke Pickthall", "Abdullah Yusuf Ali": "Abdullah Yusuf Ali",
+"Interest": "Interest", "Marriage": "Marriage", "Zakat": "Zakat", "Prayer": "Prayer", "Justice": "Justice", "Hajj": "Hajj",
+}

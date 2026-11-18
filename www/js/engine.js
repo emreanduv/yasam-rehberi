@@ -7,6 +7,11 @@ const WEAK_WEIGHT = 0.3;
 const CONCEPT_WEIGHT = 0.35;
 const ANCHOR_BONUS = 0.9;
 
+// İngilizce soru kalıplarındaki dolgu kelimeleri (Türkçe STOPWORDS'ün karşılığı)
+const EN_STOP = new Set(("a an the and or of to in on at for from by with about is are was were be been am do does did can could should would may might must " +
+  "what which who whom whose when where why how i me my we our you your he she it they them their this that these those there here " +
+  "not no yes if so as into than then too very just also any some all quran koran verse verses surah say says said allowed permitted forbidden").split(" "));
+
 const WORD_RE = /[\p{L}\p{N}_']+/gu;
 const REF_RE = /^\s*(\d{1,3})\s*[:/.\s]\s*(\d{1,3})\s*$/;
 const NAMED_REF_RE = /^\s*([^\d:]+?)\s*[:\s]\s*(\d{1,3})\s*$/;
@@ -29,6 +34,30 @@ export class Engine {
     this.postings = index.postings;
     this.tidOrder = index.tids;                // kaynak sırası (dizin kodları için)
     this.surahLookup = this.surahs.map((s) => [fold(s.name).replace(/[\s-]/g, ""), s.no]);
+  }
+
+  // ---------- İngilizce kip (dil English): telifsiz İngilizce mealler + kendi kelime dizini ----------
+  // en: data/en.json · kavram: data/en-kavram.js'deki İngilizce tetikleyiciler (anahtar → {label, triggers, keywords, note})
+  ingilizce(en, kavram) {
+    this.lang = "en";
+    this.core.meta = { ...this.core.meta, arabic_credit: "Arabic text: Tanzil.net (CC BY 3.0) — http://tanzil.net" };
+    for (const s of en.sources) { this.sources.push(s); this.core.texts[s.id] = en.texts[s.id]; this.core.footnotes[s.id] = {}; }
+    this.meals = en.sources.map((s) => s.id);
+    this.surahs = this.core.surahs.map((s, i) => ({ ...s, name: en.surahs[i].name, en: en.surahs[i].en }));
+    // dil.js: sure adları özel ad sayılır ("Kaldığın yerden devam · Al-Faatiha 1" kalıbı çevrilsin)
+    const ozel = en.surahs.map((x) => x.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).concat(Object.values(kavram).map((k) => k.label.replace(/[()]/g, "\\$&")));
+    window.DIL_OZEL = new RegExp("^(" + ozel.join("|") + ")( \\d+(:\\d+)?)?$");
+    this.surahLookup = this.surahs.map((s) => [fold(s.name).replace(/[\s-]/g, ""), s.no]).concat(this.core.surahs.map((s) => [fold(s.name).replace(/[\s-]/g, ""), s.no]));
+    // kelime dizini: sıralı kelime listesi + her kelimenin geçtiği (ayet << 3 | kaynak) kodları
+    const harita = new Map();
+    this.meals.forEach((t, k) => en.texts[t].forEach((metin, i) => {
+      for (const w of new Set(tokens(metin))) { if (!harita.has(w)) harita.set(w, []); harita.get(w).push((i << 3) | k); }
+    }));
+    this.vocab = [...harita.keys()].sort();
+    this.postings = this.vocab.map((w) => harita.get(w));
+    this.tidOrder = [...this.meals];
+    this.tefsirs = [];
+    this.core.concepts = this.core.concepts.filter((c) => kavram[c.key]).map((c) => ({ ...c, ...kavram[c.key], modern: [] }));
   }
 
   // ---------- yardımcılar ----------
@@ -118,6 +147,7 @@ export class Engine {
   // ---------- ana arama ----------
   search(query, topK = 8, tids = null) {
     const ref = this.parseRef(query);
+    if (this.lang === "en" && !ref) query = query.split(/\s+/).filter((w) => !EN_STOP.has(w.toLowerCase().replace(/[^a-z']/g, ""))).join(" ");
     if (ref) {
       const v = this.verse(this.indexOf(ref[0], ref[1]), tids);
       return { query, terms: [], missing: [], missingKeys: [], concepts: [], verses: v ? [v] : [], isRef: true };

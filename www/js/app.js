@@ -8,21 +8,29 @@ import * as M from "./miras.js";
 import { initCarsi, carsiRoute } from "./carsi.js";
 import { KURAN } from "./ozellik.js";
 import * as RH from "./rehber.js";
+import { KAVRAM_EN } from "./en-kavram.js";
 
 // ---------------------------------------------------------------------------
 // Ayarlanabilir sabitler (isim değişirse sadece burası ve capacitor.config.json)
 // ---------------------------------------------------------------------------
 const APP_NAME = "Yaşam Rehberi";
 const MAKER = "Bir Mr. Anduv! yapımıdır.";
-const VERSION = "1.0.1";
+const VERSION = "1.4.0";
+const EN = !!(window.DIL && window.DIL.kod === "en");   // dil English: telifsiz İngilizce mealler (Pickthall, Yusuf Ali)
 const QURANENC = { rowwad: "turkish_rwwad", ozek: "turkish_shahin", saban: "turkish_shaban", muhtasar: "turkish_mokhtasar" };
-const SHORT = { rowwad: "Rowwad", ozek: "Ali Özek", saban: "Ş. Britiş" };
-const COLOR = { rowwad: "var(--c-rowwad)", ozek: "var(--c-ozek)", saban: "var(--c-saban)" };
+const SHORT = { rowwad: "Rowwad", ozek: "Ali Özek", saban: "Ş. Britiş", pickthall: "Pickthall", yusufali: "Yusuf Ali" };
+const COLOR = { rowwad: "var(--c-rowwad)", ozek: "var(--c-ozek)", saban: "var(--c-saban)", pickthall: "var(--c-rowwad)", yusufali: "var(--c-ozek)" };
 const FAQ = [
   ["Sakız orucu bozar mı?", "Oruç"], ["Miras nasıl paylaştırılır?", "Miras"],
   ["Faiz hakkında ne denir?", "Faiz"], ["Boşanan kadın ne kadar bekler?", "Boşanma"],
   ["Kumar ve içki hakkında ne denir?", "İçki ve kumar"],
 ];
+// English: aynı sorular İngilizce aranır (İngilizce mealler + İngilizce kavram sözlüğü)
+const FAQ_EN = [["Does chewing gum break the fast?", "Fasting"], ["How is inheritance divided?", "Inheritance"],
+  ["What is said about interest?", "Interest (riba)"], ["How long does a divorced woman wait?", "Divorce"],
+  ["What is said about gambling and alcohol?", "Intoxicants and gambling"]];
+const TOPICS_EN = [["Fasting", "fasting"], ["Inheritance", "inheritance"], ["Interest", "interest usury"], ["Prayer", "prayer times"],
+  ["Divorce", "divorce"], ["Zakat", "zakat charity"], ["Hajj", "hajj pilgrimage"], ["Marriage", "marriage"], ["Justice", "justice"]];
 const TOPICS = [["Oruç", "oruç"], ["Miras", "miras"], ["Faiz", "faiz"], ["Namaz", "namaz vakitleri"],
   ["Boşanma", "boşanma"], ["Zekât", "zekât"], ["Hac", "hac"], ["Evlilik", "evlilik"], ["Adalet", "adalet"]];
 // Günün ayeti: her gün sıradaki (yalnızca ayet numarası; metin meal verisinden gelir)
@@ -116,7 +124,7 @@ function topbar(left = "brand") {
 
 const linkTanzil = (s) => esc(s).replace("http://tanzil.net", '<a href="http://tanzil.net">tanzil.net</a>');
 function credits(tids) {
-  return `<div class="credits">Kaynak: ${E.credits(tids).map(linkTanzil).join(" · ")}</div>`;
+  return `<div class="credits">${EN ? "Source" : "Kaynak"}: ${E.credits(tids).map(linkTanzil).join(" · ")}</div>`;
 }
 
 function mealBlock(v, terms, filter = "all") {
@@ -173,11 +181,11 @@ function homeView() {
     <a class="panel bg-kayit" href="#/kaydedilenler"><span>${ICON.mark}<b>Kayıtlı ayetler</b></span><span class="meta">${saved.length ? `<span class="count">${saved.length}</span> ` : ""}›</span></a>
     <section class="panel">
       <div class="panel-h">Sık sorulanlar</div>
-      <div class="rows">${FAQ.map(([q, t]) => `<a class="row" href="#/ara?q=${enc(q)}">${esc(q)}<span class="meta">${esc(t)} ›</span></a>`).join("")}</div>
+      <div class="rows">${(EN ? FAQ_EN : FAQ).map(([q, t]) => `<a class="row" href="#/ara?q=${enc(q)}">${esc(q)}<span class="meta">${esc(t)} ›</span></a>`).join("")}</div>
     </section>
     <section class="panel">
       <div class="panel-h">Konular</div>
-      <div class="panel-b chips">${TOPICS.map(([l, q]) => `<a class="chip" href="#/ara?q=${enc(q)}">${esc(l)}</a>`).join("")}</div>
+      <div class="panel-b chips">${(EN ? TOPICS_EN : TOPICS).map(([l, q]) => `<a class="chip" href="#/ara?q=${enc(q)}">${esc(l)}</a>`).join("")}</div>
     </section>
     <section class="panel">
       <div class="panel-h">Gelen kutusu <span class="count">1</span></div>
@@ -490,7 +498,7 @@ function resultsView(q) {
   const card = answerCard(q, r, strong);
   let body = card;
   if (strong.length && !card) body += `<div class="warn">${ICON.warn}<div><b>${strong.map((w) => `“${esc(w)}”`).join(", ")} Kur'an'da geçmez.</b> Bu konuda doğrudan bir hüküm yok; aşağıdakiler konuyla dolaylı olarak ilgili ayetlerdir.</div></div>`;
-  if (soft.length) body += `<div class="note">${soft.map((w) => `“${esc(w)}”`).join(", ")} kelimesi meallerde bu biçimiyle geçmiyor; konu başka kelimelerle anlatılıyor olabilir.</div>`;
+  if (soft.length) body += `<div class="note">${EN ? `The word ${soft.map((w) => `“${esc(w)}”`).join(", ")} does not appear in this form in the translations; the subject may be expressed in other words.` : `${soft.map((w) => `“${esc(w)}”`).join(", ")} kelimesi meallerde bu biçimiyle geçmiyor; konu başka kelimelerle anlatılıyor olabilir.`}</div>`;
   if (r.concepts.length) body += `<div class="topic">İlgili konu ${r.concepts.map((c) => `<span class="pill">${esc(c.label)}</span>`).join("")}<span style="margin-left:auto;color:var(--muted)">${mealsOn().length} meal</span></div>`;
   if (!r.verses.length) body += `<div class="empty">Bu arama için ayet bulunamadı.<br>Farklı kelimelerle deneyin.</div>`;
   body += r.verses.map((v) => verseCard(v, r.terms)).join("");
@@ -570,7 +578,7 @@ function verseView(s, a) {
     <div class="actions">
       <button class="btn-go" data-act="save" data-i="${i}">${isSaved ? ICON.markOn : ICON.mark}${isSaved ? "Kayıtlı" : "Kaydet"}</button>
       <button class="btn-go btn-dark" data-act="share" data-i="${i}">${ICON.share}Paylaş</button>
-      <a class="btn-go btn-dark" href="https://quranenc.com/tr/browse/${QURANENC[Object.keys(v.texts)[0]] || "turkish_rwwad"}/${v.surah}">${ICON.note}Not bildir</a>
+      ${EN ? "" : `<a class="btn-go btn-dark" href="https://quranenc.com/tr/browse/${QURANENC[Object.keys(v.texts)[0]] || "turkish_rwwad"}/${v.surah}">${ICON.note}Not bildir</a>`}
     </div>
     ${credits([...mealsOn(), ...(S.tafsir ? E.tefsirs : [])])}
   </main>`;
@@ -653,6 +661,7 @@ function settingsView() {
     <section class="panel"><div class="panel-h">Yaşam Rehberi</div><div class="panel-b" style="font-size:14px;line-height:1.55">
       Namaz vakitleri, kıble, tesbih, saat, çarşı ve miras hesabı. Hepsi telefonda çalışır; internet ve üyelik gerekmez,
       hiçbir veri toplanmaz. Vakitler Diyanet'in hesap yöntemiyle telefonda hesaplanır.</div></section>
+    <section class="panel"><div class="panel-h">Dil · Language</div><div class="rows"><a class="row" href="#" data-act="dil"><span>${window.DIL ? (window.DIL.kod === "en" ? "English" : "Türkçe") : "Türkçe"}</span><span class="meta">${window.DIL && window.DIL.kod === "en" ? "Türkçe’ye geç" : "Switch to English"} ›</span></a></div></section>
     ${RH.ayarPanelleri(view.silOnay)}
     <div class="made" style="font-style:normal;color:var(--muted)">Reklamsız ve ücretsiz · Sürüm ${VERSION}</div>
     <div class="made">${esc(MAKER)}</div>
@@ -665,19 +674,20 @@ function settingsView() {
     <section class="panel"><div class="panel-h">Gösterilecek mealler</div><div>
       ${E.meals.map((t) => row(esc(E.source(t).name), "meal:" + t, S.meals.includes(t))).join("")}</div></section>
     <section class="panel"><div class="panel-h">Görünüm</div><div>
-      ${row("Arapça metni göster", "arabic", S.arabic)}${row("Tefsir açıklamasını göster", "tafsir", S.tafsir)}</div></section>
+      ${row("Arapça metni göster", "arabic", S.arabic)}${EN ? "" : row("Tefsir açıklamasını göster", "tafsir", S.tafsir)}</div></section>
     <section class="panel"><div class="panel-h">Kaynaklar</div>
       <table class="src"><thead><tr><th>Eser</th><th>Sürüm</th><th>Güncelleme</th></tr></thead><tbody>
-      ${E.sources.map((s) => `<tr><td>${esc(s.name)}</td><td>${esc(s.version || "—")}</td><td>${s.updated ? esc(s.updated.split("-").reverse().join(".")) : "—"}</td></tr>`).join("")}
+      ${(EN ? E.sources.filter((s) => E.meals.includes(s.id)) : E.sources).map((s) => `<tr><td>${esc(s.name)}</td><td>${esc(s.version || "—")}</td><td>${s.updated ? esc(s.updated.split("-").reverse().join(".")) : "—"}</td></tr>`).join("")}
       </tbody></table>
       <div class="panel-b" style="font-size:13px;line-height:1.5;color:#3d382d;border-top:1px solid var(--panel-line)">
-        Mealler ve tefsir <a href="https://quranenc.com">QuranEnc.com</a>'dan alınmıştır ve hiçbir değişiklik yapılmadan gösterilir.
+        ${EN ? "English translations: Marmaduke Pickthall (1930) and Abdullah Yusuf Ali (1934), both in the public domain, shown without any change. Text: Tanzil.net via the open quran-api project." : `Mealler ve tefsir <a href="https://quranenc.com">QuranEnc.com</a>'dan alınmıştır ve hiçbir değişiklik yapılmadan gösterilir.`}
         ${linkTanzil(E.core.meta.arabic_credit)}
         <br>Ezan bildirim sesi: <a href="https://commons.wikimedia.org/wiki/File:Beautiful_adhan.ogg">“Beautiful adhan”</a>, Adam-synagda, Wikimedia Commons (CC0, kamu malı); ilk 30 saniyesi.
       </div>
     </section>
-    <a class="btn-go btn-dark" href="https://quranenc.com/tr/browse/turkish_rwwad">${ICON.note}Mealle ilgili not gönder</a>
+    ${EN ? "" : `<a class="btn-go btn-dark" href="https://quranenc.com/tr/browse/turkish_rwwad">${ICON.note}Mealle ilgili not gönder</a>`}
     <div class="credits" style="text-align:center">Veri sürümü: ${esc(E.core.meta.built)}</div>
+    <section class="panel"><div class="panel-h">Dil · Language</div><div class="rows"><a class="row" href="#" data-act="dil"><span>${window.DIL ? (window.DIL.kod === "en" ? "English" : "Türkçe") : "Türkçe"}</span><span class="meta">${window.DIL && window.DIL.kod === "en" ? "Türkçe’ye geç" : "Switch to English"} ›</span></a></div></section>
     ${RH.ayarPanelleri(view.silOnay)}
     <div class="made" style="font-style:normal;color:var(--muted)">Reklamsız ve ücretsiz · Sürüm ${VERSION}</div>
     <div class="made">${esc(MAKER)}</div>
@@ -779,6 +789,7 @@ function bildirimPanel(pos) {
 function kibleMetin(pos) {
   const q = K.qiblaBearing(pos.lat, pos.lon);
   const m = (q - K.trueNorthOffset(pos.lat, pos.lon) + 360) % 360;
+  if (EN) return `Qibla: ${Math.round(q)}° from true north (${window.DIL.t(K.yonAdi(q))}); ${Math.round(m)}° on the compass · ${Math.round(K.distanceKm(pos.lat, pos.lon)).toLocaleString("en-US")} km to the Kaaba`;
   return `Kıble, gerçek kuzeyden ${Math.round(q)}° (${K.yonAdi(q)}); pusulada ${Math.round(m)}° · Kâbe'ye ${Math.round(K.distanceKm(pos.lat, pos.lon)).toLocaleString("tr-TR")} km`;
 }
 
@@ -1205,6 +1216,7 @@ document.addEventListener("click", async (e) => {
   if (act === "kaza-sifir") { if (!view.kazaSifir) { view.kazaSifir = true; route(); return; } kaza = {}; view.kazaSifir = false; await store.set("kaza", kaza); toast("Kaza sayıları sıfırlandı"); route(); return; }
   if (act === "rh-bastan") { RH.bastan(); toast("Rehber baştan başladı"); if (location.hash && location.hash !== "#/") location.hash = "#/"; else route(); return; }
   if (act === "rh-oner" || act === "rh-paylas-kart") { RH.puanKartKapat(); RH.paylas(toast); return; }
+  if (act === "dil") { e.preventDefault(); if (window.DIL) window.DIL.degistir(); return; }
   if (act === "rh-yaz") { RH.puanKartKapat(); RH.bizeYaz(VERSION, `konum ${S.konum ? "seçili" : "yok"} · bildirim ${S.vakit?.on ? "açık" : "kapalı"}`); return; }
   if (act === "rh-puan") { RH.puanVer(); return; }
   if (act === "rh-sonra") { RH.puanKartKapat(); return; }
@@ -1240,7 +1252,7 @@ document.addEventListener("click", async (e) => {
   } else if (act === "share") {
     const v = E.verse(Number(el.dataset.i), mealsOn());
     const t = view.mealFilter !== "all" ? view.mealFilter : Object.keys(v.texts)[0];
-    const text = `${v.title}\n\n${v.texts[t]}\n— ${E.source(t).name} meali (QuranEnc.com)\n\n${APP_NAME}`;
+    const text = EN ? `${v.title}\n\n${v.texts[t]}\n— ${E.source(t).name} translation\n\n${APP_NAME}` : `${v.title}\n\n${v.texts[t]}\n— ${E.source(t).name} meali (QuranEnc.com)\n\n${APP_NAME}`;
     const Share = window.Capacitor?.Plugins?.Share;
     try {
       if (Share) await Share.share({ title: v.title, text });
@@ -1305,6 +1317,10 @@ async function boot() {
       window.__INDEX || fetch("data/index.json").then((r) => r.json()),
     ]);
     E = new Engine(core, index);
+    if (EN) {
+      const en = window.__EN || await fetch("data/en.json").then((r) => r.json());
+      E.ingilizce(en, KAVRAM_EN);
+    }
   }
   S = { ...S, ...(await store.get("settings", {})) };
   if (KURAN && (!Array.isArray(S.meals) || !S.meals.some((t) => E.meals.includes(t)))) S.meals = [...E.meals];

@@ -9,7 +9,7 @@ if (kuran) { console.log("KURAN açık: veri dosyaları pakette kalıyor."); pro
 
 const hedefler = ["ios/App/App/public", "android/app/src/main/assets/public"];
 for (const h of hedefler) {
-  for (const f of ["data/core.json", "data/index.json"]) {
+  for (const f of ["data/core.json", "data/index.json", "data/en.json"]) {
     const yol = new URL(`../${h}/${f}`, import.meta.url);
     if (existsSync(yol)) { rmSync(yol); console.log("çıkarıldı:", `${h}/${f}`); }
   }
