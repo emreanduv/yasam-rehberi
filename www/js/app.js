@@ -15,7 +15,7 @@ import { KAVRAM_EN } from "./en-kavram.js";
 // ---------------------------------------------------------------------------
 const APP_NAME = "Yaşam Rehberi";
 const MAKER = "Bir Mr. Anduv! yapımıdır.";
-const VERSION = "1.4.0";
+const VERSION = "1.4.1";
 const EN = !!(window.DIL && window.DIL.kod === "en");   // dil English: telifsiz İngilizce mealler (Pickthall, Yusuf Ali)
 const QURANENC = { rowwad: "turkish_rwwad", ozek: "turkish_shahin", saban: "turkish_shaban", muhtasar: "turkish_mokhtasar" };
 const SHORT = { rowwad: "Rowwad", ozek: "Ali Özek", saban: "Ş. Britiş", pickthall: "Pickthall", yusufali: "Yusuf Ali" };

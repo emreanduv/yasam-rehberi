@@ -1,6 +1,6 @@
 {
   "name": "yasam-rehberi",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Yaşam Rehberi — Kur'an meallerini karşılaştırmalı arayan uygulama (iOS + Android, Capacitor). Bir Mr. Anduv! yapımıdır.",
   "directories": {
     "test": "test"
