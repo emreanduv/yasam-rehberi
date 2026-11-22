@@ -9,6 +9,7 @@ import { initCarsi, carsiRoute } from "./carsi.js";
 import { KURAN } from "./ozellik.js";
 import * as RH from "./rehber.js";
 import { KAVRAM_EN } from "./en-kavram.js";
+import { sahneKur } from "./sahne.js";
 
 // ---------------------------------------------------------------------------
 // Ayarlanabilir sabitler (isim değişirse sadece burası ve capacitor.config.json)
@@ -315,17 +316,36 @@ function kazaView() {
   </main>`;
 }
 
+// Vakit simgeleri (elle çizilmiş SVG; güneşin gün içindeki yolu)
+const VAKIT_IKON = {
+  imsak: `<svg viewBox="0 0 32 32"><path d="M4 23h24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M19.5 8.5a7 7 0 1 0 4.8 11 5.6 5.6 0 0 1-4.8-11z" fill="#e9c766" stroke="#9a7a14" stroke-width=".8"/><path d="M9 7l.8 1.8 1.8.8-1.8.8L9 12.2l-.8-1.8-1.8-.8 1.8-.8z" fill="#e9c766"/><path d="M8 27h16" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".5"/></svg>`,
+  gunes: `<svg viewBox="0 0 32 32"><path d="M8 22a8 8 0 0 1 16 0" fill="#f6b24a" stroke="#b5651d" stroke-width=".9"/><g stroke="#e08a2a" stroke-width="1.6" stroke-linecap="round"><path d="M16 8v3M6.6 12.6l2.1 2.1M25.4 12.6l-2.1 2.1M3 19.5h3M26 19.5h3"/></g><path d="M3 23h26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M16 26v3M14 27.5l2-2 2 2" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".55"/></svg>`,
+  ogle: `<svg viewBox="0 0 32 32"><circle cx="16" cy="15" r="6.2" fill="#f5c542" stroke="#b58a12" stroke-width=".9"/><g stroke="#e0a81e" stroke-width="1.6" stroke-linecap="round"><path d="M16 3.5v3M16 23.5v3M4.5 15h3M24.5 15h3M7.9 6.9l2.1 2.1M22 21l2.1 2.1M24.1 6.9 22 9M10 21l-2.1 2.1"/></g><path d="M6 29h20" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".45"/></svg>`,
+  ikindi: `<svg viewBox="0 0 32 32"><circle cx="20" cy="13" r="5.4" fill="#f3b84a" stroke="#b5741d" stroke-width=".9"/><g stroke="#e3992a" stroke-width="1.5" stroke-linecap="round"><path d="M20 4v2.6M28.5 13h-2.6M26 7l-1.8 1.8M14 7l1.8 1.8"/></g><path d="M4 25h24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M9 25V17M9 17l-2.5 2M9 17l2.5 2" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".6"/><path d="M9 25l10 0" stroke="currentColor" stroke-width="3" opacity=".18"/></svg>`,
+  aksam: `<svg viewBox="0 0 32 32"><defs><clipPath id="vk-a"><rect x="0" y="0" width="32" height="22"/></clipPath></defs><circle cx="16" cy="22" r="8" fill="#f08a4b" stroke="#b5501d" stroke-width=".9" clip-path="url(#vk-a)"/><path d="M3 22h26" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7 26h18M11 29h10" stroke="#e07a3a" stroke-width="1.3" stroke-linecap="round" opacity=".7"/><path d="M16 4v4M14 6.5l2 2 2-2" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".55"/></svg>`,
+  yatsi: `<svg viewBox="0 0 32 32"><path d="M18.5 6a9.5 9.5 0 1 0 7.2 15.3A8 8 0 0 1 18.5 6z" fill="#e9c766" stroke="#9a7a14" stroke-width=".8"/><path d="M8 6l.7 1.5 1.5.7-1.5.7L8 10.4l-.7-1.5-1.5-.7 1.5-.7zM26 6.5l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5zM6.5 17l.4.9.9.4-.9.4-.4.9-.4-.9-.9-.4.9-.4z" fill="#e9c766"/></svg>`,
+};
+
+// Gün şeridi: imsaktan yatsıya altı vakit, şimdi nerede?
+function gunSeridi(t, now) {
+  const bas = +t.imsak - 30 * 60000, son = +t.yatsi + 60 * 60000, yuzde = (d) => kis((d - bas) / (son - bas) * 100, 0, 100);
+  const isaret = V.VAKITLER.map((v) => `<span class="gs-isaret${t[v.key] <= now ? " gecti" : ""}" style="left:${yuzde(t[v.key]).toFixed(2)}%"><i></i><small>${esc(v.ad)}</small></span>`).join("");
+  return `<div class="gun-seridi" aria-hidden="true"><div class="gs-yol" style="--gs:${yuzde(now).toFixed(2)}%">${isaret}<span class="gs-simdi" style="left:${yuzde(now).toFixed(2)}%"></span></div></div>`;
+}
+const kis = (x, a, b) => Math.max(a, Math.min(b, x));
+
 function bugunView() {
   const pos = S.konum;
   const now = new Date();
   const h = V.hicri(now);
   const tarih = now.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", weekday: "long" });
   const tz = tesbihDurum();
-  let ust;
+  let ust, sahneKart = "";
   if (!pos) {
     ust = `<section class="panel bg-next"><div class="bg-next-h">Sıradaki vakit</div>
       <div class="panel-b nz-empty"><div>Vakitleri ve geri sayımı görmek için bulunduğun yeri seç. Konum yalnızca bu telefonda kullanılır.</div>
       <button class="btn-go" data-act="konum">${ICON.compass}Konumumu kullan</button><div class="kb-msg" id="nz-msg"></div></div></section>`;
+    sahneKart = "";
   } else {
     const t = V.times(pos.lat, pos.lon, now);
     const nx = V.nextVakit(pos.lat, pos.lon, now);
@@ -333,14 +353,12 @@ function bugunView() {
     const rows = V.VAKITLER.map((v) => {
       const on = !yarin && nx.key === v.key;
       const past = t[v.key] <= now;
-      return `<div class="bg-row${on ? " on" : ""}${past && !on ? " past" : ""}"><span>${esc(v.ad)}</span><b>${V.hhmm(t[v.key])}</b></div>`;
+      return `<div class="bg-row${on ? " on" : ""}${past && !on ? " past" : ""}"><span class="bg-row-a"><span class="vk-ikon">${VAKIT_IKON[v.key]}</span>${esc(v.ad)}</span><b>${V.hhmm(t[v.key])}</b></div>`;
     }).join("");
-    ust = `<section class="panel bg-next"><div class="bg-next-h">Sıradaki vakit${yarin ? " · yarın" : ""}</div>
-      <a class="bg-next-b" href="#/namaz">
-        <span><span class="bg-ad">${esc(nx.ad)}</span><span class="bg-at">${V.hhmm(nx.at)}'de</span></span>
-        <span class="bg-kalan"><span class="bg-kalan-l">Kalan</span><span class="bg-sayac" id="nz-count">${V.sayac(nx.at - now)}</span></span>
-      </a></section>
-    <section class="panel"><div class="panel-h"><span>Vakitler</span><span>Bugün</span></div><div>${rows}</div>
+    sahneKart = `<a class="sahne-kart" href="#/namaz">
+        <span class="sk-sol"><span class="sk-etiket">Sıradaki vakit${yarin ? " · yarın" : ""}</span><span class="sk-ad">${esc(nx.ad)}</span><span class="sk-at">${V.hhmm(nx.at)}'de</span></span>
+        <span class="sk-sag"><span class="sk-etiket">Kalan</span><span class="sk-sayac" id="nz-count">${V.sayac(nx.at - now)}</span></span></a>`;
+    ust = `<section class="panel"><div class="panel-h"><span>Vakitler</span><span>Bugün</span></div>${gunSeridi(t, now)}<div>${rows}</div>
       <div class="panel-b nz-foot">Diyanet yöntemiyle telefonda hesaplanır; resmî takvimle 1–2 dakika fark olabilir. <a href="#" data-act="konum">Konumu güncelle</a> · <a href="#/imsakiye">İmsakiye</a></div></section>
     ${kerahatPanel(pos, now)}`;
   }
@@ -361,8 +379,10 @@ function bugunView() {
     </section>`;
   }
   return `${topbar()}
-  <section class="bg-band">
-    <div class="bg-tarih"><span>${esc(tarih)}</span>${h ? `<span>${h.gun} ${esc(h.ayAdi)} ${h.yil}</span>` : ""}</div>
+  <section class="sahne" aria-label="${esc(tarih)}">
+    <canvas id="bg-sahne" aria-hidden="true"></canvas>
+    <div class="sahne-ust"><span class="sahne-tarih">${esc(tarih)}</span>${h ? `<span class="sahne-hicri">${h.gun} ${esc(h.ayAdi)} ${h.yil}</span>` : ""}</div>
+    ${sahneKart}
   </section>
   <main class="content">
     ${ramazanPanel(pos)}
@@ -924,6 +944,13 @@ function namazView() {
 
 function namazMount() {
   const pos = S.konum;
+  const cv = document.getElementById("bg-sahne");
+  if (cv) {
+    const now = new Date(), h = V.hicri(now), dini = V.diniGunler(now, 1)[0];
+    const kandil = dini && dini.kalanGun === 0 && /Kandil|Kadir/.test(dini.ad);
+    const yer = pos || { lat: 41.0086, lon: 28.9802 };   // konum yoksa İstanbul ufku
+    window.__sahne = sahneKur(cv, { lat: yer.lat, lon: yer.lon, hicriGun: h?.gun, mahya: h?.ramazan ? "HOŞ GELDİN RAMAZAN" : kandil ? "KANDİL MÜBAREK" : null });
+  }
   if (pos) kibleRender(true);
   bildirimDurum();
   sayacBaslat();

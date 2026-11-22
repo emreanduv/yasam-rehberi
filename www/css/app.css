@@ -380,3 +380,42 @@ html, body { overflow-x: hidden; }
 .hz-cuz a b { font-size: 14px; } .hz-cuz a small { font-size: 11px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hz-cuz button { width: 36px; border: 0; border-left: 1px solid var(--panel-line); background: var(--panel-alt); font: 700 16px "PT Sans", sans-serif; color: var(--ink-2); cursor: pointer; }
 .hz-cuz.ok { border-color: var(--go-edge); } .hz-cuz.ok button { background: var(--go); color: #fff; }
+
+/* ── Bugün sahnesi (1.5): canlı çizilmiş ufuk + üstünde sıradaki vakit ── */
+.sahne { position: relative; height: clamp(300px, 46vh, 420px); overflow: hidden; background: #0c1733; border-bottom: 3px solid var(--gold); isolation: isolate; }
+.sahne canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.sahne-ust { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: space-between; gap: 8px; padding: 10px 14px; z-index: 1;
+  font-size: 13px; color: #f4efe2; text-shadow: 0 1px 3px rgba(0,0,0,.55); }
+.sahne-hicri { font-weight: 700; color: #f1d78a; }
+.sahne-kart { position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end; gap: 10px;
+  padding: 12px 14px 13px; border-radius: 4px; text-decoration: none; color: #fff;
+  background: linear-gradient(180deg, rgba(20,23,26,.58), rgba(12,15,18,.78)); border: 1px solid rgba(233,199,102,.55);
+  box-shadow: 0 10px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08); -webkit-backdrop-filter: blur(6px) saturate(1.2); backdrop-filter: blur(6px) saturate(1.2); }
+.sahne-kart::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--go); border-radius: 4px 0 0 4px; }
+.sk-sol, .sk-sag { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.sk-sag { align-items: flex-end; text-align: right; }
+.sk-etiket { font-size: 11px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; color: #f1d78a; }
+.sk-ad { font: 700 36px/1 "PT Sans Narrow", "PT Sans", sans-serif; }
+.sk-at { font-size: 13px; color: #d7dde2; }
+.sk-sayac { font: 700 46px/.95 "PT Sans Narrow", "PT Sans", sans-serif; font-variant-numeric: tabular-nums; letter-spacing: .5px; text-shadow: 0 2px 10px rgba(0,0,0,.4); }
+@media (max-width: 360px) { .sk-ad { font-size: 30px; } .sk-sayac { font-size: 38px; } }
+
+/* gün şeridi */
+.gun-seridi { padding: 16px 18px 26px; background: var(--panel); border-bottom: 1px solid var(--panel-line); }
+.gs-yol { position: relative; height: 8px; border-radius: 4px;
+  background: linear-gradient(90deg, #1b2850 0%, #b25f78 9%, #f3b84a 18%, #8fc0e8 38%, #6ea6dd 55%, #f3b84a 78%, #e0703a 86%, #3a3f78 93%, #16264a 100%); box-shadow: inset 0 1px 2px rgba(0,0,0,.25); }
+.gs-dolu { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(239,232,212,.0); }
+.gs-yol::after { content: ""; position: absolute; inset: 0; border-radius: 4px; background: rgba(239,232,212,.55); clip-path: inset(0 0 0 var(--gs, 0%)); }
+.gs-isaret { position: absolute; top: -3px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; z-index: 1; }
+.gs-isaret i { width: 3px; height: 14px; background: var(--ink); border-radius: 2px; opacity: .55; }
+.gs-isaret.gecti i { opacity: .9; }
+.gs-isaret small { margin-top: 3px; font-size: 10px; font-weight: 700; color: var(--ink-2); white-space: nowrap; }
+.gs-simdi { position: absolute; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; z-index: 2;
+  background: radial-gradient(circle at 35% 35%, #fff6d6, #e9c766 55%, #b58a12); border: 2px solid #fff; box-shadow: 0 0 0 3px rgba(233,199,102,.35), 0 2px 6px rgba(0,0,0,.35); }
+
+/* vakit satırlarında simge */
+.bg-row-a { display: flex; align-items: center; gap: 10px; }
+.vk-ikon { width: 28px; height: 28px; flex: none; color: var(--ink-2); }
+.vk-ikon svg { width: 100%; height: 100%; display: block; }
+.bg-row.past .vk-ikon { opacity: .5; filter: grayscale(.6); }
+.bg-row.on .vk-ikon { color: var(--ink); }
