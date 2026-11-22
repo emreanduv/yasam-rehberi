@@ -157,3 +157,4 @@ Emre: "çizimler, görseller yalapşap; çok daha iyisini yapabilirsin." Bütün
 - Ezan saatlerinin (Al Fajr gibi) ruhuyla, kendi çizimimiz dört kadran: Ana-Dijital Vakit (varsayılan), Vakit LCD, Kıble Pusulalı, Masa Ezan Saati. Logo/model kopyası yok; Kâbe çizilmez (kıble bezelde ışıklı mihrap kemeri).
 - 1.5.0 incelemeye gönderilmedi; 1.5.1 onun yerine geçer: `store/surum/1.5.1.json`, görseller `store/gorseller/v15` (+ `10-saat`).
 - Emre cihazda onaylayınca: `asc-surum` hazirla (1.5.1) → gonder; Android 1.5.1 .aab imzala → Play.
+- 22 Kasım 23:07: Emre onayladı ("yapıştır"). 1.5.1 (derleme 40) metinler ve 10'ar görselle App Store incelemesine gönderildi: WAITING_FOR_REVIEW. Onay gelince `store/SON-SURUM` → 1.5.1.
