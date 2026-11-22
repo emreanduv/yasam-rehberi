@@ -33,7 +33,7 @@ function gokRenk(alt) {
 function tohum(s) { return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
 
 // ── cami ve şehir silüeti (kodla) ──
-function cami(c, x, zemin, s, o) {
+export function cami(c, x, zemin, s, o) {
   // o: { minare: 2|4|6, genis: 1 }  — merkez kubbe, yarım kubbeler, kademeli kubbecikler, kalem minareler
   const g = (o.genis || 1) * s;
   const R = 26 * g;                                   // ana kubbe yarıçapı

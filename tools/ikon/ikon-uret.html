@@ -1,0 +1,57 @@
+<!doctype html><meta charset="utf-8"><link rel="stylesheet" href="css/app.css"><body style="margin:0;background:#222">
+<canvas id="c" width="1024" height="1024"></canvas><canvas id="s" width="2732" height="2732"></canvas>
+<script type="module">
+import { cami } from "./js/sahne.js";
+await Promise.all(["700 96px 'PT Sans Narrow'", "italic 700 54px 'PT Sans'", "700 54px 'PT Sans'"].map((f) => document.fonts.load(f)));
+// ── uygulama simgesi: akşam ufku, cami silüeti, hilal ve yıldız, altın çizgi ──
+function ikon(x, N, { kenar = true } = {}) {
+  const S = N / 1024;
+  x.save(); x.scale(S, S);
+  let g = x.createLinearGradient(0, 0, 0, 1024);
+  g.addColorStop(0, "#0b1530"); g.addColorStop(.42, "#2c2f66"); g.addColorStop(.66, "#a8587a"); g.addColorStop(.8, "#f19a5c"); g.addColorStop(.86, "#f7c27a");
+  x.fillStyle = g; x.fillRect(0, 0, 1024, 1024);
+  // ufuktaki güneş hâlesi
+  g = x.createRadialGradient(512, 860, 0, 512, 860, 520); g.addColorStop(0, "rgba(255,214,140,.85)"); g.addColorStop(.35, "rgba(255,170,110,.35)"); g.addColorStop(1, "rgba(255,170,110,0)");
+  x.fillStyle = g; x.fillRect(0, 0, 1024, 1024);
+  // yıldızlar
+  const r = (n) => { let s = n; return () => (s = (s * 16807) % 2147483647) / 2147483647; }, rr = r(1923);
+  for (let i = 0; i < 70; i++) { const yy = rr() * 420, a = .25 + .75 * (1 - yy / 420); x.fillStyle = `rgba(255,245,220,${a * (.4 + rr() * .6)})`; x.beginPath(); x.arc(rr() * 1024, yy, 1.2 + rr() * 2.2, 0, 7); x.fill(); }
+  // hilal ve yıldız
+  x.save(); x.translate(735, 255);
+  g = x.createRadialGradient(0, 0, 40, 0, 0, 210); g.addColorStop(0, "rgba(255,236,180,.35)"); g.addColorStop(1, "rgba(255,236,180,0)"); x.fillStyle = g; x.beginPath(); x.arc(0, 0, 210, 0, 7); x.fill();
+  const ay = document.createElement("canvas"); ay.width = ay.height = 400; const a = ay.getContext("2d");
+  a.fillStyle = "#f6d77a"; a.beginPath(); a.arc(200, 200, 118, 0, 7); a.fill(); a.globalCompositeOperation = "destination-out"; a.beginPath(); a.arc(250, 168, 104, 0, 7); a.fill();
+  x.drawImage(ay, -200, -200);
+  x.fillStyle = "#f6d77a"; x.beginPath(); const yx = 66, yy0 = -6, R1 = 34, R2 = 14;
+  for (let k = 0; k < 10; k++) { const an = -Math.PI / 2 + k * Math.PI / 5, R = k % 2 ? R2 : R1; x.lineTo(yx + Math.cos(an) * R, yy0 + Math.sin(an) * R); } x.closePath(); x.fill();
+  x.restore();
+  // cami silüeti (büyük, ortada) ve su
+  const zemin = 840;
+  x.fillStyle = "#101826"; cami(x, 512, zemin, 3.05, { minare: 4, genis: 1.0 });
+  x.fillStyle = "#101826"; x.fillRect(0, zemin - 2, 1024, 1024 - zemin + 2);
+  // şerefe ışıkları
+  // suya düşen ışık: ortada parlak, kenarlara sönen kısa çizgiler
+  for (let i = 0; i < 9; i++) {
+    const w = 300 - i * 26, y = zemin + 16 + i * 13;
+    const lg = x.createLinearGradient(512 - w / 2, 0, 512 + w / 2, 0);
+    lg.addColorStop(0, "rgba(247,194,122,0)"); lg.addColorStop(.5, `rgba(247,194,122,${.55 - i * .05})`); lg.addColorStop(1, "rgba(247,194,122,0)");
+    x.fillStyle = lg; x.fillRect(512 - w / 2, y, w, 4);
+  }
+  // altın şerit (marka)
+  if (kenar) { x.fillStyle = "#c9a227"; x.fillRect(0, 968, 1024, 26); }
+  x.restore();
+}
+const c = document.getElementById("c").getContext("2d"); ikon(c, 1024);
+// açılış ekranı: koyu zemin, ortada yuvarlatılmış simge, altında ad ve imza
+const s = document.getElementById("s").getContext("2d");
+s.fillStyle = "#14171a"; s.fillRect(0, 0, 2732, 2732);
+const k = document.createElement("canvas"); k.width = k.height = 560; ikon(k.getContext("2d"), 560);
+s.save(); s.shadowColor = "rgba(0,0,0,.5)"; s.shadowBlur = 40; s.shadowOffsetY = 12;
+const rx = 1366 - 280, ry = 1366 - 380; s.beginPath(); s.roundRect(rx, ry, 560, 560, 124); s.fillStyle = "#000"; s.fill(); s.restore();
+s.save(); s.beginPath(); s.roundRect(rx, ry, 560, 560, 124); s.clip(); s.drawImage(k, rx, ry); s.restore();
+s.strokeStyle = "rgba(201,162,39,.8)"; s.lineWidth = 4; s.beginPath(); s.roundRect(rx, ry, 560, 560, 124); s.stroke();
+s.textAlign = "center"; s.fillStyle = "#f4efe2"; s.font = "700 96px 'PT Sans Narrow', 'PT Sans', sans-serif"; s.letterSpacing = "6px"; s.fillText("YAŞAM REHBERİ", 1366, 1366 + 330);
+s.fillStyle = "#c9a227"; s.fillRect(1366 - 160, 1366 + 370, 320, 6);
+s.fillStyle = "#e9c766"; s.font = "italic 700 54px 'PT Sans', sans-serif"; s.letterSpacing = "0px"; s.fillText("Bir Mr. Anduv! yapımıdır.", 1366, 1366 + 460);
+window.hazir = true;
+</script>
