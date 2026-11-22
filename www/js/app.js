@@ -10,13 +10,14 @@ import { KURAN } from "./ozellik.js";
 import * as RH from "./rehber.js";
 import { KAVRAM_EN } from "./en-kavram.js";
 import { sahneKur } from "./sahne.js";
+import { RAHLE as RAHLE_CIZIM, BANT, KONU } from "./cizim.js";
 
 // ---------------------------------------------------------------------------
 // Ayarlanabilir sabitler (isim değişirse sadece burası ve capacitor.config.json)
 // ---------------------------------------------------------------------------
 const APP_NAME = "Yaşam Rehberi";
 const MAKER = "Bir Mr. Anduv! yapımıdır.";
-const VERSION = "1.4.1";
+const VERSION = "1.5.0";
 const EN = !!(window.DIL && window.DIL.kod === "en");   // dil English: telifsiz İngilizce mealler (Pickthall, Yusuf Ali)
 const QURANENC = { rowwad: "turkish_rwwad", ozek: "turkish_shahin", saban: "turkish_shaban", muhtasar: "turkish_mokhtasar" };
 const SHORT = { rowwad: "Rowwad", ozek: "Ali Özek", saban: "Ş. Britiş", pickthall: "Pickthall", yusufali: "Yusuf Ali" };
@@ -141,7 +142,7 @@ function mealBlock(v, terms, filter = "all") {
 function verseCard(v, terms) {
   const tag = v.anchorOf.length ? `<span class="tag">Temel ayet · ${esc(v.anchorOf[0])}</span>` : "";
   return `<article class="panel">
-    <a class="verse-h" href="#/ayet/${v.surah}/${v.ayah}"><span class="ref">${esc(v.title)}</span>${tag}</a>
+    <a class="verse-h" href="#/ayet/${v.surah}/${v.ayah}"><span class="ref vh-ref"><span class="vh-durak">${ayetDuragi(v.ayah)}</span>${esc(v.title)}</span>${tag}</a>
     <div class="panel-b">${mealBlock(v, terms)}
       <div style="margin-top:10px"><a class="btn-light" href="#/ayet/${v.surah}/${v.ayah}">Arapça metin ve tefsir açıklaması ›</a></div>
     </div></article>`;
@@ -165,7 +166,7 @@ function homeView() {
   const dv = E.verse(E.indexOf(ds, da), mealsOn());
   const firstMeal = Object.keys(dv.texts)[0];
   return `${topbar()}
-  <section class="band">
+  <section class="band cizimli">${BANT.sor}
     <div class="eyebrow">Hoş geldin</div>
     <h1>Ne öğrenmek istersin?</h1>
     <div class="sub">${E.meals.length} meal · kısa tefsir · ${E.refs.length} ayet · internetsiz arama</div>
@@ -186,12 +187,12 @@ function homeView() {
     </section>
     <section class="panel">
       <div class="panel-h">Konular</div>
-      <div class="panel-b chips">${(EN ? TOPICS_EN : TOPICS).map(([l, q]) => `<a class="chip" href="#/ara?q=${enc(q)}">${esc(l)}</a>`).join("")}</div>
+      <div class="panel-b konu-izgara">${(EN ? TOPICS_EN : TOPICS).map(([l, q], i) => `<a class="konu" href="#/ara?q=${enc(q)}"><span class="konu-ik">${KONU[TOPICS[i][0]] || ""}</span><span>${esc(l)}</span></a>`).join("")}</div>
     </section>
     <section class="panel">
       <div class="panel-h">Gelen kutusu <span class="count">1</span></div>
       <a class="panel-b" href="#/ayet/${ds}/${da}" style="display:flex;gap:10px;text-decoration:none;color:var(--ink)">
-        <div style="width:6px;border-radius:3px;background:var(--go);flex:none"></div>
+        <div style="flex:none;width:38px">${ayetDuragi(da)}</div>
         <div style="min-width:0">
           <div style="font-size:12px;font-weight:700;color:var(--band)">Günün ayeti · ${esc(dv.title)}</div>
           <div style="font-size:15px;line-height:1.45;margin-top:3px">${esc(dv.texts[firstMeal])}</div>
@@ -282,9 +283,9 @@ function imsakiyeView() {
     tablo = `<div class="ims-kap"><table class="ims"><thead><tr><th>Gün</th>${V.VAKITLER.map((v) => `<th>${esc(v.ad)}</th>`).join("")}<th>Kıble s.</th></tr></thead><tbody>${satir}</tbody></table></div>
       <div class="panel-b nz-foot">Bulunduğun yere göre, Diyanet yöntemiyle telefonda hesaplanır. Kıble saati: güneşin tam kıble yönünde olduğu an.</div>`;
   }
-  const dini = V.diniGunler(now, 14).map((g) => `<div class="bg-row dini${g.kalanGun === 0 ? " on" : ""}"><span>${esc(g.ad)}<small>${esc(g.gun.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", weekday: "long" }))}${g.tahmini ? " · tahmini" : ""}</small></span><b>${g.kalanGun === 0 ? "bugün" : g.kalanGun + " gün"}</b></div>`).join("");
+  const dini = V.diniGunler(now, 14).map((g) => `<div class="bg-row dini${g.kalanGun === 0 ? " on" : ""}"><span class="dini-ik">${/Bayram|Arife/.test(g.ad) ? CIZIM.bayram : /Ramazan|Yılbaşı|Aşure/.test(g.ad) ? CIZIM.ramazan : CIZIM.kandil}</span><span style="flex:1">${esc(g.ad)}<small>${esc(g.gun.toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric", weekday: "long" }))}${g.tahmini ? " · tahmini" : ""}</small></span><b>${g.kalanGun === 0 ? "bugün" : g.kalanGun + " gün"}</b></div>`).join("");
   return `${topbar("Geri")}
-  <section class="band"><div class="eyebrow">Bugün</div><h1>İmsakiye ve dinî günler</h1></section>
+  <section class="band cizimli">${CIZIM.kandil.replace('class="cz"', 'class="bant-cizim"')}<div class="eyebrow">Bugün</div><h1>İmsakiye ve dinî günler</h1></section>
   <main class="content">
     <section class="panel"><div class="panel-h"><span>İmsakiye</span><span>30 gün</span></div>${tablo}</section>
     <section class="panel"><div class="panel-h"><span>Dinî günler</span><span>Kandiller akşamdan başlar</span></div><div>${dini}</div>
@@ -308,7 +309,7 @@ function kazaView() {
     <b class="kz-n">${kaza[k] || 0}</b>
     <button class="btn-go kz-kil" data-act="kaza" data-k="${k}" data-d="-1" ${kaza[k] ? "" : "disabled"}>${k === "oruc" ? "Tuttum" : "Kıldım"} −1</button></div>`).join("");
   return `${topbar("Geri")}
-  <section class="band"><div class="eyebrow">Bugün</div><h1>Kaza takibi</h1></section>
+  <section class="band cizimli">${CIZIM.seccade.replace('class="cz"', 'class="bant-cizim"')}<div class="eyebrow">Bugün</div><h1>Kaza takibi</h1></section>
   <main class="content">
     <section class="panel"><div class="panel-h"><span>Kaza borcum</span><span>${kazaToplam()} namaz · ${kaza.oruc || 0} oruç</span></div>${satir}</section>
     <section class="panel"><div class="panel-h">Toplu ekle</div><div class="panel-b kz-toplu">
@@ -628,7 +629,7 @@ function verseView(s, a) {
     </div>
   </section>
   <main class="content">
-    ${S.arabic ? `<section class="panel"><div class="panel-h">Arapça metin</div><div class="panel-b arabic" lang="ar">${esc(v.arabic)}</div></section>` : ""}
+    ${S.arabic ? `<section class="panel"><div class="panel-h">Arapça metin</div><div class="panel-b ar-cerceve"><div class="arabic" lang="ar">${esc(v.arabic)} <span class="ar-son">﴿${arapRakam(v.ayah)}﴾</span></div></div></section>` : ""}
     <section class="panel"><div class="panel-h">Mealler</div><div class="panel-b">
       <div class="seg" role="group" aria-label="Meal seçimi">${filters.map(([id, l]) => `<button data-act="filter" data-id="${id}" class="${view.mealFilter === id ? "on" : ""}" aria-pressed="${view.mealFilter === id}">${esc(l)}</button>`).join("")}</div>
       ${mealBlock(v, [], view.mealFilter)}
@@ -649,13 +650,29 @@ function verseView(s, a) {
 const CUZ = [[1,1],[2,142],[2,253],[3,93],[4,24],[4,148],[5,83],[6,111],[7,88],[8,41],[9,93],[11,6],[12,53],[15,1],[17,1],[18,75],[21,1],[23,1],[25,21],[27,56],[29,46],[33,31],[36,28],[39,32],[41,47],[46,1],[51,31],[58,1],[67,1],[78,1]];
 const hatimKaydet = () => store.set("hatim", hatim);
 function sonOkunan(sure, ayet) { if (!sure || !ayet) return; hatim.son = { s: sure, a: ayet }; hatimKaydet(); }
+const RAHLE = RAHLE_CIZIM;
 function hatimKart() {
   const n = hatim.done.length, son = hatim.son;
-  return `<a class="panel bg-dini" href="#/hatim"><span class="bg-dini-l">Hatim takibi${hatim.sayi ? ` · ${hatim.sayi} hatim` : ""}</span>
+  return `<a class="panel bg-dini kart-cizim" href="#/hatim"><span class="kc-resim">${RAHLE}</span><span class="kc-metin"><span class="bg-dini-l">Hatim takibi${hatim.sayi ? ` · ${hatim.sayi} hatim` : ""}</span>
     <span class="hz-bar"><span style="width:${Math.round(n / 30 * 100)}%"></span></span>
     <span class="bg-dini-t"><b>${n}/30 cüz</b>${son ? ` · kaldığın yer ${esc(E.surahs[son.s - 1]?.name || "")} ${son.a}` : ""}</span>
-    <span class="bg-dini-m">Cüzler ${ICON.next}</span></a>`;
+    <span class="bg-dini-m">Cüzler ${ICON.next}</span></span></a>`;
 }
+// Hatim gülü: 30 yapraklı tezhip gülü; okunan cüzler altın
+function hatimGulu(done, sayi) {
+  const y = Array.from({ length: 30 }, (_, i) => {
+    const ok = done.includes(i + 1);
+    return `<path d="M100 18 C106 30 106 42 100 52 C94 42 94 30 100 18Z" transform="rotate(${i * 12} 100 100)" fill="${ok ? "url(#hg-a)" : "#fffaf0"}" stroke="${ok ? "#7a5a10" : "#c9b78a"}" stroke-width="1"/>`;
+  }).join("");
+  const no = Array.from({ length: 30 }, (_, i) => { const a = (i * 12 - 90) * Math.PI / 180; return `<text x="${(100 + Math.cos(a) * 92).toFixed(1)}" y="${(103 + Math.sin(a) * 92).toFixed(1)}" text-anchor="middle" font-size="7.5" font-weight="700" fill="${done.includes(i + 1) ? "#1d4d36" : "#a89a78"}" font-family="PT Sans Narrow, PT Sans, sans-serif">${i + 1}</text>`; }).join("");
+  return `<svg viewBox="0 0 200 200" class="hatim-gul" aria-hidden="true"><defs><radialGradient id="hg-a" cx="40%" cy="30%"><stop offset="0" stop-color="#fff1bf"/><stop offset="1" stop-color="#c9a227"/></radialGradient>
+    <radialGradient id="hg-m" cx="45%" cy="40%"><stop offset="0" stop-color="#2e7d56"/><stop offset="1" stop-color="#123522"/></radialGradient></defs>
+    <circle cx="100" cy="100" r="84" fill="none" stroke="#c9a227" stroke-width=".8" stroke-dasharray="2 3"/>${y}${no}
+    <circle cx="100" cy="100" r="46" fill="url(#hg-m)" stroke="#c9a227" stroke-width="2.4"/><circle cx="100" cy="100" r="40" fill="none" stroke="#e9c766" stroke-width=".7" stroke-dasharray="1.5 2.5"/>
+    <text x="100" y="104" text-anchor="middle" font-family="PT Sans Narrow, PT Sans, sans-serif" font-weight="700" font-size="26" fill="#f1d78a">${done.length}<tspan font-size="13" fill="#d7e8dc">/30</tspan></text>
+    <text x="100" y="120" text-anchor="middle" font-family="PT Sans, sans-serif" font-weight="700" font-size="8" letter-spacing="1" fill="#d7e8dc">${sayi ? `${sayi} HATİM TAMAM` : "CÜZ"}</text></svg>`;
+}
+
 function hatimView() {
   const n = hatim.done.length, son = hatim.son;
   const cuzler = CUZ.map(([cs, ca], i) => {
@@ -664,10 +681,10 @@ function hatimView() {
       <button data-act="cuz" data-n="${no}" aria-pressed="${ok}" aria-label="${no}. cüzü ${ok ? "okunmadı say" : "okudum say"}">${ok ? "✓" : "○"}</button></div>`;
   }).join("");
   return `${topbar("Geri")}
-  <section class="band"><div class="eyebrow">Sureler</div><h1>Hatim takibi</h1></section>
+  <section class="band cizimli">${RAHLE.replace('class="cz"', 'class="bant-cizim"')}<div class="eyebrow">Sureler</div><h1>Hatim takibi</h1></section>
   <main class="content">
     <section class="panel"><div class="panel-h"><span>Bu hatim</span><span>${n}/30 cüz${hatim.sayi ? ` · ${hatim.sayi} hatim tamam` : ""}</span></div>
-      <div class="panel-b hz-ust"><span class="hz-bar"><span style="width:${Math.round(n / 30 * 100)}%"></span></span>
+      <div class="panel-b hz-ust">${hatimGulu(hatim.done, hatim.sayi)}
       ${son ? `<a class="btn-go" href="#/sure/${son.s}?a=${son.a}">${ICON.next}Kaldığın yerden devam · ${esc(E.surahs[son.s - 1].name)} ${son.a}</a>` : `<a class="btn-go" href="#/sure/1">${ICON.next}Fâtiha'dan başla</a>`}
       ${n === 30 ? `<button class="btn-go" data-act="hatim-yeni">Hatmi tamamla ve yenisine başla</button>` : ""}</div></section>
     <section class="panel"><div class="panel-h"><span>Cüzler</span><span>Okuduğunu işaretle</span></div><div class="hz-grid">${cuzler}</div></section>
@@ -676,16 +693,41 @@ function hatimView() {
   </main>`;
 }
 
+// Surelerin Arapça adları (Tanzil yazımı)
+const SURE_AR = "الفاتحة|البقرة|آل عمران|النساء|المائدة|الأنعام|الأعراف|الأنفال|التوبة|يونس|هود|يوسف|الرعد|إبراهيم|الحجر|النحل|الإسراء|الكهف|مريم|طه|الأنبياء|الحج|المؤمنون|النور|الفرقان|الشعراء|النمل|القصص|العنكبوت|الروم|لقمان|السجدة|الأحزاب|سبإ|فاطر|يس|الصافات|ص|الزمر|غافر|فصلت|الشورى|الزخرف|الدخان|الجاثية|الأحقاف|محمد|الفتح|الحجرات|ق|الذاريات|الطور|النجم|القمر|الرحمن|الواقعة|الحديد|المجادلة|الحشر|الممتحنة|الصف|الجمعة|المنافقون|التغابن|الطلاق|التحريم|الملك|القلم|الحاقة|المعارج|نوح|الجن|المزمل|المدثر|القيامة|الإنسان|المرسلات|النبإ|النازعات|عبس|التكوير|الانفطار|المطففين|الانشقاق|البروج|الطارق|الأعلى|الغاشية|الفجر|البلد|الشمس|الليل|الضحى|الشرح|التين|العلق|القدر|البينة|الزلزلة|العاديات|القارعة|التكاثر|العصر|الهمزة|الفيل|قريش|الماعون|الكوثر|الكافرون|النصر|المسد|الإخلاص|الفلق|الناس".split("|");
+const arapRakam = (n) => String(n).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+// Tezhipli sure başlığı: çift altın çerçeve, köşe rumileri, ortada kartuşta Arapça sure adı; altında besmele (Fâtiha ve Tevbe hariç)
+function sureBasligi(no, s, alt) {
+  const kose = (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M0 0c10 0 16 4 18 12-6-4-12-5-18-4 1-6 4-8 0-8z" fill="#c9a227" stroke="#7a5a10" stroke-width=".6"/><circle cx="6" cy="6" r="2" fill="#1d4d36"/></g>`;
+  const besmele = no !== 1 && no !== 9 ? `<div class="sb-besmele" lang="ar">${esc(E.verse(E.indexOf(1, 1), []).arabic)}</div>` : "";
+  return `<section class="sure-baslik">
+    <svg viewBox="0 0 360 96" class="sb-cerceve" aria-hidden="true" preserveAspectRatio="none">
+      <defs><linearGradient id="sb-z" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1d4d36"/><stop offset="1" stop-color="#123522"/></linearGradient>
+        <pattern id="sb-d" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M7 0l7 7-7 7-7-7z" fill="none" stroke="#c9a227" stroke-width=".5" opacity=".35"/><circle cx="7" cy="7" r=".9" fill="#c9a227" opacity=".5"/></pattern></defs>
+      <rect x="2" y="2" width="356" height="92" fill="url(#sb-z)" stroke="#c9a227" stroke-width="2"/>
+      <rect x="2" y="2" width="356" height="92" fill="url(#sb-d)"/>
+      <rect x="8" y="8" width="344" height="80" fill="none" stroke="#e9c766" stroke-width=".8"/>
+      <ellipse cx="180" cy="48" rx="122" ry="31" fill="#f6efdc" stroke="#c9a227" stroke-width="2"/>
+      <ellipse cx="180" cy="48" rx="116" ry="26" fill="none" stroke="#c9a227" stroke-width=".7" stroke-dasharray="2 2.5"/>
+      ${kose(10, 10, 0)}${kose(350, 10, 90)}${kose(350, 86, 180)}${kose(10, 86, 270)}
+      <path d="M40 48h14M306 48h14" stroke="#e9c766" stroke-width="1.2"/><circle cx="34" cy="48" r="3" fill="#e9c766"/><circle cx="326" cy="48" r="3" fill="#e9c766"/>
+    </svg>
+    <div class="sb-ic"><span class="sb-ar" lang="ar">سورة ${esc(SURE_AR[no - 1])}</span><span class="sb-tr">${esc(s.name)} Suresi</span></div>
+    <div class="sb-alt">${alt}</div>
+    ${besmele}
+  </section>`;
+}
+
 function surahsView() {
   return `${topbar()}
-  <section class="band"><div class="eyebrow">Mushaf sırası</div><h1>Sureler</h1></section>
+  <section class="band cizimli">${RAHLE.replace('class="cz"', 'class="bant-cizim"')}<div class="eyebrow">Mushaf sırası</div><h1>Sureler</h1></section>
   <main class="content">
     ${hatimKart()}
     <section class="panel"><div class="panel-b search">
       <label for="sf" class="sr">Sure ara</label>
       <input id="sf" type="search" placeholder="Sure adı veya numarası" data-act="sfilter" autocomplete="off">
     </div>
-    <div class="rows" id="slist">${E.surahs.map((s) => `<a class="row" data-name="${esc(fold2(s.name))} ${s.no}" href="#/sure/${s.no}"><span><b style="display:inline-block;width:34px;color:var(--band)">${s.no}</b>${esc(s.name)}</span><span class="meta">${s.count} ayet ›</span></a>`).join("")}</div>
+    <div class="rows" id="slist">${E.surahs.map((s) => `<a class="row sl-row" data-name="${esc(fold2(s.name))} ${s.no}" href="#/sure/${s.no}"><span class="sl-sol">${ayetDuragi(s.no)}<span class="sl-ad">${esc(s.name)}<small>${s.count} ayet</small></span></span><span class="sl-ar" lang="ar">${esc(SURE_AR[s.no - 1])}</span></a>`).join("")}</div>
     </section>
   </main>`;
 }
@@ -698,11 +740,10 @@ function surahView(no) {
   let rows = "";
   for (let k = 0; k < s.count; k++) {
     const v = E.verse(start + k, [first]);
-    rows += `<a class="row" id="a${v.ayah}" href="#/ayet/${no}/${v.ayah}" style="align-items:flex-start"><b style="flex:none;width:34px;color:var(--band)">${v.ayah}</b><span style="flex:1;font-size:15px;line-height:1.5">${esc(v.texts[first])}${v.footnotes[first] ? ` <span style="color:var(--ink-2)">[dipnot]</span>` : ""}</span></a>`;
+    rows += `<a class="row" id="a${v.ayah}" href="#/ayet/${no}/${v.ayah}" style="align-items:flex-start"><span class="sr-durak">${ayetDuragi(v.ayah)}</span><span style="flex:1;font-size:15px;line-height:1.5">${esc(v.texts[first])}${v.footnotes[first] ? ` <span style="color:var(--ink-2)">[dipnot]</span>` : ""}</span></a>`;
   }
   return `${topbar("Sureler")}
-  <section class="band"><div class="eyebrow">${no}. sure · ${s.count} ayet</div><h1>${esc(s.name)}</h1><div class="sub">${esc(E.source(first).name)} meali</div></section>
-  <main class="content"><section class="panel"><div class="rows">${rows}</div></section>${credits([first])}</main>`;
+  <main class="content">${sureBasligi(no, s, `${no}. sure · ${s.count} ayet · ${esc(E.source(first).name)} meali`)}<section class="panel"><div class="rows">${rows}</div></section>${credits([first])}</main>`;
 }
 
 function savedView() {
@@ -1134,12 +1175,28 @@ let mg = null;   // miras girdisi (cihazda saklanır)
 const mirasGirdi = () => (mg ||= JSON.parse(JSON.stringify(M.BOS)));
 const tl = (v) => v.toLocaleString("tr-TR", { maximumFractionDigits: 0 }) + " TL";
 
+// Miras: akraba figürü (yüzsüz, sade): cinsiyet ve kuşak
+const MR_KISI = { es: "k2", ogul: "e0", kiz: "k0", anne: "k2", baba: "e2", dede: "e3", babaAnne: "k3", anneDede: "e3", anneAnne: "k3",
+  tamE: "e1", tamK: "k1", babaE: "e1", babaK: "k1", anaE: "e1", anaK: "k1", uzakAsabe: "e1" };
+function mrKisi(key, kadinEs) {
+  let k = MR_KISI[key] || (/ogul$/.test(key) ? "e0" : /kiz$/.test(key) ? "k0" : "");
+  if (key === "es" && kadinEs) k = "e2";
+  if (!k) return "";
+  const kad = k[0] === "k", kus = +k[1], sc = kus === 0 ? .78 : 1, sac = kus === 3 ? "#c9c9c9" : "#3e2a1a";
+  const govde = kad ? (kus === 3 ? "#5a3a5a" : "#8a1f22") : (kus === 3 ? "#4a5560" : "#25307a");
+  const bas = kad && kus === 0
+    ? `<circle cx="18" cy="13" r="6" fill="#e8c9a8"/><path d="M12 12q0-6.5 6-6.5t6 6.5q-2-3-6-3t-6 3z" fill="#5a3a22"/><path d="M23.5 9q5 1 4 9-2-4-4-5z" fill="#5a3a22"/><circle cx="24.5" cy="9.5" r="1.4" fill="#a3261a"/>`
+    : kad
+    ? `<path d="M10 12a8 8 0 0 1 16 0v4q0 6-8 7-8-1-8-7z" fill="${kus === 3 ? "#d8d2c4" : "#1d4d36"}"/><circle cx="18" cy="13.5" r="5.4" fill="#e8c9a8"/><path d="M12.6 12a5.4 5.4 0 0 1 10.8 0q-5.4-3-10.8 0z" fill="${kus === 3 ? "#d8d2c4" : "#1d4d36"}"/>`
+    : `<circle cx="18" cy="13" r="6" fill="#e8c9a8"/><path d="M12 12q0-6.5 6-6.5t6 6.5q-2-3-6-3t-6 3z" fill="${sac}"/>${kus === 3 ? `<path d="M14 17q4 4 8 0" fill="${sac}"/>` : ""}`;
+  return `<svg viewBox="0 0 36 40" class="mr-kisi" aria-hidden="true"><g transform="translate(18 40) scale(${sc}) translate(-18 -40)"><path d="M5 40q0-14 13-14t13 14z" fill="${govde}"/>${bas}</g></svg>`;
+}
 function stepper(key, val, max, label, alt = "") {
-  return `<div class="mr-row"><span>${label}${alt ? ` <small>${alt}</small>` : ""}</span>
+  return `<div class="mr-row"><span class="mr-ad">${mrKisi(key)}<span>${label}${alt ? ` <small>${alt}</small>` : ""}</span></span>
     <span class="stp"><button data-act="mr-step" data-k="${key}" data-d="-1" aria-label="${esc(label)} azalt" ${val <= 0 ? "disabled" : ""}>−</button><b>${val}</b><button data-act="mr-step" data-k="${key}" data-d="1" aria-label="${esc(label)} artır" ${val >= max ? "disabled" : ""}>+</button></span></div>`;
 }
 function toggle(key, val, label, alt = "") {
-  return `<label class="mr-row"><span>${label}${alt ? ` <small>${alt}</small>` : ""}</span><input type="checkbox" data-act="mr-tog" data-k="${key}" ${val ? "checked" : ""}></label>`;
+  return `<label class="mr-row"><span class="mr-ad">${mrKisi(key, key === "es")}<span>${label}${alt ? ` <small>${alt}</small>` : ""}</span></span><input type="checkbox" data-act="mr-tog" data-k="${key}" ${val ? "checked" : ""}></label>`;
 }
 
 function sonucTablo(r, tutar, baslik, renk) {
@@ -1166,7 +1223,7 @@ function mirasView() {
   const ayetler = !KURAN ? "" : [[4, 11], [4, 12], [4, 176]].map(([s, a]) => { const x = v(s, a); const t0 = Object.keys(x.texts)[0];
     return `<a class="row" href="#/ayet/${s}/${a}" style="align-items:flex-start"><span style="flex:none;width:58px;font-weight:700;color:var(--band)">${s}:${a}</span><span style="flex:1;font-size:14px;line-height:1.45">${esc(excerpt(x.texts[t0], 170))}</span></a>`; }).join("");
   return `${topbar()}
-  <section class="band">
+  <section class="band cizimli">${BANT.miras}
     <div class="eyebrow">Miras</div>
     <h1>Kime ne düşer?</h1>
     <div class="sub">Kur'an'a göre (feraiz) ve Türk Medeni Kanunu'na göre yan yana</div>

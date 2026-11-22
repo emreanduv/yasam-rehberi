@@ -419,3 +419,68 @@ html, body { overflow-x: hidden; }
 .vk-ikon svg { width: 100%; height: 100%; display: block; }
 .bg-row.past .vk-ikon { opacity: .5; filter: grayscale(.6); }
 .bg-row.on .vk-ikon { color: var(--ink); }
+
+/* çizimli kartlar */
+.kart-cizim { display: flex !important; align-items: center; gap: 12px; }
+.kc-resim { flex: none; width: 64px; height: 78px; display: grid; place-items: center; }
+.kc-resim .cz, .bg-devam-r .cz { width: 100%; height: 100%; display: block; overflow: visible; }
+.kc-metin { flex: 1; min-width: 0; display: grid; gap: 2px; }
+.kc-gun { flex: none; width: 64px; height: 64px; border-radius: 50%; display: grid; place-content: center; text-align: center;
+  background: radial-gradient(circle at 35% 30%, #2e7d56, #14321f); border: 2px solid var(--gold); box-shadow: 0 3px 10px rgba(0,0,0,.25), inset 0 0 0 3px rgba(233,199,102,.25); color: #fff; }
+.kc-gun b { font: 700 26px/1 "PT Sans Narrow", "PT Sans", sans-serif; color: #f1d78a; }
+.kc-gun small { font-size: 9px; letter-spacing: .5px; text-transform: uppercase; color: #d7e8dc; margin-top: 2px; }
+.bg-dini .bg-dini-a { font-size: 18px; }
+.bg-ayet-c { width: 38px !important; background: none !important; border-radius: 0 !important; padding-top: 2px; }
+.ayet-durak { width: 38px; height: 38px; display: block; filter: drop-shadow(0 1px 1px rgba(0,0,0,.15)); }
+.bg-devam { padding: 8px 12px !important; }
+.bg-devam-r { flex: none; width: 52px; height: 62px; }
+.bg-devam-z { flex: 1; display: grid; gap: 1px; color: #fff !important; font-size: 17px !important; font-weight: 700; }
+.bg-devam-z small { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: #f1d78a; }
+
+/* Kur'an ekranları: tezhip (1.5) */
+.sl-row { min-height: 58px; }
+.sl-sol { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.sl-sol .ayet-durak { width: 36px; height: 36px; flex: none; }
+.sl-ad { display: grid; font-size: 17px; font-weight: 700; color: var(--ink); }
+.sl-ad small { font-size: 12px; font-weight: 400; color: var(--ink-2); }
+.sl-ar { font-family: "Amiri", serif; font-size: 22px; color: var(--band); direction: rtl; }
+.sr-durak { flex: none; width: 34px; margin-right: 8px; }
+.sr-durak .ayet-durak { width: 32px; height: 32px; }
+.sure-baslik { position: relative; margin: 0 0 12px; border-radius: 4px; overflow: hidden; background: var(--panel); border: 1px solid var(--panel-line); box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+.sb-cerceve { display: block; width: 100%; height: 110px; }
+.sb-ic { position: absolute; left: 0; right: 0; top: 0; height: 110px; display: grid; place-content: center; text-align: center; gap: 0; }
+.sb-ar { font-family: "Amiri", serif; font-weight: 700; font-size: 26px; line-height: 1.3; color: #1d4d36; }
+.sb-tr { font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #7a5a10; }
+.sb-alt { padding: 7px 12px; font-size: 12px; color: var(--ink-2); text-align: center; border-top: 1px solid var(--panel-line); background: var(--panel-alt); }
+.sb-besmele { font-family: "Amiri", serif; font-size: 26px; line-height: 2; text-align: center; color: var(--ink); padding: 6px 12px 10px; direction: rtl; }
+.ar-cerceve { position: relative; margin: 8px; border: 2px solid #c9a227; outline: 1px solid #c9a227; outline-offset: 3px; border-radius: 2px;
+  background: radial-gradient(ellipse at 50% 0%, #fffdf6, #f6efdc 70%); box-shadow: inset 0 0 0 4px rgba(233,199,102,.15); }
+.ar-cerceve .arabic { padding: 4px 6px; }
+.ar-son { font-family: "Amiri", serif; color: #9a7a14; white-space: nowrap; }
+
+/* bant başlıklarında sekiz kollu yıldız örgüsü (hafif) */
+.band { background-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.18) 100%), url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2244%22%20height%3D%2244%22%20viewBox%3D%220%200%2044%2044%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23e9c766%22%20stroke-width%3D%22.7%22%20opacity%3D%22.16%22%3E%3Cpath%20d%3D%22M22%206l4.7%2011.3L38%2022l-11.3%204.7L22%2038l-4.7-11.3L6%2022l11.3-4.7z%22/%3E%3Cpath%20d%3D%22M22%2011l3%208%208%203-8%203-3%208-3-8-8-3%208-3z%22/%3E%3Cpath%20d%3D%22M0%200l6%206M44%200l-6%206M0%2044l6-6M44%2044l-6-6%22/%3E%3C/g%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2222%22%20r%3D%221.3%22%20fill%3D%22%23e9c766%22%20opacity%3D%22.25%22/%3E%3C/svg%3E"); background-size: auto, 44px 44px; background-position: 0 0, right -6px center; }
+
+/* bant çizimleri, konu ve reyon simgeleri */
+.band { position: relative; }
+.band.cizimli { padding-right: 118px; min-height: 96px; }
+.bant-cizim { position: absolute; right: 8px; bottom: 4px; width: 104px; height: 94px; filter: drop-shadow(0 3px 6px rgba(0,0,0,.35)); pointer-events: none; }
+.bant-ik { width: 52px; height: 52px; right: 20px; bottom: 50%; transform: translateY(50%); padding: 9px; background: rgba(246,239,220,.92); border: 2px solid var(--gold); border-radius: 50%; box-sizing: content-box; }
+.ik { width: 100%; height: 100%; display: block; overflow: visible; }
+.konu-izgara { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.konu { display: grid; justify-items: center; gap: 4px; padding: 10px 4px 8px; border: 1px solid var(--panel-line); border-radius: 4px; background: var(--field, #fffdf6);
+  text-decoration: none; color: var(--band); font-weight: 700; font-size: 14px; box-shadow: 0 1px 0 rgba(0,0,0,.05); }
+.konu:active { background: #f1e6c4; }
+.konu-ik { width: 40px; height: 40px; }
+.reyon-row { min-height: 62px; }
+.reyon-sol { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.reyon-ik { flex: none; width: 44px; height: 44px; padding: 4px; border-radius: 6px; background: #fffdf6; border: 1px solid var(--panel-line); box-sizing: border-box; }
+.hatim-gul { width: min(72vw, 260px); height: auto; justify-self: center; display: block; margin: 0 auto; filter: drop-shadow(0 3px 6px rgba(0,0,0,.15)); }
+.vh-ref { display: inline-flex; align-items: center; gap: 8px; }
+.vh-durak .ayet-durak { width: 28px; height: 28px; }
+.dini-ik { flex: none; width: 30px; height: 36px; margin-right: 10px; }
+.dini-ik .cz { width: 100%; height: 100%; display: block; }
+.bg-row.dini { justify-content: flex-start; }
+.bg-row.dini > b { margin-left: auto; }
+.mr-ad { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.mr-kisi { flex: none; width: 30px; height: 34px; }

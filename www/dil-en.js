@@ -822,5 +822,13 @@ window.DIL_EN = {
 "Zakat": "Zakat",
 "Prayer": "Prayer",
 "Justice": "Justice",
-"Hajj": "Hajj"
+"Hajj": "Hajj",
+"gün kaldı": "days left",
+"gün · yarın": "day · tomorrow",
+"Son zikir": "Last dhikr",
+"{0} Suresi": "Sura {0}",
+"{0}. sure · {1} ayet · {2} meali": "Sura {0} · {1} verses · {2} translation",
+"CÜZ": "JUZ",
+"{0} HATİM TAMAM": "{0} KHATMS DONE",
+"{0} ayet": "{0} verses"
 };

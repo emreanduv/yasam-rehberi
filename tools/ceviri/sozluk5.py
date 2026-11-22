@@ -20,4 +20,7 @@ SOZ = {
 "−1 Geri al": "−1 Undo", "Geri al": "Undo", "{0} · Dokun": "{0} · Tap",
 "Marmaduke Pickthall": "Marmaduke Pickthall", "Abdullah Yusuf Ali": "Abdullah Yusuf Ali",
 "Interest": "Interest", "Marriage": "Marriage", "Zakat": "Zakat", "Prayer": "Prayer", "Justice": "Justice", "Hajj": "Hajj",
+"gün kaldı": "days left", "gün · yarın": "day · tomorrow", "Son zikir": "Last dhikr", "{0} Suresi": "Sura {0}",
+"{0}. sure · {1} ayet · {2} meali": "Sura {0} · {1} verses · {2} translation", "CÜZ": "JUZ", "{0} HATİM TAMAM": "{0} KHATMS DONE",
+"{0} ayet": "{0} verses", "{0} gün": "{0} days",
 }

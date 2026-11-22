@@ -2,6 +2,7 @@
 // Veri: www/data/carsi.json (Wikidata + Türkçe Vikipedi kategorileri; yeniden üretmek için: npm run carsi)
 // Kurallar: markaları damgalayan etiket yok; sahiplik bilgisi kaynağıyla birlikte, olduğu gibi gösterilir.
 
+import { BANT, REYON as REYON_IK } from "./cizim.js";
 const REYON = [
   ["gida", "Mutfak", "Bisküvi, süt, et, bakliyat, şeker"],
   ["icecek", "İçecek", "Çay, su, maden suyu, gazoz"],
@@ -101,8 +102,8 @@ async function kameraIleOkut() {
 // ---------------------------------------------------------------------------
 // ekranlar
 // ---------------------------------------------------------------------------
-function band(eyebrow, title, sub = "") {
-  return `<section class="band"><div class="eyebrow">${ctx.esc(eyebrow)}</div><h1>${ctx.esc(title)}</h1>${sub ? `<div class="sub">${sub}</div>` : ""}</section>`;
+function band(eyebrow, title, sub = "", cizim = "") {
+  return `<section class="band${cizim ? " cizimli" : ""}">${cizim}<div class="eyebrow">${ctx.esc(eyebrow)}</div><h1>${ctx.esc(title)}</h1>${sub ? `<div class="sub">${sub}</div>` : ""}</section>`;
 }
 
 function brandRow(x, showReyon = false) {
@@ -128,7 +129,7 @@ function homeView() {
   const results = ui.q ? D.items.filter((x) => x.k.includes(fold(ui.q))).sort((a, b) => a.n.localeCompare(b.n, "tr")) : [];
   const b = barkodBilgi(ui.barkod, ui.barkodTam);
   return `${ctx.topbar()}
-  ${band("Çarşı", "Ne alacaksın?", `${D.items.length} marka · ${REYON.length} reyon · kaynaklı bilgi`)}
+  ${band("Çarşı", "Ne alacaksın?", `${D.items.length} marka · ${REYON.length} reyon · kaynaklı bilgi`).replace('<section class="band">', `<section class="band cizimli">${BANT.carsi}`)}
   <main class="content">
     <section class="panel">
       <div class="panel-h">Marka ara</div>
@@ -141,7 +142,7 @@ function homeView() {
       <div class="panel-h">Reyonlar</div>
       <div class="rows">${REYON.map(([id, name, hint]) => {
         const n = byReyon(id).length;
-        return `<a class="row" href="#/carsi/r/${id}"><span><b>${ctx.esc(name)}</b><br><span class="c-hint">${ctx.esc(hint)}</span></span><span class="meta">${n ? `<span class="count">${n}</span>` : `<span class="c-soon">Yakında</span>`} ›</span></a>`;
+        return `<a class="row reyon-row" href="#/carsi/r/${id}"><span class="reyon-sol"><span class="reyon-ik">${REYON_IK[id] || ""}</span><span><b>${ctx.esc(name)}</b><br><span class="c-hint">${ctx.esc(hint)}</span></span></span><span class="meta">${n ? `<span class="count">${n}</span>` : `<span class="c-soon">Yakında</span>`} ›</span></a>`;
       }).join("")}</div>
     </section>
     <section class="panel">
@@ -192,7 +193,7 @@ function reyonView(id) {
          <a class="btn-go btn-dark" href="#/saat">${ctx.ICON.clock}Kendi kadranını tasarla: Saat › Kadran atölyesi</a>`
       : `<div class="empty">Bu reyonda henüz kayıt yok.</div>`;
   return `${ctx.topbar("Çarşı")}
-  ${band("Reyon", r[1], ctx.esc(r[2]))}
+  ${band("Reyon", r[1], ctx.esc(r[2]), (REYON_IK[id] || "").replace('class="ik"', 'class="bant-cizim bant-ik"'))}
   <main class="content">${body}
     <div class="note">“Ortaklı” işareti, Wikidata'ya göre şirketin sahipleri ya da bağlı olduğu yapı arasında yurt dışından bir ortak bulunduğunu gösterir. Karar senin.</div>
     ${credits()}</main>`;
