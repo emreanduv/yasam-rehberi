@@ -23,4 +23,8 @@ SOZ = {
 "gün kaldı": "days left", "gün · yarın": "day · tomorrow", "Son zikir": "Last dhikr", "{0} Suresi": "Sura {0}",
 "{0}. sure · {1} ayet · {2} meali": "Sura {0} · {1} verses · {2} translation", "CÜZ": "JUZ", "{0} HATİM TAMAM": "{0} KHATMS DONE",
 "{0} ayet": "{0} verses", "{0} gün": "{0} days",
+"Vakit Serisi": "Prayer Series", "Ana-Dijital Vakit": "Ana-Digi Prayer", "Vakit LCD": "Prayer LCD", "Kıble Pusulalı": "Qibla Compass", "Masa Ezan Saati": "Desk Adhan Clock",
+"Sıradaki vakit + geri sayım": "Next prayer + countdown", "Altı vakit · dokun: ışık": "Six prayers · tap: light", "Kıble bezeli · gün halkası": "Qibla bezel · day ring", "Vakit panosu": "Prayer board",
+"Vakit Serisi vitrine çıktı": "The Prayer Series is here",
+"Ezan saatlerinin ruhuyla dört yeni kadran: Ana-Dijital Vakit (sıradaki vakit ve geri sayım iki LCD pencerede, vakitler kadran halkasında altın işaretle), Vakit LCD (altı vakit çubuğu, hicri tarih, kıble açısı; dokun, ışık yansın), Kıble Pusulalı (dönen pusula bezelinde kıble kemeri, gün halkasında vakitler) ve Masa Ezan Saati (cami panosu gibi kehribar ışıklı vakit hücreleri). Vakitler Namaz sekmesindeki konumuna göre, Diyanet yöntemiyle.": "Four new dials in the spirit of adhan watches: Ana-Digi Prayer (next prayer and countdown in two LCD windows, prayer times marked in gold on the dial ring), Prayer LCD (six prayer bars, Hijri date, qibla angle; tap for the backlight), Qibla Compass (a qibla arch on the compass bezel, prayer times on a day ring) and Desk Adhan Clock (amber-lit prayer cells like a mosque board). Times follow your location, calculated with the Diyanet method.",
 }

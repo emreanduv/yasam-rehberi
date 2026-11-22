@@ -14,7 +14,8 @@ const EKRAN = [
   ['7-hatim',   '#/hatim', 0],
   ['8-carsi',   '#/carsi', 0],
   ['9-miras',   '#/miras', 0],
-];
+  ['10-saat',   '#/saat', 0],
+].filter(e => !process.env.SADECE || process.env.SADECE.split(',').includes(e[0]));
 // Bugün sahnesi gün batımında çekilsin (İstanbul, kasım): saat sabit
 const SAAT = process.env.SAAT || '2026-11-23T16:55:00+03:00';
 (async () => {
