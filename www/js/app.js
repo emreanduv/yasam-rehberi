@@ -259,9 +259,12 @@ function diniGunPanel(now) {
   if (!g) return "";
   const tarih = g.gun.toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "long" });
   const ne = g.kalanGun === 0 ? "bugün" : g.kalanGun === 1 ? "yarın" : `${g.kalanGun} gün sonra`;
-  return `<a class="panel bg-dini" href="#/imsakiye"><span class="bg-dini-l">Sıradaki dinî gün</span>
-    <span class="bg-dini-a">${esc(g.ad)}</span><span class="bg-dini-t">${esc(tarih)}${/Kandil|Gecesi/.test(g.ad) ? " akşamı" : ""} · <b>${ne}</b>${g.tahmini ? " · tahmini" : ""}</span>
-    <span class="bg-dini-m">İmsakiye ve tüm dinî günler ${ICON.next}</span></a>`;
+  const cizim = /Bayram|Arife/.test(g.ad) ? CIZIM.bayram : /Ramazan/.test(g.ad) ? CIZIM.ramazan : CIZIM.kandil;
+  return `<a class="panel bg-dini kart-cizim" href="#/imsakiye"><span class="kc-resim">${cizim}</span>
+    <span class="kc-metin"><span class="bg-dini-l">Sıradaki dinî gün</span>
+    <span class="bg-dini-a">${esc(g.ad)}</span><span class="bg-dini-t">${esc(tarih)}${/Kandil|Gecesi/.test(g.ad) ? " akşamı" : ""}${g.tahmini ? " · tahmini" : ""}</span>
+    <span class="bg-dini-m">İmsakiye ve tüm dinî günler ${ICON.next}</span></span>
+    <span class="kc-gun"><b>${g.kalanGun === 0 ? "★" : g.kalanGun}</b><small>${g.kalanGun === 0 ? "bugün" : g.kalanGun === 1 ? "gün · yarın" : "gün kaldı"}</small></span></a>`;
 }
 
 // İmsakiye (30 gün) + dinî günler
@@ -295,8 +298,9 @@ const KAZA = [["sabah", "Sabah"], ["ogle", "Öğle"], ["ikindi", "İkindi"], ["a
 const kazaToplam = () => KAZA.slice(0, 6).reduce((t, [k]) => t + (kaza[k] || 0), 0);
 function kazaPanel() {
   const n = kazaToplam(), o = kaza.oruc || 0;
-  return `<a class="panel bg-kaza" href="#/kaza"><span class="bg-dini-l">Kaza takibi</span>
-    <span class="bg-kaza-s">${n || o ? `<b>${n}</b> namaz${o ? ` · <b>${o}</b> oruç` : ""} borcun var` : "Kaza borcun yok ya da henüz eklemedin"}</span><span class="bg-dini-m">Aç ${ICON.next}</span></a>`;
+  return `<a class="panel bg-kaza kart-cizim" href="#/kaza"><span class="kc-resim">${CIZIM.seccade}</span>
+    <span class="kc-metin"><span class="bg-dini-l">Kaza takibi</span>
+    <span class="bg-kaza-s">${n || o ? `<b>${n}</b> namaz${o ? ` · <b>${o}</b> oruç` : ""} borcun var` : "Kaza borcun yok ya da henüz eklemedin"}</span><span class="bg-dini-m">Aç ${ICON.next}</span></span></a>`;
 }
 function kazaView() {
   const satir = KAZA.map(([k, ad]) => `<div class="kz-row"><span class="kz-ad">${esc(ad)}</span>
@@ -314,6 +318,43 @@ function kazaView() {
     <div class="note">Sayılar yalnızca bu telefonda saklanır. Kaza namazı, kerahat vakitleri dışında her zaman kılınabilir; ayrıntı için Diyanet İşleri Başkanlığı'nı (ALO 190) esas alın.</div>
     <div class="made">${esc(MAKER)}</div>
   </main>`;
+}
+
+// ── Çizimler (elle çizilmiş SVG; FM2010 paleti: koyu yeşil, altın, krem, lacivert) ──
+const CIZIM = {
+  // asma cam kandil, alevli (kandil geceleri)
+  kandil: `<svg viewBox="0 0 80 96" class="cz"><defs><radialGradient id="cz-k1" cx="50%" cy="45%" r="55%"><stop offset="0" stop-color="#fff3c4" stop-opacity=".95"/><stop offset=".35" stop-color="#f6c24a" stop-opacity=".55"/><stop offset="1" stop-color="#f6c24a" stop-opacity="0"/></radialGradient>
+    <linearGradient id="cz-k2" x1="0" x2="1"><stop offset="0" stop-color="#2e7d56" stop-opacity=".85"/><stop offset=".5" stop-color="#9fd9b8" stop-opacity=".7"/><stop offset="1" stop-color="#1d4d36" stop-opacity=".9"/></linearGradient></defs>
+    <g stroke="#9a7a14" stroke-width="1" fill="none"><path d="M40 2v14M40 16 22 40M40 16l18 24M40 16v22"/></g>
+    <circle cx="40" cy="58" r="34" fill="url(#cz-k1)"/>
+    <path d="M18 40h44l-4 10c-2 14-10 24-18 24s-16-10-18-24z" fill="url(#cz-k2)" stroke="#0f2e20" stroke-width="1.2"/>
+    <path d="M18 40h44" stroke="#c9a227" stroke-width="3"/><path d="M24 52h32M27 62h26" stroke="#c9a227" stroke-width="1" opacity=".7"/>
+    <g fill="#e9c766"><circle cx="30" cy="57" r="1.4"/><circle cx="40" cy="57" r="1.4"/><circle cx="50" cy="57" r="1.4"/></g>
+    <path d="M40 74v8M36 86h8" stroke="#c9a227" stroke-width="2"/><circle cx="40" cy="90" r="3" fill="#c9a227"/>
+    <path d="M40 22c4 6 5 10 0 15-5-5-4-9 0-15z" fill="#ffd36a"><animate attributeName="d" dur="1.8s" repeatCount="indefinite" values="M40 22c4 6 5 10 0 15-5-5-4-9 0-15z;M40 20c5 7 4 11 0 17-4-6-5-10 0-17z;M40 22c4 6 5 10 0 15-5-5-4-9 0-15z"/></path>
+    <path d="M40 27c2 3 2 5 0 8-2-3-2-5 0-8z" fill="#fff6dc"/></svg>`,
+  // bayram: hilal ve yıldız, iplerde asılı küçük fenerler
+  bayram: `<svg viewBox="0 0 80 96" class="cz"><path d="M4 18q36 22 72 0" stroke="#9a7a14" fill="none" stroke-width="1"/>
+    ${[14, 28, 52, 66].map((x, i) => `<g><path d="M${x} ${20 + [3, 7, 7, 3][i]}v6" stroke="#9a7a14"/><rect x="${x - 4}" y="${26 + [3, 7, 7, 3][i]}" width="8" height="11" rx="3" fill="${i % 2 ? "#a3261a" : "#1d4d36"}" stroke="#c9a227"/><rect x="${x - 2}" y="${29 + [3, 7, 7, 3][i]}" width="4" height="5" fill="#ffd36a" opacity=".9"/></g>`).join("")}
+    <path d="M48 46a20 20 0 1 0 6 30 16 16 0 1 1-6-30z" fill="#e9c766" stroke="#9a7a14"/><path d="M58 58l2 5 5 1-4 3 1 5-4-3-5 3 1-5-4-3 5-1z" fill="#e9c766" stroke="#9a7a14" stroke-width=".8"/></svg>`,
+  // Ramazan: hilal ve el feneri
+  ramazan: `<svg viewBox="0 0 80 96" class="cz"><defs><radialGradient id="cz-r1"><stop offset="0" stop-color="#fff3c4" stop-opacity=".9"/><stop offset="1" stop-color="#f6c24a" stop-opacity="0"/></radialGradient></defs>
+    <path d="M30 10a18 18 0 1 0 14 30 14 14 0 1 1-14-30z" fill="#e9c766" stroke="#9a7a14"/>
+    <circle cx="52" cy="66" r="26" fill="url(#cz-r1)"/><path d="M52 36v6M44 42h16l-2 6H46z" stroke="#9a7a14" fill="#c9a227"/>
+    <path d="M44 48h16l4 26H40z" fill="#1d4d36" stroke="#c9a227" stroke-width="1.4"/><path d="M48 52h8l2 18H46z" fill="#ffd36a" opacity=".9"/><path d="M40 74h24l-3 6H43z" fill="#c9a227"/></svg>`,
+  // seccade (kaza takibi)
+  seccade: `<svg viewBox="0 0 80 96" class="cz"><g transform="rotate(-6 40 48)"><path d="M14 8h52v80H14z" fill="#8a1f22" stroke="#5a1012" stroke-width="1.2"/>
+    <path d="M18 12h44v72H18z" fill="none" stroke="#c9a227" stroke-width="1.6"/><path d="M22 80V36q0-18 18-24 18 6 18 24v44z" fill="#1d4d36" stroke="#c9a227" stroke-width="1.2"/>
+    <path d="M40 18l3 6-3 6-3-6z" fill="#e9c766"/><path d="M28 62h24M28 68h24M28 74h24" stroke="#c9a227" stroke-width=".8" opacity=".7"/>
+    ${[18, 26, 34, 42, 50, 58].map((x) => `<path d="M${x} 88v5M${x + 4} 88v5" stroke="#c9a227" stroke-width="1"/>`).join("")}</g></svg>`,
+};
+// Mushaf ayet durağı: sekiz kollu yıldız içinde numara
+const ayetDuragi = (n) => `<svg viewBox="0 0 40 40" class="ayet-durak" aria-hidden="true"><g fill="#f3ead3" stroke="#9a7a14" stroke-width="1.2"><rect x="9" y="9" width="22" height="22" rx="2"/><rect x="9" y="9" width="22" height="22" rx="2" transform="rotate(45 20 20)"/></g><circle cx="20" cy="20" r="9.5" fill="#fffaf0" stroke="#c9a227" stroke-width="1.2"/><text x="20" y="24" text-anchor="middle" font-family="PT Sans Narrow, PT Sans, sans-serif" font-weight="700" font-size="${String(n).length > 2 ? 9 : 11}" fill="#1d4d36">${n}</text></svg>`;
+// Küçük tesbih halkası: çekilen taneler altın
+function tesbihHalka(n, h) {
+  const adet = 33, dolu = h ? Math.round(Math.min(1, n / h) * adet) : n % adet;
+  const tane = Array.from({ length: adet }, (_, i) => { const a = (i / adet) * Math.PI * 2 - Math.PI / 2; return `<circle cx="${(30 + Math.cos(a) * 22).toFixed(1)}" cy="${(30 + Math.sin(a) * 22).toFixed(1)}" r="2.7" fill="${i < dolu ? "url(#th-a)" : "url(#th-k)"}"/>`; }).join("");
+  return `<svg viewBox="0 0 60 72" class="cz" aria-hidden="true"><defs><radialGradient id="th-a" cx="35%" cy="35%"><stop offset="0" stop-color="#fff1bf"/><stop offset="1" stop-color="#b58a12"/></radialGradient><radialGradient id="th-k" cx="35%" cy="35%"><stop offset="0" stop-color="#8b5a3c"/><stop offset="1" stop-color="#3e2414"/></radialGradient></defs>${tane}<path d="M30 52v8" stroke="#3e2414" stroke-width="2"/><path d="M27 60h6l-1 10h-4z" fill="#3e2414"/><circle cx="30" cy="30" r="12" fill="none"/><text x="30" y="34" text-anchor="middle" font-family="PT Sans Narrow, PT Sans, sans-serif" font-weight="700" font-size="11" fill="#e9c766">${n}</text></svg>`;
 }
 
 // Vakit simgeleri (elle çizilmiş SVG; güneşin gün içindeki yolu)
@@ -371,7 +412,7 @@ function bugunView() {
     gunAyet = `<section class="panel">
       <div class="panel-h">Gelen kutusu <span class="count">1</span></div>
       <a class="panel-b bg-ayet" href="#/ayet/${ds}/${da}">
-        <span class="bg-ayet-c"></span>
+        <span class="bg-ayet-c">${ayetDuragi(da)}</span>
         <span style="min-width:0"><b class="bg-ayet-t">Günün ayeti · ${esc(dv.title)}</b>
         <span class="bg-ayet-m">${esc(dv.texts[fm])}</span>
         <span class="bg-ayet-k">${esc(E.source(fm).credit)}</span></span>
@@ -390,7 +431,7 @@ function bugunView() {
     ${pos ? kiblePanel(pos) : ""}
     ${diniGunPanel(now)}
     ${gunAyet}
-    <a class="bg-devam" href="#/tesbih"><span class="bg-devam-z">Son zikir · ${esc(tz.ad)}</span>
+    <a class="bg-devam" href="#/tesbih"><span class="bg-devam-r">${tesbihHalka(tz.n, tz.h)}</span><span class="bg-devam-z"><small>Son zikir</small>${esc(tz.ad)}</span>
       <span class="btn-go bg-devam-b">DEVAM ${tz.h ? `${tz.n}/${tz.h}` : tz.n} ${ICON.next}</span></a>
     ${kazaPanel()}
     ${pos ? bildirimPanel(pos) : ""}
@@ -722,23 +763,53 @@ const kible = { stop: null, heading: null, gotEvent: false, timer: null, tick: n
 const ayarVakit = () => ({ ...VAKIT_VARSAYILAN, ...(S.vakit || {}), keys: { ...VAKIT_VARSAYILAN.keys, ...((S.vakit || {}).keys || {}) } });
 
 function compassSvg() {
-  const ticks = Array.from({ length: 72 }, (_, i) => {
+  // Pirinç pusula: kazınmış derece çizgileri, tezhip kuşağı, Selçuklu yıldızlı gül, cam parıltısı.
+  // İbrenin ucunda mihrap kemeri ışığı (Kâbe çizilmez; ışıkla anılır).
+  const P = (n, f) => Array.from({ length: n }, (_, i) => f(i)).join("");
+  const ticks = P(72, (i) => {
     const big = i % 18 === 0, mid = i % 6 === 0;
-    return `<line x1="130" y1="${big ? 14 : mid ? 18 : 22}" x2="130" y2="28" transform="rotate(${i * 5} 130 130)" stroke="${big ? "#1f2328" : "#9c9077"}" stroke-width="${big ? 3 : mid ? 2 : 1}"/>`;
-  }).join("");
+    return `<line x1="130" y1="${big ? 13 : mid ? 16 : 19}" x2="130" y2="25" transform="rotate(${i * 5} 130 130)" stroke="${big ? "#3a2a08" : "#5a4410"}" stroke-width="${big ? 2.6 : mid ? 1.6 : .9}" stroke-linecap="round" opacity="${big ? 1 : .8}"/>`;
+  });
+  const derece = P(12, (i) => i % 3 === 0 ? "" : `<text x="130" y="36" text-anchor="middle" font-family="PT Sans Narrow, PT Sans, sans-serif" font-weight="700" font-size="8.5" fill="#5a4410" transform="rotate(${i * 30} 130 130)">${i * 30}</text>`);
   const lbl = [["K", 0], ["D", 90], ["G", 180], ["B", 270]].map(([t, a]) =>
-    `<text x="130" y="48" text-anchor="middle" font-family="PT Sans Narrow, PT Sans, sans-serif" font-weight="700" font-size="18" fill="${t === "K" ? "#b23b2a" : "#2f3e4c"}" transform="rotate(${a} 130 130)">${t}</text>`).join("");
+    `<text x="130" y="39" text-anchor="middle" font-family="PT Sans Narrow, PT Sans, sans-serif" font-weight="700" font-size="15" fill="${t === "K" ? "#a3261a" : "#2a1d05"}" transform="rotate(${a} 130 130)">${t}</text>`).join("");
+  // tezhip kuşağı: 24 rumi yaprağı + aralarında nokta
+  const tezhip = P(24, (i) => `<g transform="rotate(${i * 15} 130 130)"><path d="M130 44 c3 3 3 7 0 10 c-3-3-3-7 0-10z" fill="#c9a227" stroke="#7a5a10" stroke-width=".5"/><circle cx="130" cy="49" r=".9" fill="#1d4d36"/></g><circle cx="130" cy="47" r="1.1" fill="#e9c766" transform="rotate(${i * 15 + 7.5} 130 130)"/>`);
+  // Selçuklu yıldızı (8 kollu, iki kare) + iç gül
+  const yildiz = (r, d) => `<rect x="${130 - r}" y="${130 - r}" width="${2 * r}" height="${2 * r}" transform="rotate(${d} 130 130)"/>`;
+  const gul = P(16, (i) => `<path d="M130 ${i % 2 ? 84 : 72} L134 120 L130 126 L126 120 Z" transform="rotate(${i * 22.5} 130 130)" fill="${i % 4 === 0 ? "#14324a" : i % 2 ? "#c9a227" : "#2f5a7a"}" opacity="${i % 2 ? .75 : .9}"/>`);
   return `<svg viewBox="0 0 260 260" class="kb-dial" aria-hidden="true">
-    <circle cx="130" cy="130" r="124" fill="#fffdf6" stroke="#c8bc9a" stroke-width="2"/>
-    <g id="kb-rose">${ticks}${lbl}</g>
-    <g id="kb-arrow" style="opacity:0">
-      <path d="M130 30 L146 120 L130 110 L114 120 Z" fill="#1d4d36"/>
-      <path d="M130 230 L142 140 L130 150 L118 140 Z" fill="#c8bc9a"/>
-      <rect x="119" y="10" width="22" height="22" rx="2" fill="#14171a" stroke="#c9a227" stroke-width="2"/>
-      <rect x="119" y="16" width="22" height="3" fill="#c9a227"/>
+    <defs>
+      <radialGradient id="kb-pirinc" cx="40%" cy="32%" r="75%"><stop offset="0" stop-color="#fff1bf"/><stop offset=".45" stop-color="#d9b04a"/><stop offset=".8" stop-color="#9c7418"/><stop offset="1" stop-color="#5e430c"/></radialGradient>
+      <radialGradient id="kb-yuz" cx="45%" cy="38%" r="70%"><stop offset="0" stop-color="#fffaf0"/><stop offset=".7" stop-color="#f3ead3"/><stop offset="1" stop-color="#d9caa3"/></radialGradient>
+      <linearGradient id="kb-ibre" x1="0" x2="1"><stop offset="0" stop-color="#1d4d36"/><stop offset=".5" stop-color="#2e7d56"/><stop offset=".5" stop-color="#16402c"/><stop offset="1" stop-color="#0f2e20"/></linearGradient>
+      <radialGradient id="kb-nur" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff6d0" stop-opacity=".95"/><stop offset=".5" stop-color="#e9c766" stop-opacity=".45"/><stop offset="1" stop-color="#e9c766" stop-opacity="0"/></radialGradient>
+      <linearGradient id="kb-cam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      <filter id="kb-golge" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".35"/></filter>
+    </defs>
+    <circle cx="130" cy="130" r="128" fill="url(#kb-pirinc)" filter="url(#kb-golge)"/>
+    <circle cx="130" cy="130" r="121" fill="none" stroke="#3a2a08" stroke-width="1" opacity=".55"/>
+    <circle cx="130" cy="130" r="117" fill="url(#kb-yuz)" stroke="#7a5a10" stroke-width="1.5"/>
+    <g id="kb-rose">
+      ${ticks}${derece}${lbl}
+      <circle cx="130" cy="130" r="88" fill="none" stroke="#7a5a10" stroke-width=".8"/>
+      <circle cx="130" cy="130" r="80" fill="none" stroke="#7a5a10" stroke-width=".6"/>
+      ${tezhip}
+      <g fill="#1d4d36" opacity=".1">${yildiz(52, 0)}${yildiz(52, 45)}</g>
+      <g fill="none" stroke="#9c7418" stroke-width="1.1">${yildiz(52, 0)}${yildiz(52, 45)}</g>
+      ${gul}
     </g>
-    <circle cx="130" cy="130" r="7" fill="#c9a227" stroke="#14171a" stroke-width="2"/>
-    <path d="M130 2 L136 14 L124 14 Z" fill="#c9a227"/>
+    <g id="kb-arrow" style="opacity:0">
+      <path d="M130 40 L139 122 L130 132 L121 122 Z" fill="url(#kb-ibre)" stroke="#0b2418" stroke-width=".8"/>
+      <path d="M130 220 L137 140 L130 128 L123 140 Z" fill="#c9b78a" stroke="#7a6a40" stroke-width=".8"/>
+      <circle cx="130" cy="24" r="22" fill="url(#kb-nur)"/>
+      <path d="M121 33 V21 Q121 12 130 8 Q139 12 139 21 V33 Z" fill="#14171a" stroke="#e9c766" stroke-width="1.6"/>
+      <path d="M125 33 V23 Q125 17 130 14.5 Q135 17 135 23 V33 Z" fill="#e9c766" opacity=".9"/>
+    </g>
+    <circle cx="130" cy="130" r="9" fill="url(#kb-pirinc)" stroke="#3a2a08" stroke-width="1.2"/>
+    <circle cx="130" cy="130" r="3" fill="#3a2a08"/>
+    <path d="M130 1 L137 12 L123 12 Z" fill="#a3261a" stroke="#5e1208" stroke-width=".8"/>
+    <ellipse cx="112" cy="78" rx="78" ry="44" fill="url(#kb-cam)" opacity=".55" pointer-events="none"/>
   </svg>`;
 }
 

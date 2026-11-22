@@ -347,7 +347,9 @@ input, select, textarea { font-size: 16px !important; }
             <radialGradient id="g-oltu" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#8a8a90"/><stop offset=".35" stop-color="#2b2b2f"/><stop offset="1" stop-color="#050506"/></radialGradient>
             <radialGradient id="g-silver" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="#b9bcc4"/><stop offset="1" stop-color="#5d616b"/></radialGradient>
           </defs>
-          <circle id="paperC" cx="150" cy="150" r="96" fill="var(--paper)" stroke="var(--line)" stroke-width="1"></circle>
+          <radialGradient id="g-kagit" cx="45%" cy="38%" r="70%"><stop offset="0" stop-color="#fffdf6"/><stop offset=".8" stop-color="#f6efdc"/><stop offset="1" stop-color="#e6d9b6"/></radialGradient>
+          <circle id="paperC" cx="150" cy="150" r="96" fill="url(#g-kagit)" stroke="#c9a227" stroke-width="1.6"></circle>
+          <circle cx="150" cy="150" r="91" fill="none" stroke="#c9a227" stroke-width=".7" stroke-dasharray="1.5 3" opacity=".9"></circle>
           <g class="t-beads" id="beads"></g>
           <g class="t-duraks"></g>
           <g>
@@ -636,8 +638,21 @@ input, select, textarea { font-size: 16px !important; }
   function drawTesbih(svg, sp, lit) {
     var gB = svg.querySelector(".t-beads"), gD = svg.querySelector(".t-duraks");
     var key = [sp.mat, sp.shape, sp.size, sp.imame, sp.puskul, sp.durak].join(".");
+    if (!svg._suslu) {   // ip, parıltı katmanı, gölge (bir kez)
+      var defs = svg.querySelector("defs") || svg.insertBefore(el("defs", {}), svg.firstChild);
+      if (!svg.querySelector("#tg-golge")) {
+        var f = el("filter", { id: "tg-golge-" + svg.id, x: "-30%", y: "-30%", width: "160%", height: "160%" });
+        f.appendChild(el("feDropShadow", { dx: "0", dy: "1.6", stdDeviation: "1.3", "flood-color": "#1a0f05", "flood-opacity": ".45" }));
+        defs.appendChild(f);
+      }
+      gB.setAttribute("filter", "url(#tg-golge-" + svg.id + ")"); gD.setAttribute("filter", "url(#tg-golge-" + svg.id + ")");
+      var ip = el("circle", { cx: 150, cy: 150, r: 117, fill: "none", stroke: "#3a2a18", "stroke-width": "1.3", "stroke-dasharray": "2 1.4", opacity: ".55" });
+      gB.parentNode.insertBefore(ip, gB);
+      var par = el("g", { "class": "t-parilti", "pointer-events": "none" }); gD.parentNode.insertBefore(par, gD.nextSibling);
+      svg._par = par; svg._suslu = true;
+    }
     if (svg._key !== key) {
-      gB.innerHTML = ""; gD.innerHTML = "";
+      gB.innerHTML = ""; gD.innerHTML = ""; svg._par.innerHTML = "";
       var hasD = sp.durak > 0, slots = NB + (hasD ? 2 : 0), dS = hasD ? [11, 23] : [];
       var s = [.72, .86, .98, 1.08][sp.size] * 8.2;
       for (var i = 0; i < slots; i++) {
@@ -647,6 +662,8 @@ input, select, textarea { font-size: 16px !important; }
           gD.appendChild(el("ellipse", { cx: x, cy: y, rx: 8.5, ry: 5, fill: durakFill(sp), transform: "rotate(" + (a / Math.PI * 180 + 90) + " " + x + " " + y + ")" }));
         } else {
           var b = beadEl(sp, x, y, a, s); b.setAttribute("fill", matFill(sp.mat)); gB.appendChild(b);
+          // cilalı tanenin ışık lekesi (sol üst)
+          svg._par.appendChild(el("ellipse", { cx: (x - s * .32).toFixed(2), cy: (y - s * .38).toFixed(2), rx: (s * .34).toFixed(2), ry: (s * .22).toFixed(2), fill: "#fff", opacity: sp.mat === 2 ? ".55" : ".42", transform: "rotate(-35 " + (x - s * .32).toFixed(2) + " " + (y - s * .38).toFixed(2) + ")" }));
         }
       }
       var im = svg.querySelector(".t-imame"); im.setAttribute("d", IMAME_PATH[sp.imame]); im.setAttribute("fill", matFill(sp.mat));
@@ -655,7 +672,11 @@ input, select, textarea { font-size: 16px !important; }
       svg._key = key;
     }
     var kids = gB.children;
-    for (var j = 0; j < kids.length; j++) kids[j].setAttribute("opacity", j < lit ? "1" : ".3");
+    // çekilen taneler: tam parlak ve altın kenar; kalanlar hafif soluk (yine de malzemesi görünür)
+    for (var j = 0; j < kids.length; j++) {
+      kids[j].setAttribute("opacity", j < lit ? "1" : ".72");
+      if (j < lit) { kids[j].setAttribute("stroke", "#e9c766"); kids[j].setAttribute("stroke-width", "1.1"); } else kids[j].removeAttribute("stroke");
+    }
   }
 
   // ---- Tasarım kodu: TSB-XXX-K (sunucusuz paylaşım) ----
