@@ -35,4 +35,7 @@ fi
 
 python3 araclar/turkce-yazi-kontrol.py www && tamam "Türkçe yazı ve iOS işaretleri" || hata "Türkçe yazı / iOS işaret denetimi tutmadı"
 
+# Ses koruyucu (CLAUDE.md "Ses koruyucu"): arka plandan dönünce ses geri gelsin
+if grep -q 'ses-kurtarici.js' www/index.html && grep -q 'W.sesKurtar = later' www/ses-kurtarici.js && grep -q 'SesKoruyucu.shared.baslat' ios/App/App/AppDelegate.swift && grep -q 'window.sesKurtar' android/app/src/main/java/com/anduv/yasamrehberi/MainActivity.java; then echo "✓ ses koruyucu (JS + iOS + Android)"; else echo "::error::Ses koruyucu eksik (ses-kurtarici.js, AppDelegate SesKoruyucu, MainActivity onResume)"; HATA=1; hata=1; fi
+# ses koruyucu sonu
 [ $HATA = 0 ] && echo "Yayın öncesi kontrol geçti." || { echo "Yayın öncesi kontrol TUTMADI, derleme durdu."; exit 1; }
