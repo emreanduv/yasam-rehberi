@@ -141,3 +141,14 @@ Ezan Vakti Pro'nun mağaza sayfasıyla özellik karşılaştırması sonrası (k
 - Ezan sesi (9.11): Vakit bildirimleri › "Bildirim sesi": Kısa ses · Ezan (ilk 30 sn) · Telefonun sesi. Kayıt Wikimedia Commons "Beautiful adhan" (Adam-synagda, **CC0**; 3 CC0 aday ses analiziyle karşılaştırıldı: İstanbul kaydı sokak gürültülü, Adhan.ogg kısa/kısık). `ezan-sesi.yml` iş akışı aday listeler/indirir/30 sn'ye kırpar (loudnorm, sonu yumuşak). iOS `ios/App/App/ezan.caf` (IMA4), Android `res/raw/ezan.ogg`, ayrı bildirim kanalları (vakit / vakit-ezan / vakit-sistem). Ezan yalnız vakit girince; güneşte ve "x dk önce"de kısa ses. Künye: Ayarlar › Kaynaklar, `store/ses/ezan-kaynak.json`.
 - 1.3.0 derlemeleri (iOS + Android) ✓; metinler `store/surum/1.3.0.json`. 1.2.0 onaylanınca: widget görselleri + hazirla/gonder.
 - İlke: kaynaklar her zaman açık/özgür lisanslı (CC0/kamu malı öncelikli).
+
+## 22 Kasım 2026 · 1.5.0 görsel yenileme (TestFlight'ta; Emre'nin cihazda bakışını bekliyor)
+Emre: "çizimler, görseller yalapşap; çok daha iyisini yapabilirsin." Bütün ekranlar baştan çizildi (dış görsel yok, hepsi kod):
+- **Bugün:** `www/js/sahne.js` canlı İstanbul ufku (gök/güneş/ay gerçek konuma göre NOAA, hilal hicri güne göre, kümülüs bulutlar, cami silüetleri, gece pencere ve şerefe ışıkları, Ramazan/kandil mahyası, Boğaz'da dalgalı yansıma, vapur, martılar), üstünde cam kart (sıradaki vakit); gün şeridi; vakit simgeleri; pirinç kıble pusulası (ibre ucunda mihrap ışığı, Kâbe çizilmez); çizimli kartlar (kandil, bayram, Ramazan feneri, seccade, tesbih halkası, ayet durağı, gün madalyonu).
+- **Kur'an:** tezhipli sure başlığı (Arapça ad, besmele Fâtiha 1:1 verisinden), Arapça sure adları (Tanzil yazımı), ayet durakları, altın çerçeveli Arapça metin + ﴿ayet no﴾, hatim gülü (30 yaprak), rahle.
+- **Tesbih:** ip, tane parıltısı ve gölgesi, çekilen tanelere altın kenar, altın halkalı merkez.
+- **Sor/Çarşı/Miras:** bant çizimleri (`www/js/cizim.js`), 9 konu ve 13 reyon simgesi, akraba figürleri; bantlarda sekiz kollu yıldız örgüsü.
+- **Yeni simge ve açılış ekranı:** `tools/ikon/ikon-uret.html` (sahne motoruyla); iOS, Watch, Android, bütün açılış boyutları.
+- İngilizce sözlüğe yeni etiketler. Testler: parity 44/44, miras 33/33; Playwright'ta bütün ekranlar hatasız.
+- Önizleme: https://emreanduv.github.io/yasam-rehberi/onizleme/ · Mağaza: `store/surum/1.5.0.json`, görseller `store/gorseller/v15`.
+- Emre cihazda onaylayınca: `asc-surum` hazirla (`store/surum/1.5.0.json`, görseller `store/gorseller/v15`) → gonder; Android 1.5.0 .aab imzala → Play.
