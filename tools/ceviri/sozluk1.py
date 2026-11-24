@@ -95,7 +95,7 @@ SOZ = {
 "Paylaş ve puanla": "Share and rate", "★ Puan ver": "★ Rate", "Puan ver": "Rate", "Telefonun paylaşım menüsüyle": "With your phone's share menu",
 "Görüş ve öneri": "Feedback and suggestions", "Bize yaz": "Write to us", "emreanduvart@gmail.com · sürüm ve cihaz bilgisi hazır gelir": "emreanduvart@gmail.com · version and device info are filled in",
 "Verilerin": "Your data", "Verilerimi sil": "Delete my data", "Emin misin? Bir daha dokun": "Are you sure? Tap again",
-"Konum, ayarlar, kayıtlı ayetler, tesbih ve saat verisi, çarşı listesi, miras girdileri, bildirimler ve rehber bu telefondan silinir": "Location, settings, saved verses, tasbih and clock data, bazaar list, inheritance entries, notifications and the guide are deleted from this phone",
+"Konum, ayarlar, kayıtlı ayetler, tesbih ve saat verisi, Sofra kayıtları, çarşı listesi, miras girdileri, bildirimler ve rehber bu telefondan silinir": "Location, settings, saved verses, tasbih and clock data, Sofra logs, bazaar list, inheritance entries, notifications and the guide are deleted from this phone",
 "Bizde senin hakkında hiçbir kayıt yok": "We keep no record about you", "Uygulama hiçbir kişisel veri toplamaz": "The app collects no personal data", "Gizlilik politikası": "Privacy policy",
 "Nasıl kullanılır, puan verme, arkadaşına önerme, bize yazma ve Verilerimi sil burada": "How to use, rating, recommending to a friend, writing to us and Delete my data are here",
 "Altın çerçeveliler henüz görmediğin ipuçları": "The gold-framed ones are tips you haven't seen yet",

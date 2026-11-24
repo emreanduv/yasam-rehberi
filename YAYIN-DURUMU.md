@@ -158,3 +158,13 @@ Emre: "çizimler, görseller yalapşap; çok daha iyisini yapabilirsin." Bütün
 - 1.5.0 incelemeye gönderilmedi; 1.5.1 onun yerine geçer: `store/surum/1.5.1.json`, görseller `store/gorseller/v15` (+ `10-saat`).
 - Emre cihazda onaylayınca: `asc-surum` hazirla (1.5.1) → gonder; Android 1.5.1 .aab imzala → Play.
 - 22 Kasım 23:07: Emre onayladı ("yapıştır"). 1.5.1 (derleme 40) metinler ve 10'ar görselle App Store incelemesine gönderildi: WAITING_FOR_REVIEW. Onay gelince `store/SON-SURUM` → 1.5.1.
+
+## 24 Kasım 2026 · 1.6.0 Sofra (Denge, Yaşam Rehberi'ne katıldı) → TestFlight
+- Emre: iki ayrı uygulama yerine tek uygulama; dinî ve Atatürk'le ilgili uygulamalar ücretsiz. Denge (emreanduv/denge) `www/moduller/sofra.html` olarak üçüncü modül oldu; Tam Sürüm kaldırıldı, Program Modu dahil her şey ücretsiz. Denge'nin kendi mağaza kaydı bekletilir, silinmez.
+- Alt menüde Saat ile Çarşı arasında "Sofra"; Bugün'de günün kalori/su/adım özeti (`_sofra-ozet`); Ayarlar → "Açılışta: Bugün / Sofra".
+- Dil Yaşam Rehberi'nden gelir; bildirimler ana pencerenin Capacitor köprüsüyle, yalnız Sofra kimlikleri (100000–299999) yenilenir, vakit bildirimlerine dokunulmaz.
+- Kayıt `sofra.v1` (iCloud eşitlenir); öğün fotoğrafları `_sofra-foto.v1` (yalnız cihazda, 1 MB sınırı yüzünden).
+- Düzeltme: "Kalan kcal" küsuratlı görünüyordu (1052.6999…), yuvarlandı.
+- Gizlilik politikası Sofra kayıtlarıyla güncellendi (24 Kasım). Kamera izni metni Sofra'yı da anıyor.
+- Mağaza: `store/surum/1.6.0.json`, görseller `store/gorseller/v16` (8-carsi yerine 8-sofra). 1.5.1 incelemede: onay gelmeden 1.6.0 gönderilmez.
+- Sıradaki (1.6.x): Ramazan/oruç modu (sahur-iftar öğünleri, su iftar–sahur arasına), nafile oruç günleri, Çarşı'daki barkod okuyucuyla paketli ürün kalorisi (Open Food Facts).

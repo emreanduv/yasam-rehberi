@@ -17,7 +17,7 @@ import { RAHLE as RAHLE_CIZIM, BANT, KONU } from "./cizim.js";
 // ---------------------------------------------------------------------------
 const APP_NAME = "Yaşam Rehberi";
 const MAKER = "Bir Mr. Anduv! yapımıdır.";
-const VERSION = "1.5.1";
+const VERSION = "1.6.0";
 const EN = !!(window.DIL && window.DIL.kod === "en");   // dil English: telifsiz İngilizce mealler (Pickthall, Yusuf Ali)
 const QURANENC = { rowwad: "turkish_rwwad", ozek: "turkish_shahin", saban: "turkish_shaban", muhtasar: "turkish_mokhtasar" };
 const SHORT = { rowwad: "Rowwad", ozek: "Ali Özek", saban: "Ş. Britiş", pickthall: "Pickthall", yusufali: "Yusuf Ali" };
@@ -73,6 +73,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 const enc = encodeURIComponent;
 
 const ICON = {
+  sofra: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18"/><path d="M4.5 12a7.5 7.5 0 0 0 15 0"/><path d="M9 20h6"/><path d="M9 8c0-1.5 1-1.5 1-3M13 8c0-1.5 1-1.5 1-3"/></svg>',
   back: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>',
   next: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
   search: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
@@ -115,7 +116,7 @@ const mealsOn = () => S.meals.filter((t) => E.meals.includes(t));
 
 // Ana sayfa dışındaki her ekranda sol üstte geri düğmesi olur (sekmeler değişse de geçerli kalsın diye)
 // Alt menüdeki bölümlerin kendisi "ana sayfa" sayılır (Geri düğmesi yerine uygulama adı)
-const anaSayfa = () => !location.hash || /^#\/?(sor|sureler|kible|namaz|tesbih|saat|carsi|miras)?$/.test(location.hash);
+const anaSayfa = () => !location.hash || /^#\/?(sor|sureler|kible|namaz|tesbih|saat|sofra|carsi|miras)?$/.test(location.hash);
 function topbar(left = "brand") {
   if (left === "brand" && !anaSayfa()) left = "Geri";
   const l = left === "brand"
@@ -153,7 +154,7 @@ function renderNav(active) {
   // Tek menü: her bölüm burada, sırayla
   $nav.innerHTML = item("bugun", "#/", ICON.mosque, "Bugün")
     + (KURAN ? item("ara", "#/sor", ICON.search, "Sor") + item("sure", "#/sureler", ICON.book, "Sureler") : "")
-    + item("tesbih", "#/tesbih", ICON.beads, "Tesbih") + item("saat", "#/saat", ICON.clock, "Saat")
+    + item("tesbih", "#/tesbih", ICON.beads, "Tesbih") + item("saat", "#/saat", ICON.clock, "Saat") + item("sofra", "#/sofra", ICON.sofra, "Sofra")
     + item("carsi", "#/carsi", ICON.bag, "Çarşı") + item("miras", "#/miras", ICON.scale, "Miras");
 }
 
@@ -376,6 +377,31 @@ function gunSeridi(t, now) {
 }
 const kis = (x, a, b) => Math.max(a, Math.min(b, x));
 
+// Sofra (kalori, su, adım): modülün bugünkü özeti; modül her kayıtta "_sofra-ozet"i yazar
+function sofraOzet() {
+  try {
+    const o = JSON.parse(localStorage.getItem("_sofra-ozet") || "null");
+    const d = new Date(), z = (n) => String(n).padStart(2, "0");
+    if (!o) return null;
+    if (o.tarih !== `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}`) return { ...o, kcal: 0, su: 0, adim: 0 };
+    return o;
+  } catch { return null; }
+}
+function sofraPanel() {
+  const o = sofraOzet();
+  if (!o) return `<a class="sf-davet" href="#/sofra"><span class="sf-ik">${ICON.sofra}</span><span><b>Sofra</b><small>Kalori, su, adım ve kilo takibi. Öğününü ekle, günün dengesini gör.</small></span>${ICON.next}</a>`;
+  const yer = window.DIL && window.DIL.kod === "en" ? "en-GB" : "tr-TR";
+  const cubuk = (ad, v, h, br, renk) => {
+    const y = h ? Math.min(100, Math.round(v / h * 100)) : 0;
+    return `<div class="sf-c"><div class="sf-c-u"><span>${ad}</span><b>${v.toLocaleString(yer)}${h ? ` / ${h.toLocaleString(yer)}` : ""} ${br}</b></div><div class="sf-bar"><i style="width:${y}%;background:${renk}"></i></div></div>`;
+  };
+  return `<a class="panel sf-panel" href="#/sofra"><div class="panel-h"><span>Sofra</span><span>Bugün ›</span></div><div class="panel-b">
+    ${cubuk("Kalori", Math.round(o.kcal || 0), o.hedef || 0, "kcal", o.kcal > (o.hedef || 0) * 1.05 ? "#b8352a" : "#4c9a35")}
+    ${cubuk("Su", Math.round((o.su || 0) / 100) / 10, Math.round((o.suHedef || 0) / 100) / 10, "L", "#2d7fc1")}
+    ${cubuk("Adım", Math.round(o.adim || 0), o.adimHedef || 0, "", "#d6a43a")}
+  </div></a>`;
+}
+
 function bugunView() {
   const pos = S.konum;
   const now = new Date();
@@ -434,6 +460,7 @@ function bugunView() {
     ${gunAyet}
     <a class="bg-devam" href="#/tesbih"><span class="bg-devam-r">${tesbihHalka(tz.n, tz.h)}</span><span class="bg-devam-z"><small>Son zikir</small>${esc(tz.ad)}</span>
       <span class="btn-go bg-devam-b">DEVAM ${tz.h ? `${tz.n}/${tz.h}` : tz.n} ${ICON.next}</span></a>
+    ${sofraPanel()}
     ${kazaPanel()}
     ${pos ? bildirimPanel(pos) : ""}
     <div class="rh-dugmeler"><a class="btn-light" href="#/rehber">? Nasıl kullanılır</a><button class="btn-light" data-act="rh-oner">↗ Arkadaşına öner</button></div>
@@ -755,6 +782,13 @@ function savedView() {
     : `<div class="empty">Henüz kaydedilmiş ayet yok.<br>Bir ayeti açıp “Kaydet”e dokunduğunda burada görünür.</div>`}</main>`;
 }
 
+function acilisPanel() {
+  const a = S.acilis === "sofra" ? "sofra" : "bugun";
+  const b = (k, ad) => `<button class="${a === k ? "on" : ""}" data-act="acilis" data-k="${k}">${ad}</button>`;
+  return `<section class="panel"><div class="panel-h">Açılışta</div><div class="panel-b"><div class="seg">${b("bugun", "Bugün")}${b("sofra", "Sofra")}</div>
+    <div style="font-size:13px;color:var(--muted);margin-top:8px">Uygulama açılınca ilk görünecek bölüm.</div></div></section>`;
+}
+
 function settingsView() {
   if (!KURAN) {
     return `${topbar("Geri")}
@@ -764,6 +798,7 @@ function settingsView() {
       Namaz vakitleri, kıble, tesbih, saat, çarşı ve miras hesabı. Hepsi telefonda çalışır; internet ve üyelik gerekmez,
       hiçbir veri toplanmaz. Vakitler Diyanet'in hesap yöntemiyle telefonda hesaplanır.</div></section>
     <section class="panel"><div class="panel-h">Dil · Language</div><div class="rows"><a class="row" href="#" data-act="dil"><span>${window.DIL ? (window.DIL.kod === "en" ? "English" : "Türkçe") : "Türkçe"}</span><span class="meta">${window.DIL && window.DIL.kod === "en" ? "Türkçe’ye geç" : "Switch to English"} ›</span></a></div></section>
+    ${acilisPanel()}
     ${RH.ayarPanelleri(view.silOnay)}
     <div class="made" style="font-style:normal;color:var(--muted)">Reklamsız ve ücretsiz · Sürüm ${VERSION}</div>
     <div class="made">${esc(MAKER)}</div>
@@ -790,6 +825,7 @@ function settingsView() {
     ${EN ? "" : `<a class="btn-go btn-dark" href="https://quranenc.com/tr/browse/turkish_rwwad">${ICON.note}Mealle ilgili not gönder</a>`}
     <div class="credits" style="text-align:center">Veri sürümü: ${esc(E.core.meta.built)}</div>
     <section class="panel"><div class="panel-h">Dil · Language</div><div class="rows"><a class="row" href="#" data-act="dil"><span>${window.DIL ? (window.DIL.kod === "en" ? "English" : "Türkçe") : "Türkçe"}</span><span class="meta">${window.DIL && window.DIL.kod === "en" ? "Türkçe’ye geç" : "Switch to English"} ›</span></a></div></section>
+    ${acilisPanel()}
     ${RH.ayarPanelleri(view.silOnay)}
     <div class="made" style="font-style:normal;color:var(--muted)">Reklamsız ve ücretsiz · Sürüm ${VERSION}</div>
     <div class="made">${esc(MAKER)}</div>
@@ -946,7 +982,7 @@ function menuView() {
   </main>`;
 }
 
-const MODULLER = { tesbih: "Tesbih", saat: "Saat" };
+const MODULLER = { tesbih: "Tesbih", saat: "Saat", sofra: "Sofra" };
 function modulView(ad) {
   return `${topbar()}<iframe class="modul" src="moduller/${ad}.html" title="${esc(MODULLER[ad])}"></iframe>`;
 }
@@ -1001,6 +1037,8 @@ window.YR = {
   konum: () => (S.konum ? { lat: S.konum.lat, lon: S.konum.lon, ad: "Bulunduğun yer" } : null),
   vakit: (d) => (S.konum ? V.times(S.konum.lat, S.konum.lon, d || new Date()) : null),
   git: (h) => { location.hash = h; },
+  surum: VERSION,
+  sofraDegisti: () => {},
   saatPlan: async (list) => {
     S.saatPlan = (Array.isArray(list) ? list : []).filter((n) => n && n.at && n.title).slice(0, SAAT_MAX)
       .map((n) => ({ at: Number(n.at), title: String(n.title), body: String(n.body || "") }));
@@ -1302,7 +1340,7 @@ function route() {
   else if (parts[0] === "hatim") { html = hatimView(); nav = "sure"; }
   else if (parts[0] === "kaydedilenler") { html = savedView(); nav = "ara"; }
   else if (parts[0] === "menu") { location.replace("#/"); return; }
-  else if (parts[0] === "tesbih" || parts[0] === "saat") { html = modulView(parts[0]); nav = parts[0]; }
+  else if (parts[0] === "tesbih" || parts[0] === "saat" || parts[0] === "sofra") { html = modulView(parts[0]); nav = parts[0]; }
   else if (parts[0] === "carsi") { html = carsiRoute(parts); nav = "carsi"; if (!html) { location.replace("#/carsi"); return; } }
   else if (parts[0] === "ayarlar") { html = settingsView(); nav = "ayar"; }
   else if (parts[0] === "rehber") { html = RH.rehberView(topbar, MAKER); nav = "ayar"; }
@@ -1371,6 +1409,7 @@ document.addEventListener("click", async (e) => {
   if (act === "kaza-sifir") { if (!view.kazaSifir) { view.kazaSifir = true; route(); return; } kaza = {}; view.kazaSifir = false; await store.set("kaza", kaza); toast("Kaza sayıları sıfırlandı"); route(); return; }
   if (act === "rh-bastan") { RH.bastan(); toast("Rehber baştan başladı"); if (location.hash && location.hash !== "#/") location.hash = "#/"; else route(); return; }
   if (act === "rh-oner" || act === "rh-paylas-kart") { RH.puanKartKapat(); RH.paylas(toast); return; }
+  if (act === "acilis") { S.acilis = el.dataset.k === "sofra" ? "sofra" : "bugun"; await store.set("settings", S); route(); return; }
   if (act === "dil") { e.preventDefault(); if (window.DIL) window.DIL.degistir(); return; }
   if (act === "rh-yaz") { RH.puanKartKapat(); RH.bizeYaz(VERSION, `konum ${S.konum ? "seçili" : "yok"} · bildirim ${S.vakit?.on ? "açık" : "kapalı"}`); return; }
   if (act === "rh-puan") { RH.puanVer(); return; }
@@ -1493,6 +1532,7 @@ async function boot() {
   saatBildirimKur().catch(() => {});
   tesbihBildirimKur().catch(() => {});
   await RH.rehberHazirla(store, !!(S.konum || saved.length || Object.values(modVeri).some(Boolean)));
+  if (S.acilis === "sofra" && (!location.hash || location.hash === "#/")) history.replaceState(null, "", "#/sofra");
   lastHash = location.hash;
   route();
 }

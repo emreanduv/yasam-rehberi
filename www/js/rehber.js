@@ -16,11 +16,12 @@ const IPUCU = {
   sureler: ["Sureler", "114 sure sırayla. Bir sureye dokun, ayetleri meallerle açılsın; ayeti kaydedip paylaşabilirsin. Üstteki Hatim takibi kartında okuduğun cüzleri işaretle, kaldığın yerden devam et."],
   tesbih: ["Tesbih", "Ekrana dokundukça sayar; hedef dolunca sıradaki zikre geçer. Esmâ, serbest zikir ve tesbih atölyesi de burada. Sayın yalnız bu telefonda kalır."],
   saat: ["Saat", "Kadranlar, kadran atölyesi, hatırlatıcılar, zamanlayıcı ve kronometre. Vakit ve konum uygulamadan gelir; hatırlatıcılar telefonun kendi bildirimiyle çalışır."],
+  sofra: ["Sofra", "Kalori, su, adım, kilo ve sağlık takibi. Serbest Mod'da hemen başla; Program Modu'nda boyuna, kilona ve hedefine göre kişisel hedef ve diyet listesi. Kayıtlar yalnız bu telefonda ve kendi iCloud'unda."],
   carsi: ["Çarşı", "Reyon reyon markalar ve kaynaklı künyeleri. Barkodu kamerayla okut ya da yaz, markayı listene ekle."],
   miras: ["Miras", "Adım adım ailedekileri gir: feraiz (Hanefî) ve Türk Medeni Kanunu'na göre paylar kesirle ve TL olarak, dayanaklarıyla çıkar."],
   ayarlar: ["Ayarlar", "Nasıl kullanılır, puan verme, arkadaşına önerme, bize yazma ve Verilerimi sil burada."],
 };
-const SIRA = () => ["bugun", ...(KURAN ? ["sor", "sureler"] : []), "tesbih", "saat", "carsi", "miras", "ayarlar"];
+const SIRA = () => ["bugun", ...(KURAN ? ["sor", "sureler"] : []), "tesbih", "saat", "sofra", "carsi", "miras", "ayarlar"];
 const ANAHTAR = "yr.rehber", PUAN = "yr.puan", GUN = "yr.gunler";
 const PUAN_ANI = [3, 10];   // farklı kullanım günü eşikleri
 
@@ -85,7 +86,7 @@ export function ayarPanelleri(silOnay) {
     <section class="panel"><div class="panel-h">Görüş ve öneri</div><div class="rows">
       ${row("rh-yaz", "✉", "Bize yaz", "emreanduvart@gmail.com · sürüm ve cihaz bilgisi hazır gelir")}</div></section>
     <section class="panel"><div class="panel-h">Verilerin</div><div class="rows">
-      ${row("rh-sil", "×", silOnay ? "Emin misin? Bir daha dokun, silinsin" : "Verilerimi sil", "Konum, ayarlar, kayıtlı ayetler, tesbih ve saat verisi, çarşı listesi, miras girdileri, bildirimler ve rehber bu telefondan silinir. Bizde senin hakkında hiçbir kayıt yok.", "rh-sil" + (silOnay ? " onay" : ""))}</div>
+      ${row("rh-sil", "×", silOnay ? "Emin misin? Bir daha dokun, silinsin" : "Verilerimi sil", "Konum, ayarlar, kayıtlı ayetler, tesbih ve saat verisi, Sofra kayıtları, çarşı listesi, miras girdileri, bildirimler ve rehber bu telefondan silinir. Bizde senin hakkında hiçbir kayıt yok.", "rh-sil" + (silOnay ? " onay" : ""))}</div>
       <div class="panel-b" style="font-size:13px;border-top:1px solid var(--panel-rule)">Uygulama hiçbir kişisel veri toplamaz. <a href="https://emreanduv.github.io/yasam-rehberi/gizlilik.html">Gizlilik politikası</a></div></section>`;
 }
 
