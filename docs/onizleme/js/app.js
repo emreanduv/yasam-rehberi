@@ -1038,6 +1038,7 @@ window.YR = {
   vakit: (d) => (S.konum ? V.times(S.konum.lat, S.konum.lon, d || new Date()) : null),
   git: (h) => { location.hash = h; },
   surum: VERSION,
+  hicri: (d) => V.hicri(d || new Date()),
   sofraDegisti: () => {},
   saatPlan: async (list) => {
     S.saatPlan = (Array.isArray(list) ? list : []).filter((n) => n && n.at && n.title).slice(0, SAAT_MAX)

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Çarşı bölümünde ürün barkodunu okutmak ve Sofra bölümünde öğün fotoğrafı çekmek için kamera kullanılır. Fotoğraflar yalnızca bu telefonda saklanır.</string>
+	<string>Çarşı bölümünde ürün barkodunu okutmak ve Sofra bölümünde paketli ürün barkodu okutmak ya da öğün fotoğrafı çekmek için kamera kullanılır. Fotoğraflar yalnızca bu telefonda saklanır.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Namaz vakitlerini ve kıble yönünü hesaplamak için konumunuz yalnızca bu telefonda kullanılır; hiçbir yere gönderilmez.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

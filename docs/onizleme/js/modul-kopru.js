@@ -13,6 +13,7 @@
     yaz: function (k, v) { if (P) { P.yaz(k, v); return; } try { localStorage.setItem(k, v); } catch (e) { mem[k] = v; } },
     konum: function () { return P ? P.konum() : null; },          // { lat, lon, ad } ya da null
     vakit: function (d) { return P ? P.vakit(d) : null; },         // { imsak, gunes, ogle, ikindi, aksam, yatsi } (Date)
+    hicri: function (d) { return P && P.hicri ? P.hicri(d) : null; }, // { gun, ay, yil, ayAdi, ramazan }
     git: function (h) { if (P) P.git(h); },
     saatPlan: function (list) { if (P) P.saatPlan(list); },
     tesbihAyar: function (on, after) { return P ? P.tesbihAyar(on, after) : Promise.resolve(true); }

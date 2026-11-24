@@ -167,4 +167,7 @@ Emre: "çizimler, görseller yalapşap; çok daha iyisini yapabilirsin." Bütün
 - Düzeltme: "Kalan kcal" küsuratlı görünüyordu (1052.6999…), yuvarlandı.
 - Gizlilik politikası Sofra kayıtlarıyla güncellendi (24 Kasım). Kamera izni metni Sofra'yı da anıyor.
 - Mağaza: `store/surum/1.6.0.json`, görseller `store/gorseller/v16` (8-carsi yerine 8-sofra). 1.5.1 24 Kasım itibarıyla yayında (READY_FOR_SALE, SON-SURUM 1.5.1). 1.6.0 TestFlight'ta cihazda onaylanınca incelemeye gider.
-- Sıradaki (1.6.x): Ramazan/oruç modu (sahur-iftar öğünleri, su iftar–sahur arasına), nafile oruç günleri, Çarşı'daki barkod okuyucuyla paketli ürün kalorisi (Open Food Facts).
+- 24 Kasım (Emre: "to do listini tamamla öyle çıkarız mağazaya"): 1.6.0'a eklendi:
+  - Oruç kartı: Ramazan (hicri 9. ay) kendiliğinden oruçlu gün; öğünler Sahur/İftar, iftara/sahur bitimine kalan süre, su planı; su hatırlatıcıları iftar+20 dk ile imsak−30 dk arasına kayar. Nafile günler (pazartesi-perşembe, eyyâm-ı bîz, Muharrem 9-11, Arefe, Şevval) bilgi olarak; "Oruçluyum / Niyetliyim". Bayram günleri oruç önerilmez. Hicri tarih ve vakitler YR köprüsünden (YR.hicri, YR.vakit).
+  - Barkodla ekle: CapacitorBarcodeScanner (Çarşı'daki) + Open Food Facts API v2; bulunan ürünler `_sofra-barkod`'da önbellekte (internetsiz tekrar). Alerjen etiketleri profil alerjileriyle eşleşir. Gizlilik politikasına barkod sorgusu eklendi.
+  - Sofra bildirim bütçesi 3 gün / en çok 24 (iOS 64 sınırı vakit bildirimleriyle paylaşılır).
