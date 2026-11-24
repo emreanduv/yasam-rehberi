@@ -166,5 +166,5 @@ Emre: "çizimler, görseller yalapşap; çok daha iyisini yapabilirsin." Bütün
 - Kayıt `sofra.v1` (iCloud eşitlenir); öğün fotoğrafları `_sofra-foto.v1` (yalnız cihazda, 1 MB sınırı yüzünden).
 - Düzeltme: "Kalan kcal" küsuratlı görünüyordu (1052.6999…), yuvarlandı.
 - Gizlilik politikası Sofra kayıtlarıyla güncellendi (24 Kasım). Kamera izni metni Sofra'yı da anıyor.
-- Mağaza: `store/surum/1.6.0.json`, görseller `store/gorseller/v16` (8-carsi yerine 8-sofra). 1.5.1 incelemede: onay gelmeden 1.6.0 gönderilmez.
+- Mağaza: `store/surum/1.6.0.json`, görseller `store/gorseller/v16` (8-carsi yerine 8-sofra). 1.5.1 24 Kasım itibarıyla yayında (READY_FOR_SALE, SON-SURUM 1.5.1). 1.6.0 TestFlight'ta cihazda onaylanınca incelemeye gider.
 - Sıradaki (1.6.x): Ramazan/oruç modu (sahur-iftar öğünleri, su iftar–sahur arasına), nafile oruç günleri, Çarşı'daki barkod okuyucuyla paketli ürün kalorisi (Open Food Facts).
