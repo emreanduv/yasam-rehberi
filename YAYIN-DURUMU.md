@@ -179,3 +179,4 @@ Emre: "çizimler, görseller yalapşap; çok daha iyisini yapabilirsin." Bütün
 - 27 Kasım: 1.6.0 (Sofra) yayında, SON-SURUM 1.6.0. 1.6.1 TestFlight'a yüklendi (iOS + Watch derlendi), Android .aab hazır; Emre cihazda bakınca incelemeye.
 - 27 Kasım 11:2x: Emre onayladı. 1.6.1 (derleme 43) App Store incelemesine gönderildi. Onay gelince SON-SURUM → 1.6.1.
 - 27 Kasım 15:5x: Emre saatinden fotoğraf attı: Fotoğraflar kadranının alt satırında (accessoryInline) "AKŞAM 17…" kesiliyor. Düzeltme: ViewThatFits ("Akşam 17:45" → "Akş 17:45" → "17:45"). 1.6.1 incelemeden geri çekildi (asc-surum geri_cek), yeni derleme 1.6.1 ile yeniden gönderilecek.
+- 27 Kasım: 1.6.1 derleme 44 (Watch tek satır düzeltmesiyle) yeniden incelemeye gönderildi.
