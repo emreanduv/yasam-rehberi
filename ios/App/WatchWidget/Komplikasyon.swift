@@ -105,20 +105,29 @@ struct VakitSaglayici: AppIntentTimelineProvider {
 struct VakitGorunum: View {
     @Environment(\.widgetFamily) private var aile
     let k: VakitKaydi
+    private var saatParca: (String, String) { let p = k.saat.split(separator: ":"); return p.count == 2 ? (String(p[0]), String(p[1])) : (k.saat, "") }
+    private var kisaAd: String { k.ad.count > 6 ? String(k.ad.prefix(5)) : k.ad }
 
     var body: some View {
         switch aile {
         case .accessoryInline:
             Text("\(k.ad) \(k.saat)")
         case .accessoryCircular:
-            VStack(spacing: 0) {
-                Text(k.ad).font(.system(size: 11, weight: .semibold)).minimumScaleFactor(0.7)
-                Text(k.saat).font(.system(size: 15, weight: .bold)).monospacedDigit().minimumScaleFactor(0.7)
+            // Dar halkada "12:…" diye kesilmesin: saat ve dakika alt alta, gerekirse küçülür
+            VStack(spacing: -1) {
+                Text(kisaAd).font(.system(size: 10, weight: .semibold)).lineLimit(1).minimumScaleFactor(0.6)
+                Text(saatParca.0).font(.system(size: 17, weight: .bold)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.5)
+                Text(saatParca.1).font(.system(size: 13, weight: .semibold)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.5)
             }
         #if os(watchOS)
         case .accessoryCorner:
-            Text(k.saat).font(.system(size: 14, weight: .bold)).monospacedDigit()
-                .widgetLabel { Text(k.ad) }
+            // Köşe en dar yer: "12:47" sığmazsa küçülür, yine sığmazsa "12⁴⁷" biçimine geçer; asla "12:…" olmaz
+            ViewThatFits {
+                Text(k.saat).font(.system(size: 14, weight: .bold)).monospacedDigit().lineLimit(1)
+                (Text(saatParca.0).font(.system(size: 15, weight: .bold)) + Text(saatParca.1).font(.system(size: 9, weight: .bold)).baselineOffset(5))
+                    .monospacedDigit().lineLimit(1).minimumScaleFactor(0.5)
+            }
+            .widgetLabel { Text("\(k.ad) \(k.saat)") }
         #else
         case .systemSmall:
             KucukWidget(k: k)
@@ -127,9 +136,9 @@ struct VakitGorunum: View {
         #endif
         default: // accessoryRectangular
             VStack(alignment: .leading, spacing: 1) {
-                Text("\(k.ad) · \(k.saat)").font(.system(size: 15, weight: .bold))
-                Text(k.zaman, style: .timer).font(.system(size: 20, weight: .bold)).monospacedDigit()
-                Text(k.ilAdi).font(.system(size: 11)).foregroundStyle(.secondary)
+                Text("\(k.ad) · \(k.saat)").font(.system(size: 15, weight: .bold)).lineLimit(1).minimumScaleFactor(0.6)
+                Text(k.zaman, style: .timer).font(.system(size: 20, weight: .bold)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.6)
+                Text(k.ilAdi).font(.system(size: 11)).foregroundStyle(.secondary).lineLimit(1)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -188,7 +197,7 @@ struct OrtaWidget: View {
                     HStack {
                         Text(Vakit.ad[i]).font(.system(size: 13, weight: on ? .bold : .regular))
                         Spacer()
-                        Text(k.bugun.count == 6 ? Vakit.hhmm(k.bugun[i]) : "--:--").font(.system(size: 13, weight: .bold)).monospacedDigit()
+                        Text(k.bugun.count == 6 ? Vakit.hhmm(k.bugun[i]) : "--:--").font(.system(size: 13, weight: .bold)).monospacedDigit().lineLimit(1).fixedSize()
                     }
                     .foregroundStyle(Renk.murekkep)
                     .padding(.horizontal, 8).frame(maxHeight: .infinity)

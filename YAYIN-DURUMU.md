@@ -172,3 +172,7 @@ Emre: "çizimler, görseller yalapşap; çok daha iyisini yapabilirsin." Bütün
   - Barkodla ekle: CapacitorBarcodeScanner (Çarşı'daki) + Open Food Facts API v2; bulunan ürünler `_sofra-barkod`'da önbellekte (internetsiz tekrar). Alerjen etiketleri profil alerjileriyle eşleşir. Gizlilik politikasına barkod sorgusu eklendi.
   - Sofra bildirim bütçesi 3 gün / en çok 24 (iOS 64 sınırı vakit bildirimleriyle paylaşılır).
 - 24 Kasım 14:13: Emre TestFlight'ta onayladı ("Tamam"). 1.6.0 (derleme 42) App Store incelemesine gönderildi: WAITING_FOR_REVIEW. Onay gelince SON-SURUM → 1.6.0. Android 1.6.0 .aab imza bekliyor (imzala.sh).
+
+## 27 Kasım 2026 · 1.6.1 kullanıcı görüşü → TestFlight
+- Görüş 1: "ezan saatleri saatte 12.— olarak çıkıyor" (Ezan Vakti Pro'da da var). Apple Watch köşe (accessoryCorner) ve yuvarlak komplikasyonda "12:47" sığmayıp kesiliyordu. Köşe: ViewThatFits (12:47 → 12⁴⁷, küçülerek), yuvarlak: saat/dakika alt alta; dikdörtgen ve saat ana ekranında lineLimit + küçülme.
+- Görüş 2: "Öğle ezanına 15 dk kaldı" uyarısı. Eskiden "X dk önce" vakit bildiriminin YERİNE geçiyordu; artık EK hatırlatma (Kapalı/5/10/15/20/30/45/60). Kimlikler g*20 (vakit 0–5, önceden 10–15, sahur 9). Saatte de "Ezandan önce" seçici (açıkken 5 gün × 10).

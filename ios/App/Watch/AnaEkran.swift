@@ -21,6 +21,7 @@ struct AnaEkran: View {
     @AppStorage("t_n") private var sayi = 0
     @AppStorage("t_h") private var hedef = 33
     @AppStorage("bildirim") private var bildirim = true
+    @AppStorage("bildirimOnce") private var once = 0
     @AppStorage("otomatikKonum") private var otomatik = true
     @ObservedObject private var konum = KonumYoneticisi.shared
     @Environment(\.scenePhase) private var faz
@@ -43,9 +44,9 @@ struct AnaEkran: View {
                                 .font(.system(size: 11, weight: .bold)).foregroundStyle(.white)
                                 .frame(maxWidth: .infinity).padding(.vertical, 3).background(Renk.yesil)
                             Text("\(Vakit.ad[d.siradaki]) · \(saat(d.zaman))")
-                                .font(.system(size: 17, weight: .bold)).foregroundStyle(Renk.murekkep).padding(.top, 4)
+                                .font(.system(size: 17, weight: .bold)).lineLimit(1).minimumScaleFactor(0.6).foregroundStyle(Renk.murekkep).padding(.top, 4)
                             Text(kalan(d.zaman, ctx.date))
-                                .font(.system(size: 30, weight: .bold).monospacedDigit())
+                                .font(.system(size: 30, weight: .bold).monospacedDigit()).lineLimit(1).minimumScaleFactor(0.5)
                                 .foregroundStyle(Renk.murekkep).padding(.bottom, 6)
                         }
                         .background(Renk.panel).clipShape(RoundedRectangle(cornerRadius: 8))
@@ -56,9 +57,9 @@ struct AnaEkran: View {
                                 let gecti = d.gunBasi.addingTimeInterval(Double(d.bugun[k]) * 60) <= ctx.date
                                 let sira = !d.yarin && k == d.siradaki
                                 HStack {
-                                    Text(Vakit.ad[k])
-                                    Spacer()
-                                    Text(Vakit.hhmm(d.bugun[k])).monospacedDigit()
+                                    Text(Vakit.ad[k]).lineLimit(1).minimumScaleFactor(0.7)
+                                    Spacer(minLength: 4)
+                                    Text(Vakit.hhmm(d.bugun[k])).monospacedDigit().lineLimit(1).fixedSize()
                                 }
                                 .font(.system(size: 14, weight: sira ? .bold : .regular))
                                 .foregroundStyle(sira ? Renk.murekkep : gecti ? Renk.soluk : Renk.panel)
@@ -87,6 +88,19 @@ struct AnaEkran: View {
                         .tint(Renk.yesil)
                         .padding(.horizontal, 4)
 
+                        if bildirim {
+                            Picker(selection: $once) {
+                                Text("Kapalı").tag(0)
+                                Text("5 dk önce").tag(5)
+                                Text("10 dk önce").tag(10)
+                                Text("15 dk önce").tag(15)
+                                Text("30 dk önce").tag(30)
+                            } label: {
+                                Text("Ezandan önce").font(.system(size: 13, weight: .semibold)).foregroundStyle(Renk.panel)
+                            }
+                            .padding(.horizontal, 4)
+                        }
+
                         Text("Bir Mr. Anduv! yapımıdır.").font(.system(size: 11)).foregroundStyle(Renk.altin)
                     }
                 }
@@ -97,9 +111,9 @@ struct AnaEkran: View {
         .onAppear { konum.guncelle() }
         .onChange(of: faz) { f in if f == .active { konum.guncelle() } }
         // Saatin kendi ezan bildirimleri: konum, il ya da ayar değişince yeniden kurulur
-        .task(id: "\(il)-\(bildirim)-\(otomatik)-\(konum.surum)") {
+        .task(id: "\(il)-\(bildirim)-\(once)-\(otomatik)-\(konum.surum)") {
             let y = Yer.simdiki()
-            await SaatBildirim.kur(lat: y.lat, lon: y.lon, yerAdi: y.ad, acik: bildirim)
+            await SaatBildirim.kur(lat: y.lat, lon: y.lon, yerAdi: y.ad, acik: bildirim, once: once)
         }
     }
 

@@ -6,10 +6,10 @@ import UserNotifications
 enum SaatBildirim {
     /// Bildirim kurulacak vakitler (Güneş namaz vakti olmadığı için yok)
     private static let vakitler = [0, 2, 3, 4, 5]   // İmsak, Öğle, İkindi, Akşam, Yatsı
-    private static let gun = 7                       // 7 gün × 5 vakit = 35 (watchOS sınırı 64)
+    private static let gun = 7                       // 7 gün × 5 vakit = 35 (watchOS sınırı 64); önceden hatırlatma açıkken 5 gün × 10 = 50
     private static let onEk = "yr-vakit-"
 
-    static func kur(lat: Double, lon: Double, yerAdi: String, acik: Bool) async {
+    static func kur(lat: Double, lon: Double, yerAdi: String, acik: Bool, once: Int = 0) async {
         let c = UNUserNotificationCenter.current()
         let bekleyen = await c.pendingNotificationRequests().map(\.identifier).filter { $0.hasPrefix(onEk) }
         c.removePendingNotificationRequests(withIdentifiers: bekleyen)
@@ -26,7 +26,7 @@ enum SaatBildirim {
         var takvim = Calendar(identifier: .gregorian)
         takvim.timeZone = TimeZone(identifier: "Europe/Istanbul") ?? .current
 
-        for g in 0..<gun {
+        for g in 0..<(once > 0 ? 5 : gun) {
             let gunTarih = simdi.addingTimeInterval(Double(g) * 86400)
             let t = Vakit.trGun(gunTarih)
             let base = Vakit.gunBasi(t)
@@ -42,6 +42,18 @@ enum SaatBildirim {
                 let tetik = UNCalendarNotificationTrigger(dateMatching: bilesen, repeats: false)
                 let istek = UNNotificationRequest(identifier: "\(onEk)\(g)-\(k)", content: icerik, trigger: tetik)
                 try? await c.add(istek)
+                // Önceden hatırlatma: "Öğle ezanına 15 dakika kaldı"
+                if once > 0 {
+                    let oan = an.addingTimeInterval(Double(-once) * 60)
+                    guard oan > simdi.addingTimeInterval(30) else { continue }
+                    let o = UNMutableNotificationContent()
+                    o.title = "\(Vakit.ad[k]) ezanına \(once) dk · \(Vakit.hhmm(v[k]))"
+                    o.body = "\(yerAdi) · \(Vakit.ad[k]) ezanına \(once) dakika kaldı."
+                    o.sound = .default
+                    let ob = takvim.dateComponents([.year, .month, .day, .hour, .minute], from: oan)
+                    try? await c.add(UNNotificationRequest(identifier: "\(onEk)o\(g)-\(k)", content: o,
+                                                          trigger: UNCalendarNotificationTrigger(dateMatching: ob, repeats: false)))
+                }
             }
         }
     }

@@ -82,18 +82,26 @@ export function plan(lat, lon, ayar, now = new Date()) {
     // Ramazan: imsaktan 45 dk önce sahur hatırlatması
     if (ram && ayar.sahur) gunluk.push({ slot: 9, at: new Date(t.imsak - 45 * 60000), title: `Sahur · imsak ${hhmm(t.imsak)}`, body: "İmsaka 45 dakika kaldı. Hayırlı sahurlar." });
     for (const v of secili) {
-      const at = new Date(t[v.key] - once);
-      let title = `${v.ad} vakti · ${hhmm(t[v.key])}`;
-      let body = once ? `${v.ad} vaktine ${ayar.once} dakika kaldı.` : `${v.ad} vakti girdi.`;
-      if (v.key === "gunes") body = once ? `Güneşin doğmasına ${ayar.once} dakika kaldı.` : "Güneş doğdu; kerahat vakti.";
-      if (ram && v.key === "aksam") { title = `İftar vakti · ${hhmm(t.aksam)}`; body = once ? `İftara ${ayar.once} dakika kaldı.` : "İftar vakti. Hayırlı iftarlar!"; }
-      if (ram && v.key === "imsak") { title = `İmsak · ${hhmm(t.imsak)}`; body = once ? `İmsaka ${ayar.once} dakika kaldı.` : "İmsak vakti girdi; oruç başladı."; }
-      gunluk.push({ slot: VAKITLER.indexOf(v), at, title, body, ezan: !once && v.key !== "gunes" });   // ezan sesi yalnız vakit girince (güneşte ezan okunmaz)
+      // 1) vakit girince (ezan sesi burada)
+      let title = `${v.ad} vakti · ${hhmm(t[v.key])}`, body = `${v.ad} vakti girdi.`;
+      if (v.key === "gunes") body = "Güneş doğdu; kerahat vakti.";
+      if (ram && v.key === "aksam") { title = `İftar vakti · ${hhmm(t.aksam)}`; body = "İftar vakti. Hayırlı iftarlar!"; }
+      if (ram && v.key === "imsak") { title = `İmsak · ${hhmm(t.imsak)}`; body = "İmsak vakti girdi; oruç başladı."; }
+      gunluk.push({ slot: VAKITLER.indexOf(v), at: t[v.key], title, body, ezan: v.key !== "gunes" });   // güneşte ezan okunmaz
+      // 2) önceden hatırlatma (ör. "Öğle ezanına 15 dakika kaldı"), kısa sesle
+      if (once) {
+        const dk = ayar.once;
+        let ot = `${v.ad} ezanına ${dk} dk · ${hhmm(t[v.key])}`, ob = `${v.ad} ezanına ${dk} dakika kaldı.`;
+        if (v.key === "gunes") { ot = `Güneş doğuşuna ${dk} dk · ${hhmm(t.gunes)}`; ob = `Güneşin doğmasına ${dk} dakika kaldı; sabah namazını kılmadıysan vakit daralıyor.`; }
+        if (ram && v.key === "aksam") { ot = `İftara ${dk} dk · ${hhmm(t.aksam)}`; ob = `İftara ${dk} dakika kaldı.`; }
+        if (ram && v.key === "imsak") { ot = `İmsaka ${dk} dk · ${hhmm(t.imsak)}`; ob = `İmsaka ${dk} dakika kaldı; sahuru bitirme vakti yaklaşıyor.`; }
+        gunluk.push({ slot: 10 + VAKITLER.indexOf(v), at: new Date(t[v.key] - once), title: ot, body: ob, ezan: false });
+      }
     }
     for (const n of gunluk.sort((a, b) => a.at - b.at)) {
       if (n.at <= now) continue;
       if (out.length >= MAX_BEKLEYEN) break;
-      out.push({ id: ID_BASE + g * 10 + n.slot, at: n.at, title: n.title, body: n.body, ezan: !!n.ezan });
+      out.push({ id: ID_BASE + g * 20 + n.slot, at: n.at, title: n.title, body: n.body, ezan: !!n.ezan });
     }
   }
   return out;

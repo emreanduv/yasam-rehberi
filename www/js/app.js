@@ -17,7 +17,7 @@ import { RAHLE as RAHLE_CIZIM, BANT, KONU } from "./cizim.js";
 // ---------------------------------------------------------------------------
 const APP_NAME = "Yaşam Rehberi";
 const MAKER = "Bir Mr. Anduv! yapımıdır.";
-const VERSION = "1.6.0";
+const VERSION = "1.6.1";
 const EN = !!(window.DIL && window.DIL.kod === "en");   // dil English: telifsiz İngilizce mealler (Pickthall, Yusuf Ali)
 const QURANENC = { rowwad: "turkish_rwwad", ozek: "turkish_shahin", saban: "turkish_shaban", muhtasar: "turkish_mokhtasar" };
 const SHORT = { rowwad: "Rowwad", ozek: "Ali Özek", saban: "Ş. Britiş", pickthall: "Pickthall", yusufali: "Yusuf Ali" };
@@ -936,15 +936,15 @@ function bildirimPanel(pos) {
     return `<section class="panel"><div class="panel-h">Vakit bildirimleri</div><div class="panel-b" style="font-size:14px">Bildirimler telefondaki uygulamada çalışır.</div></section>`;
   }
   const row = (label, key, checked, dis) => `<label class="opt"><span>${label}</span><input type="checkbox" data-act="vopt" data-key="${key}" ${checked ? "checked" : ""} ${dis ? "disabled" : ""}></label>`;
-  const onceSel = `<label class="opt"><span>Ne zaman haber verilsin?</span>
-    <select data-act="vonce" class="nz-sel" ${a.on ? "" : "disabled"}>${[[0, "Vakit girince"], [5, "5 dk önce"], [10, "10 dk önce"], [15, "15 dk önce"], [30, "30 dk önce"]]
+  const onceSel = `<label class="opt"><span>Ezandan önce de hatırlat <small>(ör. "Öğle ezanına 15 dakika kaldı")</small></span>
+    <select data-act="vonce" class="nz-sel" ${a.on ? "" : "disabled"}>${[[0, "Kapalı"], [5, "5 dk önce"], [10, "10 dk önce"], [15, "15 dk önce"], [20, "20 dk önce"], [30, "30 dk önce"], [45, "45 dk önce"], [60, "1 saat önce"]]
       .map(([m, l]) => `<option value="${m}" ${a.once === m ? "selected" : ""}>${l}</option>`).join("")}</select></label>`;
   return `<section class="panel"><div class="panel-h">Vakit bildirimleri</div><div>
     ${row("<b>Bildirimleri aç</b>", "on", a.on, !pos)}
     ${V.VAKITLER.map((v) => row(`${v.ad}${v.key === "aksam" ? " <small>(Ramazan'da iftar)</small>" : v.key === "gunes" ? " <small>(doğuş)</small>" : ""}`, "k:" + v.key, a.keys[v.key], !a.on)).join("")}
     ${row("Ramazan'da sahur hatırlatması <small>(imsaktan 45 dk önce)</small>", "sahur", a.sahur, !a.on)}
     ${onceSel}
-    <label class="opt"><span>Bildirim sesi${a.ses === "ezan" && a.once ? ` <small>(ezan yalnız vakit girince çalar; önceden haberde kısa ses)</small>` : ""}</span>
+    <label class="opt"><span>Bildirim sesi${a.ses === "ezan" && a.once ? ` <small>(ezan vakit girince çalar; önceden hatırlatmada kısa ses)</small>` : ""}</span>
     <select data-act="vses" class="nz-sel" ${a.on ? "" : "disabled"}>${[["dit", "Kısa ses"], ["ezan", "Ezan (ilk 30 sn)"], ["sistem", "Telefonun sesi"]]
       .map(([k, l]) => `<option value="${k}" ${a.ses === k ? "selected" : ""}>${l}</option>`).join("")}</select></label>
     </div>

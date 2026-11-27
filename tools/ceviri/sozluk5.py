@@ -31,4 +31,7 @@ SOZ = {
 "Uygulama açılınca ilk görünecek bölüm.": "The section shown first when the app opens.",
 "Kalori, su, adım ve kilo takibi. Öğününü ekle, günün dengesini gör.": "Calorie, water, step and weight tracking. Log your meal, see your day's balance.",
 "Kalori, su, adım, kilo ve sağlık takibi. Serbest Mod'da hemen başla; Program Modu'nda boyuna, kilona ve hedefine göre kişisel hedef ve diyet listesi. Kayıtlar yalnız bu telefonda ve kendi iCloud'unda.": "Calorie, water, step, weight and health tracking. Start right away in Free Mode; Program Mode gives personal targets and a diet plan from your height, weight and goal. Your logs stay on this phone and in your own iCloud.",
+"Ezandan önce de hatırlat": "Also remind me before the adhan", "(ör. \"Öğle ezanına 15 dakika kaldı\")": "(e.g. \"15 minutes to the Dhuhr adhan\")",
+"Kapalı": "Off", "5 dk önce": "5 min before", "10 dk önce": "10 min before", "15 dk önce": "15 min before", "20 dk önce": "20 min before", "30 dk önce": "30 min before", "45 dk önce": "45 min before", "1 saat önce": "1 hour before",
+"(ezan vakit girince çalar; önceden hatırlatmada kısa ses)": "(the adhan plays when the time comes; short sound for the early reminder)",
 }
