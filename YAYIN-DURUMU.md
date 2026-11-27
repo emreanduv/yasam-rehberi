@@ -178,3 +178,4 @@ Emre: "çizimler, görseller yalapşap; çok daha iyisini yapabilirsin." Bütün
 - Görüş 2: "Öğle ezanına 15 dk kaldı" uyarısı. Eskiden "X dk önce" vakit bildiriminin YERİNE geçiyordu; artık EK hatırlatma (Kapalı/5/10/15/20/30/45/60). Kimlikler g*20 (vakit 0–5, önceden 10–15, sahur 9). Saatte de "Ezandan önce" seçici (açıkken 5 gün × 10).
 - 27 Kasım: 1.6.0 (Sofra) yayında, SON-SURUM 1.6.0. 1.6.1 TestFlight'a yüklendi (iOS + Watch derlendi), Android .aab hazır; Emre cihazda bakınca incelemeye.
 - 27 Kasım 11:2x: Emre onayladı. 1.6.1 (derleme 43) App Store incelemesine gönderildi. Onay gelince SON-SURUM → 1.6.1.
+- 27 Kasım 15:5x: Emre saatinden fotoğraf attı: Fotoğraflar kadranının alt satırında (accessoryInline) "AKŞAM 17…" kesiliyor. Düzeltme: ViewThatFits ("Akşam 17:45" → "Akş 17:45" → "17:45"). 1.6.1 incelemeden geri çekildi (asc-surum geri_cek), yeni derleme 1.6.1 ile yeniden gönderilecek.

@@ -111,7 +111,13 @@ struct VakitGorunum: View {
     var body: some View {
         switch aile {
         case .accessoryInline:
-            Text("\(k.ad) \(k.saat)")
+            // Tek satırlık yer (Fotoğraflar/Portre kadranının alt yazısı) dar: "AKŞAM 17…" diye kesilmesin.
+            // Sığana kadar kısalt: "Akşam 17:45" → "Akş 17:45" → "17:45"; saat her zaman tam görünür.
+            ViewThatFits {
+                Text("\(k.ad) \(k.saat)")
+                Text("\(String(k.ad.prefix(3))) \(k.saat)")
+                Text(k.saat)
+            }
         case .accessoryCircular:
             // Dar halkada "12:…" diye kesilmesin: saat ve dakika alt alta, gerekirse küçülür
             VStack(spacing: -1) {

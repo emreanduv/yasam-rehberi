@@ -78,6 +78,12 @@ def hazirla(d):
     api("PATCH", f"appStoreVersions/{vid}/relationships/build", json={"data": {"type": "builds", "id": bid}})
     print("derleme bağlandı:", b[0]["attributes"]["version"])
 
+def geri_cek(d):
+    """İncelemedeki gönderimi geri çek (yeni derleme bağlamak için)."""
+    for sub in api("GET", f"apps/{APP}/reviewSubmissions", params={"filter[state]": "WAITING_FOR_REVIEW,IN_REVIEW", "filter[platform]": "IOS"})["data"]:
+        api("PATCH", f"reviewSubmissions/{sub['id']}", json={"data": {"type": "reviewSubmissions", "id": sub["id"], "attributes": {"canceled": True}}})
+        print("gönderim geri çekildi:", sub["id"], sub["attributes"]["state"])
+
 def gonder(d):
     v = next(x for x in surumler() if x["attributes"]["appStoreState"] in DUZENLENEBILIR and x["attributes"]["versionString"] == d["surum"])
     acik = [s for s in api("GET", f"apps/{APP}/reviewSubmissions", params={"filter[state]": "READY_FOR_REVIEW,UNRESOLVED_ISSUES", "filter[platform]": "IOS"})["data"]]
@@ -90,5 +96,5 @@ def gonder(d):
 
 if __name__ == "__main__":
     is_ = sys.argv[1]; d = json.load(open(sys.argv[2])) if len(sys.argv) > 2 else None
-    {"durum": lambda: durum(), "hazirla": lambda: hazirla(d), "gonder": lambda: gonder(d)}[is_]()
+    {"durum": lambda: durum(), "hazirla": lambda: hazirla(d), "gonder": lambda: gonder(d), "geri_cek": lambda: geri_cek(d)}[is_]()
     durum()

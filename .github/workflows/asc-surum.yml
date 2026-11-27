@@ -2,7 +2,7 @@ name: App Store sürümü (durum / hazırla / gönder)
 on:
   workflow_dispatch:
     inputs:
-      is: { description: "durum | hazirla | gonder", default: "durum" }
+      is: { description: "durum | hazirla | gonder | geri_cek", default: "durum" }
       surum: { description: "store/surum/ altındaki dosya", default: "store/surum/1.1.0.json" }
       gorseller: { description: "Hazırlarken görselleri de yükle (store/gorseller/ klasörü; boş = yükleme)", default: "" }
 env:
