@@ -177,3 +177,4 @@ Emre: "çizimler, görseller yalapşap; çok daha iyisini yapabilirsin." Bütün
 - Görüş 1: "ezan saatleri saatte 12.— olarak çıkıyor" (Ezan Vakti Pro'da da var). Apple Watch köşe (accessoryCorner) ve yuvarlak komplikasyonda "12:47" sığmayıp kesiliyordu. Köşe: ViewThatFits (12:47 → 12⁴⁷, küçülerek), yuvarlak: saat/dakika alt alta; dikdörtgen ve saat ana ekranında lineLimit + küçülme.
 - Görüş 2: "Öğle ezanına 15 dk kaldı" uyarısı. Eskiden "X dk önce" vakit bildiriminin YERİNE geçiyordu; artık EK hatırlatma (Kapalı/5/10/15/20/30/45/60). Kimlikler g*20 (vakit 0–5, önceden 10–15, sahur 9). Saatte de "Ezandan önce" seçici (açıkken 5 gün × 10).
 - 27 Kasım: 1.6.0 (Sofra) yayında, SON-SURUM 1.6.0. 1.6.1 TestFlight'a yüklendi (iOS + Watch derlendi), Android .aab hazır; Emre cihazda bakınca incelemeye.
+- 27 Kasım 11:2x: Emre onayladı. 1.6.1 (derleme 43) App Store incelemesine gönderildi. Onay gelince SON-SURUM → 1.6.1.
